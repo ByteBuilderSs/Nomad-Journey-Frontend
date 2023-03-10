@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import NewRequestPage from "./pages/NewRequest";
 
 function App() {
@@ -13,11 +13,9 @@ function App() {
             </ul>
           </nav>
 
-          <Switch>
-            <Route path="/add-new-request">
-              <NewRequestPage />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/add-new-request" element={<NewRequestPage />}/>
+          </Routes>
         </div>
       </Router>
   );

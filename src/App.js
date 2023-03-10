@@ -1,8 +1,25 @@
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import NewRequestPage from "./pages/NewRequest";
+
 function App() {
   return (
-    <div className="App">
-      Hello world!
-    </div>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/add-new-request">Add New Request</Link>
+              </li>
+            </ul>
+          </nav>
+
+          <Switch>
+            <Route path="/add-new-request">
+              <NewRequestPage />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
   );
 }
 

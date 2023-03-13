@@ -1,4 +1,4 @@
-import NewRequestForm from "../components/requests/NewRequestForm";
+import NewRequestForm from "../components/requests/NewRequestForm/NewRequestForm";
 
 function NewRequestPage() {
     return (

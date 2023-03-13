@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import NewRequestPage from "./pages/NewRequest";
+import SignInSide from "./pages/signup";
 
 function App() {
   return (
@@ -13,8 +14,11 @@ function App() {
             </ul>
           </nav>
 
-          <Routes>
+          {/* <Routes>
             <Route path="/add-new-request" element={<NewRequestPage />}/>
+          </Routes> */}
+          <Routes>
+            <Route path="/add-new-request" element={<SignInSide />}/>
           </Routes>
         </div>
       </Router>

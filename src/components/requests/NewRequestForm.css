@@ -11,12 +11,12 @@
 }
 
 .request-management-add-request .add-request-form {
-    width: 70%;
+    width: 80%;
     padding: 3px;
 }
 
 .request-management-add-request .request-management-add-request {
-    width: 60%;
+    width: 70%;
     border: 1px solid rgb(235, 239, 241);
     padding: 10px;
     border-radius: 10px;

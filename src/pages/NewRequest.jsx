@@ -2,10 +2,10 @@ import NewRequestForm from "../components/requests/NewRequestForm";
 import HeaderComponent from "../components/requests/Header";
 function NewRequestPage() {
     return (
-        <div>
-            <HeaderComponent />
+        <section>
+            <h1>Add New Request</h1>
             <NewRequestForm />
-        </div>
+        </section>
     );
 }
 

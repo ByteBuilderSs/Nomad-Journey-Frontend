@@ -7,6 +7,10 @@ import SettingsPage from './pages/Settings';
 import Navbar from "./components/navbar/Navbar";
 import React, { useEffect, useState } from "react";
 
+// import NewRequestPage from "./pages/NewRequest";
+import SignInSide from "./pages/signup";
+import MainPageFunc from "./pages/MainPage";
+
 const tabNametoIndex = {
   Dashboard: 1,
   Profile: 2,
@@ -35,15 +39,20 @@ function App(props) {
           setSelectedTab={setSelectedTab}
           />
 
-          <Routes>
+          {/* <Routes>
             <Route path="/home/Dashboard/" element={<DashboardPage />}/>
             <Route path="/home/Profile/" element={<ProfilePage />}/>
             <Route path="/home/Inbox/" element={<InboxPage />}/>
             <Route path="/home/Settings/" element={<SettingsPage />}/>
+          </Routes> */}
+          <Routes>
+            <Route path="/add-new-request" element={<SignInSide />}/>
+            <Route path="/" element={<MainPageFunc />}/>
           </Routes>
       </Router>
     </div>
   );
+
 }
 
 export default App;

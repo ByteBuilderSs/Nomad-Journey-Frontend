@@ -16,6 +16,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import TemporaryDrawer from "./SideBar.jsx"
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -155,8 +158,11 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+
   return (
+    
     <div className='nav-bar'>
+        
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
             <Toolbar>
@@ -167,7 +173,7 @@ export default function PrimarySearchAppBar() {
                 aria-label="open drawer"
                 sx={{ mr: 2 }}
             >
-                <MenuIcon />
+                <MenuIcon/>
             </IconButton>
             <Typography
                 variant="h6"
@@ -230,6 +236,7 @@ export default function PrimarySearchAppBar() {
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
+        <TemporaryDrawer />
         </Box>
     </div>
   );

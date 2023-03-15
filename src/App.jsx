@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Login from "./pages/login";
 import NewRequestPage from "./pages/NewRequest";
 import SignInForm from "./pages/signup";
 
@@ -11,14 +12,22 @@ function App() {
               <li>
                 <Link to="/add-new-request">Add New Request</Link>
               </li>
+              <li>
+                <Link to="/signup">sign up</Link>
+              </li><li>
+                <Link to="/login">log in</Link>
+              </li>
             </ul>
           </nav>
-
-          {/* <Routes>
-            <Route path="/add-new-request" element={<NewRequestPage />}/>
-          </Routes> */}
+          
           <Routes>
-            <Route path="/add-new-request" element={<SignInForm />}/>
+            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
+          </Routes>
+          <Routes>
+            <Route exact path="/signup" element={<SignInForm />}/>
+          </Routes>
+          <Routes>
+            <Route exact path="/login" element={<Login />}/>
           </Routes>
         </div>
       </Router>

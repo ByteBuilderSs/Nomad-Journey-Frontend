@@ -5,9 +5,11 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
     "@hookform/resolvers": "^2.9.11",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
+    "@mui/styled-engine-sc": "^5.11.11",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -21,6 +23,7 @@
     "sass": "^1.58.3",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
+    "styled-components": "^5.3.9",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.2"
   },

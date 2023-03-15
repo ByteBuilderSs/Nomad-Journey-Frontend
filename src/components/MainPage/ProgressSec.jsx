@@ -16,7 +16,7 @@ function WithLabelExample() {
 
 export default function ProgressBox() {
   return (
-    <div className='prof'>
+    <div className='progbox'>
         <Box
         sx={{
             width: 300,

@@ -8,6 +8,7 @@ import Navbar from "./components/navbar/Navbar";
 import React, { useEffect, useState } from "react";
 import SignInSide from "./pages/signup";
 import MainPageFunc from "./pages/MainPage";
+import Footer from "./components/Footer/Footer";
 
 const tabNametoIndex = {
   Dashboard: 1,
@@ -35,8 +36,9 @@ function App(props) {
           // selectedTab={selectedTab}
           // setSelectedTab={setSelectedTab}
           /> 
-
+        <Footer />
           <Routes>
+            <Route path="/home/" element={<MainPageFunc />}/>
             <Route path="/home/Dashboard/" element={<DashboardPage />}/>
             <Route path="/home/Profile/" element={<ProfilePage />}/>
             <Route path="/home/Inbox/" element={<InboxPage />}/>

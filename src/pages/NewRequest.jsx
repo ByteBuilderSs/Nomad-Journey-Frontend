@@ -1,5 +1,5 @@
 import NewRequestForm from "../components/requests/NewRequestForm";
-
+import HeaderComponent from "../components/requests/Header";
 function NewRequestPage() {
     return (
         <section>

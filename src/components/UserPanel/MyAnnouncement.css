@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Righteous&display=swap');
+.delete-announcement:hover{
+    background-color: #fdeeee;
+}
+.delete-announcement{
+    border-radius: 40%;
+    border: none;
+    background-color: white;
+    transition: 0.25s ease;
+ }
+.edit-announcement:hover{
+      background-color: #f1f5ff;
+  }
+.edit-announcement{
+    border-radius: 40%;
+    border: none;
+    background-color: white;
+    transition: 0.25s ease;
+}
+.trash {
+    transition: 0.25s ease;
+}
+.trash:hover{
+    color: #c70000;
+}
+.edit{
+    transition: 0.25s ease;
+}
+.edit:hover{
+    color: #003cb9;
+}
+
+
+.outter{
+    font-family: 'Pacifico', cursive;
+    font-family: 'Righteous', cursive;
+}
+.no-overflow {
+    overflow: hidden;
+}
+.image{
+    transition: 0.3s ease;
+    overflow: hidden;
+    filter: grayscale(90%);
+}
+.image:hover
+{
+    filter: grayscale(40%);
+    transform: scale(1.1);
+}

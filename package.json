@@ -13,6 +13,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-element-popper": "^2.1.6",
+    "react-icons": "^4.8.0",
     "react-multi-date-picker": "^3.3.4",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
@@ -44,5 +45,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@mui/icons-material": "^5.11.11",
+    "mdb-react-ui-kit": "^5.1.0",
+    "react-bootstrap": "^2.7.2"
   }
 }

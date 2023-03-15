@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -23,17 +23,7 @@ export default function SignInSide() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    const formSchema = Yup.object().shape({
-      password: Yup.string()
-        .required('Password is mendatory')
-        .min(8, 'Password must be at 3 char long'),
-        ConfirmPassword: Yup.string()
-        .required('Password is mendatory')
-        .oneOf([Yup.ref('password')], 'Passwords does not match'),
-    });
-  const formOptions = { resolver: yupResolver(formSchema) }
-  const { register, handleSubmit, reset, formState } = useForm(formOptions)
-  const { errors } = formState
+  
   function onSubmit(data) {
     console.log(JSON.stringify(data, null, 4))
     return false
@@ -127,12 +117,12 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link to="#">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link to="/login">
                     {"Already have an account? Log In"}
                   </Link>
                 </Grid>

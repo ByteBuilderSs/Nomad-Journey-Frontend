@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Login from "./pages/login";
 import NewRequestPage from "./pages/NewRequest";
 import DashboardPage from './pages/Dashboard';
 import InboxPage from './pages/Inbox';
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import SignInSide from "./pages/signup";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
+import SignInForm from "./pages/signup";
 
 const tabNametoIndex = {
   Dashboard: 1,
@@ -37,6 +39,19 @@ function App(props) {
           // setSelectedTab={setSelectedTab}
           /> 
         <Footer />
+        
+          <Routes>
+            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
+          </Routes>
+          <Routes>
+            <Route exact path="/signup" element={<SignInForm />}/>
+          </Routes>
+          <Routes>
+            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
+          </Routes>
+          <Routes>
+            <Route exact path="/signup" element={<SignInForm />}/>
+          </Routes>
           <Routes>
             <Route path="/home/" element={<MainPageFunc />}/>
             <Route path="/home/Dashboard/" element={<DashboardPage />}/>

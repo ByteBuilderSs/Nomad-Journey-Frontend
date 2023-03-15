@@ -1,9 +1,8 @@
-import SignInSide from "../components/signup/signupCom";
+import SignInSide from "../components/signup/signupCompo";
 
-function SignInForm()
+export default function SignInForm()
 {
-    return(
+    return (
         <SignInSide />
     );
 }
-export default SignInForm;

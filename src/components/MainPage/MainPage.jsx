@@ -13,7 +13,7 @@ export default function MainPage(){
 
     return(
 
-        <div >
+        <div className='mainpage'>
             
             <div className='boxes'>
 
@@ -63,6 +63,32 @@ export default function MainPage(){
                                 <h3>Completed</h3>
                             </div>          
                     </Box>
+
+                    <br />
+
+                    <Box
+                        sx={{
+                            width: 300,
+                            height: 700,
+                            backgroundColor: '#9B9B9B',
+                            '&:hover': {
+                            backgroundColor: "grey",
+                            opacity: [0.9, 0.8, 0.7],
+                            },
+                        }}
+                        >
+                            <div>
+                                <header className='progheader'>
+                                    <h1> <b> My Profile</b></h1>
+                                </header>
+                                <div className='prog'>
+                                    <WithLabelExample />
+                                </div>
+                            </div>  
+                            <div className='complete'>
+                                <h3>Completed</h3>
+                            </div>          
+                    </Box>
                     
                 </div>
 
@@ -79,7 +105,9 @@ export default function MainPage(){
                             },
                         }}
                         >    
-                        test    
+                        <div>
+                            <h1>Random</h1>
+                        </div>   
                     </Box>
                 </div>
 

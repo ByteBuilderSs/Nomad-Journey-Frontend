@@ -44,6 +44,7 @@ export default function MainPage(){
                             backgroundColor: "grey",
                             opacity: [0.9, 0.8, 0.7],
                             },
+                            borderRadius : '10px',
                         }}
                         >
                             <div>
@@ -65,6 +66,7 @@ export default function MainPage(){
                             backgroundColor: "grey",
                             opacity: [0.9, 0.8, 0.7],
                             },
+                            borderRadius : '10px',
                         }}
                         >
                             <div>
@@ -91,19 +93,14 @@ export default function MainPage(){
                             backgroundColor: "grey",
                             opacity: [0.9, 0.8, 0.7],
                             },
+                            borderRadius : '10px',
                         }}
                         >
                             <div>
                                 <header className='progheader'>
-                                    <h1> <b> My Profile</b></h1>
+                                    <h1> <b> Box4</b></h1>
                                 </header>
-                                <div className='prog'>
-                                    <WithLabelExample />
-                                </div>
-                            </div>  
-                            <div className='complete'>
-                                <h3>Completed</h3>
-                            </div>          
+                            </div>       
                     </Box>
                     
                 </div>
@@ -115,7 +112,7 @@ export default function MainPage(){
                             width: 1000,
                             height: 500,
                             backgroundColor: '#9B9B9B',
-                            
+                            borderRadius : '10px',
                         }}
                         >    
                         <div>
@@ -123,6 +120,20 @@ export default function MainPage(){
                             <div style={containerStyles}>
                                 <Slider slides={slides}/>
                             </div>
+                            
+                        </div>   
+                    </Box>
+                    <br />
+                    <Box
+                        sx={{
+                            width: 1000,
+                            height: 500,
+                            backgroundColor: '#9B9B9B',
+                            borderRadius : '10px',
+                        }}
+                        >    
+                        <div>
+                            <h1>Announcements</h1>
                             
                         </div>   
                     </Box>

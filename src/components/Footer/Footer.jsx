@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="text-center mt-3">
-          <p>&copy; 2023 Project Name. All Rights Reserved.</p>
+          <p>&copy; 2023 Nomad Journey. All Rights Reserved.</p>
         </div>
       </footer>
     </div>

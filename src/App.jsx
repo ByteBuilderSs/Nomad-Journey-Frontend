@@ -5,13 +5,13 @@ import DashboardPage from './pages/Dashboard';
 import InboxPage from './pages/Inbox';
 import ProfilePage from './pages/Profile';
 import SettingsPage from './pages/Settings';
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/navbar/Navbar"
 import React, { useEffect, useState } from "react";
 import SignInSide from "./pages/signup";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
-
+import PostExperience from "./pages/PostExperience";
 const tabNametoIndex = {
   Dashboard: 1,
   Profile: 2,
@@ -33,11 +33,7 @@ function App(props) {
   // };
   return (
       <Router>
-        <Navbar 
-          // handleTabChange={handleTabChange}
-          // selectedTab={selectedTab}
-          // setSelectedTab={setSelectedTab}
-          /> 
+        <Navbar /> 
         <Footer />
         
           <Routes>
@@ -58,6 +54,7 @@ function App(props) {
             <Route path="/home/Profile/" element={<ProfilePage />}/>
             <Route path="/home/Inbox/" element={<InboxPage />}/>
             <Route path="/home/Settings/" element={<SettingsPage />}/>
+            <Route path="/home/PostExperience/" element={<PostExperience />}/>
             <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
             <Route path="/home/SignUp/" element={<SignInSide />}/>
           </Routes>

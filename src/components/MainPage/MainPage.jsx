@@ -1,7 +1,11 @@
-import * as React from 'react';
+// import * as React from 'react';
 import Box from '@mui/material/Box';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import "./MainPage.css"
+import React, { useState, useEffect } from "react";
+import Slider from './ImageSlide';
+import { containerClasses } from '@mui/system';
+
 
 function WithLabelExample() {
     const now = 60;
@@ -11,6 +15,18 @@ function WithLabelExample() {
 export default function MainPage(){
 
 
+    const slides = [
+        {url : "http://localhost:3000/kish.jpg", title : 'Kish Island'},
+        {url :  "http://localhost:3000/Tehran.jpeg", title : 'Tehran City'},
+        {url : "http://localhost:3000/Khaju_Bridje_at_night.jpg", title : 'Isfahan City'},
+    ]
+
+    const containerStyles = {
+        width : '700px',
+        height : '400px', 
+        margin : '0 auto',
+    }
+    
     return(
 
         <div className='mainpage'>
@@ -99,14 +115,15 @@ export default function MainPage(){
                             width: 1000,
                             height: 500,
                             backgroundColor: '#9B9B9B',
-                            '&:hover': {
-                            backgroundColor: "grey",
-                            opacity: [0.9, 0.8, 0.7],
-                            },
+                            
                         }}
                         >    
                         <div>
                             <h1>Random</h1>
+                            <div style={containerStyles}>
+                                <Slider slides={slides}/>
+                            </div>
+                            
                         </div>   
                     </Box>
                 </div>

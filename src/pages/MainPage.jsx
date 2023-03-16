@@ -6,7 +6,7 @@ function MainPageFunc() {
 
         <div>
 
-                <MainPage />
+            <MainPage />
                            
         </div>
     

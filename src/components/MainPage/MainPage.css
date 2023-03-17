@@ -1,87 +1,53 @@
-/* Global styles */
-* {
-    box-sizing: border-box;
+
+.mainpage{
+    height: 100%;
     margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  body {
-    background-color: #f2f2f2;
-  }
-  
-  /* Header styles */
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem;
-  }
-  
-  nav ul {
+}
+
+.profile{
+    padding-left: 0%;
+    padding-top: 1%;
+    display: inline;
+}
+
+.random{
+    padding-left: 2%;
+    padding-top: 1%;
+}
+
+.boxes{
     display: flex;
-    justify-content: space-between;
-    list-style: none;
-  }
-  
-  nav li {
-    margin-right: 1rem;
-  }
-  
-  nav li:last-of-type {
-    margin-right: 0;
-  }
-  
-  nav a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  /* Main styles */
-  main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 210px);
-  }
-  
-  section {
+    padding-left: 15%;
+    
+}
+
+.profheader{
     text-align: center;
-  }
-  
-  h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  button {
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #555;
-  }
-  
-  /* Footer styles */
-  footer {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem;
+    padding-top: 10%;
+}
+
+.prog{
+    padding-top: 10%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.complete{
     text-align: center;
-  }
-  
-  footer p {
-    font-size: 0.8rem;
-  }
-  
+    padding-top: 10%;
+}
+
+.progheader{
+    text-align: center;
+    padding-top: 2%;
+}
+
+h1,h2,h3 {
+    text-align: center;
+}
+
+
+.sliding{
+    width: 900;
+    padding-left: 1%;
+}

@@ -5,19 +5,17 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import * as Yup from 'yup';
-import {yupResolver} from "@hookform/resolvers/yup";
 
 const theme = createTheme();
 
-export default function SignInSide() {
+export default function LogInSide() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -25,17 +23,7 @@ export default function SignInSide() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    const formSchema = Yup.object().shape({
-      password: Yup.string()
-        .required('Password is mendatory')
-        .min(8, 'Password must be at 3 char long'),
-        ConfirmPassword: Yup.string()
-        .required('Password is mendatory')
-        .oneOf([Yup.ref('password')], 'Passwords does not match'),
-    });
-  const formOptions = { resolver: yupResolver(formSchema) }
-  // const { register, handleSubmit, reset, formState } = useForm(formOptions)
-  // const { errors } = formState
+  
   function onSubmit(data) {
     console.log(JSON.stringify(data, null, 4))
     return false
@@ -62,29 +50,9 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign UP
+              LogIn
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="FirstName"
-                label="FirstName"
-                name="FirstName"
-                autoComplete="FirstName"
-                autoFocus
-              />
-              <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="Famliy Name"
-              label="Famliy Name"
-              name="Famliy Name"
-              autoComplete="Famliy Name"
-              autoFocus
-            />
               <TextField
                 margin="normal"
                 required
@@ -105,16 +73,7 @@ export default function SignInSide() {
                 id="password"
                 autoComplete="current-password"
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="ConfirmPassword"
-                label="Confirm Password"
-                type="Confirm password"
-                id="Confirm password"
-                autoComplete="current-password"
-              />
+             
               {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
@@ -125,19 +84,19 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign UP
+                LogIn
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link to="#" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
+                {/* <Grid item>
+                  <Link to="/login" variant="body2">
                     {"Already have an account? Log In"}
                   </Link>
-                </Grid>
+                </Grid> */}
               </Grid>
              
             </Box>

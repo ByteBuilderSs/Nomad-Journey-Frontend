@@ -1,14 +1,15 @@
+import MainPage from "../components/MainPage/MainPage";
 
-import Footer from "../components/MainPage/Footer";
-import PrimarySearchAppBar from "../components/MainPage/NavBar"
-    
 
 function MainPageFunc() {
     return (
+
         <div>
-            <PrimarySearchAppBar />
-            <Footer />
+
+            <MainPage />
+                           
         </div>
+    
     );
 }
 

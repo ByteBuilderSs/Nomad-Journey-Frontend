@@ -29,7 +29,7 @@ export default function MainPage(){
     
     return(
 
-        <div className='mainpage'>
+        <div className='mainpage' style={{ marginRight: "40rem"}}>
             
             <div className='boxes'>
 

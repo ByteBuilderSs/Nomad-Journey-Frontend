@@ -146,7 +146,7 @@ const Nabar = (props) => {
                                     horizental: "right"
                                 }}
                                 sx={{
-                                    mt: "2.5rem",
+                                    mt: "-5.5rem",
                                     display: {xs: "block", lg: "none"},
                                 }}
                                 open={Boolean(anchorElNav)}

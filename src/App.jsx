@@ -52,14 +52,10 @@ function App(props) {
             <Route exact path="/signup" element={<SignInForm />}/>
           </Routes>
           <Routes>
-            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-          </Routes>
-          <Routes>
             <Route exact path="/signup" element={<SignInForm />}/>
           </Routes>
           <Routes>
-            <Route path="/home/" element={<MainPageFunc />}/>
-            <Route path="/home/Dashboard/" element={<DashboardPage />}/>
+            <Route path="/" element={<MainPageFunc />}/>
             <Route path="/home/Profile/" element={<ProfilePage />}/>
             <Route path="/home/Inbox/" element={<InboxPage />}/>
             <Route path="/home/Settings/" element={<SettingsPage />}/>

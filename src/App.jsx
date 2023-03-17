@@ -31,37 +31,53 @@ function App(props) {
   // const handleTabChange = (newValue) => {
   //   setSelectedTab(newValue)
   // };
+
+ 
+  const allPagesStyle = {
+    /* set the min-height to 100% minus the height of the footer */
+    "min-height" : "calc(100% - 100px)",/* replace 50px with the actual height of your footer */
+    "padding-bottom": "110px", /* set the padding bottom to the height of the footer */
+    "box-sizing": "border-box",
+  }
+
   return (
       <Router>
         <Navbar 
           // handleTabChange={handleTabChange}
           // selectedTab={selectedTab}
           // setSelectedTab={setSelectedTab}
-          /> 
-        <Footer />
-        
-          <Routes>
-            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-          </Routes>
-          <Routes>
-            <Route exact path="/signup" element={<SignInForm />}/>
-          </Routes>
-          <Routes>
-            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-          </Routes>
-          <Routes>
-            <Route exact path="/signup" element={<SignInForm />}/>
-          </Routes>
-          <Routes>
-            <Route path="/home/" element={<MainPageFunc />}/>
-            <Route path="/home/Dashboard/" element={<DashboardPage />}/>
-            <Route path="/home/Profile/" element={<ProfilePage />}/>
-            <Route path="/home/Inbox/" element={<InboxPage />}/>
-            <Route path="/home/Settings/" element={<SettingsPage />}/>
-            <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
-            <Route path="/home/SignUp/" element={<SignInSide />}/>
-          </Routes>
+          />
+
+        <div style = {allPagesStyle}>
+                      
+            <Routes>
+              <Route exact path="/add-new-request" element={<NewRequestPage />}/>
+            </Routes>
+            <Routes>
+              <Route exact path="/signup" element={<SignInForm />}/>
+            </Routes>
+            <Routes>
+              <Route exact path="/add-new-request" element={<NewRequestPage />}/>
+            </Routes>
+            <Routes>
+              <Route exact path="/signup" element={<SignInForm />}/>
+            </Routes>
+            <Routes>
+              <Route path="/home/" element={<MainPageFunc />}/>
+              <Route path="/home/Dashboard/" element={<DashboardPage />}/>
+              <Route path="/home/Profile/" element={<ProfilePage />}/>
+              <Route path="/home/Inbox/" element={<InboxPage />}/>
+              <Route path="/home/Settings/" element={<SettingsPage />}/>
+              <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
+              <Route path="/home/SignUp/" element={<SignInSide />}/>
+            </Routes>
+
+        </div>
+
+        <Footer/>
+
       </Router>
+      
   );
 
 }

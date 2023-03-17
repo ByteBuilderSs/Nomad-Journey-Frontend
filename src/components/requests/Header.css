@@ -1,0 +1,22 @@
+.datatable-crud-demo .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+@media screen and (max-width: 960px) {
+    .datatable-crud-demo .table-header {
+        align-items: flex-start;
+    }
+}
+
+
+@media screen and (max-width: 960px) {
+    .datatable-crud-demo .table-header {
+        flex-direction: column;
+    }
+    .datatable-crud-demo .table-header {
+        width: 100%;
+    }
+}

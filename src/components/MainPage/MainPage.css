@@ -18,10 +18,7 @@
 .boxes{
     display: flex;
     padding-left: 15%;
-    /* set the min-height to 100% minus the height of the footer */
-    min-height: calc(100% - 100px); /* replace 50px with the actual height of your footer */
-    padding-bottom: 100px; /* set the padding bottom to the height of the footer */
-    box-sizing: border-box;
+    
 }
 
 .profheader{
@@ -49,3 +46,8 @@ h1,h2,h3 {
     text-align: center;
 }
 
+
+.sliding{
+    width: 900;
+    padding-left: 1%;
+}

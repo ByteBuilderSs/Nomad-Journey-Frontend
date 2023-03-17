@@ -48,24 +48,16 @@ function App(props) {
                       
             <Routes>
               <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-            </Routes>
-            <Routes>
               <Route exact path="/signup" element={<SignInForm />}/>
-            </Routes>
-            <Routes>
               <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-            </Routes>
-            <Routes>
               <Route exact path="/signup" element={<SignInForm />}/>
-            </Routes>
-            <Routes>
-              <Route path="/home/" element={<MainPageFunc />}/>
-              <Route path="/home/Dashboard/" element={<DashboardPage />}/>
+              <Route path="/" element={<MainPageFunc />}/>
+              {/* <Route path="/home/Dashboard/" element={<DashboardPage />}/> */}
               <Route path="/home/Profile/" element={<ProfilePage />}/>
               <Route path="/home/Inbox/" element={<InboxPage />}/>
               <Route path="/home/Settings/" element={<SettingsPage />}/>
               <Route path="/home/PostExperience/" element={<PostExperience />}/>
-            <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
+              <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
               <Route path="/home/SignUp/" element={<SignInSide />}/>
             </Routes>
 

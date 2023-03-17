@@ -46,7 +46,7 @@ const tabs = [
         value: 1,
         desktopIcon: <MdDashboard style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdDashboard style={{  fontSize: "small" }}/>,
-        route: "/home/Dashboard/",
+        route: "/",
     },
     {
         label: "Profile",
@@ -114,8 +114,8 @@ const Nabar = (props) => {
     };
 
     return (
-        <div dir={dir}>
-            <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">
+        <div dir={dir} style={{ marginBottom: "10rem"}}>
+            <AppBar sx={{ backgroundColor: "#E55405"}}  position="fixed">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                     <Box sx={{ 

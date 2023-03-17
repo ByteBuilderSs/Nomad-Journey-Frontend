@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Righteous&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+
+}
+.content-div{
+    /*border-left: solid;*/
+    /*border-right: solid;*/
+    /*border-left-width: 0.05vw;*/
+    /*border-right-width: 0.05vw;*/
+    /*border-left-color: rgba(0, 0, 0, 0.19);*/
+    /*border-right-color: rgba(0, 0, 0, 0.19);*/
+}
+.font{
+    font-family: 'Pacifico', cursive;
+    font-family: 'Righteous', cursive;
+}
+.side-bar{
+    position: fixed;
+    width: 15vw;
+}
+.profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section {
+    color: black;
+    transition : 0.15s ease;
+    line-height: 2.5vw;
+    font-size : 1.25vw;
+}
+
+.section:hover
+{
+    color: #e55405;
+}
+.active
+{
+}
+.sidebar_list
+{
+    color: black;
+    border-radius: 20%;
+}
+.list-section{
+    list-style-type: none;
+}
+/*.Button{*/
+/*    background-color: #e55405;*/
+/*    border-radius: 15px 25px;*/
+/*    transition: 0.3s ease;*/
+/*    color: white;*/
+/*    border: solid #e55405;*/
+/*    font-family: 'Pacifico', cursive;*/
+/*    font-family: 'Righteous', cursive;*/
+/*    padding: 4%;*/
+/*}*/
+/*.Button:hover{*/
+/*    background-color: #da5304;*/
+/*}*/

@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+.website-name {
+    font-family: 'Courgette',  sans-serif;
+    font-weight: bold;
+}
+
+.css-7e0s21-MuiPaper-root-MuiAppBar-root {
+    height: 4.5rem;
+}
+
+.appbar-notification-badge {
+    margin-left: 1rem;
+    cursor: pointer;
+    color: #fff !important;
+}
+

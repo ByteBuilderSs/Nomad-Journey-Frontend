@@ -34,17 +34,26 @@ function App(props) {
 
  
   const allPagesStyle = {
-    /* set the min-height to 100% minus the height of the footer */
-    "min-height" : "calc(100% - 100px)",/* replace 50px with the actual height of your footer */
-    "padding-bottom": "110px", /* set the padding bottom to the height of the footer */
-    "box-sizing": "border-box",
+
+    display: "flex",
+    "flex-direction": "column",
+    "min-height": "100vh",
+  }
+
+  const content = {
+    "flex": 1,
+    "padding-bottom": "110px"
   }
 
   return (
     <Router>
       <Navbar />
 
-      <div style = {allPagesStyle}>
+      <body  style = {allPagesStyle}>
+        
+      
+        <div style = {content}>
+
           <Routes>
             <Route exact path="/add-new-request" element={<NewRequestPage />}/>
           </Routes>
@@ -62,8 +71,13 @@ function App(props) {
             <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
             <Route path="/home/SignUp/" element={<SignInSide />}/>
           </Routes>
-      </div>
-    <Footer/>
+
+        </div>
+
+        <Footer/>
+
+      </body>
+    
   </Router>
   );
 

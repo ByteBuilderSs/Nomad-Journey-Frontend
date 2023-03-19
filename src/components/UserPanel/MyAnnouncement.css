@@ -48,3 +48,10 @@
     filter: grayscale(40%);
     transform: scale(1.1);
 }
+.announcement-user{
+    background-color: rgba(255, 255, 255, 0.75);
+    border: solid;
+}
+.announcement-user:hover{
+    background-color: rgba(255, 255, 255, 0.9);
+}

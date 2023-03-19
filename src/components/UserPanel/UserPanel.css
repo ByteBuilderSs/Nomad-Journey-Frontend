@@ -37,6 +37,10 @@
 {
     color: #e55405;
 }
+.selectedSection
+{
+    color: #e55405;
+}
 .active
 {
 }
@@ -48,16 +52,3 @@
 .list-section{
     list-style-type: none;
 }
-/*.Button{*/
-/*    background-color: #e55405;*/
-/*    border-radius: 15px 25px;*/
-/*    transition: 0.3s ease;*/
-/*    color: white;*/
-/*    border: solid #e55405;*/
-/*    font-family: 'Pacifico', cursive;*/
-/*    font-family: 'Righteous', cursive;*/
-/*    padding: 4%;*/
-/*}*/
-/*.Button:hover{*/
-/*    background-color: #da5304;*/
-/*}*/

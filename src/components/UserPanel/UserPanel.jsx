@@ -1,4 +1,4 @@
-import {Col, Container, Row} from "react-bootstrap";
+import { Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import MyAnnouncements from "./MyAnnouncements";
 import MyPosts from "./Posts";
@@ -7,18 +7,37 @@ import AboutMe from "./About";
 import "./UserPanel.css";
 import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import user from "../../const/profile";
 import {Add, } from "@mui/icons-material";
-import {IconButton} from "@mui/material";
-import {BiEdit} from "react-icons/bi";
+import {Divider, Stack} from "@mui/material";
 import {TiUser} from "react-icons/ti";
 import {AiFillNotification} from "react-icons/ai";
 import {MdFeedback} from "react-icons/md";
 import {HiCamera} from "react-icons/hi";
 import {GiTwoCoins} from "react-icons/gi";
 import {BsStarHalf} from "react-icons/bs";
-import {FiChevronRight} from "react-icons/fi";
+import {Item} from "semantic-ui-react";
+import {makeStyles} from "@mui/styles";
+const useStyles = makeStyles(theme =>(
+    {
+        newReqBtn:{
+            backgroundColor: "white",
+            color: "#e45505",
+            borderRadius:"18px 8px",
+            transition:"0.2s ease",
+            padding:"4%",
+            border:"solid",
+            borderWidth:"1px 0.45em",
+            borderColor:"#e45505",
+            "&:hover":{
+                color: "#e45505",
+                backgroundColor: "rgba(228,85,5,0.11)",
+            }
+        }
+
+    }));
+
 function UserPanelPage() {
+    const classes = useStyles();
     const menuItem = [
         {
             name : "About Me",
@@ -45,69 +64,60 @@ function UserPanelPage() {
     return (
         <div className="font">
             <Container>
-                <Row>
-                    <Col md={{span: 3}}>
-                        <div className="side-bar">
+                    <Stack direction={`row`} spacing={10} divider={<Divider orientation={`vertical`} color={`black`} flexItem/>}>
+                        <Item>
                             <Row>
-                                <Row>
-                                    <div className="profile">
-                                        <Avatar sx={{width:'8vw', height:'8vw'}} src={user.profile_path}/>
-                                    </div>
-                                </Row>
-                                         <Row>
-                                        <div className="profile">
-                                            <IconButton className="edit_profileIcon" size="large">
-                                                <BiEdit/>
-                                            </IconButton>
-                                        </div>
-                                    </Row>
-                                    <Row>
-                                        <div className="profile">
-                                            {user.name} {user.last_name}
-                                        </div>
-                                    </Row>
-                                    <Row>
-                                        <div className="profile">
-                                            {user.nationality}
-                                        </div>
-                                    </Row>
-                                    <Row>
-                                        <div className="profile">
-                                             coins: {user.coin} <GiTwoCoins color="#e55405"/>
-                                        </div>
-                                    </Row>
-                                    <Row>
-                                        <div className="profile">
-                                             rating: {user.rating} <BsStarHalf color="#e55405"/>
-                                        </div>
-                                    </Row>
+                                <Stack alignItems={`center`} spacing={2} divider={<Divider variant={`middle`} flexItem/>}>
+                                    <Item>
+                                        <Avatar sx={{width:'8vw', height:'8vw'}} />
+                                    </Item>
+                                    <Item>
+                                        <Stack direction={`column`}>
+                                            <Item>
+                                                Amir Fakharzadeh
+                                            </Item>
+                                            <Item>
+                                                Iranian
+                                            </Item>
+                                            <Item>
+                                                coin: 3 <GiTwoCoins color="#e55405"/>
+                                            </Item>
+                                            <Item>
+                                                rating: 3.5 <BsStarHalf color="#e55405"/>
+                                            </Item>
+                                        </Stack>
+                                    </Item>
+
+                                </Stack>
                             </Row>
                             <Row>
                                 <ul className="list-section">
                                     {menuItem.map((item, key) => (
                                         <div className="sidebar_list">
-                                            <Link className={`section`} onClick={() => setActive(item.name)}>
-                                                {active === item.name && (<FiChevronRight />)} {item.icon} {item.name}
-                                            </Link>
+                                            {active === item.name && <Link className={`section selectedSection`} onClick={() => setActive(item.name)}>
+                                                 {item.icon} {item.name}
+                                            </Link>}
+                                            {active !== item.name && <Link className={`section`} onClick={() => setActive(item.name)}>
+                                                {item.icon} {item.name}
+                                            </Link>}
                                         </div>
                                     ))}
                                 </ul>
                             </Row>
                             <Row>
-                                    <Add /> New Announcement
+                                <Link className={classes.newReqBtn} to={`/home/AddNewRequest/`}>
+                                    <big><Add /> New Announcement</big>
+                                </Link>
                             </Row>
-                        </div>
-                    </Col>
-                    <Col className="content-div">
-                        <div>
+                    </Item>
+                        <Item>
                             {menuItem.map((item, key) => (
                                 <div id={`${item.name}`}>
                                     {active === item.name && item.component}
                                 </div>
                             ))}
-                        </div>
-                    </Col>
-                </Row>
+                        </Item>
+                    </Stack>
             </Container>
         </div>);
 };

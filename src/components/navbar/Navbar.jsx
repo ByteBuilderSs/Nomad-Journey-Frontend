@@ -108,7 +108,7 @@ const Nabar = (props) => {
     /* */
     
     return (
-        <div dir={dir} style={{ marginBottom: "10rem"}}>
+        <div dir={dir} style={{ marginBottom: "6rem"}}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="fixed">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>

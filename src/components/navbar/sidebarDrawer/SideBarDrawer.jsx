@@ -40,7 +40,7 @@ const SideBarDrawer = (props) => {
                                 <ListItemIcon>
                                     <MdDashboard style={{  fontSize: "1.2rem" }}/>
                                 </ListItemIcon>
-                                <ListItemText primary={"Dahsboard"} sx={{ color: "black"}}/>
+                                <ListItemText primary={"Dashboard"} sx={{ color: "black"}}/>
                             </ListItemButton>
                         </ListItem>
                         <Divider />

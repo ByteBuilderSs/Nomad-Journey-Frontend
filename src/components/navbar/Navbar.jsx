@@ -40,7 +40,7 @@ import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
 
 const tabs = [
     {
-        label: "Dahsboard",
+        label: "Dashboard",
         value: 1,
         desktopIcon: <MdDashboard style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdDashboard style={{  fontSize: "small" }}/>,

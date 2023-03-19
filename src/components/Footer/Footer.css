@@ -5,3 +5,17 @@
     bottom: auto;
     flex-shrink: 0;
 }
+
+.texts{
+    padding-left: 10%;
+    padding-top: 0.5%;
+}
+
+.social-links{
+    padding-left: 50%;
+}
+
+.under-text{
+    padding-left: 44%;
+}
+

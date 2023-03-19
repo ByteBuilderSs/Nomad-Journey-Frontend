@@ -1,16 +1,44 @@
 // import * as React from 'react';
 import Box from '@mui/material/Box';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 import "./MainPage.css"
 import React, { useState, useEffect } from "react";
 import Slider from './ImageSlide';
 import { containerClasses } from '@mui/system';
 
 
-function WithLabelExample() {
-    const now = 60;
-    return (<ProgressBar now={now} label={`${now}%`} />);
+const ProgressBar = ({bgcolor,progress,height}) => {
+     
+    const Parentdiv = {
+        height: height,
+        width: '100%',
+        backgroundColor: 'whitesmoke',
+        borderRadius: "20px",
+        margin: 0
+      }
+      
+      const Childdiv = {
+        height: '100%',
+        width: `${progress}%`,
+        backgroundColor: bgcolor,
+        borderRadius:"20px",
+        textAlign: 'right'
+      }
+      
+      const progresstext = {
+        padding: 10,
+        color: 'black',
+        fontWeight: 900
+      }
+        
+    return (
+    <div style={Parentdiv}>
+      <div style={Childdiv}>
+        <span style={progresstext}>{`${progress}%`}</span>
+      </div>
+    </div>
+    )
 }
+
 
 export default function MainPage(){
 
@@ -29,11 +57,11 @@ export default function MainPage(){
     
     return(
 
-        <div className='mainpage' style={{ marginRight: "40rem"}}>
+        <div className='mainpage'>
             
-            <div className='boxes'>
+            <div className='groupbox1'>
 
-                <div className='profile'>
+                <div className='leftboxes1'>
 
                     <Box
                         sx={{
@@ -73,8 +101,8 @@ export default function MainPage(){
                                 <header className='progheader'>
                                     <h1> <b> My Profile</b></h1>
                                 </header>
-                                <div className='prog'>
-                                    <WithLabelExample />
+                                <div className='prog'>    
+                                <ProgressBar bgcolor="#D97D54" progress='60'  height={20} />
                                 </div>
                             </div>  
                             <div className='complete'>
@@ -87,7 +115,7 @@ export default function MainPage(){
                     <Box
                         sx={{
                             width: 300,
-                            height: 700,
+                            height: 660,
                             backgroundColor: '#9B9B9B',
                             '&:hover': {
                             backgroundColor: "grey",
@@ -106,7 +134,7 @@ export default function MainPage(){
                 </div>
 
 
-                <div className='random'>
+                <div className='rightboxes1'>
                     <Box
                         sx={{
                             width: 1000,
@@ -137,12 +165,26 @@ export default function MainPage(){
                             
                         </div>   
                     </Box>
-                </div>
 
+                </div> 
 
             </div>
             
-            
+            <div className='groupbox2'>
+                <Box
+                        sx={{
+                            width: 1330,
+                            height: 500,
+                            backgroundColor: '#9B9B9B',
+                            borderRadius : '10px',
+                        }}
+                        >    
+                        <div>
+                            <h1>Announcements</h1>
+                            
+                        </div>   
+                </Box>
+            </div>
 
         </div>
 

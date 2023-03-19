@@ -10,7 +10,6 @@ import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import MenuIcon from "@mui/icons-material/Menu";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import {
     MdSettings,
@@ -37,12 +36,11 @@ import { Button } from "bootstrap";
 import { useNavigate } from 'react-router-dom';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-
-
+import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
 
 const tabs = [
     {
-        label: "Dahsboard",
+        label: "Dashboard",
         value: 1,
         desktopIcon: <MdDashboard style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdDashboard style={{  fontSize: "small" }}/>,
@@ -75,10 +73,10 @@ const Nabar = (props) => {
     const [dir, setDir] = useState("ltr");
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [notifBadgeContent, setNotifBadgeContent] = useState(100);
     const [selectedTab, setSelectedTab] = useState(
         props.selectedTab ? props.selectedTab : 1
     );
+    const [openSideBarDrawer, setOpenSideBarDrawer] = useState(false);
 
     useEffect(() => {
         setSelectedTab(props.selectedTab);
@@ -104,68 +102,24 @@ const Nabar = (props) => {
         setAnchorElUser(null);
     }
 
-    const onNotifBadgeClick = () => {
-        if (notifBadgeContent) {
-            setNotifBadgeContent(null);
-        }
-        else {
-            setNotifBadgeContent(100);
-        }
-    };
-
+    const onSideBarIconClick = () => {
+        setOpenSideBarDrawer(!openSideBarDrawer);
+    }
+    /* */
+    
     return (
-        <div dir={dir} style={{ marginBottom: "10rem"}}>
+        <div dir={dir} style={{ marginBottom: "6rem"}}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="fixed">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                     <Box sx={{ 
                             flexGrow: 1, 
                             display: {xs: "flex", lg: "none"},
-                            height: "4.5rem"
+                            height: "4.5rem",
+                            marginTop: "1rem",
                             }}
                         >
-                        <IconButton
-                            size="large"
-                            aria-label="user-profile"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            color="inherit"
-                            onClick={handleOpenNavMenu}
-                            >
-                            <MenuIcon />
-                        </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorOrigin={{
-                                    vertical: "top",
-                                    horizental: "right",
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: "top",
-                                    horizental: "right"
-                                }}
-                                sx={{
-                                    mt: "-5.5rem",
-                                    display: {xs: "block", lg: "none"},
-                                }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                >
-                                {tabs.map((page) => (
-                                    <MenuItem
-                                        component={Link}
-                                        to={page.route}
-                                        key={page.value}
-                                        onClick={handleCloseNavMenu}
-                                    >
-                                        <ListItemIcon>
-                                            {page.mobileIcon}
-                                        </ListItemIcon>
-                                        <Typography textAlign="center">{page.label}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
+                            <SideBarDrawer />
                         </Box>
                         <IconButton
                             style={{ marginLeft: "10rem", width: "4.1rem" }}

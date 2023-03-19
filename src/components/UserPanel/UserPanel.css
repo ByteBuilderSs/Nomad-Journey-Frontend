@@ -4,28 +4,19 @@
     padding: 0;
 
 }
-.content-div{
-    /*border-left: solid;*/
-    /*border-right: solid;*/
-    /*border-left-width: 0.05vw;*/
-    /*border-right-width: 0.05vw;*/
-    /*border-left-color: rgba(0, 0, 0, 0.19);*/
-    /*border-right-color: rgba(0, 0, 0, 0.19);*/
-}
 .font{
     font-family: 'Pacifico', cursive;
     font-family: 'Righteous', cursive;
 }
+.user-panel-style{
+    border-top: none;
+}
 .side-bar{
     position: fixed;
-    width: 15vw;
 }
-.profile{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.left{
+    margin-left: 12%;
 }
-
 .section {
     color: black;
     transition : 0.15s ease;

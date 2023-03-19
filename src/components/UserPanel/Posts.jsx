@@ -1,9 +1,9 @@
-function MyPosts() {
+function Posts() {
     return(
         <>
-            <h1>My Posts</h1>
+            <h1>Posts</h1>
         </>
     );
 }
 
-export default MyPosts;
+export default Posts;

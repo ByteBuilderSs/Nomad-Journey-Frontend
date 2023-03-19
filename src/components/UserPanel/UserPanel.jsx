@@ -1,4 +1,4 @@
-import { Container, Row} from "react-bootstrap";
+import { Container, Row, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import MyAnnouncements from "./MyAnnouncements";
 import MyPosts from "./Posts";
@@ -8,7 +8,8 @@ import "./UserPanel.css";
 import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
 import {Add, } from "@mui/icons-material";
-import {Divider, Stack} from "@mui/material";
+import {Stack} from "@mui/material";
+import {Divider, Grid, Segment} from "semantic-ui-react";
 import {TiUser} from "react-icons/ti";
 import {AiFillNotification} from "react-icons/ai";
 import {MdFeedback} from "react-icons/md";
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme =>(
             transition:"0.2s ease",
             padding:"4%",
             border:"solid",
-            borderWidth:"1px 0.45em",
+            borderWidth:"0em 0.45em",
             borderColor:"#e45505",
             "&:hover":{
                 color: "#e45505",
@@ -63,10 +64,13 @@ function UserPanelPage() {
     const [active, setActive] = useState("About Me");
     return (
         <div className="font">
-            <Container>
-                    <Stack direction={`row`} spacing={10} divider={<Divider orientation={`vertical`} color={`black`} flexItem/>}>
-                        <Item>
-                            <Row>
+            <Segment>
+                <Grid  divided>
+                    <Grid.Row columns={3}>
+                <Grid.Column width={5}>
+                    <div className={`side-bar left`}>
+                        <Stack spacing={6}>
+                            <Item>
                                 <Stack alignItems={`center`} spacing={2} divider={<Divider variant={`middle`} flexItem/>}>
                                     <Item>
                                         <Avatar sx={{width:'8vw', height:'8vw'}} />
@@ -87,38 +91,45 @@ function UserPanelPage() {
                                             </Item>
                                         </Stack>
                                     </Item>
-
                                 </Stack>
-                            </Row>
-                            <Row>
-                                <ul className="list-section">
+                            </Item>
+                            <Item>
+                                <Stack className="list-section">
                                     {menuItem.map((item, key) => (
-                                        <div className="sidebar_list">
+                                        <Item className="sidebar_list">
                                             {active === item.name && <Link className={`section selectedSection`} onClick={() => setActive(item.name)}>
                                                  {item.icon} {item.name}
                                             </Link>}
                                             {active !== item.name && <Link className={`section`} onClick={() => setActive(item.name)}>
                                                 {item.icon} {item.name}
                                             </Link>}
-                                        </div>
+                                        </Item>
                                     ))}
-                                </ul>
-                            </Row>
-                            <Row>
+                                </Stack>
+                            </Item>
+                            <Item>
                                 <Link className={classes.newReqBtn} to={`/home/AddNewRequest/`}>
                                     <big><Add /> New Announcement</big>
                                 </Link>
-                            </Row>
-                    </Item>
-                        <Item>
+                            </Item>
+                        </Stack>
+                    </div>
+                </Grid.Column>
+                <Grid.Column width={6}>
                             {menuItem.map((item, key) => (
                                 <div id={`${item.name}`}>
                                     {active === item.name && item.component}
                                 </div>
                             ))}
-                        </Item>
-                    </Stack>
-            </Container>
+                </Grid.Column>
+                <Grid.Column width={5}>
+                    <div className={`side-bar`}>
+                    <div>third Col</div>
+                    </div>
+                </Grid.Column>
+                </Grid.Row>
+                </Grid>
+            </Segment>
         </div>);
 };
 

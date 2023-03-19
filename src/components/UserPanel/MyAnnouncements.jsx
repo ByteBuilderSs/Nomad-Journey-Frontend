@@ -1,12 +1,10 @@
-import {Container, Card, Col, CardImg, Row} from "react-bootstrap";
+import { Col, Row} from "react-bootstrap";
 import "./MyAnnouncement.css";
-import {Link} from "react-router-dom";
 import {TiLocation} from "react-icons/ti";
 import {BsCalendarDateFill} from "react-icons/bs";
 import "../Announcements/DeleteAnnouncement"
 import DeleteAnnouncement from "../Announcements/DeleteAnnouncement";
 import EditAnnouncement from "../Announcements/EditAnnouncement";
-import Grid from "@mui/material/Grid";
 import {Divider, IconButton, Stack} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import {FaHome, FaLongArrowAltRight} from "react-icons/fa";
@@ -15,7 +13,6 @@ import {IoIosPerson} from "react-icons/io";
 import {MdDescription} from "react-icons/md";
 import {FiMoreHorizontal} from "react-icons/fi";
 import { makeStyles } from '@mui/styles';
-import {useState} from "react";
 const useStyles = makeStyles(theme => (
     {
         more:
@@ -30,6 +27,26 @@ const useStyles = makeStyles(theme => (
 function MyAnnouncements() {
     const classes = useStyles();
     const announcements = [
+        {
+            city: "Madrid",
+            country: "Spain",
+            status: "Expired",
+        },
+        {
+            city: "Paris",
+            country: "France",
+            status: "Done",
+        },
+        {
+            city: "Istanbul",
+            country: "Turkey",
+            status: "Accepted",
+        },
+        {
+            city: "Tehran",
+            country: "Iran",
+            status: "Pending",
+        },
         {
             city: "Madrid",
             country: "Spain",
@@ -70,7 +87,7 @@ function MyAnnouncements() {
     }
     return (
         <div>
-            <h1>My Announcements</h1>
+            <h1>    Announcements</h1>
                 <div className="outter">
                     <Stack spacing={4} divider={<Divider variant={`fullWidth`} orientation={`horizontal`} flexItem/>}>
                         {announcements.map((announcement, key) =>
@@ -92,7 +109,7 @@ function MyAnnouncements() {
                                                                 </Item>
                                                             </Stack>
                                                         </Item>
-                                                <Col md={{offset: 7}}>
+                                                <Col md={{offset: 8}}>
                                                         <Item>
                                                             {check_EditTrash(announcement.status)}
                                                         </Item>
@@ -116,7 +133,7 @@ function MyAnnouncements() {
                                             </Stack>
                                         </Item>
                                         <Item>
-                                            <MdDescription /> Description: Just to experience the iranian/persian culture food and hospitality.
+                                            <MdDescription /> Description: Just to experience the iranian/persian culture food and hospitality.JustJustJust
                                             <IconButton className={classes.more}>
                                                 <FiMoreHorizontal />
                                             </IconButton>

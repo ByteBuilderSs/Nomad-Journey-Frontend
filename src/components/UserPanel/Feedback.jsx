@@ -1,9 +1,9 @@
-function MyFeedbacks() {
+function Feedbacks() {
     return(
         <>
-            <h1>My Feedbacks</h1>
+            <h1>Feedbacks</h1>
         </>
     );
 }
 
-export default MyFeedbacks;
+export default Feedbacks;

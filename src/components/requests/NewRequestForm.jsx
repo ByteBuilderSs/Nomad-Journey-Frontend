@@ -1,6 +1,6 @@
 import  "./NewRequestForm.css";
 import React, { useState, useEffect } from "react";
-
+import axios from 'axios'
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -18,23 +18,120 @@ import transition from "react-element-popper/animations/transition";
 import { useMediaQuery } from "react-responsive";
 import PropTypes from 'prop-types';
 
+const intialState = {
+    country: "",
+    city: "",
+    arrival_date: "",
+    departure_date: "",
+    arrival_data_is_flexible: false,
+    departure_date_is_flexible: false,
+    message: "",
+    countryErr: false,
+    cityErr: false,
+    arrival_dateErr: false,
+    departure_dateErr: false,
+};
+
+const HEADERS = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    // Athorization
+}
+
 export default function NewRequestForm(props) {
     const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1224px)" });
     const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
-    const [disabled, setDisabled] = React.useState(false);
+    const [
+        {
+            country,
+            city,
+            arrival_date,
+            departure_date,
+            arrival_data_is_flexible,
+            departure_date_is_flexible,
+            message,
+            countryErr,
+            cityErr,
+            arrival_dateErr,
+            departure_dateErr,
+        },
+        setState
+    ] = useState(intialState);
 
-    const [values, setValues] = React.useState({
+    const [loading, setLoading] = useState(false);
+
+    const [values, setValues] = useState({
         country: "",
         city: "",
-        arrivalDate: null,
-        departureDate: null,
+        arrival_date: "",
+        departure_date: "",
+        arrival_data_is_flexible: false,
+        departure_date_is_flexible: false,
         message: "",
-        countryError: false,
-        cityError: false,
-        arrivalDateError: false,
-        departureDate: false
+        countryErr: false,
+        cityErr: false,
+        arrival_dateErr: false,
+        departure_dateErr: false,
     });
+
+
+    // Data Validation and Send to Backend
+    const onSubmit = async (e) => {
+        e.preventDafault();
+        let isDataValid = true;
+        let arrDate = new Date();
+        let dptDate = new Date();
+        if (!values.country) {
+            setValues({
+                ...values,
+                countryErr: true,
+            });
+            isDataValid = false;
+            console.log("The country field can not be empty");
+        }
+        if (!values.city) {
+            setValues({
+                ...values,
+                cityErr: true,
+            });
+            isDataValid = false;
+            console.log("The city field can not be empty");
+        }
+        if (!values.arrival_date) {
+            setValues({
+                ...values,
+                arrival_dateErr: true,
+            });
+            isDataValid = false;
+            console.log("The arrival date must be specific");
+        }
+        if (!values.departure_date) {
+            setValues({
+                ...values,
+                departure_dateErr: true,
+            });
+            isDataValid = false;
+            console.log("The departure date must be specific");
+        }
+
+        if (isDataValid) {
+            let data = {
+                /* TODO */
+            }
+            axios({
+                method: "post",
+                url: "http://127.0.0.1:8000/announcement/create/",
+                headers: Headers,
+                data: data,
+            }).then((res) => {
+                setValues(intialState);
+                props.setOpen(false);
+                /* TODO */
+            })
+        }
+
+    }
 
     const handleClose = () => {
         props.setOpen(false);

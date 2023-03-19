@@ -55,15 +55,7 @@ function App(props) {
         <div style = {content}>
 
           <Routes>
-            <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-          </Routes>
-          <Routes>
             <Route exact path="/signup" element={<SignInForm />}/>
-          </Routes>
-          <Routes>
-            <Route exact path="/signup" element={<SignInForm />}/>
-          </Routes>
-          <Routes>
             <Route path="/" element={<MainPageFunc />}/>
             <Route path="/home/Profile/" element={<ProfilePage />}/>
             <Route path="/home/Inbox/" element={<InboxPage />}/>

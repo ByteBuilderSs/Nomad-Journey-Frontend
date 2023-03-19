@@ -4,6 +4,7 @@ function NewRequestPage() {
     return (
         <section>
             <h1>Add New Request</h1>
+            <HeaderComponent />
             <NewRequestForm />
         </section>
     );

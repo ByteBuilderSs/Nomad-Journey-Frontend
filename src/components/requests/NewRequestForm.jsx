@@ -11,12 +11,14 @@ import Grid from "@mui/material/Grid";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { IconButton, Button, Dialog } from "@mui/material";
-import { styled, StyledEngineProvider, ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled, StyledEngineProvider, ThemeProvider, createTheme} from '@mui/material/styles';
 import { Theme } from "@mui/material";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { useMediaQuery } from "react-responsive";
 import PropTypes from 'prop-types';
+
+
 
 const intialState = {
     country: "",
@@ -198,10 +200,9 @@ export default function NewRequestForm(props) {
                                                             format="YYYY/MM/DD"
                                                             name="arrival date"
                                                             calendarPosition="bottom-end"
-                                                            placeholder="Arrival Date"
+                                                            placeholder="Arrival Date *"
                                                             hideOnScroll
                                                             editable
-                                                            required
                                                             maxDate={new DateObject()}
                                                             />
                                                     {/*  arrival date is flexible */}
@@ -229,7 +230,7 @@ export default function NewRequestForm(props) {
                                                             format="YYYY/MM/DD"
                                                             name="departure date"
                                                             calendarPosition="bottom-end"
-                                                            placeholder="Departure Date"
+                                                            placeholder="Departure Date *"
                                                             hideOnScroll
                                                             editable
                                                             required
@@ -240,6 +241,40 @@ export default function NewRequestForm(props) {
                                                         control={<Checkbox value="arrivaldateisflexible" color="primary" />}
                                                         label="Departure date is flexible"
                                                     />
+                                                </Grid>
+                                                {/* Travelers count */}
+                                                <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                                                    <FormControl sx={{ width: "100%", mb: "1rem" }}>
+                                                            <InputLabel id="travelers-count-label" required>
+                                                                Number of Travelers
+                                                            </InputLabel>
+
+                                                                <Select
+                                                                    labelId="travelers-count-labe"
+                                                                    id="travelers-count"
+                                                                    label="Number of Travelers"
+                                                                    name="number of travelers"
+                                                                    MenuProps={{ style: {
+                                                                        maxHeight: "10rem",
+                                                                    }}}
+                                                                >
+                                                                    <MenuItem value={1}>1</MenuItem>
+                                                                    <MenuItem value={2}>2</MenuItem>
+                                                                    <MenuItem value={3}>3</MenuItem>
+                                                                    <MenuItem value={4}>4</MenuItem>
+                                                                    <MenuItem value={5}>5</MenuItem>
+                                                                    <MenuItem value={6}>6</MenuItem>
+                                                                    <MenuItem value={7}>7</MenuItem>
+                                                                    <MenuItem value={8}>8</MenuItem>
+                                                                    <MenuItem value={9}>9</MenuItem>
+                                                                    <MenuItem value={10}>10</MenuItem>
+                                                                    <MenuItem value={11}>11</MenuItem>
+                                                                    <MenuItem value={12}>12</MenuItem>
+                                                                    <MenuItem value={13}>13</MenuItem>
+                                                                    <MenuItem value={14}>14</MenuItem>
+                                                                    <MenuItem value={15}>15</MenuItem>
+                                                                </Select>
+                                                    </FormControl>
                                                 </Grid>
                                                 {/* message */}
                                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>

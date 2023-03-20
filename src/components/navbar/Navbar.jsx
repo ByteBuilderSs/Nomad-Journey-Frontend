@@ -69,7 +69,7 @@ const tabs = [
     }
 ]
 
-const Nabar = (props) => {
+const Navbar = (props) => {
     const [dir, setDir] = useState("ltr");
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -238,4 +238,4 @@ const Nabar = (props) => {
 
 }
 
-export default Nabar;
+export default Navbar;

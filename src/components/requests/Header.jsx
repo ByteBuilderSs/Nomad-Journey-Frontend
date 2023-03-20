@@ -8,9 +8,10 @@ import NewRequestForm from "./NewRequestForm";
 import { DataTable } from "primereact/datatable";
 import "./Header.css";
 
-export default function HeaderComponent() {
+export default function HeaderComponent(props) {
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
+    const [requestData, setRequestData] = useState({});
 
     const openCreateRequest = (event) => {
         setOpen(true);
@@ -45,6 +46,8 @@ export default function HeaderComponent() {
                 setOpen={setOpen}
                 disabled={disabled}
                 setDisabled={setDisabled}
+                setRequestData={setRequestData}
+                requestData={requestData}
             />
         </div>
     );

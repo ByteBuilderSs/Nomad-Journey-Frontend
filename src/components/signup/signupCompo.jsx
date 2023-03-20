@@ -6,18 +6,17 @@ import {Link} from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import * as Yup from 'yup';
 import {useFormik} from "formik";
 import { useState} from 'react';
 import { useSignup } from '../../hooks/useSignup';
-import { LoginSharp } from '@mui/icons-material';
 import Image from '../../Assets/images/image.jpg'
+
 //-------------------------------------------------------------
 const theme = createTheme();
-export default function SignInSide(props) 
+export default function SignInSide() 
 {
  
   const [FirstName, setName] = useState("");
@@ -29,6 +28,7 @@ export default function SignInSide(props)
   const validations=Yup.object({
     FirstName:Yup.string().required().trim().min(3),
     FamliyName:Yup.string().required().trim().min(3),
+    userName:Yup.string().required().trim().min(3),
     email :Yup.string().email("Please enter a valid email").required("Email is required"),
     password:Yup.string().min(8, 'Password must be 8 characters long')
                 .matches(/[0-9]/, 'Password requires a number')
@@ -42,16 +42,27 @@ export default function SignInSide(props)
       initialValues:{
         FirstName:"",
         FamliyName:"",
+        userName:"",
         email:"",
         password:"",
         ConfirmPassword:"",
         errors:""
       },
-      validationSchema:validations
+      validationSchema:validations,
+      onSubmit:{
+        FirstName:"",
+        FamliyName:"",
+        userName:"",
+        email:"",
+        password:"",
+        ConfirmPassword:"",
+        errors:""
+      }
     });
   
   const {signup,isLoading,error} =useSignup()
   const handleSubmit = async (event) => {
+    formik.handelSubmit()
     event.preventDefault();
     await signup(FirstName,FamilyName,Email,password,UserName)
   };
@@ -64,7 +75,7 @@ export default function SignInSide(props)
          justifyContent:'center',
          paddingTop:'3vh',
          paddingRight:'5vh',
-         //backgroundImage:`url(${Image})`,
+         backgroundImage:`url(${Image})`,
          backgroundSize:'cover',
          backgroundRepeat:'no-repeat',
          backgroundPosition:'center',
@@ -112,8 +123,8 @@ export default function SignInSide(props)
                 autoComplete="First Name"
                 autoFocus
                 onChange={e=>{setName(e.target.value)}}
-                error={formik.errors.fisrtName}
-                helperText={formik.errors.fisrtName}
+                error={formik.errors.FirstName}
+                helperText={formik.errors.FirstName}
               />
               <TextField
               sx={{backgroundColor :'white',}}
@@ -126,8 +137,8 @@ export default function SignInSide(props)
               autoComplete="Famliy Name"
               autoFocus
               onChange={e=>{setFamilyName(e.target.value)}}
-              error={formik.errors.familyName}
-              helperText={formik.errors.familyName}
+              error={formik.errors.FamilyName}
+              helperText={formik.errors.FamilyName}
             />
              <TextField
              sx={{backgroundColor :'white',}}
@@ -140,8 +151,8 @@ export default function SignInSide(props)
               autoComplete="User Name"
               autoFocus
               onChange={e=>{setUserName(e.target.value)}}
-              error={formik.errors.familyName}
-              helperText={formik.errors.familyName}
+              error={formik.errors.userName}
+              helperText={formik.errors.userName}
             />
               <TextField
                 sx={{backgroundColor :'white',}}
@@ -193,7 +204,7 @@ export default function SignInSide(props)
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 ,backgroundColor:'rgba(0,0,0, 0.4)'}}
+                sx={{ mt: 3, mb: 2 }}
                 disabled ={isLoading}
               >
                 Sign Up

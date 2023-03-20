@@ -17,7 +17,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { useMediaQuery } from "react-responsive";
 import PropTypes from 'prop-types';
-
+import {AxiosError} from 'axios';
 
 
 const intialState = {
@@ -41,10 +41,43 @@ const HEADERS = {
 }
 
 export default function NewRequestForm(props) {
-    const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1224px)" });
-    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-    const [isArrDateFelxible, setIsArrDateFelxible] = useState(false);
+    const [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
+    const [arrival_date, setArrivalDate] = useState('')
+    const [departure_date, setDepartureDate] = useState('');
+    const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(false);
+    const [departure_date_is_flexible, setIsDptDateFelxible] = useState(false);
+    const [message, setMessage] = useState('');
 
+    const handleChangeCountry = (event) => {
+        setCountry(event.target.value);
+    }
+
+    const handleChangeCity = (event) => {
+        setCity(event.target.value);
+    }
+
+    const handleChangeArrivalDate = (event) => {
+        setArrivalDate(event.target.value);
+    }
+
+    const handleChangeDepartureDate = (event) => {
+        setDepartureDate(event.target.value);
+    }
+
+    const handleChangeMessage = (event) => {
+        setMessage(event.target.value);
+    }
+
+    const handleChangeIsArrDateFlexible = (event) => {
+        setIsArrDateFelxible(event.target.checked);
+    };
+    const handleChangeIsDptDateFlexible = (event) => {
+        setIsDptDateFelxible(event.target.checked);
+    };
+    
+    const [values, setValues] = useState(intialState);
+    
     const handleChange = (prop) => (event) => {
         setValues({
             ...values,
@@ -52,83 +85,38 @@ export default function NewRequestForm(props) {
         });
     };
 
-    const handleChangeIsArrDateFlexible = (event) => {
-        setIsArrDateFelxible(event.target.value);
-    };
-    const [isDptDateFelxible, setIsDptDateFelxible] = useState(false);
-    const handleChangeIsDptDateFlexible = (event) => {
-        setIsDptDateFelxible(event.target.value);
-    };
-
-    const [values, setValues] = useState(intialState);
-
-
     // Data Validation and Send to Backend
+    axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     const onSubmit = async (e) => {
-        e.preventDafault();
-        let isDataValid = true;
-        if (!values.country) {
-            setValues({
-                ...values,
-                countryErr: true,
-            });
-            isDataValid = false;
-            console.log("The country field can not be empty");
-        }
-        if (!values.city) {
-            setValues({
-                ...values,
-                cityErr: true,
-            });
-            isDataValid = false;
-            console.log("The city field can not be empty");
-        }
-        if (!values.arrival_date) {
-            setValues({
-                ...values,
-                arrival_dateErr: true,
-            });
-            isDataValid = false;
-            console.log("The arrival date must be specific");
-        }
-        if (!values.departure_date) {
-            setValues({
-                ...values,
-                departure_dateErr: true,
-            });
-            isDataValid = false;
-            console.log("The departure date must be specific");
-        }
-        /* TODO check for travelers count */
-        if (isDataValid) {
-            let data = {
-                country: values.country,
-                city: values.city,
-                arrival_date: isArrDateFelxible,
-                departure_date: isDptDateFelxible,
-                arrival_date_is_flexible: values.arrival_date_is_flexible,
-                departure_date_is_flexible: values.departure_date_is_flexible,
-                message: values.message,
-                /* TODO => travelers count */
-            }
-            axios({
-                method: "post",
-                url: "http://127.0.0.1:8000/announcement/create/",
-                headers: Headers,
-                data: data,
-            }).then((res) => {
-                setValues(intialState);
-                props.setOpen(false);
-                console.log("Request added successfully:)");
-                props.setRequestData({});
-                /* TODO */
+        e.preventDefault();
+        axios.post("http://127.0.0.1:8000/announcement/create/", {
+            country : country,
+            city : city,
+            arrival_date: arrival_date,
+            departure_date: departure_date,
+            arrival_date_is_flexible: arrival_date_is_flexible,
+            departure_date_is_flexible: departure_date_is_flexible,
+            message: message,
+            })
+            .then((res) =>{
+                console.log(res.data)
             })
             .catch((error) => {
-                console.log("An Error has occurred while adding a new request");
-            })
+                if (!error?.response) {
+                    console.log("No Server Response");
+                } else if (error?.code === AxiosError.ERR_NETWORK) {
+                    console.log("Network Error");
+                } else if (error.response?.status === 404) {
+                    console.log("404 - Not Found");
+                } else if (error?.code) {
+                    console.log("Code: " + error.code);
+                } else {
+                    console.log("Unknown Error");
+                }
+            });
         }
 
-    }
 
     const handleClose = () => {
         props.setOpen(false);
@@ -166,8 +154,7 @@ export default function NewRequestForm(props) {
                                                             label="Country"
                                                             variant="outlined"
                                                             inputProps={{maxLength: 20}}
-                                                            value={values.country}
-                                                            onChange={handleChange("country")}
+                                                            onChange={handleChangeCountry}
                                                             required/>
                                                     </FormControl>
                                                 </Grid>
@@ -181,8 +168,7 @@ export default function NewRequestForm(props) {
                                                             label="City"
                                                             variant="outlined"
                                                             inputProps={{maxLength: 20}}
-                                                            value={values.city}
-                                                            onChange={handleChange("city")}
+                                                            onChange={handleChangeCity}
                                                             required/>
                                                     </FormControl>
                                                 </Grid>
@@ -207,23 +193,15 @@ export default function NewRequestForm(props) {
                                                             placeholder="Arrival Date *"
                                                             hideOnScroll
                                                             editable
-                                                            maxDate={new DateObject()}
-                                                            value={values.arrival_date}
-                                                            // onChange={handleChange("arrival_date")}
+                                                            // onChange={handleChangeArrivalDate}
                                                             />
                                                     {/*  arrival date is flexible */}
                                                     <FormControlLabel
                                                         control={<Checkbox 
                                                                     value="arrivaldateisflexible" 
                                                                     color="primary" 
-                                                                    onChange={(event) => {
-                                                                        handleChangeIsArrDateFlexible({
-                                                                            target: {
-                                                                                name: event.target.name,
-                                                                                value: event.target.checked,
-                                                                            },
-                                                                        });
-                                                                    }}/>}
+                                                                    onChange={handleChangeIsArrDateFlexible}
+                                                                    />}
                                                         label="Arrival date is flexible"
                                                     />
                                                     </FormControl>
@@ -250,9 +228,8 @@ export default function NewRequestForm(props) {
                                                             hideOnScroll
                                                             editable
                                                             required
-                                                            maxDate={new DateObject()}
-                                                            value={values.departure_date}
-                                                            // onChange={handleChange("departure_date")}
+                                                            minDate={values.arrival_date}
+                                                            // onChange={handleChangeDepartureDate}
                                                             />
                                                     </FormControl>
                                                     {/* departure date is  flexible */}
@@ -260,14 +237,8 @@ export default function NewRequestForm(props) {
                                                         control={<Checkbox 
                                                                     value="arrivaldateisflexible" 
                                                                     color="primary"
-                                                                    onChange={(event) => {
-                                                                        handleChangeIsDptDateFlexible({
-                                                                            target: {
-                                                                                name: event.target.name,
-                                                                                value: event.target.checked,
-                                                                            },
-                                                                        });
-                                                                    }} />}
+                                                                    onChange={handleChangeIsDptDateFlexible}
+                                                                    />}
                                                         label="Departure date is flexible"
                                                     />
                                                 </Grid>
@@ -321,7 +292,7 @@ export default function NewRequestForm(props) {
                                                             size="medium"
                                                             rows={10}
                                                             maxRows={10}
-                                                            onChange={handleChange("message")}
+                                                            onChange={handleChangeMessage}
                                                             />
                                                     </FormControl>
                                                 </Grid>
@@ -360,7 +331,7 @@ export default function NewRequestForm(props) {
         </Dialog>
         
     );
-    
+
 }
 
 

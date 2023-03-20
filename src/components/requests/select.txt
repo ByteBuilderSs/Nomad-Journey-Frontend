@@ -1,0 +1,35 @@
+  <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                                                    <FormControl sx={{ width: "100%", mb: "1rem" }}>
+                                                            <InputLabel id="travelers-count-label" required>
+                                                                Number of Travelers
+                                                            </InputLabel>
+
+                                                                <Select
+                                                                    labelId="travelers-count-labe"
+                                                                    id="travelers-count"
+                                                                    label="Number of Travelers"
+                                                                    name="number of travelers"
+                                                                    MenuProps={{ style: {
+                                                                        maxHeight: "10rem",
+                                                                    }}}
+                                                                    onChange={handleChange("number_of_travelers")}
+                                                                    /* Add value*/
+                                                                >
+                                                                    <MenuItem value={1}>1</MenuItem>
+                                                                    <MenuItem value={2}>2</MenuItem>
+                                                                    <MenuItem value={3}>3</MenuItem>
+                                                                    <MenuItem value={4}>4</MenuItem>
+                                                                    <MenuItem value={5}>5</MenuItem>
+                                                                    <MenuItem value={6}>6</MenuItem>
+                                                                    <MenuItem value={7}>7</MenuItem>
+                                                                    <MenuItem value={8}>8</MenuItem>
+                                                                    <MenuItem value={9}>9</MenuItem>
+                                                                    <MenuItem value={10}>10</MenuItem>
+                                                                    <MenuItem value={11}>11</MenuItem>
+                                                                    <MenuItem value={12}>12</MenuItem>
+                                                                    <MenuItem value={13}>13</MenuItem>
+                                                                    <MenuItem value={14}>14</MenuItem>
+                                                                    <MenuItem value={15}>15</MenuItem>
+                                                                </Select>
+                                                    </FormControl>
+                                                </Grid>

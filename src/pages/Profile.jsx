@@ -1,5 +1,9 @@
+import UserPanelPage from "../components/UserPanel/UserPanel";
+
 function ProfilePage() {
-    return (<div><h1>In Profile Page</h1></div>);
-};
+    return (
+        <UserPanelPage />
+    )
+}
 
 export default ProfilePage;

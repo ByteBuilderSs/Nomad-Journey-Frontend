@@ -61,7 +61,7 @@ function App() {
           <Routes>
             <Route exact path="/signup" element={<SignInForm />}/>
             <Route path="/" element={<MainPageFunc />}/>
-            <Route path="/home/Profile/" element={<ProfilePage />}/>
+            <Route path="/:user_name" element={<ProfilePage />}/>
             <Route path="/home/Inbox/" element={<InboxPage />}/>
             <Route path="/home/Settings/" element={<SettingsPage />}/>
             <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>

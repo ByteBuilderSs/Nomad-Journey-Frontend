@@ -13,14 +13,15 @@ import {
 import {BiEdit} from "react-icons/bi";
 import {FiX} from "react-icons/fi";
 import "../UserPanel/MyAnnouncement.css";
+import {IconButton} from "@mui/material";
 function EditAnnouncement()
 {
     const [show, setShow] = useState(false);
     return (
         <>
-            <button className="edit-announcement"  onClick={() => setShow(true)}>
+            <IconButton className="edit-announcement"  onClick={() => setShow(true)}>
                 <BiEdit className="edit" />
-            </button>
+            </IconButton>
             <MDBModal show={show} onHide={() => setShow(false)}>
                 <MDBModalDialog centered>
                     <MDBModalContent>

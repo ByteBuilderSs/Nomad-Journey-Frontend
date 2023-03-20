@@ -13,14 +13,15 @@ import {
 import {BiTrash} from "react-icons/bi";
 import {FiX} from "react-icons/fi";
 import "../UserPanel/MyAnnouncement.css";
+import {IconButton} from "@mui/material";
 function DeleteAnnouncement()
 {
     const [show, setShow] = useState(false);
     return (
         <>
-            <button className="delete-announcement"  onClick={() => setShow(true)}>
+            <IconButton className="delete-announcement"  onClick={() => setShow(true)}>
                 <BiTrash className="trash" />
-            </button>
+            </IconButton>
             <MDBModal show={show} onHide={() => setShow(false)}>
                 <MDBModalDialog centered>
                     <MDBModalContent>

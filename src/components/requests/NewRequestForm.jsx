@@ -11,19 +11,21 @@ import Grid from "@mui/material/Grid";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { IconButton, Button, Dialog } from "@mui/material";
-import { styled, StyledEngineProvider, ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled, StyledEngineProvider, ThemeProvider, createTheme} from '@mui/material/styles';
 import { Theme } from "@mui/material";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { useMediaQuery } from "react-responsive";
 import PropTypes from 'prop-types';
+import {AxiosError} from 'axios';
+
 
 const intialState = {
     country: "",
     city: "",
     arrival_date: "",
     departure_date: "",
-    arrival_data_is_flexible: false,
+    arrival_date_is_flexible: false,
     departure_date_is_flexible: false,
     message: "",
     countryErr: false,
@@ -39,102 +41,90 @@ const HEADERS = {
 }
 
 export default function NewRequestForm(props) {
-    const isDesktopOrLaptop = useMediaQuery({ query: "(min-width: 1224px)" });
-    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+    const [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
+    const [arrival_date, setArrivalDate] = useState('')
+    const [departure_date, setDepartureDate] = useState('');
+    const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(false);
+    const [departure_date_is_flexible, setIsDptDateFelxible] = useState(false);
+    const [message, setMessage] = useState('');
 
-    const [
-        {
-            country,
-            city,
-            arrival_date,
-            departure_date,
-            arrival_data_is_flexible,
-            departure_date_is_flexible,
-            message,
-            countryErr,
-            cityErr,
-            arrival_dateErr,
-            departure_dateErr,
-        },
-        setState
-    ] = useState(intialState);
+    const handleChangeCountry = (event) => {
+        setCountry(event.target.value);
+    }
 
-    const [loading, setLoading] = useState(false);
+    const handleChangeCity = (event) => {
+        setCity(event.target.value);
+    }
 
-    const [values, setValues] = useState({
-        country: "",
-        city: "",
-        arrival_date: "",
-        departure_date: "",
-        arrival_data_is_flexible: false,
-        departure_date_is_flexible: false,
-        message: "",
-        countryErr: false,
-        cityErr: false,
-        arrival_dateErr: false,
-        departure_dateErr: false,
-    });
+    const handleChangeArrivalDate = (event) => {
+        setArrivalDate(event.target.value);
+    }
 
+    const handleChangeDepartureDate = (event) => {
+        setDepartureDate(event.target.value);
+    }
+
+    const handleChangeMessage = (event) => {
+        setMessage(event.target.value);
+    }
+
+    const handleChangeIsArrDateFlexible = (event) => {
+        setIsArrDateFelxible(event.target.checked);
+    };
+    const handleChangeIsDptDateFlexible = (event) => {
+        setIsDptDateFelxible(event.target.checked);
+    };
+    
+    const [values, setValues] = useState(intialState);
+    
+    const handleChange = (prop) => (event) => {
+        setValues({
+            ...values,
+            [prop]: event.target.value,
+        });
+    };
 
     // Data Validation and Send to Backend
+    axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     const onSubmit = async (e) => {
-        e.preventDafault();
-        let isDataValid = true;
-        let arrDate = new Date();
-        let dptDate = new Date();
-        if (!values.country) {
-            setValues({
-                ...values,
-                countryErr: true,
-            });
-            isDataValid = false;
-            console.log("The country field can not be empty");
-        }
-        if (!values.city) {
-            setValues({
-                ...values,
-                cityErr: true,
-            });
-            isDataValid = false;
-            console.log("The city field can not be empty");
-        }
-        if (!values.arrival_date) {
-            setValues({
-                ...values,
-                arrival_dateErr: true,
-            });
-            isDataValid = false;
-            console.log("The arrival date must be specific");
-        }
-        if (!values.departure_date) {
-            setValues({
-                ...values,
-                departure_dateErr: true,
-            });
-            isDataValid = false;
-            console.log("The departure date must be specific");
-        }
-
-        if (isDataValid) {
-            let data = {
-                /* TODO */
-            }
-            axios({
-                method: "post",
-                url: "http://127.0.0.1:8000/announcement/create/",
-                headers: Headers,
-                data: data,
-            }).then((res) => {
-                setValues(intialState);
-                props.setOpen(false);
-                /* TODO */
+        e.preventDefault();
+        axios.post("http://127.0.0.1:8000/announcement/create/", {
+            country : country,
+            city : city,
+            arrival_date: arrival_date,
+            departure_date: departure_date,
+            arrival_date_is_flexible: arrival_date_is_flexible,
+            departure_date_is_flexible: departure_date_is_flexible,
+            message: message,
             })
+            .then((res) =>{
+                console.log(res.data)
+            })
+            .catch((error) => {
+                if (!error?.response) {
+                    console.log("No Server Response");
+                } else if (error?.code === AxiosError.ERR_NETWORK) {
+                    console.log("Network Error");
+                } else if (error.response?.status === 404) {
+                    console.log("404 - Not Found");
+                } else if (error?.code) {
+                    console.log("Code: " + error.code);
+                } else {
+                    console.log("Unknown Error");
+                }
+            });
         }
 
-    }
 
     const handleClose = () => {
         props.setOpen(false);
+    };
+
+    const onCancle = () => {
+        props.setRequestData({});
+        setValues(intialState);
     };
 
     return (
@@ -164,6 +154,7 @@ export default function NewRequestForm(props) {
                                                             label="Country"
                                                             variant="outlined"
                                                             inputProps={{maxLength: 20}}
+                                                            onChange={handleChangeCountry}
                                                             required/>
                                                     </FormControl>
                                                 </Grid>
@@ -177,6 +168,7 @@ export default function NewRequestForm(props) {
                                                             label="City"
                                                             variant="outlined"
                                                             inputProps={{maxLength: 20}}
+                                                            onChange={handleChangeCity}
                                                             required/>
                                                     </FormControl>
                                                 </Grid>
@@ -196,17 +188,20 @@ export default function NewRequestForm(props) {
                                                             inputClass="new-request-date-picker-input"
                                                             className="date-picker"
                                                             format="YYYY/MM/DD"
-                                                            name="arrival date"
+                                                            name="arrival_date"
                                                             calendarPosition="bottom-end"
-                                                            placeholder="Arrival Date"
+                                                            placeholder="Arrival Date *"
                                                             hideOnScroll
                                                             editable
-                                                            required
-                                                            maxDate={new DateObject()}
+                                                            // onChange={handleChangeArrivalDate}
                                                             />
                                                     {/*  arrival date is flexible */}
                                                     <FormControlLabel
-                                                        control={<Checkbox value="arrivaldateisflexible" color="primary" />}
+                                                        control={<Checkbox 
+                                                                    value="arrivaldateisflexible" 
+                                                                    color="primary" 
+                                                                    onChange={handleChangeIsArrDateFlexible}
+                                                                    />}
                                                         label="Arrival date is flexible"
                                                     />
                                                     </FormControl>
@@ -227,19 +222,61 @@ export default function NewRequestForm(props) {
                                                             inputClass="new-request-date-picker-input"
                                                             className="date-picker"
                                                             format="YYYY/MM/DD"
-                                                            name="departure date"
+                                                            name="departure_date"
                                                             calendarPosition="bottom-end"
-                                                            placeholder="Departure Date"
+                                                            placeholder="Departure Date *"
                                                             hideOnScroll
                                                             editable
                                                             required
-                                                            maxDate={new DateObject()}/>
+                                                            minDate={values.arrival_date}
+                                                            // onChange={handleChangeDepartureDate}
+                                                            />
                                                     </FormControl>
                                                     {/* departure date is  flexible */}
                                                     <FormControlLabel
-                                                        control={<Checkbox value="arrivaldateisflexible" color="primary" />}
+                                                        control={<Checkbox 
+                                                                    value="arrivaldateisflexible" 
+                                                                    color="primary"
+                                                                    onChange={handleChangeIsDptDateFlexible}
+                                                                    />}
                                                         label="Departure date is flexible"
                                                     />
+                                                </Grid>
+                                                {/* Travelers count */}
+                                                <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                                                    <FormControl sx={{ width: "100%", mb: "1rem" }}>
+                                                            <InputLabel id="travelers-count-label" required>
+                                                                Number of Travelers
+                                                            </InputLabel>
+
+                                                                <Select
+                                                                    labelId="travelers-count-labe"
+                                                                    id="travelers-count"
+                                                                    label="Number of Travelers"
+                                                                    name="number of travelers"
+                                                                    MenuProps={{ style: {
+                                                                        maxHeight: "10rem",
+                                                                    }}}
+                                                                    onChange={handleChange("number_of_travelers")}
+                                                                    /* Add value*/
+                                                                >
+                                                                    <MenuItem value={1}>1</MenuItem>
+                                                                    <MenuItem value={2}>2</MenuItem>
+                                                                    <MenuItem value={3}>3</MenuItem>
+                                                                    <MenuItem value={4}>4</MenuItem>
+                                                                    <MenuItem value={5}>5</MenuItem>
+                                                                    <MenuItem value={6}>6</MenuItem>
+                                                                    <MenuItem value={7}>7</MenuItem>
+                                                                    <MenuItem value={8}>8</MenuItem>
+                                                                    <MenuItem value={9}>9</MenuItem>
+                                                                    <MenuItem value={10}>10</MenuItem>
+                                                                    <MenuItem value={11}>11</MenuItem>
+                                                                    <MenuItem value={12}>12</MenuItem>
+                                                                    <MenuItem value={13}>13</MenuItem>
+                                                                    <MenuItem value={14}>14</MenuItem>
+                                                                    <MenuItem value={15}>15</MenuItem>
+                                                                </Select>
+                                                    </FormControl>
                                                 </Grid>
                                                 {/* message */}
                                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -255,6 +292,7 @@ export default function NewRequestForm(props) {
                                                             size="medium"
                                                             rows={10}
                                                             maxRows={10}
+                                                            onChange={handleChangeMessage}
                                                             />
                                                     </FormControl>
                                                 </Grid>
@@ -264,6 +302,7 @@ export default function NewRequestForm(props) {
                                                         variant="contained"
                                                         sx={{ width: "100%" }}
                                                         type="submit"
+                                                        onClick={onSubmit}
                                                     >
                                                         Submit the information
                                                     </Button>
@@ -276,6 +315,7 @@ export default function NewRequestForm(props) {
                                                         width: "1000%",
                                                         }}
                                                         type="submit"
+                                                        onClick={onCancle}
                                                     >
                                                         Quit
                                                     </Button>
@@ -291,7 +331,7 @@ export default function NewRequestForm(props) {
         </Dialog>
         
     );
-    
+
 }
 
 

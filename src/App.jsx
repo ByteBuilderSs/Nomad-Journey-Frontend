@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./pages/login";
 import NewRequestPage from "./pages/NewRequest";
 import DashboardPage from './pages/Dashboard';
@@ -18,7 +18,7 @@ const tabNametoIndex = {
   Settings: 4
 }
 
-function App(props) {
+function App() {
 
   
   // console.log(props);
@@ -45,10 +45,13 @@ function App(props) {
     "flex": 1,
     "padding-bottom": "110px"
   }
-
+ 
+  
   return (
     <Router>
-      <Navbar />
+      
+       <Navbar />
+      
 
       <body  style = {allPagesStyle}>
         
@@ -62,8 +65,7 @@ function App(props) {
             <Route path="/home/Inbox/" element={<InboxPage />}/>
             <Route path="/home/Settings/" element={<SettingsPage />}/>
             <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
-            <Route path="/signUp/" element={<SignInForm />}/>
-            <Route path="/login/" element={<Login />}/>
+            <Route exact path="/login/" element={<Login />}/>
           </Routes>
 
         </div>

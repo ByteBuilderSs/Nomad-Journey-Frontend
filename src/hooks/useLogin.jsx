@@ -1,21 +1,20 @@
 import { useState } from "react";
-import { Navigate} from "react-router-dom";
 import {useAuthContext} from './useAuth'
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 
 
-export const useSignup=()=>{
+export const useLogin=()=>{
     const[error,setError]=useState('')
     const[isLoading,setLoader]=useState('')
     
-    const signup= async(first_name,last_name,email,password,username) =>{
+    const login= async(email,password) =>{
         setLoader(true)
         setError(null)
 
-        const respone= await fetch(process.env.REACT_APP_API_URL+'/register/',{ 
+        const respone= await fetch(process.env.REACT_APP_API_URL+'/login/',{ 
             method :'POST',
             headers :{'Content-Type':'application/json'},
-            body :JSON.stringify({first_name,last_name,email,password,username})
+            body :JSON.stringify({email,password})
         })
         const json =await respone.json()
         if(!respone.ok)
@@ -23,12 +22,18 @@ export const useSignup=()=>{
             console.log(respone)
             setLoader(false)
             setError(respone.statusText)
+           
         }
         if(respone.ok)
         {
             localStorage.setItem('user',JSON.stringify(json))
+            setError(null)
             setLoader(false)
         }
     }
-    return{signup,isLoading,error}
+    return{login,isLoading,error}
 }
+
+
+
+  

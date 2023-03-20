@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,10 +12,30 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
+import {useFormik} from "formik";
+import * as Yup from "yup";
 
 const theme = createTheme();
 
 export default function LogInSide() {
+
+  const validations=Yup.object({
+    email :Yup.string().email("Please enter a valid email").required("Email is required"),
+    password:Yup.string().min(8, 'Password must be 8 characters long')
+    .matches(/[0-9]/, 'Password requires a number')
+    .matches(/[a-z]/, 'Password requires a lowercase letter')
+    .matches(/[A-Z]/, 'Password requires an uppercase letter')
+    .matches(/[^\w]/, 'Password requires a symbol').required("Password is required")
+  })
+  const formik=useFormik({
+      initialValues:{
+        email:"",
+        password:"",
+        errors:""
+      },
+      validationSchema:validations
+    })
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -31,9 +51,10 @@ export default function LogInSide() {
   };
 
   return (
+    
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
-      <Grid container component="main" sx={{ height: '100vh',justifyContent:'center'}} >
+      <Grid container component="main" sx={{ height: '60vh',justifyContent:'center',paddingTop:'5vh',width:'170vh'}} >
         <CssBaseline />
         <Grid item xs={12} sm={8} md={5}  component={Paper} elevation={6} square sx={{ alignContent:"center",
         justifyContent:"center"}} >
@@ -62,6 +83,9 @@ export default function LogInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                error={formik.errors.email}
+                helperText={formik.errors.email}
+                onChange={formik.handleChange}
               />
               <TextField
                 margin="normal"
@@ -72,6 +96,10 @@ export default function LogInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                error={formik.errors.password}
+                helperText={formik.errors.password}
+                onChange={formik.handleChange}
+
               />
              
               {/* <FormControlLabel

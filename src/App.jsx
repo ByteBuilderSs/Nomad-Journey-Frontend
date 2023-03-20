@@ -7,7 +7,6 @@ import ProfilePage from './pages/Profile';
 import SettingsPage from './pages/Settings';
 import Navbar from "./components/navbar/Navbar"
 import React, { useEffect, useState } from "react";
-import SignInSide from "./pages/signup";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
@@ -20,6 +19,8 @@ const tabNametoIndex = {
 }
 
 function App(props) {
+
+  
   // console.log(props);
   // const { location }  = props;
   // const [selectedTab, setSelectedTab] = useState(
@@ -61,7 +62,8 @@ function App(props) {
             <Route path="/home/Inbox/" element={<InboxPage />}/>
             <Route path="/home/Settings/" element={<SettingsPage />}/>
             <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
-            <Route path="/home/SignUp/" element={<SignInSide />}/>
+            <Route path="/signUp/" element={<SignInForm />}/>
+            <Route path="/login/" element={<Login />}/>
           </Routes>
 
         </div>

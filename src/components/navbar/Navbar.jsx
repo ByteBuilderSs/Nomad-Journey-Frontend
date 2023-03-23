@@ -33,7 +33,6 @@ import defaultAvatar from "../../Assets/images/default-avatar.jpg";
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from "bootstrap";
-import { useNavigate } from 'react-router-dom';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
@@ -70,6 +69,8 @@ const tabs = [
 ]
 
 const Navbar = (props) => {
+    // const location = useLocation()
+    
     const [dir, setDir] = useState("ltr");
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -106,7 +107,8 @@ const Navbar = (props) => {
         setOpenSideBarDrawer(!openSideBarDrawer);
     }
     /* */
-    
+    // if(["/authentication"].includes(location.pathname)) 
+    //     return <></> 
     return (
         <div dir={dir} style={{ marginBottom: "6rem"}}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="fixed">

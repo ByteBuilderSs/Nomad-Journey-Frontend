@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation  } from "react-router-dom";
 import Login from "./pages/login";
 import NewRequestPage from "./pages/NewRequest";
 import DashboardPage from './pages/Dashboard';
@@ -11,6 +11,7 @@ import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import PostExperience from "./pages/PostExperience";
+import Authentication from "./components/Auth/Auth";
 const tabNametoIndex = {
   Dashboard: 1,
   Profile: 2,
@@ -20,7 +21,7 @@ const tabNametoIndex = {
 
 function App() {
 
-  
+  let location = useLocation();
   // console.log(props);
   // const { location }  = props;
   // const [selectedTab, setSelectedTab] = useState(
@@ -33,9 +34,7 @@ function App() {
   //   setSelectedTab(newValue)
   // };
 
- 
   const allPagesStyle = {
-
     display: "flex",
     "flex-direction": "column",
     "min-height": "100vh",
@@ -43,38 +42,38 @@ function App() {
 
   const content = {
     "flex": 1,
-    "padding-bottom": "110px"
+    // "padding-bottom": "110px"
   }
- 
+
   
   return (
-    <Router>
-      
-       <Navbar />
-      
-
-      <body  style = {allPagesStyle}>
+    // <Router>
+      <>
+        {location.pathname !== "/authentication" && <Navbar />}
         
-      
-        <div style = {content}>
 
-          <Routes>
-            <Route exact path="/signup" element={<SignInForm />}/>
-            <Route path="/" element={<MainPageFunc />}/>
-            <Route path="/:user_name" element={<ProfilePage />}/>
-            <Route path="/home/Inbox/" element={<InboxPage />}/>
-            <Route path="/home/Settings/" element={<SettingsPage />}/>
-            <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
-            <Route exact path="/login/" element={<Login />}/>
-          </Routes>
+        <body  style = {allPagesStyle}>
 
-        </div>
+          <div style = {content}>
 
-        <Footer/>
+            <Routes>
+              <Route exact path="/authentication" element={<Authentication />}/>
+              <Route exact path="/signup" element={<SignInForm />}/>
+              <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+              <Route path="/:user_name" element={<ProfilePage />}/>
+              <Route path="/home/Inbox/" element={<InboxPage />}/>
+              <Route path="/home/Settings/" element={<SettingsPage />}/>
+              <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
+            </Routes>
 
-      </body>
+          </div>
+
+          {location.pathname !== "/authentication" && <Footer/>}
+
+        </body>
+      </>
     
-  </Router>
+    // </Router>
   );
 
 }

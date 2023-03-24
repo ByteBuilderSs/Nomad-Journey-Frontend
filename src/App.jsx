@@ -12,6 +12,8 @@ import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import PostExperience from "./pages/PostExperience";
 import Authentication from "./components/Auth/Auth";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const tabNametoIndex = {
   Dashboard: 1,
   Profile: 2,
@@ -71,6 +73,7 @@ function App() {
           {location.pathname !== "/authentication" && <Footer/>}
 
         </body>
+        <ToastContainer />
       </>
     
     // </Router>

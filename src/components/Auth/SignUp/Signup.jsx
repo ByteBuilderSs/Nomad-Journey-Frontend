@@ -17,7 +17,6 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import logo from "../../../Assets/images/nomad-journey-logo-3-fotor-bg-remover-20230323195457.png";
-import { Navigate } from "react-router-dom";
 
 const Signup = () => {
     const [values, setValues] = React.useState({
@@ -91,9 +90,10 @@ const Signup = () => {
             values.lastName &&
             values.email) {
                 if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                    console.log("***************** in email verification *************************");
                     isDataValid = false;
                     toast.error("Email address is not valid", {
-                        position: toast.POSITION.BOTTOM_LEFT,
+                        position: toast.POSITION.TOP_LEFT,
                         autoClose: 5000,
                         hideProgressBar: false,
                         closeOnClick: true,
@@ -126,11 +126,11 @@ const Signup = () => {
                         }
                     })
                     .then((res) => {
-                        window.location="/home/Dashboard/"
+                        // window.location="/home/Dashboard/"
                     })
                     .catch((error) => {
                         toast.error("Unexpected error has occurred", {
-                            position: toast.POSITION.BOTTOM_LEFT,
+                            position: toast.POSITION.TOP_LEFT,
                             autoClose: 5000,
                             hideProgressBar: false,
                             closeOnClick: true,

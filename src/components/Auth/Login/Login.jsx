@@ -93,7 +93,7 @@ const Login = () => {
       if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         isDataValid = false;
         toast.error("Email address is not valid", {
-          position: toast.POSITION.BOTTOM_LEFT,
+          position: toast.POSITION.TOP_LEFT,
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -106,7 +106,9 @@ const Login = () => {
         axios({
           method: "post",
           url: "http://127.0.0.1:8000/api/v1/accounts/token/",
-          headers: {},
+          headers: {
+            'Content-Type': 'application/json',
+          },
           data: {
             email: values.email,
             password: values.password
@@ -115,11 +117,20 @@ const Login = () => {
         .then((res) => {
           localStorage.setItem("access", res.data.access);
           localStorage.setItem("refresh", res.data.refresh);
-          window.location = "/home/Dashboard/"
+          window.location = "/home/Dashboard/";
+          toast.success("You logged in successfully", {
+            position: toast.POSITION.BOTTOM_LEFT,
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
         })
         .catch((error) => {
           toast.error("Unexpected error has occurred", {
-            position: toast.POSITION.BOTTOM_LEFT,
+            position: toast.POSITION.TOP_LEFT,
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,

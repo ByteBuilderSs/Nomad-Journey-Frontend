@@ -36,6 +36,8 @@ import { Button } from "bootstrap";
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const tabs = [
     {
@@ -106,9 +108,50 @@ const Navbar = (props) => {
     const onSideBarIconClick = () => {
         setOpenSideBarDrawer(!openSideBarDrawer);
     }
-    /* */
-    // if(["/authentication"].includes(location.pathname)) 
-    //     return <></> 
+    
+    const handleLogout = (e) => {
+        e.preventDefault();
+        let refresh = localStorage.getItem('refresh');
+        let access = localStorage.getItem('access');
+        axios({
+            method: "post",
+            url: "http://127.0.0.1:8000/api/v1/accounts/logout/",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access}`
+            },
+            data: {
+                refresh_token: refresh
+            }
+        })
+        .then((res) => {
+            localStorage.removeItem("refresh");
+            localStorage.removeItem("access");
+            localStorage.removeItem("username");
+
+            window.location="/authentication";
+            toast.success("Logged out successfully", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        })
+        .catch((error) => {
+            toast.error("Unexpected error has occurred", {
+                position: toast.POSITION.TOP_LEFT,
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        })
+    };
     return (
         <div dir={dir} style={{ marginBottom: "6rem"}}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="fixed">
@@ -223,7 +266,7 @@ const Navbar = (props) => {
                                         </ListItemIcon>
                                         <Typography>Account & Settings</Typography>
                                     </MenuItem>
-                                    <MenuItem>
+                                    <MenuItem onClick={handleLogout}>
                                         <ListItemIcon>
                                             <LogoutOutlinedIcon fontSize="small" />
                                         </ListItemIcon>

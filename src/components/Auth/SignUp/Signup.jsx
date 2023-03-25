@@ -126,6 +126,7 @@ const Signup = () => {
                         }
                     })
                     .then((res) => {
+                        localStorage.setItem("username", values.username);
                         let tabIndex = 1;
                         window.location=`/authentication/${tabIndex}`;
                         toast.success("Your account created successfully", {

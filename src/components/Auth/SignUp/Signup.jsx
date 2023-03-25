@@ -126,7 +126,17 @@ const Signup = () => {
                         }
                     })
                     .then((res) => {
-                        // window.location="/home/Dashboard/"
+                        let tabIndex = 1;
+                        window.location=`/authentication/${tabIndex}`;
+                        toast.success("Your account created successfully", {
+                            position: toast.POSITION.TOP_LEFT,
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                        });
                     })
                     .catch((error) => {
                         toast.error("Unexpected error has occurred", {

@@ -59,7 +59,7 @@ function App() {
           <div style = {content}>
 
             <Routes>
-              <Route exact path="/authentication" element={<Authentication />}/>
+              <Route exact path="/authentication/:tabIndex?" element={<Authentication />}/>
               <Route exact path="/signup" element={<SignInForm />}/>
               <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
               <Route path="/:user_name" element={<ProfilePage />}/>

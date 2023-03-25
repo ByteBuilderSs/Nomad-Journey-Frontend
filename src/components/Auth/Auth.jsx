@@ -51,10 +51,11 @@ export default function Authentication() {
     };
 
 
-    // React.useEffect( () => {
-    //     if ( 0 == test(tabIndex) || 1 == test(tabIndex)) 
-    //     { setValue( tabIndex ); } 
-    // }, [ tabIndex ] );
+    React.useEffect( () => {
+        if (0 == tabIndex || 1 == tabIndex) {
+            setValue( parseInt(tabIndex) );    
+        }
+    }, [ tabIndex ] );
 
     return (
         <div className="auth">
@@ -77,12 +78,14 @@ export default function Authentication() {
             >
                 <Tab
                     component={Link}
+                    tabIndex={0}
                     style={{ color: "white", fontSize: 18 }}
                     label="Register"
                     {...a11yProps(0)}
                 />
                 <Tab
                     component={Link}
+                    tabIndex={1}
                     style={{ color: "white", fontSize: 18 }}
                     label="Login"
                     {...a11yProps(1)}

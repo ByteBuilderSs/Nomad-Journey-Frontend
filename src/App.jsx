@@ -44,13 +44,18 @@ function App() {
     "flex": 1,
     // "padding-bottom": "110px"
   }
-
+  const [isAuth, setIsAuth] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem('user') !== null) {
+       setIsAuth(true); 
+     }
+   }, [isAuth]);
   
   return (
     // <Router>
       <>
         {location.pathname !== "/authentication" && <Navbar />}
-        
+        {isAuth ? <Navbar /> :null}
 
         <body  style = {allPagesStyle}>
 
@@ -59,6 +64,8 @@ function App() {
             <Routes>
               <Route exact path="/authentication" element={<Authentication />}/>
               <Route exact path="/signup" element={<SignInForm />}/>
+              <Route exact path="/login" element={<Login />}/>
+
               <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
               <Route path="/:user_name" element={<ProfilePage />}/>
               <Route path="/home/Inbox/" element={<InboxPage />}/>

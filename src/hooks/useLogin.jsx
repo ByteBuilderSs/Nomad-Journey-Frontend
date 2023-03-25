@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 export const useLogin=()=>{
     const[error,setError]=useState('')
     const[isLoading,setLoader]=useState('')
-    
+    const {dispatch}=useAuthContext()
     const login= async(email,password) =>{
         setLoader(true)
         setError(null)
@@ -27,6 +27,7 @@ export const useLogin=()=>{
         if(respone.ok)
         {
             localStorage.setItem('user',JSON.stringify(json))
+            dispatch({type:'LOGIN',payload:json})
             setError(null)
             setLoader(false)
         }

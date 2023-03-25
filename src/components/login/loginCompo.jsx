@@ -16,7 +16,7 @@ import {Formik, useFormik} from "formik";
 import * as Yup from "yup";
 import { useLogin } from '../../hooks/useLogin';
 import { useState } from 'react';
-import Image from '../../Assets/images/image.jpg'
+import Image from '../../Assets/images/image2.png'
 //-----------------------------------------------------------
 const theme = createTheme();
 

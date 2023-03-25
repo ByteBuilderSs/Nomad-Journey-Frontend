@@ -9,11 +9,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 // Semantic UI
 import 'semantic-ui-css/semantic.min.css';
-
+import { AuthContextProvider } from './hooks/useAuth';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <BrowserRouter>
-    <App />
+    <AuthContextProvider>
+      <App />
+    </AuthContextProvider>
   </BrowserRouter>
 );

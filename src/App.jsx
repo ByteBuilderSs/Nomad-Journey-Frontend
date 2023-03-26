@@ -60,15 +60,14 @@ function App() {
           {(!location.pathname.includes("/authentication")) && <Footer/>}
 
         </body>
-        <ToastContainer rtl
-          position="top-left"
-          newestOnTop={true}
-          pauseOnFocusLoss
-          draggable
-          theme="dark"
-          autoClose={10000}
-          closeOnClick
-          pauseOnHover
+        <ToastContainer 
+            position="top-left"
+            newestOnTop={true}
+            pauseOnFocusLoss
+            draggable
+            autoClose={10000}
+            closeOnClick
+            pauseOnHover
           />
       </>
     

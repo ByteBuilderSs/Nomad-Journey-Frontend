@@ -41,12 +41,12 @@ const Signup = () => {
         if (prop === "confirmPassword" && event.target.value !== values.password)
             setCofirmPasswordError(true);
         else if (
-        prop === "confirmPassword" &&
-        event.target.value === values.password
+            prop === "confirmPassword" &&
+            event.target.value === values.password
         )
         setCofirmPasswordError(false);
-        if (prop === "firstname") setFirstnameError(false);
-        if (prop === "lastname") setLastnameError(false);
+        if (prop === "firstName") setFirstnameError(false);
+        if (prop === "lastName") setLastnameError(false);
         if (prop === "password") setPasswordError(false);
         if (prop === "username") setUsernameError(false);
         if (prop === "email") setEmailnameError(false);

@@ -60,7 +60,16 @@ function App() {
           {(!location.pathname.includes("/authentication")) && <Footer/>}
 
         </body>
-        <ToastContainer />
+        <ToastContainer rtl
+          position="top-left"
+          newestOnTop={true}
+          pauseOnFocusLoss
+          draggable
+          theme="dark"
+          autoClose={10000}
+          closeOnClick
+          pauseOnHover
+          />
       </>
     
     // </Router>

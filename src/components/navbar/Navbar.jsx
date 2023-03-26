@@ -130,26 +130,10 @@ const Navbar = (props) => {
             localStorage.removeItem("username");
 
             window.location="/authentication";
-            toast.success("Logged out successfully", {
-                position: toast.POSITION.TOP_LEFT,
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast.success("Logged out successfully");
         })
         .catch((error) => {
-            toast.error("Unexpected error has occurred", {
-                position: toast.POSITION.TOP_LEFT,
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            toast.error("Unexpected error has occurred");
         })
     };
     return (

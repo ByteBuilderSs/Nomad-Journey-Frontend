@@ -92,15 +92,7 @@ const Signup = () => {
                 if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                     console.log("***************** in email verification *************************");
                     isDataValid = false;
-                    toast.error("Email address is not valid", {
-                        position: toast.POSITION.TOP_LEFT,
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    toast.error("Email address is not valid");
                 }
 
                 setFirstnameError(false);
@@ -129,26 +121,10 @@ const Signup = () => {
                         localStorage.setItem("username", values.username);
                         let tabIndex = 1;
                         window.location=`/authentication/${tabIndex}`;
-                        toast.success("Your account created successfully", {
-                            position: toast.POSITION.TOP_LEFT,
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
+                        toast.success("Your account created successfully");
                     })
                     .catch((error) => {
-                        toast.error("Unexpected error has occurred", {
-                            position: toast.POSITION.TOP_LEFT,
-                            autoClose: 5000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                        });
+                        toast.error("Unexpected error has occurred");
                     })
                 }
             }

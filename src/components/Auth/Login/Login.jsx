@@ -16,8 +16,11 @@ import {
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [values, setValues] = React.useState({
     password: "",
     email: "",
@@ -117,9 +120,11 @@ const Login = () => {
         .then((res) => {
           localStorage.setItem("access", res.data.access);
           localStorage.setItem("refresh", res.data.refresh);
-          window.location = "/home/Dashboard/";
+          localStorage.setItem("username", res.data.username);
+          navigate("/home/Dashboard/", { replace: true });
+          // window.location = "/home/Dashboard/";
           toast.success("You logged in successfully", {
-            position: toast.POSITION.BOTTOM_LEFT,
+            position: toast.POSITION.TOP_LEFT,
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -207,7 +212,7 @@ const Login = () => {
                   label="Password"
                 />
             </FormControl>
-            <FormControl fullWidth variant="outlined">
+            <FormControl fullWidth variant="outlined" component={Link} to='/home/Dashboard/'>
                 <Button
                     sx={{ m: 1 }}
                     onClick={onLogin}

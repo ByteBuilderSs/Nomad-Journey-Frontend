@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
-import NewRequestPage from "./pages/NewRequest";
+import NewAnnouncementFormPage from "./pages/NewAnnouncement";
 import InboxPage from './pages/Inbox';
 import ProfilePage from './pages/Profile';
 import SettingsPage from './pages/Settings';
@@ -7,7 +7,6 @@ import Navbar from "./components/navbar/Navbar"
 import React, { useEffect, useState } from "react";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
-import SignInForm from "./pages/signup";
 import Authentication from "./components/Auth/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,7 +34,6 @@ function App() {
 
   
   return (
-    // <Router>
       <>
         {(!localStorage.getItem("username")) && <Navigate to="/authentication" />}
 
@@ -52,7 +50,7 @@ function App() {
               <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
               <Route path="/home/Inbox/" element={<InboxPage />}/>
               <Route path="/home/Settings/" element={<SettingsPage />}/>
-              {/* <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/> */}
+              <Route path="/home/AddNewAnnouncement/" element={<NewAnnouncementFormPage />}/>
             </Routes>
 
           </div>
@@ -70,9 +68,7 @@ function App() {
             pauseOnHover
           />
       </>
-    
-    // </Router>
-  );
+);
 
 }
 

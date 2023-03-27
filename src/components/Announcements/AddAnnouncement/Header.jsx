@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import NewRequestForm from "./NewRequestForm";
+import NewAnnouncementForm from "./NewAnnouncementForm";
 import { DataTable } from "primereact/datatable";
 import "./Header.css";
 
@@ -41,7 +41,7 @@ export default function HeaderComponent(props) {
                     </Grid>
                 </Grid>
             </div>
-            <NewRequestForm 
+            <NewAnnouncementForm 
                 open={open}
                 setOpen={setOpen}
                 disabled={disabled}

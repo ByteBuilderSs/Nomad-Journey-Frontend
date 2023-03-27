@@ -30,7 +30,6 @@ function App() {
 
   const content = {
     "flex": 1,
-    // "padding-bottom": "110px"
   }
 
   

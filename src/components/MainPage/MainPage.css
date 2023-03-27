@@ -24,7 +24,8 @@
 
 .groupbox2{
     display: flex;
-    padding-top: 1%;
+    justify-content: center;
+    position: relative;
     
 }
 

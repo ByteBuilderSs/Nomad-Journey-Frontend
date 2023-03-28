@@ -35,7 +35,7 @@ function App() {
   
   return (
       <>
-        {(!localStorage.getItem("username")) && <Navigate to="/authentication" />}
+        {(!localStorage.getItem("access")) && <Navigate to="/authentication" />}
 
         {(!location.pathname.includes("/authentication"))  && <Navbar />}
         

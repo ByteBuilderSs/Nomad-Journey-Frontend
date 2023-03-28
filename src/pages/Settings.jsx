@@ -1,5 +1,7 @@
+import SettingsCmp from "../components/Settings/Settings";
+
 function SettingsPage() {
-    return (<div><h1>In Settings Page</h1></div>);
+    return (<SettingsCmp />);
 };
 
 export default SettingsPage;

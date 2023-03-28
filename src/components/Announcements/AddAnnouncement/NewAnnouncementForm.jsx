@@ -1,23 +1,24 @@
-import  "./NewRequestForm.css";
+import  "./NewAnnouncementForm.css";
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import FormControl from "@mui/material/FormControl";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Grid from "@mui/material/Grid";
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { IconButton, Button, Dialog } from "@mui/material";
-import { styled, StyledEngineProvider, ThemeProvider, createTheme} from '@mui/material/styles';
-import { Theme } from "@mui/material";
+import {
+    FormControl,
+    TextField,
+    Box,
+    InputLabel,
+    MenuItem,
+    Select,
+    Grid,
+    FormControlLabel,
+    Checkbox,
+    IconButton, 
+    Button, 
+    Dialog
+} from "@mui/material";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
-import { useMediaQuery } from "react-responsive";
-import PropTypes from 'prop-types';
 import {AxiosError} from 'axios';
+import { toast } from "react-toastify";
 
 
 const intialState = {
@@ -27,6 +28,7 @@ const intialState = {
     departure_date: "",
     arrival_date_is_flexible: false,
     departure_date_is_flexible: false,
+    travelers_count: "",
     message: "",
     countryErr: false,
     cityErr: false,
@@ -34,20 +36,19 @@ const intialState = {
     departure_dateErr: false,
 };
 
-const HEADERS = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    // Athorization
-}
 
-export default function NewRequestForm(props) {
+
+export default function NewAnnouncementForm(props) {
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
-    const [arrival_date, setArrivalDate] = useState('')
-    const [departure_date, setDepartureDate] = useState('');
+    const [arrival_date, setArrivalDate] = useState(null);
+    const [departure_date, setDepartureDate] = useState(null);
     const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(false);
     const [departure_date_is_flexible, setIsDptDateFelxible] = useState(false);
+    const [travelers_count, setTravelersCount] = useState('');
     const [message, setMessage] = useState('');
+    const [disabled, setDisabled] = React.useState(false);
+
 
     const handleChangeCountry = (event) => {
         setCountry(event.target.value);
@@ -55,14 +56,6 @@ export default function NewRequestForm(props) {
 
     const handleChangeCity = (event) => {
         setCity(event.target.value);
-    }
-
-    const handleChangeArrivalDate = (event) => {
-        setArrivalDate(event.target.value);
-    }
-
-    const handleChangeDepartureDate = (event) => {
-        setDepartureDate(event.target.value);
     }
 
     const handleChangeMessage = (event) => {
@@ -76,55 +69,131 @@ export default function NewRequestForm(props) {
         setIsDptDateFelxible(event.target.checked);
     };
     
+    const handleChangeTravelersCount = (event) => {
+        setTravelersCount(event.target.value);
+    }
     const [values, setValues] = useState(intialState);
     
-    const handleChange = (prop) => (event) => {
-        setValues({
-            ...values,
-            [prop]: event.target.value,
-        });
-    };
 
     // Data Validation and Send to Backend
-    axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     const onSubmit = async (e) => {
         e.preventDefault();
-        axios.post("http://127.0.0.1:8000/announcement/create/", {
-            country : country,
-            city : city,
-            arrival_date: arrival_date,
-            departure_date: departure_date,
-            arrival_date_is_flexible: arrival_date_is_flexible,
-            departure_date_is_flexible: departure_date_is_flexible,
-            message: message,
-            })
-            .then((res) =>{
-                console.log(res.data)
-            })
-            .catch((error) => {
-                if (!error?.response) {
-                    console.log("No Server Response");
-                } else if (error?.code === AxiosError.ERR_NETWORK) {
-                    console.log("Network Error");
-                } else if (error.response?.status === 404) {
-                    console.log("404 - Not Found");
-                } else if (error?.code) {
-                    console.log("Code: " + error.code);
-                } else {
-                    console.log("Unknown Error");
-                }
-            });
+        let arrDate = new Date();
+        let deptDate = new Date();
+        let isDataValid = true;
+        if (!country) {
+            toast.error("Fill out destination country");
+            isDataValid = false;
         }
+        if (!city) {
+            toast.error("Fill out destination city");
+            isDataValid = false;
+        }
+        if (!arrival_date) {
+            toast.error("Fill out arrival date");
+            isDataValid = false;
+        }
+        if (!departure_date) {
+            toast.error("Fill out departure date");
+            isDataValid = false;
+        }
+        if (arrival_date) {
+            arrDate = new DateObject({
+                date: arrival_date,
+                format: "YYYY-MM-DD"
+            }).format("YYYY-MM-DD");
+        }
+        if (departure_date) {
+            deptDate = new DateObject({
+                date: departure_date,
+                format: "YYYY-MM-DD"
+            }).format("YYYY-MM-DD");
+        }
+        if (!travelers_count) {
+            toast.error("Please specify the travelers count");
+            isDataValid = false;
+        }
+        if (arrDate && deptDate && arrDate > deptDate) {
+            toast.error("The departure date can not be sooner than arrival date");
+            isDataValid = false;
+        }
+        if (isDataValid) {
+            const access_token = localStorage.getItem('access');
+            console.log(`********** the access token is: ${access_token}`);
+            axios({
+                    method: "post",
+                    url: "http://127.0.0.1:8000/api/v1/announcement/create/",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${access_token}`
+                    },
+                    data: {
+                        country: country,
+                        city: city,
+                        arrival_date: arrDate,
+                        departure_date: deptDate,
+                        arrival_date_is_flexible: arrival_date_is_flexible,
+                        departure_date_is_flexible: departure_date_is_flexible,
+                        message: message,
+                        travelers_count: travelers_count
+                    }
+                })
+                .then((res) =>{
+                    props.setOpen(false);
+                    setDisabled(true);
+                    setTimeout(() => {
+                        
+                    }, 5000);
+                    props.setRequestData({});
+                    toast.success("A new announcement created successfully");
+                    setCountry('');
+                    setCity('');
+                    setArrivalDate(null);
+                    setDepartureDate(null);
+                    setIsArrDateFelxible(false);
+                    setIsDptDateFelxible(false);
+                    setTravelersCount('');
+                    setMessage('');
+
+                })
+                .catch((error) => {
+                    toast.error("Unexpected error has occurred");
+                    setCountry('');
+                    setCity('');
+                    setArrivalDate(null);
+                    setDepartureDate(null);
+                    setIsArrDateFelxible(false);
+                    setIsDptDateFelxible(false);
+                    setTravelersCount('');
+                    setMessage('');
+                });
+        }
+    }
 
 
     const handleClose = () => {
         props.setOpen(false);
+        setCountry('');
+        setCity('');
+        setArrivalDate(null);
+        setDepartureDate(null);
+        setIsArrDateFelxible(false);
+        setIsDptDateFelxible(false);
+        setTravelersCount('');
+        setMessage('');
     };
 
     const onCancle = () => {
         props.setRequestData({});
-        setValues(intialState);
+        setCountry('');
+        setCity('');
+        setArrivalDate(null);
+        setDepartureDate(null);
+        setIsArrDateFelxible(false);
+        setIsDptDateFelxible(false);
+        setTravelersCount('');
+        setMessage('');
+        props.setOpen(false);
     };
 
     return (
@@ -155,6 +224,7 @@ export default function NewRequestForm(props) {
                                                             variant="outlined"
                                                             inputProps={{maxLength: 20}}
                                                             onChange={handleChangeCountry}
+                                                            value={country}
                                                             required/>
                                                     </FormControl>
                                                 </Grid>
@@ -168,6 +238,7 @@ export default function NewRequestForm(props) {
                                                             label="City"
                                                             variant="outlined"
                                                             inputProps={{maxLength: 20}}
+                                                            value={city}
                                                             onChange={handleChangeCity}
                                                             required/>
                                                     </FormControl>
@@ -193,12 +264,17 @@ export default function NewRequestForm(props) {
                                                             placeholder="Arrival Date *"
                                                             hideOnScroll
                                                             editable
-                                                            // onChange={handleChangeArrivalDate}
+                                                            isClearable
+                                                            minDate={new Date()}
+                                                            value={arrival_date}
+                                                            onChange={(date) => {
+                                                                setArrivalDate(date);
+                                                            }}
                                                             />
                                                     {/*  arrival date is flexible */}
                                                     <FormControlLabel
                                                         control={<Checkbox 
-                                                                    value="arrivaldateisflexible" 
+                                                                    value={arrival_date_is_flexible}
                                                                     color="primary" 
                                                                     onChange={handleChangeIsArrDateFlexible}
                                                                     />}
@@ -228,14 +304,19 @@ export default function NewRequestForm(props) {
                                                             hideOnScroll
                                                             editable
                                                             required
-                                                            minDate={values.arrival_date}
-                                                            // onChange={handleChangeDepartureDate}
+                                                            minDate={new Date()}
+                                                            isClearable
+                                                            value={departure_date}
+                                                            onChange={(date) => {
+                                                                // const d = new Date(date);
+                                                                setDepartureDate(date);
+                                                            }}
                                                             />
                                                     </FormControl>
                                                     {/* departure date is  flexible */}
                                                     <FormControlLabel
                                                         control={<Checkbox 
-                                                                    value="arrivaldateisflexible" 
+                                                                    value={arrival_date_is_flexible}
                                                                     color="primary"
                                                                     onChange={handleChangeIsDptDateFlexible}
                                                                     />}
@@ -257,7 +338,8 @@ export default function NewRequestForm(props) {
                                                                     MenuProps={{ style: {
                                                                         maxHeight: "10rem",
                                                                     }}}
-                                                                    onChange={handleChange("number_of_travelers")}
+                                                                    value={travelers_count}
+                                                                    onChange={handleChangeTravelersCount}
                                                                     /* Add value*/
                                                                 >
                                                                     <MenuItem value={1}>1</MenuItem>
@@ -292,6 +374,7 @@ export default function NewRequestForm(props) {
                                                             size="medium"
                                                             rows={10}
                                                             maxRows={10}
+                                                            value={message}
                                                             onChange={handleChangeMessage}
                                                             />
                                                     </FormControl>
@@ -303,6 +386,7 @@ export default function NewRequestForm(props) {
                                                         sx={{ width: "100%" }}
                                                         type="submit"
                                                         onClick={onSubmit}
+                                                        // disabled={disabled}
                                                     >
                                                         Submit the information
                                                     </Button>
@@ -316,6 +400,7 @@ export default function NewRequestForm(props) {
                                                         }}
                                                         type="submit"
                                                         onClick={onCancle}
+                                                        // disabled={disabled}
                                                     >
                                                         Quit
                                                     </Button>

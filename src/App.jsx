@@ -11,6 +11,8 @@ import SignInForm from "./pages/signup";
 import Authentication from "./components/Auth/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import './Loader.css'
+
 const tabNametoIndex = {
   Dashboard: 1,
   Profile: 2,
@@ -32,45 +34,73 @@ function App() {
     "flex": 1,
   }
 
-  
-  return (
-    // <Router>
-      <>
-        {(!localStorage.getItem("username")) && <Navigate to="/authentication" />}
+  const [loading, setLoading] = useState(false);
+    useEffect(() => {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+  }, []);
 
-        {(!location.pathname.includes("/authentication"))  && <Navbar />}
+  return(
+    <div>
+      {loading ? (
+
+        <div id="js-preloader" class="js-preloader">
+            <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            </div>
+        </div>
+
+
+      ) : (
+
+        // <Router>
+          <>
+            {(!localStorage.getItem("username")) && <Navigate to="/authentication" />}
+
+            {(!location.pathname.includes("/authentication"))  && <Navbar />}
+            
+
+            <body  style = {allPagesStyle}>
+
+
+              <div style = {content}>
+
+                <Routes>
+                  <Route exact path="/authentication/:tabIndex?" element={<Authentication />}/>
+                  <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                  <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
+                  <Route path="/home/Inbox/" element={<InboxPage />}/>
+                  <Route path="/home/Settings/" element={<SettingsPage />}/>
+                  {/* <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/> */}
+                </Routes>
+
+              </div>
+
+              {(!location.pathname.includes("/authentication")) && <Footer/>}
+
+            </body>
+            <ToastContainer 
+                position="top-left"
+                newestOnTop={true}
+                pauseOnFocusLoss
+                draggable
+                autoClose={10000}
+                closeOnClick
+                pauseOnHover
+              />
+          </>
         
-
-        <body  style = {allPagesStyle}>
-
-          <div style = {content}>
-
-            <Routes>
-              <Route exact path="/authentication/:tabIndex?" element={<Authentication />}/>
-              <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
-              <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
-              <Route path="/home/Inbox/" element={<InboxPage />}/>
-              <Route path="/home/Settings/" element={<SettingsPage />}/>
-              {/* <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/> */}
-            </Routes>
-
-          </div>
-
-          {(!location.pathname.includes("/authentication")) && <Footer/>}
-
-        </body>
-        <ToastContainer 
-            position="top-left"
-            newestOnTop={true}
-            pauseOnFocusLoss
-            draggable
-            autoClose={10000}
-            closeOnClick
-            pauseOnHover
-          />
-      </>
-    
-    // </Router>
+        // </Router>
+        )
+      }
+    </div>
   );
 
 }

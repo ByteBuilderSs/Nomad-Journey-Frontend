@@ -137,7 +137,7 @@ const Navbar = (props) => {
         })
     };
     return (
-        <div dir={dir} style={{ marginBottom: "1rem"}}>
+        <div dir={dir}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>

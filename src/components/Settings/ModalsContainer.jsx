@@ -6,10 +6,10 @@ import {
 
 export default function ModalsContainer() {
     return (
-        <>
-            <Box>
+        <React.Fragment>
+            <Box sx={{ bgcolor: "white"}}>
                 This is modals container
             </Box>
-        </>
+        </React.Fragment>
     )
 }

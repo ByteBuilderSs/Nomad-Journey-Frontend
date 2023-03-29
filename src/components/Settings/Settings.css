@@ -3,6 +3,8 @@
     padding: 0;
 }
 
-.body {
+.settings {
+    width           : 100%;
+    height          : 100vh;
     background: #EDE7E6;
 }

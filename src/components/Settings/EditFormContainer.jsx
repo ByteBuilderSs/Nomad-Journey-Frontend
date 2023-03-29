@@ -5,10 +5,10 @@ import {
 
 export default function FormContainer() {
     return (
-        <>
-            <Box>
+        <React.Fragment>
+            <Box sx={{ bgcolor: "white" }}>
                 This is form container
             </Box>
-        </>
+        </React.Fragment>
     )
 }

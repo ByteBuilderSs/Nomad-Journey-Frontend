@@ -9,7 +9,6 @@ import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import Login from "./pages/login";
-import Authentication from "./components/Auth/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Loader.css'

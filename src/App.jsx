@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 import NewAnnouncementFormPage from "./pages/NewAnnouncement";
 import InboxPage from './pages/Inbox';
 import ProfilePage from './pages/Profile';
@@ -7,6 +7,8 @@ import Navbar from "./components/navbar/Navbar"
 import React, { useEffect, useState } from "react";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
+import SignInForm from "./pages/signup";
+import Login from "./pages/login";
 import Authentication from "./components/Auth/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,7 +24,7 @@ const tabNametoIndex = {
 function App() {
 
   let location = useLocation();
-
+  const navigate=useNavigate()
   const allPagesStyle = {
     display: "flex",
     "flex-direction": "column",
@@ -40,30 +42,34 @@ function App() {
         setLoading(false);
       }, 1500);
   }, []);
-
-  return(
-    <div>
-      {loading ? (
-
-        <div id="js-preloader" class="js-preloader">
-            <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            </div>
-        </div>
-
-
-      ) : (
-
-              <>
-            {(!localStorage.getItem("access")) && <Navigate to="/authentication" />}
-
-            {(!location.pathname.includes("/authentication"))  && <Navbar />}
+  useEffect(()=>{
+    if(!localStorage.getItem("user")){
+      navigate("/signup");
+    }
+    },[]);
+ 
+    
+  return (
+      
+      <>
+        <div>
             
+              {loading ? (
+
+          <div id="js-preloader" class="js-preloader">
+              <div class="preloader-inner">
+              <span class="dot"></span>
+              <div class="dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+              </div>
+          </div>
+
+
+          ) :<div>
+        {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
 
             <body  style = {allPagesStyle}>
 
@@ -71,17 +77,20 @@ function App() {
               <div style = {content}>
 
                 <Routes>
-                  <Route exact path="/authentication/:tabIndex?" element={<Authentication />}/>
+                  
                   <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
                   <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
                   <Route exact path="/home/Settings/" element={<SettingsPage />}/>
+                  <Route path="/signup" element={<SignInForm />}/>
+                  <Route path="/login" element={< Login/>}/>
                   <Route path="/home/AddNewAnnouncement/" element={<NewAnnouncementFormPage />}/>
                 </Routes>
 
               </div>
 
-              {(!location.pathname.includes("/authentication")) && <Footer/>}
+             
+          {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
 
             </body>
             <ToastContainer 
@@ -91,13 +100,13 @@ function App() {
                 draggable
                 autoClose={10000}
                 closeOnClick
-                pauseOnHover
-              />
-          </>            
-        )
-      }
-    </div>
-  );
+                pauseOnHover/>
+        </div>}</div>
+
+      </>            
+        );
+      
+  
 
 }
 

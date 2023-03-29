@@ -266,7 +266,7 @@ Pre-loader Style
 
 #section-1 {
     margin-top: 0px;
-    height: 100vh;
+    height: 95vh;
     min-height: 700px;
     color: #fff;
     background-color: #222;
@@ -307,7 +307,7 @@ Pre-loader Style
     position: absolute;
     width: 80%;
     left: 10%;
-    bottom: 130px;
+    bottom: -650px;
     display: inline-block;
   }
   #section-1 .more-info i {
@@ -482,7 +482,10 @@ Pre-loader Style
     }
   }
 
-
+  .fa-user::before {
+    content: "\f007"; 
+  }
+  
   /* 
 ---------------------------------------------
 Responsive Style
@@ -510,9 +513,9 @@ body {
     }
     #section-1 .more-info {
       padding: 30px;
-      margin-top: 30px !important;
+      margin-top: 50px!important;
       border-radius: 23px;
-      bottom: 110px;
+      bottom: -530px;
       width: 95%;
       left: 2.5%;
     }
@@ -546,15 +549,19 @@ body {
   }
   
   @media (max-width: 992px) {
+
     #section-1 .more-info {
-      margin-top: 60px;
+      position: flex;
+      display: flex;
+      height: 200px;
+      padding-top: 10px;
     }
     #section-1 .more-info h4 span {
       font-size: 15px;
     }
     #section-1 .more-info h4 {
       font-size: 20px;
-      margin-bottom: 15px;
+      margin-bottom: 5px;
     }
     #section-1 .main-button {
       text-align: left;
@@ -616,14 +623,33 @@ body {
   }
   
   @media (max-width: 1200px) {
+    #section-1 .more-info {
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
     #section-1 .more-info h4 span {
       font-size: 12px;
     }
     #section-1 .more-info h4 {
-      font-size: 15px;
+      font-size: 10px;
     }
     .weekly-offers .container-fluid {
       padding: 0px;
     }
+  }
+  @media (max-width: 1842px) {
+    #section-1 .more-info {
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+     #section-1 .more-info h4 span {
+      font-size: 16px;
+    }
+    #section-1 .more-info h4 {
+      font-size: 16px;
+    }
+    .weekly-offers .container-fluid {
+      padding: 0px;
+    } 
   }
   

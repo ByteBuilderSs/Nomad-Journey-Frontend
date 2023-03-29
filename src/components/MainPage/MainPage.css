@@ -482,7 +482,10 @@ Pre-loader Style
     }
   }
 
-
+  .fa-user::before {
+    content: "\f007"; 
+  }
+  
   /* 
 ---------------------------------------------
 Responsive Style

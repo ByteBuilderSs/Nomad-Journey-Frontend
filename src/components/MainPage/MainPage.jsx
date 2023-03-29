@@ -1,6 +1,7 @@
 // import * as React from 'react';
 import Box from '@mui/material/Box';
 import "./MainPage.css"
+import "./fontawesome.css"
 import React, { useState, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';

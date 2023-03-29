@@ -12,7 +12,7 @@ const Settings = () => {
 
     return (
         <div style={{ backgroundColor: "#EDE7E6"}}>
-            {/* <Container>
+            <Container>
                 <Grid container>
                     <Grid item xs={12} sm={12} md={3}>
                         <FormContainer />
@@ -21,8 +21,7 @@ const Settings = () => {
                         <ModalsContainer />
                     </Grid>
                 </Grid>
-            </Container> */}
-            <h1>In return</h1>
+            </Container>
         </div>
     )
 }

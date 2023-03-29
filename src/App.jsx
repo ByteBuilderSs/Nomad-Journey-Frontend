@@ -75,7 +75,7 @@ function App() {
                   <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
                   <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
-                  <Route path="/home/Settings/" element={<SettingsPage />}/>
+                  <Route eexact path="/home/Settings/" element={<SettingsPage />}/>
                   <Route path="/home/AddNewAnnouncement/" element={<NewAnnouncementFormPage />}/>
                 </Routes>
 

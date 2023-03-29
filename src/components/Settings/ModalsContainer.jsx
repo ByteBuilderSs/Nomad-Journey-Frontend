@@ -1,14 +1,15 @@
 import React from 'react'
 import {
     Card,
+    Box,
 } from '@mui/material';
 
 export default function ModalsContainer() {
     return (
-        <div>
-            <Card>
-                
-            </Card>
-        </div>
+        <>
+            <Box>
+                This is modals container
+            </Box>
+        </>
     )
 }

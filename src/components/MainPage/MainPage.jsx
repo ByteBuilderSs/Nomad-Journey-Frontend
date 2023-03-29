@@ -194,7 +194,7 @@ export default function MainPage(){
           <input type="radio" id="banner4" class="sec-1-input" name="banner"/>
           <div class="slider">
             <div id="top-banner-1" class="banner">
-              <div class="banner-inner-wrapper header-text">/
+              <div class="banner-inner-wrapper header-text">
                 <div class="main-caption">
                   <h2>Take a Glimpse Into The Beautiful Country Of:</h2>
                   <h1>Caribbean</h1>
@@ -238,7 +238,7 @@ export default function MainPage(){
                 </div>
                 <div class="container">
                   <div class="row">
-                    <div class="col-lg-12">/
+                    <div class="col-lg-12">
                       <div class="more-info">
                         <div class="row">
                           <div class="col-lg-3 col-sm-6 col-6">

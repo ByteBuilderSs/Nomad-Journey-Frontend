@@ -12,12 +12,14 @@ import {
     InputAdornment,
     IconButton,
     Box,
+    Typography,
 } from '@mui/material';
 
 import {
     Visibility,
     VisibilityOff,
 } from "@mui/icons-material";
+
 
 const ChangeEmailDialog = (props) => {
     const handleClose = () => {
@@ -49,28 +51,22 @@ const ChangeEmailDialog = (props) => {
                     autoComplete="off"
                 >
                 <form
-                    id={"Change-Password-Form"}
+                    id={"Change-Email-Form"}
                     onSubmit={(e) => {
                         e.preventDefault();
                     }} style={{ marginTop: "2rem" }}
                     >
-                    <FormControl fullWidth variant="outlined">
-                        <TextField
-                            id="outlined-adornment-current-password"
-                            InputProps={{
-                                endAdornment: (
-                                <InputAdornment>
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        edge="end"
-                                    >
-                                    </IconButton>
-                                </InputAdornment>
-                                ),
-                            }}
-                            label="Current Password"
-                        />
+                    <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "1rem" }}>
+                        New Email
+                    </Typography>
+                    <FormControl fullWidth variant='outlined'>
+                        <TextField 
+                            type={"text"}
+                            label="New Email"/>
                     </FormControl>
+                    <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "1rem" }}>
+                        Current Password <span style={{ color: "red"}}>*</span>
+                    </Typography>
                     <FormControl fullWidth variant="outlined">
                         <TextField
                             id="outlined-adornment-password"
@@ -85,27 +81,10 @@ const ChangeEmailDialog = (props) => {
                                 </InputAdornment>
                                 ),
                             }}
-                            label="New Password"
+                            label="Current Password"
                         />
                     </FormControl>
-                    <FormControl fullWidth variant="outlined">
-                        <TextField
-                            id="outlined-adornment-confirm-password"
-                            InputProps={{
-                                endAdornment: (
-                                <InputAdornment>
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        edge="end"
-                                    >
-                                    </IconButton>
-                                </InputAdornment>
-                                ),
-                            }}
-                            label="Confirm Password"
-                        />
-                    </FormControl>
-                    <FormControl fullWidth variant="outlined">
+                    <DialogActions>
                         <Button
                             sx={{ m: 1 }}
                             variant="outlined"
@@ -114,7 +93,7 @@ const ChangeEmailDialog = (props) => {
                         >
                             Update
                         </Button>
-                    </FormControl>
+                    </DialogActions>
                 </form>
                 </Box>
                 

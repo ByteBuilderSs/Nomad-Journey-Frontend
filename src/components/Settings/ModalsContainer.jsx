@@ -13,8 +13,10 @@ import {
 } from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
+import HomeIcon from '@mui/icons-material/Home';
 import ChangeEmailDialog from './Modals/ChangeEmail';
 import ChangePasswordDialog from './Modals/ChangePassword';
+import ChangeAddressDialog from './Modals/ChangeAddress';
 
 export default function ModalsContainer() {
     const [disabled_p, setDisabledP] = useState(false);
@@ -25,6 +27,10 @@ export default function ModalsContainer() {
     const [open_e, setOpenE] = useState(false);
     const [requestData_e, setRequestDataE] = useState({});
 
+    const [disabled_a, setDisabledA] = useState(false);
+    const [open_a, setOpenA] = useState(false);
+    const [requestData_a, setRequestDataA] = useState({});
+
     const openChangePassword = (event) => {
         setOpenP(true);
         setDisabledP(false);
@@ -33,6 +39,11 @@ export default function ModalsContainer() {
     const openChangeEmail = (event) => {
         setOpenE(true);
         setDisabledE(false);
+    }
+
+    const openChangeAddress = (event) => {
+        setOpenA(true);
+        setDisabledA(false);
     }
 
     return (
@@ -56,6 +67,13 @@ export default function ModalsContainer() {
                         </ListItemIcon>
                         <ListItemText>Change My Password</ListItemText>
                     </MenuItem>
+                    <Divider sx={{ borderBottomWidth: 2, }}/>
+                    <MenuItem onClick={(event) => openChangeAddress(event)}>
+                        <ListItemIcon>
+                            <HomeIcon fontSize="medium" />
+                        </ListItemIcon>
+                        <ListItemText>Change My Address</ListItemText>
+                    </MenuItem>
                 </MenuList>
 
                 <ChangePasswordDialog 
@@ -74,6 +92,14 @@ export default function ModalsContainer() {
                     setRequestData={setRequestDataE}
                     requestData={requestData_e}
                 />
+                <ChangeAddressDialog 
+                    open={open_a}
+                    setOpen={setOpenA}
+                    disabled={disabled_a}
+                    setDisabled={setDisabledA}
+                    setRequestData={setRequestDataA}
+                    requestData={requestData_a}
+                    />
             </Paper >
         </React.Fragment>
     )

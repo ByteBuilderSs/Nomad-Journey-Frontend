@@ -12,6 +12,7 @@ import {
     InputAdornment,
     IconButton,
     Box,
+    Typography,
 } from '@mui/material';
 
 import {
@@ -49,19 +50,17 @@ const ChangePasswordDialog = (props) => {
                     autoComplete="off"
                 >
                 <form
-                    id={"Change-Email-Form"}
+                    id={"Change-Password-Form"}
                     onSubmit={(e) => {
                         e.preventDefault();
                     }} style={{ marginTop: "2rem" }}
                     >
-                    <FormControl fullWidth variant='outlined'>
-                        <TextField 
-                            type={"text"}
-                            label="New Email"/>
-                    </FormControl>
                     <FormControl fullWidth variant="outlined">
+                        <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "0.8rem" }}>
+                            Current Password <span style={{ color: "red"}}>*</span>
+                        </Typography>
                         <TextField
-                            id="outlined-adornment-password"
+                            id="outlined-adornment-current-password"
                             InputProps={{
                                 endAdornment: (
                                 <InputAdornment>
@@ -76,7 +75,47 @@ const ChangePasswordDialog = (props) => {
                             label="Current Password"
                         />
                     </FormControl>
+                    <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "0.8rem" }}>
+                        New Password
+                    </Typography>
                     <FormControl fullWidth variant="outlined">
+                        <TextField
+                            id="outlined-adornment-password"
+                            InputProps={{
+                                endAdornment: (
+                                <InputAdornment>
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        edge="end"
+                                    >
+                                    </IconButton>
+                                </InputAdornment>
+                                ),
+                            }}
+                            label="New Password"
+                        />
+                    </FormControl>
+                    <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "0.8rem" }}>
+                        Confirm Password
+                    </Typography>
+                    <FormControl fullWidth variant="outlined">
+                        <TextField
+                            id="outlined-adornment-confirm-password"
+                            InputProps={{
+                                endAdornment: (
+                                <InputAdornment>
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        edge="end"
+                                    >
+                                    </IconButton>
+                                </InputAdornment>
+                                ),
+                            }}
+                            label="Confirm Password"
+                        />
+                    </FormControl>
+                    <DialogActions>
                         <Button
                             sx={{ m: 1 }}
                             variant="outlined"
@@ -85,7 +124,7 @@ const ChangePasswordDialog = (props) => {
                         >
                             Update
                         </Button>
-                    </FormControl>
+                    </DialogActions>
                 </form>
                 </Box>
                 

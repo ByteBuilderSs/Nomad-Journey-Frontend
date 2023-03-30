@@ -42,7 +42,7 @@ function App() {
       }, 1500);
   }, []);
   useEffect(()=>{
-    if(!localStorage.getItem("user")){
+    if(!localStorage.getItem("tokens")){
       navigate("/signup");
     }
     },[]);

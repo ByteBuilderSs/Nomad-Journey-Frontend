@@ -42,40 +42,33 @@ function App() {
         setLoading(false);
       }, 1500);
   }, []);
-
-  return(
-    <div>
-      {loading ? (
-
-        <div id="js-preloader" class="js-preloader">
-            <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            </div>
-        </div>
-
-
-      ) : (
-
-              <>
-            {(!localStorage.getItem("access")) && <Navigate to="/authentication" />}
-
-            {(!location.pathname.includes("/authentication"))  && <Navbar />}
-            
   useEffect(()=>{
     if(!localStorage.getItem("user")){
       navigate("/signup");
     }
     },[]);
  
+    
   return (
-    // <Router>
+      
       <>
-        
+        <div>
+            
+              {loading ? (
+
+          <div id="js-preloader" class="js-preloader">
+              <div class="preloader-inner">
+              <span class="dot"></span>
+              <div class="dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+              </div>
+          </div>
+
+
+          ) :<div>
         {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
 
             <body  style = {allPagesStyle}>
@@ -89,8 +82,8 @@ function App() {
                   <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
                   <Route exact path="/home/Settings/" element={<SettingsPage />}/>
-              <Route path="/signup" element={<SignInForm />}/>
-              <Route path="/login" element={< Login/>}/>
+                  <Route path="/signup" element={<SignInForm />}/>
+                  <Route path="/login" element={< Login/>}/>
                   <Route path="/home/AddNewAnnouncement/" element={<NewAnnouncementFormPage />}/>
                 </Routes>
 
@@ -107,13 +100,13 @@ function App() {
                 draggable
                 autoClose={10000}
                 closeOnClick
-                pauseOnHover
-              />
-          </>            
-        )
-      }
-    </div>
-  );
+                pauseOnHover/>
+        </div>}</div>
+
+      </>            
+        );
+      
+  
 
 }
 

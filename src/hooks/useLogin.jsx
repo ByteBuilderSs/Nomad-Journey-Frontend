@@ -14,6 +14,7 @@ export const useLogin=()=>{
         const json =await respone.json()
         if(!respone.ok)
         {
+            console.log(json)
             let msg=Object.values(json)
             toast.error(JSON.stringify(msg[0]))  
         }

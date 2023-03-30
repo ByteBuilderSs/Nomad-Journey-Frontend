@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
-import NewAnnouncementFormPage from "./pages/NewAnnouncement";
 import InboxPage from './pages/Inbox';
 import ProfilePage from './pages/Profile';
 import SettingsPage from './pages/Settings';
-import Navbar from "./components/navbar/Navbar"
+import Navbar from "./components/navbar/Navbar";
+import EditProfile from "./components/UserPanel/EditProfile/EditProfile";
 import React, { useEffect, useState } from "react";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
@@ -77,18 +77,16 @@ function App() {
 
                 <Routes>
                   
+                  <Route path="/signup" element={<SignInForm />}/>
+                  <Route path="/login" element={< Login/>}/>
                   <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
                   <Route path="/home/Profile/:username?" element={<ProfilePage />}/>
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
                   <Route exact path="/home/Settings/" element={<SettingsPage />}/>
-                  <Route path="/signup" element={<SignInForm />}/>
-                  <Route path="/login" element={< Login/>}/>
-                  <Route path="/home/AddNewAnnouncement/" element={<NewAnnouncementFormPage />}/>
+                  <Route path="home/Members/Edit/" element={<EditProfile />}/>
                 </Routes>
 
               </div>
-
-             
           {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
 
             </body>

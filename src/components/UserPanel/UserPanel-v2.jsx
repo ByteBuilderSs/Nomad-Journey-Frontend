@@ -78,7 +78,7 @@ const UserPanelNew = () => {
                     {/* SideBar */}
                     <Grid item xs={12} sm={12} md={3}>
                         <Card  sx={{ bgcolor: "white" }}>
-                            <Stack spacing={6}>
+                            <Stack spacing={6} sx={{ paddingBottom: "1rem" }}>
                                 <Item>
                                     <Stack alignItems={`center`} spacing={1}>
                                         <Item>
@@ -89,16 +89,14 @@ const UserPanelNew = () => {
                                             <h1 style={{ fontWeight: "bold", marginBottom: "-2rem" }}>{userData.first_name}</h1>
                                             <h1 style={{ fontWeight: "bold" }}>{userData.last_name}</h1>
                                         </Item>
-                                        <Item>
-                                            <Box>
-                                                <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#e55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>
-                                            </Box>
-                                        </Item>
-                                        <Item>
-                                            <Box>
+                                        <Stack direction="row" spacing={2}>
+                                            <Item>
                                                 <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="#e55405" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>
-                                            </Box>
-                                        </Item>
+                                            </Item>
+                                            <Item>
+                                                <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#e55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>
+                                            </Item>
+                                        </Stack>
                                         <div className="list-section">
                                             {menuItem.map((item, key) => (
                                                 <Item className="sidebar_list">

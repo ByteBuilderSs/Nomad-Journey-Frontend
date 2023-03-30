@@ -485,6 +485,154 @@ Pre-loader Style
   .fa-user::before {
     content: "\f007"; 
   }
+
+
+  .search-form #search-form {
+    background-color: #E55405;
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+    padding: 35px 60px;
+  }
+  
+  .search-form #search-form h4 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  
+  .search-form #search-form select {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 0px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 300;
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .search-form #search-form option {
+    background-color: #E55405;
+  }
+  
+  .search-form #search-form button {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 8px 30px;
+    display: inline-block;
+    border-radius: 25px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .search-form #search-form button:hover {
+    background-color: #fff;
+    color: #E55405;
+  }
+
+  .amazing-deals {
+    margin-top: 120px;
+  }
+  
+  .amazing-deals .item .image {
+    border-top-left-radius: 23px;
+    border-bottom-left-radius: 23px;
+    overflow: hidden;
+  }
+  
+  .amazing-deals .item {
+    background-color: #f7f7f7;
+    border-radius: 23px;
+    padding-right: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .amazing-deals .item span.info {
+    color: #E55405;
+    font-size: 15px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  
+  .amazing-deals .item h4 {
+    font-size: 20px;
+    font-weight: 700;
+    padding-bottom: 25px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .amazing-deals .item i {
+    color: #777;
+    margin-right: 5px;
+  }
+  
+  .amazing-deals .item span.list {
+    font-size: 15px;
+    color: #afafaf;
+    font-weight: 500;
+  }
+  
+  .amazing-deals .item .content {
+    padding: 30px 0px;
+  }
+  
+  .amazing-deals .item p {
+    padding-top: 25px;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    margin-bottom: 30px;
+  }
+  
+  .amazing-deals ul.page-numbers {
+    text-align: center;
+    margin-right: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .amazing-deals ul.page-numbers li {
+    display: inline-block;
+    margin: 0px 5px;
+  }
+  
+  .amazing-deals ul.page-numbers li a {
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #E55405;
+    line-height: 44px;
+    color: #E55405;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 50%;
+    transition: all .3s;
+  }
+  
+  .amazing-deals ul.page-numbers li.active a,
+  .amazing-deals ul.page-numbers li a:hover {
+    background-color: #E55405;
+    color: #fff;
+  }
+  
+  .amazing-deals ul.page-numbers li:first-child a,
+  .amazing-deals ul.page-numbers li:last-child a {
+    border: none;
+  }
+
+
   
   /* 
 ---------------------------------------------

@@ -43,9 +43,11 @@ function App() {
       }, 1500);
   }, []);
   useEffect(()=>{
-    if(!localStorage.getItem("user")){
+    if(!localStorage.getItem('tokens')){
+      console.log('no user exists')
       navigate("/signup");
     }
+    else{navigate("/home/dashboard")}
     },[]);
  
     

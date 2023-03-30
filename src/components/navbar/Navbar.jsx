@@ -38,7 +38,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { useLogout } from "../../hooks/useLogout";
 const tabs = [
     {
         label: "Dashboard",
@@ -108,34 +108,38 @@ const Navbar = (props) => {
     const onSideBarIconClick = () => {
         setOpenSideBarDrawer(!openSideBarDrawer);
     }
-    
-    const handleLogout = (e) => {
-        e.preventDefault();
-        let refresh = localStorage.getItem('refresh');
-        let access = localStorage.getItem('access');
-        axios({
-            method: "post",
-            url: "http://127.0.0.1:8000/api/v1/accounts/logout/",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access}`
-            },
-            data: {
-                refresh_token: refresh
-            }
-        })
-        .then((res) => {
-            localStorage.removeItem("refresh");
-            localStorage.removeItem("access");
-            localStorage.removeItem("username");
-
-            window.location="/authentication";
-            toast.success("Logged out successfully");
-        })
-        .catch((error) => {
-            toast.error("Unexpected error has occurred");
-        })
+    const {logout}=useLogout()
+    const handleLogout=async (event)=>{
+        event.preventDefault();
+        await logout()
     };
+    // const handleLogout = (e) => {
+    //     e.preventDefault();
+    //     let refresh = localStorage.getItem('refresh');
+    //     let access = localStorage.getItem('access');
+    //     axios({
+    //         method: "post",
+    //         url: "http://127.0.0.1:8000/api/v1/accounts/logout/",
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${access}`
+    //         },
+    //         data: {
+    //             refresh_token: refresh
+    //         }
+    //     })
+    //     .then((res) => {
+    //         localStorage.removeItem("refresh");
+    //         localStorage.removeItem("access");
+    //         localStorage.removeItem("username");
+
+    //         window.location="/authentication";
+    //         toast.success("Logged out successfully");
+    //     })
+    //     .catch((error) => {
+    //         toast.error("Unexpected error has occurred");
+    //     })
+    // };
     return (
         <div dir={dir}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">

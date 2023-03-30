@@ -2,9 +2,8 @@ import { Col, Row} from "react-bootstrap";
 import "./MyAnnouncement.css";
 import {TiLocation} from "react-icons/ti";
 import {BsCalendarDateFill} from "react-icons/bs";
-import "../Announcements/DeleteAnnouncement"
-import DeleteAnnouncement from "../Announcements/DeleteAnnouncement";
-import EditAnnouncement from "../Announcements/EditAnnouncement";
+import DeleteAnnouncement from "../../Announcements/DeleteAnnouncement";
+import EditAnnouncement from "../../Announcements/EditAnnouncement";
 import {Divider, IconButton, Stack} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import {FaHome, FaLongArrowAltRight} from "react-icons/fa";

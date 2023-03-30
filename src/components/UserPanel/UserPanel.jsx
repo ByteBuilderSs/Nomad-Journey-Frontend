@@ -1,25 +1,26 @@
-import { Container, Row, Col} from "react-bootstrap";
-import {Link, useParams} from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import MyAnnouncements from "./MyAnnouncements";
 import MyPosts from "./Posts";
 import MyFeedbacks from "./Feedback";
 import AboutMe from "./About";
 import "./UserPanel.css";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import {Add, } from "@mui/icons-material";
-import {Stack} from "@mui/material";
-import {Divider, Grid, Segment} from "semantic-ui-react";
-import {TiUser} from "react-icons/ti";
-import {AiFillNotification} from "react-icons/ai";
-import {MdFeedback} from "react-icons/md";
-import {HiCamera} from "react-icons/hi";
-import {GiTwoCoins} from "react-icons/gi";
-import {BsStarHalf} from "react-icons/bs";
-import {Item} from "semantic-ui-react";
-import {makeStyles} from "@mui/styles";
+import { Add } from "@mui/icons-material";
+import { Stack } from "@mui/material";
+import { Divider, Grid, Segment } from "semantic-ui-react";
+import { TiUser } from "react-icons/ti";
+import { AiFillNotification } from "react-icons/ai";
+import { MdFeedback } from "react-icons/md";
+import { HiCamera } from "react-icons/hi";
+import { GiTwoCoins } from "react-icons/gi";
+import { BsStarHalf } from "react-icons/bs";
+import { Item } from "semantic-ui-react";
+import { makeStyles } from "@mui/styles";
 import axios from "axios";
-const useStyles = makeStyles(theme =>(
+
+const useStyles = makeStyles(theme => (
     {
         newReqBtn:{
             backgroundColor: "white",
@@ -43,7 +44,7 @@ function UserPanelPage() {
     const classes = useStyles();
     const menuItem = [
         {
-            name : "About Me",
+            name : "Edit My Profile",
             component : <AboutMe />,
             icon : <TiUser />,
         },
@@ -71,21 +72,21 @@ function UserPanelPage() {
     });
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    useEffect(() =>
-    {
-        axios.get(`http://127.0.0.1:8000/NormandJourney/user/${profile_params.user_name}`)
-            .then(response => setUserData(response.data))
-            .catch(error => {
-                console.log("error: ",error);
-                setError(error);
-            }).finally(() => setLoading(false))
-    }, []);
+    // useEffect(() =>
+    // {
+    //     axios.get(`http://127.0.0.1:8000/NormandJourney/user/${profile_params.user_name}`)
+    //         .then(response => setUserData(response.data))
+    //         .catch(error => {
+    //             console.log("error: ",error);
+    //             setError(error);
+    //         }).finally(() => setLoading(false))
+    // }, []);
     const [active, setActive] = useState("About Me");
     if(error !== null) return error;
     return (
         <div className="font">
             <Segment>
-                <Grid  divided>
+                <Grid divided>
                     <Grid.Row columns={3}>
                 <Grid.Column width={5}>
                     <div className={`side-bar left`}>
@@ -118,7 +119,7 @@ function UserPanelPage() {
                                     {menuItem.map((item, key) => (
                                         <Item className="sidebar_list">
                                             {active === item.name && <Link className={`section selectedSection`} onClick={() => setActive(item.name)}>
-                                                 {item.icon} {item.name}
+                                                {item.icon} {item.name}
                                             </Link>}
                                             {active !== item.name && <Link className={`section`} onClick={() => setActive(item.name)}>
                                                 {item.icon} {item.name}
@@ -135,6 +136,7 @@ function UserPanelPage() {
                         </Stack>
                     </div>
                 </Grid.Column>
+
                 <Grid.Column width={6}>
                             {menuItem.map((item, key) => (
                                 <div id={`${item.name}`}>
@@ -150,7 +152,8 @@ function UserPanelPage() {
                 </Grid.Row>
                 </Grid>
             </Segment>
-        </div>);
+        </div>
+    );
 };
 
 export default UserPanelPage;

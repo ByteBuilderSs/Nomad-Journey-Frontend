@@ -45,7 +45,7 @@ const tabs = [
         value: 1,
         desktopIcon: <MdDashboard style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdDashboard style={{  fontSize: "small" }}/>,
-        route: "/home/dashboard",
+        route: "/home/Dashboard/",
     },
     {
         label: "Profile",

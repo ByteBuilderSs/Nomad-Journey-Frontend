@@ -1,8 +1,12 @@
-import UserPanelPage from "../components/UserPanel/UserPanel";
+// import UserPanelPage from "../components/UserPanel/UserPanel";
+import UserPanelNew from "../components/UserPanel/UserPanel-v2";
+import React from "react";
 
 function ProfilePage() {
     return (
-        <UserPanelPage />
+        <React.Fragment>
+            <UserPanelNew />
+        </React.Fragment>
     )
 }
 

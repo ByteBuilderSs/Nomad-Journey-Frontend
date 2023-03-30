@@ -41,11 +41,11 @@ function App() {
         setLoading(false);
       }, 1500);
   }, []);
-  // useEffect(()=>{
-  //   if(!localStorage.getItem("user")){
-  //     navigate("/signup");
-  //   }
-  //   },[]);
+  useEffect(()=>{
+    if(!localStorage.getItem("user")){
+      navigate("/signup");
+    }
+    },[]);
 
     
   return (

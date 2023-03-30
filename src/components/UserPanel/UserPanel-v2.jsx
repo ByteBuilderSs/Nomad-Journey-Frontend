@@ -28,12 +28,12 @@ import MyAnnouncements from './RightBar/MyAnnouncements';
 import AboutMe from './RightBar/About';
 import MyPosts from './RightBar/Posts';
 import MyFeedbacks from './RightBar/Feedback';
-import UserPersonalInfo from './RightBar/UserPersonalInfo';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
+import Overview from './Overview';
 
 const menuItem = [
     {
-        name : "Edit My Profile",
+        name : "My Profile",
         component : <AboutMe />,
         icon : <TiUser />,
     },
@@ -58,7 +58,7 @@ const UserPanelNew = () => {
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
-    const [active, setActive] = useState("Edit My Profile");
+    const [active, setActive] = useState("My Profile");
     const [userData, setUserData] = useState({
         first_name : "Aylin",
         last_name : "Naebzadeh",
@@ -119,7 +119,8 @@ const UserPanelNew = () => {
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>
                         <Card  sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
-                            <h1 style={{ display: "flex", alignItems: "center", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem" }} >Not Accepting Guests
+                            <h1 style={{ display: "flex", alignItems: "center", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem" }} >
+                                Not Accepting Guests
                                 <Button
                                     sx={{ marginLeft: "29rem" }}
                                     variant="contained"
@@ -132,6 +133,7 @@ const UserPanelNew = () => {
                             </h1>
                             <p style={{ color: "#BABABA",  marginLeft: "1rem", marginBottom: "0.5rem" }}>Last login HH:MM:SS</p>
                         </Card>
+                        <Overview />
                         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
                             {menuItem.map((item, key) => (
                                     <div id={`${item.name}`}>

@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';
 
@@ -40,159 +40,42 @@ const ProgressBar = ({bgcolor,progress,height}) => {
     )
 }
 
+function clickInputsInOrder(currentIndex = 0) {
+  const inputIds = ['banner1', 'banner2', 'banner3', 'banner4'];
+
+  
+  const clickNextInput = () => {
+    const currentInput = document.getElementById(inputIds[currentIndex]);
+    if (currentInput) {
+      currentInput.click();
+      currentIndex = (currentIndex + 1) % inputIds.length;
+      setTimeout(clickNextInput, 5000); // wait for 5 seconds
+    }
+  };
+
+  clickNextInput();
+}
 
 export default function MainPage(){
 
 
-    const slides = [
-        {url : "http://localhost:3000/kish.jpg", title : 'Kish Island'},
-        {url :  "http://localhost:3000/Tehran.jpeg", title : 'Tehran City'},
-        {url : "http://localhost:3000/Khaju_Bridje_at_night.jpg", title : 'Isfahan City'},
-    ]
+    useEffect(() => {
+      clickInputsInOrder(0);
+    }, []);
 
-    const containerStyles = {
-        width : '700px',
-        height : '400px', 
-        margin : '0 auto',
-    }
+
     
     return(
-
-        // 
-            
-        //     <div className='groupbox1'>
-
-        //         <div className='leftboxes1'>
-
-        //             <Box
-        //                 sx={{
-        //                     width: 300,
-        //                     height: 160,
-        //                     backgroundColor: '#9B9B9B',
-        //                     '&:hover': {
-        //                     backgroundColor: "grey",
-        //                     opacity: [0.9, 0.8, 0.7],
-        //                     },
-        //                     borderRadius : '10px',
-        //                 }}
-        //                 >
-        //                     <div>
-        //                         <header className='profheader'>
-        //                             <h1> <b> Name Family</b></h1>
-        //                             <h2>Country</h2>
-        //                         </header>
-        //                     </div>
-        //             </Box>
-
-        //                 <br/>
-
-        //             <Box
-        //                 sx={{
-        //                     width: 300,
-        //                     height: 160,
-        //                     backgroundColor: '#9B9B9B',
-        //                     '&:hover': {
-        //                     backgroundColor: "grey",
-        //                     opacity: [0.9, 0.8, 0.7],
-        //                     },
-        //                     borderRadius : '10px',
-        //                 }}
-        //                 >
-        //                     <div>
-        //                         <header className='progheader'>
-        //                             <h1> <b> My Profile</b></h1>
-        //                         </header>
-        //                         <div className='prog'>    
-        //                         <ProgressBar bgcolor="#D97D54" progress='60'  height={20} />
-        //                         </div>
-        //                     </div>  
-        //                     <div className='complete'>
-        //                         <h3>Completed</h3>
-        //                     </div>          
-        //             </Box>
-
-        //             <br />
-
-        //             <Box
-        //                 sx={{
-        //                     width: 300,
-        //                     height: 660,
-        //                     backgroundColor: '#9B9B9B',
-        //                     '&:hover': {
-        //                     backgroundColor: "grey",
-        //                     opacity: [0.9, 0.8, 0.7],
-        //                     },
-        //                     borderRadius : '10px',
-        //                 }}
-        //                 >
-        //                     <div>
-        //                         <header className='progheader'>
-        //                             <h1> <b> Box4</b></h1>
-        //                         </header>
-        //                     </div>       
-        //             </Box>
-                    
-        //         </div>
-
-
-        //         <div className='rightboxes1'>
-        //             <Box
-        //                 sx={{
-        //                     width: 1000,
-        //                     height: 500,
-        //                     backgroundColor: '#9B9B9B',
-        //                     borderRadius : '10px',
-        //                 }}
-        //                 >    
-        //                 <div>
-        //                     <h1>Random</h1>
-        //                     <div style={containerStyles}>
-        //                         <Slider slides={slides}/>
-        //                     </div>
-                            
-        //                 </div>   
-        //             </Box>
-        //             <br />
-        //             <Box
-        //                 sx={{
-        //                     width: 1000,
-        //                     height: 500,
-        //                     backgroundColor: '#9B9B9B',
-        //                     borderRadius : '10px',
-        //                 }}
-        //                 >    
-        //                 <div>
-        //                     <h1>Announcements</h1>
-                            
-        //                 </div>   
-        //             </Box>
-
-        //         </div> 
-
-        //     </div>
-            
-            
-
-        // </div>
-        // <div className='mainpagecontainer'>
-
-        //     <div className='mainpageslider'>
-        //         <App/>
-        //     </div>
-        // </div>
-
 
     <div className='mainpage'>
 
       
-       
-      
       <section id="section-1">
         <div class="content-slider">
-          <input type="radio" id="banner1" class="sec-1-input" name="banner" checked/>
-          <input type="radio" id="banner2" class="sec-1-input" name="banner"/>
-          <input type="radio" id="banner3" class="sec-1-input" name="banner"/>
-          <input type="radio" id="banner4" class="sec-1-input" name="banner"/>
+          <input type="radio" id="banner1" class="sec-1-input" name="banner" />
+          <input type="radio" id="banner2" class="sec-1-input" name="banner" />
+          <input type="radio" id="banner3" class="sec-1-input" name="banner" />
+          <input type="radio" id="banner4" class="sec-1-input" name="banner" />
           <div class="slider">
             <div id="top-banner-1" class="banner">
               <div class="banner-inner-wrapper header-text">
@@ -349,7 +232,11 @@ export default function MainPage(){
           </nav>
         </div>
     </section>
+
+
   </div>
+
+
 
   );
 

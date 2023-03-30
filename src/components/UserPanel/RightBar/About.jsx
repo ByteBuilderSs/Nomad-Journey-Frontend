@@ -3,9 +3,11 @@ import {
     Button,
     Divider,
     Card,
+    Chip,
+    Stack,
     Typography
 } from '@mui/material';
-
+import LabelIcon from '@mui/icons-material/Label';
 function About() {
     return(
         <>
@@ -35,6 +37,14 @@ function About() {
                 </Grid>
                 {/* */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                    <Typography component="h4" sx={{ fontWeight: "bold", marginBottom: "1rem" }}>Interests</Typography>
+                    <Stack direction="row" spacing={1}>
+                        <Chip label="Animals" variant="outlined" color="primary"/>
+                        <Chip label="Travelling" variant="outlined" color="primary"/>
+                    </Stack>
+                </Grid>
+                {/* */}
+                <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <Typography component="h4" sx={{ fontWeight: "bold", marginBottom: "1rem" }}>Music, Movies, and Books</Typography>
                     <Typography component="p" sx={{ width: "70%" }} >
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
@@ -61,7 +71,7 @@ function About() {
                     </Typography>
                 </Grid>
                 {/* */}
-                <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem", marginBottom: "1rem" }}>
                     <Typography component="h4" sx={{ fontWeight: "bold", marginBottom: "1rem" }}>What I Can Share with Hosts</Typography>
                     <Typography component="p" sx={{ width: "70%" }} >
                         Lorem ipsum, dolor sit amet consectetur adipisicing elit. 

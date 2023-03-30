@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 import NewRequestPage from "./pages/NewRequest";
 import InboxPage from './pages/Inbox';
 import ProfilePage from './pages/Profile';
@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
+import Login from "./pages/login";
 import Authentication from "./components/Auth/Auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +22,7 @@ const tabNametoIndex = {
 function App() {
 
   let location = useLocation();
-
+  const navigate=useNavigate()
   const allPagesStyle = {
     display: "flex",
     "flex-direction": "column",
@@ -32,32 +33,37 @@ function App() {
     "flex": 1,
     // "padding-bottom": "110px"
   }
-
-  
+  useEffect(()=>{
+    if(!localStorage.getItem("user")){
+      navigate("/signup");
+    }
+    },[]);
+ 
   return (
     // <Router>
       <>
-        {(!localStorage.getItem("username")) && <Navigate to="/authentication" />}
-
-        {(!location.pathname.includes("/authentication"))  && <Navbar />}
         
+        {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
 
         <body  style = {allPagesStyle}>
 
           <div style = {content}>
 
             <Routes>
-              <Route exact path="/authentication/:tabIndex?" element={<Authentication />}/>
+              
               <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
               <Route path="/home/Profile/:user_name" element={<ProfilePage />}/>
               <Route path="/home/Inbox/" element={<InboxPage />}/>
               <Route path="/home/Settings/" element={<SettingsPage />}/>
+              <Route path="/signup" element={<SignInForm />}/>
+              <Route path="/login" element={< Login/>}/>
               {/* <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/> */}
             </Routes>
 
           </div>
 
-          {(!location.pathname.includes("/authentication")) && <Footer/>}
+         
+          {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
 
         </body>
         <ToastContainer 

@@ -1,17 +1,12 @@
-import { useState } from "react";
-import {useAuthContext} from './useAuth'
-import * as Yup from 'yup';
-
+import {useNavigate} from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const useLogin=()=>{
-    const[error,setError]=useState('')
-    const[isLoading,setLoader]=useState('')
-    
-    const login= async(email,password) =>{
-        setLoader(true)
-        setError(null)
 
-        const respone= await fetch(process.env.REACT_APP_API_URL+'/login/',{ 
+    const navigate=useNavigate()
+    const login= async(email,password) =>{
+              
+        const respone= await fetch(process.env.REACT_APP_API_REGISTER+'token/',{ 
             method :'POST',
             headers :{'Content-Type':'application/json'},
             body :JSON.stringify({email,password})
@@ -19,19 +14,18 @@ export const useLogin=()=>{
         const json =await respone.json()
         if(!respone.ok)
         {
-            console.log(respone)
-            setLoader(false)
-            setError(respone.statusText)
-           
+            let msg=Object.values(json)
+            toast.error(JSON.stringify(msg[0]))  
         }
         if(respone.ok)
         {
-            localStorage.setItem('user',JSON.stringify(json))
-            setError(null)
-            setLoader(false)
+            
+            localStorage.setItem('tokens',JSON.stringify(json))
+            navigate("/home/Dashboard/", { replace: true });
+            toast.success("You logged in successfully")
         }
     }
-    return{login,isLoading,error}
+    return{login}
 }
 
 

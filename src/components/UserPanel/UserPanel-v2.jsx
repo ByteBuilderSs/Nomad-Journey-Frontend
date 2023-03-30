@@ -122,13 +122,13 @@ const UserPanelNew = () => {
                             <h1 style={{ display: "flex", alignItems: "center", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem" }} >
                                 Not Accepting Guests
                                 <Button
-                                    sx={{ marginLeft: "29rem" }}
+                                    sx={{ marginLeft: "28rem" }}
                                     variant="contained"
                                     size="medium"
                                     color='success'
                                     style={{ minWidth: 150 }}
                                     onClick={(e) => openCreateRequest()}>
-                                        Add New Request
+                                        Add Announcement
                                 </Button>
                             </h1>
                             <p style={{ color: "#BABABA",  marginLeft: "1rem", marginBottom: "0.5rem" }}>Last login HH:MM:SS</p>

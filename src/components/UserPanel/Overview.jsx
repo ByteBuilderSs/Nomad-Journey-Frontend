@@ -21,7 +21,7 @@ const Overview = () => {
         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
                 <Grid item xs={12}>
-                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem" }}>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem" }}>
                         OVERVIEW
                         <Button
                             sx={{ marginLeft: "41.5rem", backgroundColor: "#088AD1" }}

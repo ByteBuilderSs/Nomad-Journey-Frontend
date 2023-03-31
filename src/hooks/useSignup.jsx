@@ -16,9 +16,12 @@ export const useSignup=()=>{
         const json =await respone.json()
         if(!respone.ok)
         {
-            console.log(json)
-            let msg=Object.values(json)
-            toast.error(JSON.stringify(msg[0]))  
+            
+            
+            Object.keys(json).forEach(function(key) {
+                toast.error(key+":"+json[key])});
+                
+            
         }
         if(respone.ok)
         {

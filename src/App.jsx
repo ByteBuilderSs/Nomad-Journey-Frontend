@@ -83,7 +83,7 @@ function App() {
                   <Route path="/home/Profile/:username?" element={<ProfilePage />}/>
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
                   <Route exact path="/home/Settings/" element={<SettingsPage />}/>
-                  <Route path="home/Members/Edit/" element={<EditProfile />}/>
+                  <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
                 </Routes>
 
               </div>

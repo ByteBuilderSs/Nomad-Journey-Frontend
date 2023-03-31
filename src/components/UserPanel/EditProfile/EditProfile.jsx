@@ -21,6 +21,9 @@ import {
 } from '@mui/material';
 import { Item } from "semantic-ui-react";
 import PropTypes from 'prop-types';
+import SideBarCard from './SideBarCard';
+import EditHome from './EditHome';
+import EditAbout from './EditAbout';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,17 +71,9 @@ const EditProfile = () => {
         <Grid container spacing={3}>
           {/* Profile picture */}
           <Grid item xs={12} sm={12} md={3}>
-            <Card>
-              This card is for profile picture + button for change + button for remove it
-            </Card>
+            <SideBarCard />
           </Grid>
-          {/* Name and City/Country */}
-          <Grid item xs={12} sm={12} md={9}>
-            <Typography component="h1" sx={{ fontWeight: "bold", fontSize: "2.8rem"}}>
-              Aylin Naebzadeh
-            </Typography>
-          </Grid>
-          {/* Tabs */}
+          {/* Name and City/Country and Tabs Card*/}
           <Grid item xs={12} sm={12} md={9}>
             <Card>
               <Box sx={{ width: '100%' }}>
@@ -89,10 +84,10 @@ const EditProfile = () => {
                   </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                  In About Edit Form
+                  <EditAbout />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                  In Home Edit Form
+                  <EditHome />
                 </TabPanel>
               </Box>
             </Card>

@@ -287,7 +287,7 @@ export default function MainPage(){
           <div class="row">
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading text-center">
-                <h2>Best Weekly Offers In Each City</h2>
+                <h2>Announcements In Your City</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
               </div>
             </div>
@@ -296,26 +296,26 @@ export default function MainPage(){
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="image">
-                      <img src="../../Assets/images/deals-01.jpg" alt=""/>
+                      <img src={require("../../Assets/images/deals-01.jpg")} alt=""/>
                     </div>
                   </div>
                   <div class="col-lg-6 align-self-center">
                     <div class="content">
-                      <span class="info">*Limited Offer Today</span>
-                      <h4>Glasgow City Lorem</h4>
+                      <span class="info">*X days left</span>
+                      <h4>UserName</h4>
                       <div class="row">
                         <div class="col-6">
                           <i class="fa fa-clock"></i>
-                          <span class="list">5 Days</span>
+                          <span class="list">Start</span>
                         </div>
                         <div class="col-6">
-                          <i class="fa fa-map"></i>
-                          <span class="list">Daily Places</span>
+                          <i class="fa fa-clock"></i>
+                          <span class="list">End</span>
                         </div>
                       </div>
                       <p>Lorem ipsum dolor sit amet dire consectetur adipiscing elit.</p>
                       <div class="main-button">
-                        <a href="reservation.html">Make a Reservation</a>
+                        <a href="reservation.html">Give an offer</a>
                       </div>
                     </div>
                   </div>
@@ -327,26 +327,26 @@ export default function MainPage(){
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="image">
-                      <img src="../../Assets/images/deals-02.jpg" alt=""/>
+                      <img src={require("../../Assets/images/deals-02.jpg")} alt=""/>
                     </div>
                   </div>
                   <div class="col-lg-6 align-self-center">
                     <div class="content">
-                      <span class="info">*Today & Tomorrow Only</span>
-                      <h4>Venezia Italy Ipsum</h4>
+                      <span class="info">*X days left</span>
+                      <h4>UserName</h4>
                       <div class="row">
                         <div class="col-6">
                           <i class="fa fa-clock"></i>
-                          <span class="list">5 Days</span>
+                          <span class="list">Start</span>
                         </div>
                         <div class="col-6">
-                          <i class="fa fa-map"></i>
-                          <span class="list">Daily Places</span>
+                          <i class="fa fa-clock"></i>
+                          <span class="list">End</span>
                         </div>
                       </div>
                       <p>Lorem ipsum dolor sit amet dire consectetur adipiscing elit.</p>
                       <div class="main-button">
-                        <a href="reservation.html">Make a Reservation</a>
+                        <a href="reservation.html">Give an offer</a>
                       </div>
                     </div>
                   </div>
@@ -358,26 +358,26 @@ export default function MainPage(){
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="image">
-                      <img src="../../Assets/images/deals-03.jpg" alt=""/>
+                      <img src={require("../../Assets/images/deals-03.jpg")} alt=""/>
                     </div>
                   </div>
                   <div class="col-lg-6 align-self-center">
                     <div class="content">
-                      <span class="info">**Undefined</span>
-                      <h4>Glasgow City Lorem</h4>
+                      <span class="info">*X days left</span>
+                      <h4>UserName</h4>
                       <div class="row">
                         <div class="col-6">
                           <i class="fa fa-clock"></i>
-                          <span class="list">5 Days</span>
+                          <span class="list">Start</span>
                         </div>
                         <div class="col-6">
-                          <i class="fa fa-map"></i>
-                          <span class="list">Daily Places</span>
+                          <i class="fa fa-clock"></i>
+                          <span class="list">End</span>
                         </div>
                       </div>
                       <p>Lorem ipsum dolor sit amet dire consectetur adipiscing elit.</p>
                       <div class="main-button">
-                        <a href="reservation.html">Make a Reservation</a>
+                        <a href="reservation.html">Give an offer</a>
                       </div>
                     </div>
                   </div>
@@ -389,26 +389,26 @@ export default function MainPage(){
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="image">
-                      <img src="../../Assets/images/deals-04.jpg" alt=""/>
+                      <img src={require("../../Assets/images/background-4.jpg")} alt=""/>
                     </div>
                   </div>
                   <div class="col-lg-6 align-self-center">
                     <div class="content">
-                      <span class="info">*Offer Until 24th March</span>
-                      <h4>Glasgow City Lorem</h4>
+                      <span class="info">*X days left</span>
+                      <h4>UserName</h4>
                       <div class="row">
                         <div class="col-6">
                           <i class="fa fa-clock"></i>
-                          <span class="list">5 Days</span>
+                          <span class="list">Start</span>
                         </div>
                         <div class="col-6">
-                          <i class="fa fa-map"></i>
-                          <span class="list">Daily Places</span>
+                          <i class="fa fa-clock"></i>
+                          <span class="list">End</span>
                         </div>
                       </div>
-                      <p>This free CSS template is provided by Template Mo website.</p>
+                      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
                       <div class="main-button">
-                        <a href="reservation.html">Make a Reservation</a>
+                        <a href="reservation.html">Give an offer</a>
                       </div>
                     </div>
                   </div>

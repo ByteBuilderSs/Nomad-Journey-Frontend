@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.userpanel {
+    width           : 100%;
+    height          : 100%;
+    background: #EDE7E6;
+}
+
+.user-panel-style{
+    border-top: none;
+}
+.side-bar{
+    position: fixed;
+}
+.left{
+    margin-left: 12%;
+}
+.section {
+    color: black;
+    transition : 0.15s ease;
+    line-height: 2.5vw;
+    font-size : 1.25vw;
+}
+
+.section:hover
+{
+    color: #e55405;
+}
+.selectedSection
+{
+    color: #e55405;
+}
+.active
+{
+}
+.sidebar_list
+{
+    color: black;
+    border-radius: 20%;
+}
+.list-section{
+    list-style-type: none;
+}

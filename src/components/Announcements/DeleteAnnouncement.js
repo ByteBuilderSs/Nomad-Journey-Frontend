@@ -12,7 +12,7 @@ import {
 
 import {BiTrash} from "react-icons/bi";
 import {FiX} from "react-icons/fi";
-import "../UserPanel/MyAnnouncement.css";
+import "../UserPanel/RightBar/MyAnnouncement.css";
 import {IconButton} from "@mui/material";
 function DeleteAnnouncement()
 {

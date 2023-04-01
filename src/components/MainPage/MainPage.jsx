@@ -56,6 +56,44 @@ function clickInputsInOrder(currentIndex = 0) {
   clickNextInput();
 }
 
+const Announce = (props) => {
+  // {image :  , leftDays : , userName : , startDate : , endDate : , desc : , }
+  const {image, leftDays, userName, startDate, endDate, desc} = props.anc
+  return(
+    <div class="col-lg-6 col-sm-6">
+      <div class="item">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="image">
+              <img src= {image} alt=""/>
+            </div>
+          </div>
+          <div class="col-lg-6 align-self-center">
+            <div class="content">
+              <span class="info">*{leftDays} days left</span>
+              <h4>{userName}</h4>
+              <div class="row">
+                <div class="col-6">
+                  <i class="fa fa-clock"></i>
+                  <span class="list">{startDate}</span>
+                </div>
+                <div class="col-6">
+                  <i class="fa fa-clock"></i>
+                  <span class="list">{endDate}</span>
+                </div>
+              </div>
+              <p>{desc}</p>
+              <div class="main-button">
+                <a href="reservation.html">Give an offer</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function MainPage(){
 
 
@@ -64,7 +102,13 @@ export default function MainPage(){
     }, []);
 
 
-    
+    const anncData = [
+      {image :  require("../../Assets/images/deals-01.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
+      {image :  require("../../Assets/images/deals-02.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
+      {image :  require("../../Assets/images/deals-03.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
+      {image :  require("../../Assets/images/deals-04.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
+    ]
+
     return(
 
     <div className='mainpage'>
@@ -291,130 +335,13 @@ export default function MainPage(){
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
               </div>
             </div>
-            <div class="col-lg-6 col-sm-6">
-              <div class="item">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="image">
-                      <img src={require("../../Assets/images/deals-01.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 align-self-center">
-                    <div class="content">
-                      <span class="info">*X days left</span>
-                      <h4>UserName</h4>
-                      <div class="row">
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">Start</span>
-                        </div>
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">End</span>
-                        </div>
-                      </div>
-                      <p>Lorem ipsum dolor sit amet dire consectetur adipiscing elit.</p>
-                      <div class="main-button">
-                        <a href="reservation.html">Give an offer</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6">
-              <div class="item">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="image">
-                      <img src={require("../../Assets/images/deals-02.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 align-self-center">
-                    <div class="content">
-                      <span class="info">*X days left</span>
-                      <h4>UserName</h4>
-                      <div class="row">
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">Start</span>
-                        </div>
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">End</span>
-                        </div>
-                      </div>
-                      <p>Lorem ipsum dolor sit amet dire consectetur adipiscing elit.</p>
-                      <div class="main-button">
-                        <a href="reservation.html">Give an offer</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6">
-              <div class="item">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="image">
-                      <img src={require("../../Assets/images/deals-03.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 align-self-center">
-                    <div class="content">
-                      <span class="info">*X days left</span>
-                      <h4>UserName</h4>
-                      <div class="row">
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">Start</span>
-                        </div>
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">End</span>
-                        </div>
-                      </div>
-                      <p>Lorem ipsum dolor sit amet dire consectetur adipiscing elit.</p>
-                      <div class="main-button">
-                        <a href="reservation.html">Give an offer</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-sm-6">
-              <div class="item">
-                <div class="row">
-                  <div class="col-lg-6">
-                    <div class="image">
-                      <img src={require("../../Assets/images/background-4.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 align-self-center">
-                    <div class="content">
-                      <span class="info">*X days left</span>
-                      <h4>UserName</h4>
-                      <div class="row">
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">Start</span>
-                        </div>
-                        <div class="col-6">
-                          <i class="fa fa-clock"></i>
-                          <span class="list">End</span>
-                        </div>
-                      </div>
-                      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-                      <div class="main-button">
-                        <a href="reservation.html">Give an offer</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+            <Announce anc={anncData[0]}/>
+            <Announce anc={anncData[1]}/>
+            <Announce anc={anncData[2]}/>
+            <Announce anc={anncData[3]}/>
+
+            
             <div class="col-lg-12">
               <ul class="page-numbers">
                 <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>

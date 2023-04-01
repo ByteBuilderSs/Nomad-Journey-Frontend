@@ -546,11 +546,15 @@ Pre-loader Style
     margin-top: 120px;
   }
   
+  .amazing-deals .image {
+    height: 350px;
+    width: 270px;
+  }
   .amazing-deals .item .image {
     border-top-left-radius: 23px;
     border-bottom-left-radius: 23px;
     overflow: hidden;
-    height: 500px;
+
   }
   
   .amazing-deals .item {
@@ -558,7 +562,7 @@ Pre-loader Style
     border-radius: 23px;
     padding-right: 30px;
     margin-bottom: 30px;
-    height: 500px;
+
     
   }
   

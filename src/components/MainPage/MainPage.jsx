@@ -2,9 +2,10 @@
 import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
-import React, { useRef, useEffect } from "react";
+import {React, useState, useRef, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';
+
 
 
 const ProgressBar = ({bgcolor,progress,height}) => {
@@ -101,6 +102,33 @@ export default function MainPage(){
       clickInputsInOrder(0);
     }, []);
 
+    const [anncdata, setAnncData] = useState([]);
+
+    useEffect(() => {
+      fetch(process.env.REACT_APP_API_REGISTER + 'get-announcements-for-host/')
+        .then(response => response.json())
+        .then(data => {
+          setAnncData(data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, []);
+
+    const [profdata, setProfData] = useState([]);
+
+    useEffect(() => {
+      fetch(process.env.REACT_APP_API_REGISTER + 'GetUsernameAndUserImageByUserId/1/')
+        .then(response => response.json())
+        .then(data => {
+          setAnncData(data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, []);
+
+    console.log(profdata)
 
     const anncData = [
       {image :  require("../../Assets/images/deals-01.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
@@ -109,7 +137,7 @@ export default function MainPage(){
       {image :  require("../../Assets/images/deals-04.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
     ]
 
-    return(
+  return(
 
     <div className='mainpage'>
 

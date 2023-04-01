@@ -17,7 +17,8 @@ import {
     IconButton
 } from '@mui/material';
 import { Item } from "semantic-ui-react";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 const SideBarCard = () => {
     return (
         <div>
@@ -34,7 +35,7 @@ const SideBarCard = () => {
                                         type="file"
                                         max={20}
                                     />
-                                    <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "1rem" }} />
+                                    <Avatar sx={{ width:'15vw', height:'15vw' }} />
                                 </IconButton>
                             </Item>
                             <Item>
@@ -42,6 +43,7 @@ const SideBarCard = () => {
                                     sx={{ width: "100%" }}
                                     variant="contained"
                                     component="label"
+                                    startIcon={<EditIcon />}
                                     >
                                     Upload a photo
                                     <input
@@ -55,8 +57,9 @@ const SideBarCard = () => {
                             <Item>
                                 <Button
                                     sx={{ mt: 1, width: "100%" }}
-                                    variant="text"
+                                    variant="contained"
                                     color="error"
+                                    startIcon={<DeleteIcon />}
                                     >
                                     Remove photo
                                 </Button>

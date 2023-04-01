@@ -75,7 +75,7 @@ const EditProfile = () => {
           </Grid>
           {/* Name and City/Country and Tabs Card*/}
           <Grid item xs={12} sm={12} md={9}>
-            <Card>
+            <Card dir="ltr">
               <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                   <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

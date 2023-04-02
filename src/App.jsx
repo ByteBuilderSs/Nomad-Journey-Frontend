@@ -41,13 +41,13 @@ function App() {
         setLoading(false);
       }, 1500);
   }, []);
-  // useEffect(()=>{
-  //   if(!localStorage.getItem('tokens')){
-  //     console.log('no user exists')
-  //     navigate("/signup");
-  //   }
-  //   else{navigate("/home/dashboard")}
-  //   },[]);
+  useEffect(()=>{
+    if(!localStorage.getItem('tokens')){
+      console.log('no user exists')
+      navigate("/signup");
+    }
+    // else{navigate("/home/dashboard")}
+    },[]);
 
     
   return (

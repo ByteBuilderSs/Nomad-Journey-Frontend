@@ -22,22 +22,14 @@ import {
     MdKeyboardArrowDown,
     MdNoteAdd,
 } from "react-icons/md";
-import { styled, alpha } from '@mui/material/styles';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Badge from "@mui/material/Badge";
-import { Link, Route } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import SiteLogo from "../../Assets/images/nomad-journey-logo-3.jpg";
-import SettingsIcon from "../../Assets/images/settings.png";
 import defaultAvatar from "../../Assets/images/default-avatar.jpg";
-import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
-import { Button } from "bootstrap";
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
-import axios from "axios";
-import { toast } from "react-toastify";
 import { useLogout } from "../../hooks/useLogout";
 
 const allData = JSON.parse(localStorage.getItem('user'));
@@ -252,7 +244,7 @@ const Navbar = (props) => {
                                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 >
-                                    <MenuItem onClick={handleCloseUserMenu} component={Link} to="/home/Settings/">
+                                    <MenuItem onClick={handleCloseUserMenu} component={Link} to={`/home/Settings/Members/${username}/`}>
                                         <ListItemIcon>
                                             <ManageAccountsOutlinedIcon fontSize="small" />
                                         </ListItemIcon>

@@ -84,7 +84,7 @@ function App() {
                   <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
                   <Route path="/home/Profile/:username?" element={<ProfilePage />}/>
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
-                  <Route exact path="/home/Settings/" element={<SettingsPage />}/>
+                  <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
                   <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
                 </Routes>
 

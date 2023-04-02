@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import SideBarCard from './SideBarCard';
 import EditHome from './EditHome';
 import EditAbout from './EditAbout';
+import { useParams } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,6 +60,8 @@ function a11yProps(index) {
 }
 
 const EditProfile = () => {
+  // const { username } = useParams();
+
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {

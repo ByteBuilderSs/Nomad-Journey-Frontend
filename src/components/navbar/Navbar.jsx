@@ -39,6 +39,10 @@ import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useLogout } from "../../hooks/useLogout";
+
+const allData = JSON.parse(localStorage.getItem('user'));
+const username = allData.username;
+
 const tabs = [
     {
         label: "Dashboard",
@@ -52,7 +56,7 @@ const tabs = [
         value: 2,
         desktopIcon: <MdAccountCircle style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdAccountCircle style={{  fontSize: "small" }}/>,
-        route: `/home/Profile/${localStorage.getItem("username")}`,
+        route: `/home/Profile/${username}`,
     },
     {
         label: "Inbox",

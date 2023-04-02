@@ -368,7 +368,7 @@ const EditAbout = () => {
                                                 />
                                         </FormControl>
                                     </Item>
-                                    {/* Teach, Learn, Share */}
+                                    {/* What I Can Share with Hosts */}
                                     <Item>
                                         <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
                                             What I Can Share with Hosts

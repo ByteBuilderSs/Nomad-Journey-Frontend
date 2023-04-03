@@ -31,28 +31,7 @@ import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
 import Overview from './Overview';
 
-const menuItem = [
-    {
-        name : "My Profile",
-        component : <AboutMe />,
-        icon : <TiUser />,
-    },
-    {
-        name : "Announcements",
-        component : <MyAnnouncements />,
-        icon : <AiFillNotification />,
-    },
-    {
-        name : "Posts",
-        component : <MyPosts />,
-        icon : <HiCamera />,
-    },
-    {
-        name : "feedback",
-        component : <MyFeedbacks />,
-        icon : <MdFeedback />,
-    },
-]
+
 
 const UserPanelNew = () => {
     const [disabled, setDisabled] = useState(false);
@@ -65,7 +44,29 @@ const UserPanelNew = () => {
         email : "aylin@gmail.com",
         username : "AylinNZ",
     });
-
+    const user_params = useParams();
+    const menuItem = [
+        {
+            name : "My Profile",
+            component : <AboutMe />,
+            icon : <TiUser />,
+        },
+        {
+            name : "Announcements",
+            component : <MyAnnouncements username={user_params.username} />,
+            icon : <AiFillNotification />,
+        },
+        {
+            name : "Posts",
+            component : <MyPosts />,
+            icon : <HiCamera />,
+        },
+        {
+            name : "feedback",
+            component : <MyFeedbacks />,
+            icon : <MdFeedback />,
+        },
+    ]
     const openCreateRequest = (event) => {
         setOpen(true);
         setDisabled(false);

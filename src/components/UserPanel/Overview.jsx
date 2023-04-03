@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import {
     Grid,
     Button,
@@ -17,6 +18,11 @@ import SchoolIcon from '@mui/icons-material/School';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 
 const Overview = () => {
+    let navigate = useNavigate(); 
+    const routeChange = () =>{ 
+        let path = `/home/Members/Edit/`; 
+        navigate(path);
+    }
     return (
         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
@@ -29,6 +35,7 @@ const Overview = () => {
                             size="medium"
                             style={{ minWidth: 150 }}
                             /* TODO => ONCLICK => GO TO EDIT PAGE */
+                            onClick={routeChange}
                             >
                                 Edit My Profile
                         </Button>

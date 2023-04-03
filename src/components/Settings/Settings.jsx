@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Settings.css';
 import {
     Container,
@@ -7,8 +7,9 @@ import {
 import FormContainer from './EditFormContainer';
 import ModalsContainer from './ModalsContainer';
 
-const Settings = () => {
 
+
+const Settings = () => {
     return (
         <div className="settings">
             <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>

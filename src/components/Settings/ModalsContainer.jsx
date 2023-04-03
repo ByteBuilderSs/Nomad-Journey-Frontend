@@ -18,7 +18,7 @@ import ChangeEmailDialog from './Modals/ChangeEmail';
 import ChangePasswordDialog from './Modals/ChangePassword';
 import ChangeAddressDialog from './Modals/ChangeAddress';
 
-export default function ModalsContainer() {
+export default function ModalsContainer(props) {
     const [disabled_p, setDisabledP] = useState(false);
     const [open_p, setOpenP] = useState(false);
     const [requestData_p, setRequestDataP] = useState({});
@@ -83,6 +83,7 @@ export default function ModalsContainer() {
                     setDisabled={setDisabledP}
                     setRequestData={setRequestDataP}
                     requestData={requestData_p}
+                    
                 />
                 <ChangeEmailDialog 
                     open={open_e}
@@ -99,6 +100,8 @@ export default function ModalsContainer() {
                     setDisabled={setDisabledA}
                     setRequestData={setRequestDataA}
                     requestData={requestData_a}
+                    user={props.user}
+                    setUser={props.setUser}
                     />
             </Paper >
         </React.Fragment>

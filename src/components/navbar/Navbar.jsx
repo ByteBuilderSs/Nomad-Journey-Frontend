@@ -32,8 +32,14 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
 import { useLogout } from "../../hooks/useLogout";
 
-const allData = JSON.parse(localStorage.getItem('user'));
-const username = allData.username;
+
+let username = "";
+
+if (localStorage.getItem('tokens'))
+{
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    username = allData.username;
+}
 
 const tabs = [
     {

@@ -14,8 +14,39 @@ import {
 } from '@mui/material';
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
+import { useParams } from 'react-router';
+import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-export default function FormContainer() {
+export default function FormContainer(props) {
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    const access_token = allData.access;
+    const { username } = useParams();
+    const [user, setUser] = useState({
+        User_birthdate: "",
+        User_gender: "",
+        User_phone_number: "",
+        first_name: "",
+        last_name: "",
+        username: "",
+    });
+    useEffect(() => {
+        loadUserInfo();
+    }, []);
+
+    const loadUserInfo = async () => {
+        const result = await axios({
+            method: "get",
+            url: `http://127.0.0.1:8000/api/v1/accounts/user/${username}/`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        })
+        setUser(result.data);
+        console.log("********** The user info ********", user);
+    }
     return (
         <React.Fragment>
             <Paper sx={{ bgcolor: "white", paddingTop: "3rem" }}>

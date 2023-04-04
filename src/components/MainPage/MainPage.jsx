@@ -1,10 +1,10 @@
-// import * as React from 'react';
 import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
 import {React, useState, useRef, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';
+import axios from 'axios';
 
 
 
@@ -59,31 +59,63 @@ function clickInputsInOrder(currentIndex = 0) {
 
 const Announce = (props) => {
   // {image :  , leftDays : , userName : , startDate : , endDate : , desc : , }
-  const {image, leftDays, userName, startDate, endDate, desc} = props.anc
+
+  const {anc_city
+  ,
+  anc_description
+  ,
+  anc_status
+  ,
+  announcer
+  ,
+  announcer_image_code
+  ,
+  announcer_username
+  ,
+  arrival_date
+  ,
+  arrival_date_is_flexible
+  ,
+  city_country
+  ,
+  city_name
+  ,
+  departure_date
+  ,
+  departure_date_is_flexible
+  ,
+  id
+  ,
+  travelers_count} = props.anc
+  
+  console.log(props.anc)
+
+  // const {image, leftDays, userName, startDate, endDate, desc} = props.anc
+  // props.iterators.head += 1
   return(
     <div class="col-lg-6 col-sm-6">
       <div class="item">
         <div class="row">
           <div class="col-lg-6">
             <div class="image">
-              <img src= {image} alt=""/>
+              <img src= {require("../../Assets/images/deals-01.jpg")} alt=""/>
             </div>
           </div>
           <div class="col-lg-6 align-self-center">
             <div class="content">
-              <span class="info">*{leftDays} days left</span>
-              <h4>{userName}</h4>
+              <span class="info">*{travelers_count} Persons</span>
+              <h4>{announcer_username}</h4>
               <div class="row">
                 <div class="col-6">
                   <i class="fa fa-clock"></i>
-                  <span class="list">{startDate}</span>
+                  <span class="list">{arrival_date}</span>
                 </div>
                 <div class="col-6">
                   <i class="fa fa-clock"></i>
-                  <span class="list">{endDate}</span>
+                  <span class="list">{departure_date}</span>
                 </div>
               </div>
-              <p>{desc}</p>
+              <p>{anc_description}</p>
               <div class="main-button">
                 <a href="reservation.html">Give an offer</a>
               </div>
@@ -95,40 +127,53 @@ const Announce = (props) => {
   )
 }
 
+
+
+
 export default function MainPage(){
 
+    const [announcdata,setAnncData] = useState([])
+    const iterators = { head: 0, limit : 4};
 
     useEffect(() => {
       clickInputsInOrder(0);
     }, []);
 
-    const [anncdata, setAnncData] = useState([]);
+    
+    
+    
+
 
     useEffect(() => {
-      fetch(process.env.REACT_APP_API_REGISTER + 'get-announcements-for-host/')
-        .then(response => response.json())
-        .then(data => {
-          setAnncData(data);
-        })
-        .catch(error => {
+
+
+        try {
+  
+          const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+  
+          const config = {
+            headers: {
+              Authorization: `Bearer ${signedInUser['access']}`
+            }
+          };
+    
+          axios.get('http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/', config).then(
+            (response) => {
+              setAnncData(response.data)
+            }
+          )
+          
+          
+        } catch (error) {
           console.error(error);
-        });
+        }
+        console.log("test")
+        console.log(announcdata)
+
     }, []);
 
-    const [profdata, setProfData] = useState([]);
+    
 
-    useEffect(() => {
-      fetch(process.env.REACT_APP_API_REGISTER + 'GetUsernameAndUserImageByUserId/1/')
-        .then(response => response.json())
-        .then(data => {
-          setAnncData(data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }, []);
-
-    console.log(profdata)
 
     const anncData = [
       {image :  require("../../Assets/images/deals-01.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
@@ -364,10 +409,16 @@ export default function MainPage(){
               </div>
             </div>
 
-            <Announce anc={anncData[0]}/>
+            {
+              announcdata.map(data => <Announce anc = {data}/>) 
+            }
+              
+            
+
+            {/* <Announce anc={anncData[0]} iterators = {iterators}/>
             <Announce anc={anncData[1]}/>
             <Announce anc={anncData[2]}/>
-            <Announce anc={anncData[3]}/>
+            <Announce anc={anncData[3]}/>  */}
 
             
             <div class="col-lg-12">

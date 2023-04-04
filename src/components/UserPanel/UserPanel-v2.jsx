@@ -83,7 +83,7 @@ const UserPanelNew = () => {
                                 <Item>
                                     <Stack alignItems={`center`} spacing={1}>
                                         <Item>
-                                            <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }} />
+                                            <Avatar sx={{ width:'15rem', height:'15rem', marginTop: "3rem" }} />
                                         </Item>
                                         <Divider variant={`middle`} flexItem/>
                                         <Item>

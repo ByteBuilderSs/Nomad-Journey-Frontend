@@ -1,9 +1,10 @@
 import React from 'react'
+import BlogForm from '../components/PostExperience/BlogForm'
 
 const PostExperience = () => {
     return (
         <div>
-            <h1>In Post Experience Page</h1>
+            <BlogForm />
         </div>
     )
 }

@@ -5,6 +5,7 @@ import {React, useState, useRef, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';
 import axios from 'axios';
+import ConfirmAlert from './ReactConfirm';
 
 
 
@@ -116,8 +117,8 @@ const Announce = (props) => {
                 </div>
               </div>
               <p>{anc_description}</p>
-              <div class="main-button">
-                <a href="reservation.html">Give an offer</a>
+              <div class="main-button" style={{cursor : "pointer"}} onClick={<ConfirmAlert/>}>
+                <div className='annc' style={{color : "#fff"}}> Give an offer </div>
               </div>
             </div>
           </div>

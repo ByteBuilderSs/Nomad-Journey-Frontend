@@ -20,6 +20,7 @@
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
     "formik": "^2.2.9",
+    "material-ui-chip-input": "^1.1.0",
     "mdb-react-ui-kit": "^5.1.0",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",

@@ -5,10 +5,17 @@ import {React, useState, useRef, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';
 import axios from 'axios';
-import ConfirmAlert from './ReactConfirm';
+import AlertDialogSlide from './ReactConfirm';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
 
-
+  
 const ProgressBar = ({bgcolor,progress,height}) => {
      
     const Parentdiv = {
@@ -63,6 +70,8 @@ const Announce = (props) => {
 
   const {anc_city
   ,
+  anc_country
+  ,
   anc_description
   ,
   anc_status
@@ -89,40 +98,115 @@ const Announce = (props) => {
   ,
   travelers_count} = props.anc
   
-  console.log(props.anc)
+  // For offer dialog :
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOffer = () => {
+      handleClose()
+      Make_Offer()
+      window.location.reload(false); 
+  }
+
+  const Make_Offer = () => {
+
+
+    try {
+  
+      const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${signedInUser['access']}`
+        }
+      };
+  
+      axios.post(`http://127.0.0.1:8000/api/v1/anc_request/create-request/${id}`, config)
+      
+      
+    } catch (error) {
+      console.error(error);
+    }
+  
+  }
 
   // const {image, leftDays, userName, startDate, endDate, desc} = props.anc
   // props.iterators.head += 1
   return(
-    <div class="col-lg-6 col-sm-6">
-      <div class="item">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="image">
-              <img src= {require("../../Assets/images/deals-01.jpg")} alt=""/>
-            </div>
-          </div>
-          <div class="col-lg-6 align-self-center">
-            <div class="content">
-              <span class="info">*{travelers_count} Persons</span>
-              <h4>{announcer_username}</h4>
-              <div class="row">
-                <div class="col-6">
-                  <i class="fa fa-clock"></i>
-                  <span class="list">{arrival_date}</span>
-                </div>
-                <div class="col-6">
-                  <i class="fa fa-clock"></i>
-                  <span class="list">{departure_date}</span>
-                </div>
+      <div class="col-lg-6 col-sm-6">
+        <div class="item">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="image">
+                <img src= {require("../../Assets/images/deals-01.jpg")} alt=""/>
               </div>
-              <p>{anc_description}</p>
-              <div class="main-button" style={{cursor : "pointer"}} onClick={<ConfirmAlert/>}>
-                <div className='annc' style={{color : "#fff"}}> Give an offer </div>
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="content">
+                <span class="info">*{travelers_count} Travelers</span>
+                <h4>{announcer_username}</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <i class="fa fa-clock"></i>
+                    <span class="list">{arrival_date}</span>
+                  </div>
+                  <div class="col-6">
+                    <i class="fa fa-clock"></i>
+                    <span class="list">{departure_date}</span>
+                  </div>
+                </div>
+                <p>{anc_description}</p>
+                <div class="main-button" style={{cursor : "pointer"}} onClick={handleClickOpen}>
+                  <div className='annc' style={{color : "#fff"}}> Give an offer </div>
+                  
+                </div>
+                <Dialog
+                    open={open}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-describedby="alert-dialog-slide-description"
+                    PaperProps={{
+                      sx: {
+                        width: "100%",
+                        maxWidth: "450px!important",
+                      },
+                    }}
+                    >
+                    <DialogTitle>{"Are You Sure?"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions style={{justifyContent : "center"}}>
+                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
+                        <div className='annc' style={{color : "#fff"}}> Yes </div>
+                      </div>
+                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleClose}>
+                        <div className='annc' style={{color : "#fff"}}> No </div>
+                      </div>
+                    </DialogActions>
+                  </Dialog>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      
+  )
+}
+
+const NotFound = () => {
+  return(
+    <div class="col-lg-12">
+      <div class="item" style={{height : "500px"}}>
+        <h1 style={{justifyContent : "center", "paddingTop" : "250px"}}>Not Found!!</h1>
       </div>
     </div>
   )
@@ -168,10 +252,11 @@ export default function MainPage(){
         } catch (error) {
           console.error(error);
         }
-        console.log("test")
-        console.log(announcdata)
 
     }, []);
+
+
+  
 
     
 
@@ -182,6 +267,8 @@ export default function MainPage(){
       {image :  require("../../Assets/images/deals-03.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
       {image :  require("../../Assets/images/deals-04.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
     ]
+
+    
 
   return(
 
@@ -409,17 +496,19 @@ export default function MainPage(){
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
               </div>
             </div>
-
+            
             {
-              announcdata.map(data => <Announce anc = {data}/>) 
-            }
               
+              announcdata.length != 0 ?   announcdata.map(data => <Announce anc = {data}/>) : <NotFound/>
+            }
+
+            
+            
+            
+            
             
 
-            {/* <Announce anc={anncData[0]} iterators = {iterators}/>
-            <Announce anc={anncData[1]}/>
-            <Announce anc={anncData[2]}/>
-            <Announce anc={anncData[3]}/>  */}
+            
 
             
             <div class="col-lg-12">

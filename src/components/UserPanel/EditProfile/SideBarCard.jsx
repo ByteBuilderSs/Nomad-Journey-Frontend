@@ -35,7 +35,7 @@ const SideBarCard = () => {
                                         type="file"
                                         max={20}
                                     />
-                                    <Avatar sx={{ width:'15vw', height:'15vw' }} />
+                                    <Avatar sx={{ width:'15rem', height:'15rem' }} />
                                 </IconButton>
                             </Item>
                             <Item>

@@ -17,35 +17,104 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import { toast } from "react-toastify";
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { Navigate } from 'react-router';
 
 const ChangeAddressDialog = (props) => {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const { username } = useParams();
-    const [user, setUser] = useState({
-        User_address: "",
-        User_country: "",
-        User_apt: "",
-        User_postal_code: "",
-        User_city: "",
-    });
+
+    const [street, setStreet] = useState("")
+    const [apt, setApt] = useState("")
+    const [city, setCity] = useState("")
+    const [country, setCountry] = useState("")
+    const [postalCode, setPostalCode] = useState("")
+
+    const handleChangeStreet = (event) => {
+        setStreet(event.target.value);
+    }
+    const handleChangeApt = (event) => {
+        setApt(event.target.value);
+    }
+    const handleChangeCity = (event) => {
+        setCity(event.target.value);
+    }
+    const handleChangeCountry = (event) => {
+        setCountry(event.target.value);
+    }
+    const handleChangePostalCode = (event) => {
+        setPostalCode(event.target.value);
+    }
+
     useEffect(() => {
         loadUserInfo();
     }, []);
 
     const loadUserInfo = async () => {
-        const result = await axios({
+        axios({
             method: "get",
             url: `http://127.0.0.1:8000/api/v1/accounts/user/${username}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
             }
+        }).then((result) => {
+            setStreet(result.data.User_address);
+            setApt(result.data.User_apt);
+            setCity(result.data.User_city);
+            setCountry(result.data.User_country);
+            setPostalCode(result.data.User_postal_code);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching data.")
+            {/* TODO => err.response.data.message*/}
         })
-        setUser(result.data);
-        console.log("********** The user info ********", user);
+    }
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        let validData = 1;
+        if (!city) {
+            toast.error("The City field can not be empty.");
+            validData = 0;
+        }
+        if (!country) {
+            toast.error("The Country field can not be empty.");
+            validData = 0;
+        }
+        if (!postalCode) {
+            toast.error("The Postal code field can not be empty.");
+            validData = 0;
+        }
+        if (validData === 1)
+        {
+            axios({
+                method: "patch",
+                url: `http://127.0.0.1:8000//api/v1/accounts/UserProfileEdit2/${username}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                data : {
+                    User_address: street,
+                    User_apt: apt,
+                    User_city: city,
+                    User_country: country,
+                    User_postal_code: postalCode
+                }
+            }).then((res) => {
+                toast.success("Changes updated successfully.")
+            }).catch((error) => {
+                toast.error("Something went wrong while updating information.")
+            })
+        }
+    }
+
+    const onCancel = async (event) => {
+        event.preventDefault();
+        loadUserInfo();
+        props.setOpen(false);
     }
     const handleClose = () => {
         props.setOpen(false);
@@ -93,7 +162,10 @@ const ChangeAddressDialog = (props) => {
                                 <FormControl fullWidth variant='outlined'>
                                     <TextField 
                                         type={"text"}
-                                        label="Street Address"/>
+                                        label="Street Address"
+                                        value={street}
+                                        onChange={handleChangeStreet}
+                                        />
                                 </FormControl>
                             </Grid>
                             
@@ -105,7 +177,10 @@ const ChangeAddressDialog = (props) => {
                                 <FormControl fullWidth variant='outlined'>
                                     <TextField 
                                         type={"text"}
-                                        label="Apt/Suit/Bldg"/>
+                                        label="Apt/Suit/Bldg"
+                                        value={apt}
+                                        onChange={handleChangeApt}
+                                        />
                                 </FormControl>
                             </Grid>
                             {/* City */}
@@ -116,7 +191,10 @@ const ChangeAddressDialog = (props) => {
                                 <FormControl fullWidth variant='outlined'>
                                     <TextField 
                                         type={"text"}
-                                        label="City"/>
+                                        label="City"
+                                        value={city}
+                                        onChange={handleChangeCity}
+                                        />
                                 </FormControl>
                             </Grid>
                             {/* Country */}
@@ -127,7 +205,10 @@ const ChangeAddressDialog = (props) => {
                                 <FormControl fullWidth variant='outlined'>
                                     <TextField 
                                         type={"text"}
-                                        label="Country"/>
+                                        label="Country"
+                                        value={country}
+                                        onChange={handleChangeCountry}
+                                        />
                                 </FormControl>
                             </Grid>
                             {/* Postal Code */}
@@ -138,7 +219,10 @@ const ChangeAddressDialog = (props) => {
                                 <FormControl fullWidth variant='outlined'>
                                     <TextField 
                                         type={"text"}
-                                        label="Postal Code"/>
+                                        label="Postal Code"
+                                        value={postalCode}
+                                        onChange={handleChangePostalCode}
+                                        />
                                 </FormControl>
                             </Grid>
                             <DialogActions>
@@ -147,6 +231,17 @@ const ChangeAddressDialog = (props) => {
                                     variant="outlined"
                                     size="large"
                                     type="submit"
+                                    onClick={onCancel}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    sx={{ m: 1 }}
+                                    variant="contained"
+                                    size="large"
+                                    type="submit"
+                                    color='success'
+                                    onClick={onSubmit}
                                 >
                                     Update
                                 </Button>

@@ -75,31 +75,54 @@ export default function FormContainer(props) {
             setPhone(result.data.User_phone_number);
         }).catch((error) => {
             toast.error("Something went wrong while fetching data.")
+            {/* TODO => err.response.data.message*/}
         })
     }
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        axios({
-            method: "patch",
-            url: `http://127.0.0.1:8000//api/v1/accounts/UserProfileEdit1/${username}`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-            },
-            data : {
-                User_birthdate: birthday,
-                User_gender: gender,
-                User_phone_number: phone,
-                first_name: firstname,
-                last_name: lastname,
-                username: usernameState
-            }
-        }).then((res) => {
-            toast.success("Changes updated successfully.")
-        }).catch((error) => {
-            toast.error("Something went wrong while updating information.")
-        })
+        let birthdate = new Date();
+        let validData = true;
+        if (!usernameState) {
+            toast.error("The Username field can not be empty.");
+            validData = false;
+        }
+        if (!firstname) {
+            toast.error("The Firstname field can not be empty.");
+            validData = false;
+        }
+        if (!lastname) {
+            toast.error("The Lastname field can not be empty");
+            validData = false;
+        }
+        if (birthday) {
+            birthdate = new DateObject({
+                date: birthdate,
+                formate: "YYYY-MM-DD"
+            }).format("YYYY-MM-DD");
+        }
+        if (validData) {
+            axios({
+                method: "patch",
+                url: `http://127.0.0.1:8000//api/v1/accounts/UserProfileEdit1/${username}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                data : {
+                    User_birthdate: birthdate,
+                    User_gender: gender,
+                    User_phone_number: phone,
+                    first_name: firstname,
+                    last_name: lastname,
+                    username: usernameState
+                }
+            }).then((res) => {
+                toast.success("Changes updated successfully.")
+            }).catch((error) => {
+                toast.error("Something went wrong while updating information.")
+            })
+        }
     }
 
     const onCancel = async (event) => {
@@ -218,8 +241,8 @@ export default function FormContainer(props) {
                                                 style={{ width: "30rem"}}
                                                 inputClass="new-request-date-picker-input"
                                                 className="date-picker"
-                                                format="YYYY/MM/DD"
-                                                name="arrival_date"
+                                                format="YYYY-MM-DD"
+                                                name="birthdate"
                                                 calendarPosition="bottom-end"
                                                 placeholder="Birthday"
                                                 hideOnScroll

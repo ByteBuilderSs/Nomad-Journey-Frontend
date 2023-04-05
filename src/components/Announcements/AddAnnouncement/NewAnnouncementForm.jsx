@@ -37,8 +37,9 @@ const intialState = {
 };
 
 
-
 export default function NewAnnouncementForm(props) {
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    const access_token = allData.access;
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [arrival_date, setArrivalDate] = useState(null);
@@ -47,7 +48,7 @@ export default function NewAnnouncementForm(props) {
     const [departure_date_is_flexible, setIsDptDateFelxible] = useState(false);
     const [travelers_count, setTravelersCount] = useState('');
     const [message, setMessage] = useState('');
-    const [disabled, setDisabled] = React.useState(false);
+    const [disabled, setDisabled] = useState(false);
 
 
     const handleChangeCountry = (event) => {
@@ -118,7 +119,6 @@ export default function NewAnnouncementForm(props) {
             isDataValid = false;
         }
         if (isDataValid) {
-            const access_token = localStorage.getItem('access');
             console.log(`********** the access token is: ${access_token}`);
             axios({
                     method: "post",
@@ -128,13 +128,13 @@ export default function NewAnnouncementForm(props) {
                         'Authorization': `Bearer ${access_token}`
                     },
                     data: {
-                        country: country,
-                        city: city,
+                        anc_country: country,
+                        anc_city: city,
                         arrival_date: arrDate,
                         departure_date: deptDate,
                         arrival_date_is_flexible: arrival_date_is_flexible,
                         departure_date_is_flexible: departure_date_is_flexible,
-                        message: message,
+                        anc_description: message,
                         travelers_count: travelers_count
                     }
                 })
@@ -142,7 +142,7 @@ export default function NewAnnouncementForm(props) {
                     props.setOpen(false);
                     setDisabled(true);
                     setTimeout(() => {
-                        
+                        setDisabled(false);
                     }, 5000);
                     props.setRequestData({});
                     toast.success("A new announcement created successfully");
@@ -158,14 +158,14 @@ export default function NewAnnouncementForm(props) {
                 })
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");
-                    setCountry('');
-                    setCity('');
-                    setArrivalDate(null);
-                    setDepartureDate(null);
-                    setIsArrDateFelxible(false);
-                    setIsDptDateFelxible(false);
-                    setTravelersCount('');
-                    setMessage('');
+                    // setCountry('');
+                    // setCity('');
+                    // setArrivalDate(null);
+                    // setDepartureDate(null);
+                    // setIsArrDateFelxible(false);
+                    // setIsDptDateFelxible(false);
+                    // setTravelersCount('');
+                    // setMessage('');
                 });
         }
     }
@@ -386,7 +386,7 @@ export default function NewAnnouncementForm(props) {
                                                         sx={{ width: "100%" }}
                                                         type="submit"
                                                         onClick={onSubmit}
-                                                        // disabled={disabled}
+                                                        disabled={disabled}
                                                     >
                                                         Submit the information
                                                     </Button>
@@ -400,7 +400,6 @@ export default function NewAnnouncementForm(props) {
                                                         }}
                                                         type="submit"
                                                         onClick={onCancle}
-                                                        // disabled={disabled}
                                                     >
                                                         Quit
                                                     </Button>

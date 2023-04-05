@@ -99,7 +99,7 @@ function App() {
                 newestOnTop={true}
                 pauseOnFocusLoss
                 draggable
-                autoClose={10000}
+                autoClose={7000}
                 closeOnClick
                 pauseOnHover/>
         </div>}</div>

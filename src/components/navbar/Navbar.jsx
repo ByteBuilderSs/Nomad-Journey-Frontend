@@ -54,7 +54,7 @@ const tabs = [
         value: 2,
         desktopIcon: <MdAccountCircle style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdAccountCircle style={{  fontSize: "small" }}/>,
-        route: `/home/Profile/${username}`,
+        route: `/home/Profile/${username}/`,
     },
     {
         label: "Inbox",

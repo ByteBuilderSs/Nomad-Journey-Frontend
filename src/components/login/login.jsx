@@ -25,6 +25,7 @@ import {
 
 import logo from "../../Assets/images/nomad-journey-logo-3-fotor-bg-remover-20230323195457.png";
 import { useLogin } from "../../hooks/useLogin";
+import { toast } from "react-toastify";
 
 
 //-------------------------------------------------------------
@@ -51,7 +52,16 @@ export default function SignInSide()
     const {login} =useLogin()
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await login(Email,password)
+        if(Email.length==0)
+        {
+            toast.error("Email required!")
+        }
+        else if(password.length==0)
+        {
+            toast.error("Password required!")
+        }
+        else{
+        await login(Email,password)}
     };
 
     return (

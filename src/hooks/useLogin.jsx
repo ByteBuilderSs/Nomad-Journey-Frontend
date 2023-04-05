@@ -14,8 +14,8 @@ export const useLogin=()=>{
         const json =await respone.json()
         if(!respone.ok)
         {
-            Object.keys(json).forEach(function(key) {
-                toast.error(key+":"+json[key])});
+            console.log("error")
+            console.log(json)
                 
         }
         if(respone.ok)

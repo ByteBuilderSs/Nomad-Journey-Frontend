@@ -1,5 +1,5 @@
 import './UserPanel-v2.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Paper,
@@ -14,7 +14,9 @@ import {
     Stack,
     Avatar,
     Card,
-    Container
+    Container,
+    CardHeader,
+    Typography
 } from '@mui/material';
 import { Link, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
@@ -30,10 +32,13 @@ import MyPosts from './RightBar/Posts';
 import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
 import Overview from './Overview';
-
+import ReqAnnonces from './ReqAnnonce/ReqAnnonce';
+import { useHostOffers } from '../../hooks/useAllHostOffers';
 
 
 const UserPanelNew = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const handleOpen = () => {setIsOpen(!isOpen)};
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
@@ -44,6 +49,7 @@ const UserPanelNew = () => {
         email : "aylin@gmail.com",
         username : "AylinNZ",
     });
+
     const user_params = useParams();
     const menuItem = [
         {
@@ -72,48 +78,79 @@ const UserPanelNew = () => {
         setDisabled(false);
     }
 
+    const {hostOffers,Annoc} =useHostOffers() 
+    useEffect(()=>{hostOffers()},[])
+
+
     return (
         <div className='userpanel'>
             <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
                 <Grid container spacing={3}>
                     {/* SideBar */}
-                    <Grid item xs={12} sm={12} md={3}>
-                        <Card  sx={{ bgcolor: "white" }}>
-                            <Stack spacing={6} sx={{ paddingBottom: "1rem" }}>
-                                <Item>
-                                    <Stack alignItems={`center`} spacing={1}>
-                                        <Item>
-                                            <Avatar sx={{ width:'15rem', height:'15rem', marginTop: "3rem" }} />
-                                        </Item>
-                                        <Divider variant={`middle`} flexItem/>
-                                        <Item>
-                                            <h1 style={{ fontWeight: "bold", marginBottom: "-2rem" }}>{userData.first_name}</h1>
-                                            <h1 style={{ fontWeight: "bold" }}>{userData.last_name}</h1>
-                                        </Item>
-                                        <Stack direction="row" spacing={2}>
+                    <Grid item direction="column" xs={12} sm={12} md={3}>
+                        <Grid item xs={12} sm={12} md={3} sx={{marginBottom:'3vh'}} >
+                            <Card  sx={{ bgcolor: "white" }}>
+                                <Stack spacing={6} sx={{ paddingBottom: "1rem" }}>
+                                    <Item>
+                                        <Stack alignItems={`center`} spacing={1}>
                                             <Item>
-                                                <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="#e55405" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>
+                                                <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }} />
                                             </Item>
+                                            <Divider variant={`middle`} flexItem/>
                                             <Item>
-                                                <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#e55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>
+                                                <h1 style={{ fontWeight: "bold", marginBottom: "-2rem" }}>{userData.first_name}</h1>
+                                                <h1 style={{ fontWeight: "bold" }}>{userData.last_name}</h1>
                                             </Item>
-                                        </Stack>
-                                        <div className="list-section">
-                                            {menuItem.map((item, key) => (
-                                                <Item className="sidebar_list">
-                                                    {active === item.name && <Link className={`section selectedSection`} onClick={() => setActive(item.name)}>
-                                                        {item.icon} {item.name}
-                                                    </Link>}
-                                                    {active !== item.name && <Link className={`section`} onClick={() => setActive(item.name)}>
-                                                        {item.icon} {item.name}
-                                                    </Link>}
+                                            <Stack direction="row" spacing={2}>
+                                                <Item>
+                                                    <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="#e55405" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>
                                                 </Item>
-                                            ))}
-                                        </div>
-                                    </Stack>
-                                </Item>
-                            </Stack>
-                        </Card>
+                                                <Item>
+                                                    <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#e55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>
+                                                </Item>
+                                            </Stack>
+                                            <div className="list-section">
+                                                {menuItem.map((item, key) => (
+                                                    <Item className="sidebar_list">
+                                                        {active === item.name && <Link className={`section selectedSection`} onClick={() => setActive(item.name)}>
+                                                            {item.icon} {item.name}
+                                                        </Link>}
+                                                        {active !== item.name && <Link className={`section`} onClick={() => setActive(item.name)}>
+                                                            {item.icon} {item.name}
+                                                        </Link>}
+                                                    </Item>
+                                                ))}
+                                            </div>
+                                        </Stack>
+                                    </Item>
+                                </Stack>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={3} >
+                            <Card  sx={{ bgcolor: "white" }}>
+                                <Stack spacing={6} sx={{ paddingBottom: "1rem"}}>
+                                    <CardHeader title="Offers from Hosts" sx={{justifyItems:"center",display:"flex",textAlign:"center"}}/>
+                                    <Item sx={{marginTop:"0px"}}>
+                                        <Stack alignItems={`center`} spacing={1} sx={{marginTop:'0px'}}>
+                                        <ReqAnnonces isDialogOpened={isOpen} 
+                                        handleCloseDialog={() => setIsOpen(false)}
+                                        />
+                                        <div className="list-section">
+                                            
+                                                {/* {Annoc.map((item, key) => (
+                                                    <Item className="sidebar_list" >
+                                                        <Link  className={`section `} onClick={() => {handleOpen()}}>
+                                                            {item.data}
+                                                        </Link>
+                                                        
+                                                    </Item>
+                                                ))} */}
+                                            </div>
+                                        </Stack>
+                                    </Item>
+                                </Stack>
+                            </Card>
+                        </Grid>
                     </Grid>
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>

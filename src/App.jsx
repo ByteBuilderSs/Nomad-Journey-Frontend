@@ -47,7 +47,6 @@ function App() {
       console.log('no user exists')
       navigate("/signup");
     }
-    // else{navigate("/home/dashboard")}
     },[]);
 
     

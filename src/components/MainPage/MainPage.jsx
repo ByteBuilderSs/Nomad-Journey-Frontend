@@ -1,12 +1,21 @@
-// import * as React from 'react';
 import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
-import React, { useRef, useEffect } from "react";
+import {React, useState, useRef, useEffect } from "react";
 import App from './ImageSlide';
 import { containerClasses } from '@mui/system';
+import axios from 'axios';
+import AlertDialogSlide from './ReactConfirm';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
 
+  
 const ProgressBar = ({bgcolor,progress,height}) => {
      
     const Parentdiv = {
@@ -56,50 +65,212 @@ function clickInputsInOrder(currentIndex = 0) {
   clickNextInput();
 }
 
+const fetchAnnc = async (setAnncData) => {
+  try {
+
+    const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${signedInUser['access']}`
+      }
+    };
+
+    await axios.get('http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/', config).then(
+      (response) => {
+        setAnncData(response.data)
+      }
+    )
+    
+    
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const Announce = (props) => {
   // {image :  , leftDays : , userName : , startDate : , endDate : , desc : , }
-  const {image, leftDays, userName, startDate, endDate, desc} = props.anc
+
+  const {anc_city
+  ,
+  anc_country
+  ,
+  anc_description
+  ,
+  anc_status
+  ,
+  announcer
+  ,
+  announcer_image_code
+  ,
+  announcer_username
+  ,
+  arrival_date
+  ,
+  arrival_date_is_flexible
+  ,
+  city_country
+  ,
+  city_name
+  ,
+  departure_date
+  ,
+  departure_date_is_flexible
+  ,
+  id
+  ,
+  travelers_count} = props.anc
+  
+  // For offer dialog :
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOffer = () => {
+      handleClose()
+      Make_Offer()
+      // window.location.reload(false); 
+      fetchAnnc(props.setAnncData)
+  }
+
+  
+
+  const Make_Offer = async () => {
+
+
+    try {
+  
+      const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+      console.log(signedInUser)
+      
+      axios({
+        method: "post",
+        url: `http://127.0.0.1:8000/api/v1/anc_request/create-request/${id}`,
+        headers: {
+          'Authorization': `Bearer ${signedInUser.access}`
+        },
+      })
+      
+      
+    } catch (error) {
+      console.error(error);
+    }
+  
+  }
+  let Description = "";
+  if(anc_description.length > 44){
+    Description = anc_description.substring(0, 44) + "..."
+  }else{
+    Description = anc_description
+  }
+   
   return(
-    <div class="col-lg-6 col-sm-6">
-      <div class="item">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="image">
-              <img src= {image} alt=""/>
-            </div>
-          </div>
-          <div class="col-lg-6 align-self-center">
-            <div class="content">
-              <span class="info">*{leftDays} days left</span>
-              <h4>{userName}</h4>
-              <div class="row">
-                <div class="col-6">
-                  <i class="fa fa-clock"></i>
-                  <span class="list">{startDate}</span>
-                </div>
-                <div class="col-6">
-                  <i class="fa fa-clock"></i>
-                  <span class="list">{endDate}</span>
-                </div>
+      <div class="col-lg-6 col-sm-6">
+        <div class="item">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="image">
+                <img src= {require("../../Assets/images/deals-01.jpg")} alt=""/>
               </div>
-              <p>{desc}</p>
-              <div class="main-button">
-                <a href="reservation.html">Give an offer</a>
+            </div>
+            <div class="col-lg-6 align-self-center">
+              <div class="content">
+                <span class="info">*{travelers_count} Travelers</span>
+                <h4>{announcer_username}</h4>
+                <div class="row">
+                  <div class="col-6">
+                    <i class="fa fa-clock"></i>
+                    <span class="list">{arrival_date}</span>
+                  </div>
+                  <div class="col-6">
+                    <i class="fa fa-clock"></i>
+                    <span class="list">{departure_date}</span>
+                  </div>
+                </div>
+                <p>{Description}</p>
+                <div class="main-button" style={{cursor : "pointer"}} onClick={handleClickOpen}>
+                  <div className='annc' style={{color : "#fff"}}> Give an offer </div>
+                </div>
+                <Dialog
+                    open={open}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-describedby="alert-dialog-slide-description"
+                    PaperProps={{
+                      sx: {
+                        width: "100%",
+                        maxWidth: "450px!important",
+                        "border-radius" : "50px",
+                        backgroundColor : "white"
+                      },
+                    }}
+                    >
+                    <DialogTitle>{"Are You Sure?"}</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions style={{justifyContent : "center"}}>
+                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
+                        <div className='annc' style={{color : "#fff"}}> Yes </div>
+                      </div>
+                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleClose}>
+                        <div className='annc' style={{color : "#fff"}}> No </div>
+                      </div>
+                    </DialogActions>
+                  </Dialog>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+  )
+}
+
+const NotFound = () => {
+  return(
+    <div class="col-lg-12">
+      <div class="item" style={{height : "500px"}}>
+        <h1 style={{justifyContent : "center", "paddingTop" : "250px"}}>Not Found!!</h1>
+      </div>
     </div>
   )
 }
 
+
+
+
 export default function MainPage(){
 
+    const [announcdata,setAnncData] = useState([])
+    const iterators = { head: 0, limit : 4};
 
     useEffect(() => {
       clickInputsInOrder(0);
     }, []);
+
+    
+    
+    
+
+
+    useEffect(() => {
+
+      fetchAnnc(setAnncData)
+        
+    }, []);
+
+
+  
+
+    
 
 
     const anncData = [
@@ -109,7 +280,9 @@ export default function MainPage(){
       {image :  require("../../Assets/images/deals-04.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
     ]
 
-    return(
+    
+
+  return(
 
     <div className='mainpage'>
 
@@ -335,11 +508,19 @@ export default function MainPage(){
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
               </div>
             </div>
+            
+            {
+              
+              announcdata.length != 0 ?   announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} />) : <NotFound/>
+            }
 
-            <Announce anc={anncData[0]}/>
-            <Announce anc={anncData[1]}/>
-            <Announce anc={anncData[2]}/>
-            <Announce anc={anncData[3]}/>
+            
+            
+            
+            
+            
+
+            
 
             
             <div class="col-lg-12">

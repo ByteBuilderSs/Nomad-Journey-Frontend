@@ -6,7 +6,7 @@ export const useLogin=()=>{
     const navigate=useNavigate()
     const login= async(email,password) =>{
               
-        const respone= await fetch(process.env.REACT_APP_API_REGISTER+'token/',{ 
+        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'token/',{ 
             method :'POST',
             headers :{'Content-Type':'application/json'},
             body :JSON.stringify({email,password})

@@ -8,7 +8,7 @@ export const useLogout=()=>{
         const refresh_token=allData.refresh
         const access=allData.access
 
-        const respone= await fetch(process.env.REACT_APP_API_REGISTER+'logout/',{ 
+        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'logout/',{ 
             method :'POST',
             headers :{'Content-Type':'application/json','Authorization': `Bearer ${access}`},
             body :JSON.stringify({refresh_token})

@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { Link, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
-import { TiUser } from "react-icons/ti";
+import { TiUser,TiPin } from "react-icons/ti";
 import { AiFillNotification } from "react-icons/ai";
 import { MdFeedback } from "react-icons/md";
 import { HiCamera } from "react-icons/hi";
@@ -32,8 +32,8 @@ import MyPosts from './RightBar/Posts';
 import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
 import Overview from './Overview';
-import ReqAnnonces from './ReqAnnonce/ReqAnnonce';
-import { useHostOffers } from '../../hooks/useAllHostOffers';
+import MyOffers from './RightBar/MyOffers'
+import {useUserData} from '../../hooks/useSetUserData'
 
 
 const UserPanelNew = () => {
@@ -43,6 +43,9 @@ const UserPanelNew = () => {
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
     const [active, setActive] = useState("My Profile");
+    const {userdata,userInfo}=useUserData()
+    useEffect(()=>{userdata()},[])
+
     const [userData, setUserData] = useState({
         first_name : "Aylin",
         last_name : "Naebzadeh",
@@ -68,18 +71,23 @@ const UserPanelNew = () => {
             icon : <HiCamera />,
         },
         {
+            name : "Hosts Offers",
+            component : <MyOffers />,
+            icon : <TiPin />,
+        },
+        {
             name : "feedback",
             component : <MyFeedbacks />,
             icon : <MdFeedback />,
         },
+        
     ]
     const openCreateRequest = (event) => {
         setOpen(true);
         setDisabled(false);
     }
 
-    const {hostOffers,Annoc} =useHostOffers() 
-    useEffect(()=>{hostOffers()},[])
+    
 
 
     return (
@@ -87,7 +95,7 @@ const UserPanelNew = () => {
             <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
                 <Grid container spacing={3}>
                     {/* SideBar */}
-                    <Grid item direction="column" xs={12} sm={12} md={3}>
+                    
                         <Grid item xs={12} sm={12} md={3} sx={{marginBottom:'3vh'}} >
                             <Card  sx={{ bgcolor: "white" }}>
                                 <Stack spacing={6} sx={{ paddingBottom: "1rem" }}>
@@ -126,32 +134,7 @@ const UserPanelNew = () => {
                                 </Stack>
                             </Card>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={3} >
-                            <Card  sx={{ bgcolor: "white" }}>
-                                <Stack spacing={6} sx={{ paddingBottom: "1rem"}}>
-                                    <CardHeader title="Offers from Hosts" sx={{justifyItems:"center",display:"flex",textAlign:"center"}}/>
-                                    <Item sx={{marginTop:"0px"}}>
-                                        <Stack alignItems={`center`} spacing={1} sx={{marginTop:'0px'}}>
-                                        <ReqAnnonces isDialogOpened={isOpen} 
-                                        handleCloseDialog={() => setIsOpen(false)}
-                                        />
-                                        <div className="list-section">
-                                            
-                                                {/* {Annoc.map((item, key) => (
-                                                    <Item className="sidebar_list" >
-                                                        <Link  className={`section `} onClick={() => {handleOpen()}}>
-                                                            {item.data}
-                                                        </Link>
-                                                        
-                                                    </Item>
-                                                ))} */}
-                                            </div>
-                                        </Stack>
-                                    </Item>
-                                </Stack>
-                            </Card>
-                        </Grid>
-                    </Grid>
+      
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>
                         <Card  sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">

@@ -65,6 +65,29 @@ function clickInputsInOrder(currentIndex = 0) {
   clickNextInput();
 }
 
+const fetchAnnc = async (setAnncData) => {
+  try {
+
+    const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${signedInUser['access']}`
+      }
+    };
+
+    await axios.get('http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/', config).then(
+      (response) => {
+        setAnncData(response.data)
+      }
+    )
+    
+    
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const Announce = (props) => {
   // {image :  , leftDays : , userName : , startDate : , endDate : , desc : , }
 
@@ -112,23 +135,27 @@ const Announce = (props) => {
   const handleOffer = () => {
       handleClose()
       Make_Offer()
-      window.location.reload(false); 
+      // window.location.reload(false); 
+      fetchAnnc(props.setAnncData)
   }
 
-  const Make_Offer = () => {
+  
+
+  const Make_Offer = async () => {
 
 
     try {
   
       const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-  
-      const config = {
+      console.log(signedInUser)
+      
+      axios({
+        method: "post",
+        url: `http://127.0.0.1:8000/api/v1/anc_request/create-request/${id}`,
         headers: {
-          Authorization: `Bearer ${signedInUser['access']}`
-        }
-      };
-  
-      axios.post(`http://127.0.0.1:8000/api/v1/anc_request/create-request/${id}`, config)
+          'Authorization': `Bearer ${signedInUser.access}`
+        },
+      })
       
       
     } catch (error) {
@@ -136,9 +163,13 @@ const Announce = (props) => {
     }
   
   }
-
-  // const {image, leftDays, userName, startDate, endDate, desc} = props.anc
-  // props.iterators.head += 1
+  let Description = "";
+  if(anc_description.length > 44){
+    Description = anc_description.substring(0, 44) + "..."
+  }else{
+    Description = anc_description
+  }
+   
   return(
       <div class="col-lg-6 col-sm-6">
         <div class="item">
@@ -162,10 +193,9 @@ const Announce = (props) => {
                     <span class="list">{departure_date}</span>
                   </div>
                 </div>
-                <p>{anc_description}</p>
+                <p>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleClickOpen}>
                   <div className='annc' style={{color : "#fff"}}> Give an offer </div>
-                  
                 </div>
                 <Dialog
                     open={open}
@@ -176,6 +206,8 @@ const Announce = (props) => {
                       sx: {
                         width: "100%",
                         maxWidth: "450px!important",
+                        "border-radius" : "50px",
+                        backgroundColor : "white"
                       },
                     }}
                     >
@@ -231,28 +263,8 @@ export default function MainPage(){
 
     useEffect(() => {
 
-
-        try {
-  
-          const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-  
-          const config = {
-            headers: {
-              Authorization: `Bearer ${signedInUser['access']}`
-            }
-          };
-    
-          axios.get('http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/', config).then(
-            (response) => {
-              setAnncData(response.data)
-            }
-          )
-          
-          
-        } catch (error) {
-          console.error(error);
-        }
-
+      fetchAnnc(setAnncData)
+        
     }, []);
 
 
@@ -499,7 +511,7 @@ export default function MainPage(){
             
             {
               
-              announcdata.length != 0 ?   announcdata.map(data => <Announce anc = {data}/>) : <NotFound/>
+              announcdata.length != 0 ?   announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} />) : <NotFound/>
             }
 
             

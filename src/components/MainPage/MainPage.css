@@ -624,6 +624,8 @@ Pre-loader Style
     margin-top: 10px;
     border-top: 1px solid #ddd;
     margin-bottom: 30px;
+    word-wrap: break-word; /* Breaks long words to fit the container */
+    white-space: pre-wrap; 
   }
   
   .amazing-deals ul.page-numbers {

@@ -4,7 +4,9 @@ import {TiLocation} from "react-icons/ti";
 import {BsCalendarDateFill} from "react-icons/bs";
 import DeleteAnnouncement from "../../Announcements/DeleteAnnouncement";
 import EditAnnouncement from "../../Announcements/EditAnnouncement";
-import {Divider, IconButton, Skeleton, Stack} from "@mui/material";
+import ShowAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
+import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
+import {Button, Divider, IconButton, Skeleton, Stack} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import {FaHome, FaLongArrowAltRight} from "react-icons/fa";
 import {AiOutlineFieldTime} from "react-icons/ai";
@@ -35,11 +37,13 @@ function MyAnnouncements({username}) {
     const classes = useStyles();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const announcements_params = useParams();
     const [announcement, setAnnouncement] = useState([]);
+    const [disabled, setDisabled] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [anc_id,setAnc_id] = useState(null);
     useEffect( () =>
     {
-        axios(`http://127.0.0.1:8000/api/v1/announcement/get-user-announcement/${username}`)
+        axios(`http://127.0.0.1:8000/api/v1/announcement/get-user-announcements/${username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -66,7 +70,7 @@ function MyAnnouncements({username}) {
             return `${num_days} Night`;
         return `${num_days} Nights`;
     }
-    const statusDefining = (status) => {
+    const statusMode = (status) => {
         switch (status){
             case 'P':
                 return "Pending";
@@ -81,11 +85,20 @@ function MyAnnouncements({username}) {
     const checkDescription = (description) => {
         if(description === null || description === "")
             return;
-        if(description.length >= 95)
+        if(description.length >= 78)
+        {
+
+            let counter = 0, uppercase = 0;
+            for (; counter < 78; counter++)
+            {
+                if(description[counter] === description[counter].toUpperCase())
+                    uppercase++;
+            }
             return(
                 <>
-                    <MdDescription /> Description: {description.substring(0,95)}...
+                    <MdDescription /> Description: {description.substring(0,78-(uppercase/3))}...
                 </>);
+        }
         return(
             <>
             <MdDescription /> Description: {description}
@@ -112,6 +125,26 @@ function MyAnnouncements({username}) {
                     </Row>
                 </h1>
             );
+        }
+    }
+    const checkNotNull = (ancId) => {
+        if (ancId != null)
+        {
+            return(
+            <>
+                <UnAuthAnnouncement
+                    announcement_id={ancId}
+                    open={open}
+                    setOpen={setOpen}
+                    disabled={disabled}
+                    setDisabled={setDisabled}
+                    dayOfdate={getDayOfDate}
+                    checkStatus={statusMode}
+                    numOfTravelers={numberOftravelers}
+                    numOfNights={diffDays}
+                />
+            </>
+            )
         }
     }
     const checkLoading = (isLoading) => {
@@ -159,22 +192,26 @@ function MyAnnouncements({username}) {
             <Stack>
                 {announcement.map((anc, key) =>
                     (
-                        <Link to={`home/Dashboard`}>
-                            <div className="announcement-hovering">
+                            <div
+                                className="announcement-hovering"
+                                onClick={() => {
+                                        setOpen(true);
+                                        setDisabled(false);
+                                        setAnc_id(anc.id);}}>
                                 <Item>
                                     <Stack className={classes.announcements}>
                                         <Item>
                                             <Stack direction={`row`}>
                                                 <Item>
-                                                    <h1> <TiLocation /> </h1>
+                                                    <h1> <TiLocation style={{marginRight:"0.25rem"}} /> </h1>
                                                 </Item>
                                                 <Item>
                                                     <Stack>
                                                         <Item>
-                                                            <h1>{anc.city_name}</h1>
+                                                            <h1>{anc.anc_city}</h1>
                                                         </Item>
                                                         <Item>
-                                                            <h4>{anc.city_country}</h4>
+                                                            <h4>{anc.anc_country}</h4>
                                                         </Item>
                                                     </Stack>
                                                 </Item>
@@ -186,18 +223,18 @@ function MyAnnouncements({username}) {
                                             </Stack>
                                         </Item>
                                         <Item className={classes.eachAnnouncement}>
-                                            <Stack direction={`row`} spacing={4} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
+                                            <Stack direction={`row`} spacing={3} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
                                                 <Item>
-                                                    <BsCalendarDateFill/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
+                                                    <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
                                                 </Item>
                                                 <Item>
-                                                    <FaHome /> {diffDays(anc.arrival_date, anc.departure_date)}
+                                                    <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
                                                 </Item>
                                                 <Item>
-                                                    <IoIosPerson /> {numberOftravelers(anc.travelers_count)}
+                                                    <IoIosPerson style={{marginRight:"0.5rem"}} /> {numberOftravelers(anc.travelers_count)}
                                                 </Item>
                                                 <Item>
-                                                    <big><AiOutlineFieldTime /></big> {statusDefining(anc.anc_status)}
+                                                    <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
                                                 </Item>
                                             </Stack>
                                         </Item>
@@ -207,10 +244,12 @@ function MyAnnouncements({username}) {
                                     </Stack>
                                     <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
                                 </Item>
+
                             </div>
-                        </Link>
                     ))}
             </Stack>
+                {checkNotNull(anc_id)}
+                {() => setAnc_id(null)}
             </h5>
         )
     }

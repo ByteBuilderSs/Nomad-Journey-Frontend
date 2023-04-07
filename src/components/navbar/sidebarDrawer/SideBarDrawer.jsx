@@ -20,6 +20,13 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 
+let username = "";
+
+if (localStorage.getItem('tokens'))
+{
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    username = allData.username;
+}
 
 const SideBarDrawer = (props) => {
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -36,7 +43,7 @@ const SideBarDrawer = (props) => {
                 >
                     <List>
                         <ListItem>
-                            <ListItemButton component={Link} to="/">
+                            <ListItemButton component={Link} to="/home/Dashboard/">
                                 <ListItemIcon>
                                     <MdDashboard style={{  fontSize: "1.2rem" }}/>
                                 </ListItemIcon>
@@ -45,7 +52,7 @@ const SideBarDrawer = (props) => {
                         </ListItem>
                         <Divider />
                         <ListItem>
-                            <ListItemButton component={Link} to="/home/Profile/">
+                            <ListItemButton component={Link} to={`/home/Profile/${username}/`}>
                                 <ListItemIcon>
                                 <MdAccountCircle style={{  fontSize: "1.2rem" }}/>
                                 </ListItemIcon>

@@ -10,12 +10,10 @@ import {
     FormControl,
     Button,
     Grid,
-    CssBaseline,
-    Paper,
-    StyledEngineProvider,
     Tab,
     Tabs,
-    AppBar
+    AppBar,
+    Autocomplete 
 } from "@mui/material";
 
 import {
@@ -25,12 +23,20 @@ import {
 
 import logo from "../../Assets/images/nomad-journey-logo-3-fotor-bg-remover-20230323195457.png";
 import { useSignup } from "../../hooks/useSignup";
-
+import { toast } from "react-toastify";
 
 //-------------------------------------------------------------
 
+const citys=[
+    { label: 'The Shawshank Redemption', year: 1994 },
+    { label: 'The Godfather', year: 1972 },
+    { label: 'The Godfather: Part II', year: 1974 },
+    { label: 'The Dark Knight', year: 2008 },
+    { label: '12 Angry Men', year: 1957 },
+    { label: "Schindler's List", year: 1993 }];
 export default function SignInSide()
 {
+    
     const [values, setValues] = React.useState({
         showPassword: false,
         showConfirmPassword: false,
@@ -57,13 +63,46 @@ export default function SignInSide()
     const [Email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [ConfirmPass, setConfirmPass] = useState("");
-
+    const [city,setCity]=useState("")
     
-
     const {signup} =useSignup()
     const handleSubmit = async (event) => {
+        
         event.preventDefault();
-        await signup(FirstName,FamilyName,Email,password,ConfirmPass,UserName)
+        if(FirstName.length ==0)
+        {
+            toast.error("FirstName required!")
+        }
+        else if(FamilyName.length ==0)
+        {
+            toast.error("FamilyName required!")
+        }
+        else if(UserName.length ==0)
+        {
+            toast.error("UserName required!")
+        }
+        else if(Email.length ==0)
+        {
+            toast.error("Email required!")
+        }
+        else if(city.length ==0)
+        {
+            toast.error("CityName required!")
+        }
+        else if(password.length ==0)
+        {
+            toast.error("password required!")
+        }
+        else if(ConfirmPass.length ==0)
+        {
+            toast.error("Confirm Password!")
+        }
+        if(password !=ConfirmPass)
+        {
+            toast.error("mismatch Confirm Password !")
+        }
+        else{
+        await signup(FirstName,FamilyName,Email,password,ConfirmPass,UserName,city)}
     };
 
     return (
@@ -113,12 +152,14 @@ export default function SignInSide()
                     
                 <Grid form 
                 id={"Signup-Form"}>
+                <Grid fullWidth sx={{display:'flex',flexDirection:'row'}}>
                 <FormControl fullWidth variant="outlined">
                     <TextField
                         id="outlined-adornment-firstname"
                         label="Firstname"
                         onChange={e=>{setName(e.target.value)}}
                         value={FirstName}
+                        
                     />
                 </FormControl>
                 <FormControl fullWidth variant="outlined">
@@ -129,6 +170,25 @@ export default function SignInSide()
                     value={FamilyName}
                     />
                 </FormControl>
+                </Grid>
+                <FormControl fullWidth variant="outlined">
+                    <TextField
+                    id="signup-outlined-adornment-city"
+                    label="City"
+                    onChange={e=>{setCity(e.target.value)}}
+                    value={city}
+                    />
+                </FormControl>
+                {/* <FormControl fullWidth variant="outlined">
+                <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={citys}
+                sx={{ width: '97%' }}
+                renderInput={(params) => <TextField {...params} label="city" />}
+                onChange={e=>{setCity(e.target.value)}}
+                />
+                </FormControl> */}
                 <FormControl fullWidth variant="outlined">
                     <TextField
                     id="signup-outlined-adornment-username"

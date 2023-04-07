@@ -230,12 +230,35 @@ Pre-loader Style
     position: relative;
     overflow: hidden;
   }
+  .main-button .annc {
+    font-size: 14px;
+    color: #fff;
+    background-color: #E55405;
+    border: 1px solid #E55405;
+    padding: 12px 30px;
+    display: inline-block;
+    border-radius: 25px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+
   
   .main-button a:hover {
     background-color: #fff;
     color: #E55405;
     border: 1px solid #fff;
   }
+  .main-button .annc:hover {
+    background-color: #fff;
+    color: #E55405 !important ;
+    border: 1px solid rgb(175, 175, 175);
+  }
+
   
   section {
     margin-top: 120px;
@@ -601,6 +624,8 @@ Pre-loader Style
     margin-top: 10px;
     border-top: 1px solid #ddd;
     margin-bottom: 30px;
+    word-wrap: break-word; /* Breaks long words to fit the container */
+    white-space: pre-wrap; 
   }
   
   .amazing-deals ul.page-numbers {
@@ -689,6 +714,7 @@ body {
     .main-button a {
       text-align: center;
     }
+    
     #section-1 .more-info h4 {
       font-size: 14px !important;
     }

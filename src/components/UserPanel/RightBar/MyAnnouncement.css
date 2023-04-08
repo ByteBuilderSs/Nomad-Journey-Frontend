@@ -52,10 +52,11 @@
 }
 .announcement-hovering{
     transition: 0.08s;
+    cursor: pointer;
     color: black;
 
 }
 .announcement-hovering:hover{
-    background-color: rgb(244, 244, 244);
+    background-color: #f7f7f7;
 
 }

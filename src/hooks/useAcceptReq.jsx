@@ -7,8 +7,8 @@ export const useAcceptReq=()=>{
     const AcceptReq= async() =>{
         const allData=JSON.parse(localStorage.getItem('tokens'))
         const access=allData.access
-
-        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTSREQ+'accept-request',{ 
+        const id=1
+        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTSREQ+'accept-request/'+id,{ 
             method :'PUT',
             headers :{'Content-Type':'application/json','Authorization': `Bearer ${access}`},
         })

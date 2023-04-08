@@ -1,23 +1,21 @@
 import * as React from 'react';
-import { Typography, List,ListItem,ListItemText,ListItemAvatar,ListItemButton} from '@mui/material';
+import { Typography, List,ListItem,ListItemText,ListItemAvatar,ListItemButton,Grid} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
 import { useState,useEffect } from 'react';
-import {useHostOffers} from '../../../hooks/useAllHostOffers'
+import {useHostOffers} from '../../../../hooks/useAllHostOffers'
 import { Link } from 'react-router-dom';
-import '../UserPanel-v2.css'
-import ReqAnnonces from '../../ReqAnnonce/ReqAnnonce';
+import '../../UserPanel-v2.css'
+import ReqAnnonces from '../../../ReqAnnonce/ReqAnnonce';
 
-export default function MyOffers() {
+
+const OfferLists=({Annoc})=>{
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = () => {setIsOpen(!isOpen)};
-    const {hostOffers,Annoc} =useHostOffers() 
-    useEffect(()=>{hostOffers()},[])
-
-  return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-    
-        <ListItem alignItems="flex-start" sx={{width:'100%'}}>
+    return (
+        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        {Annoc.map((item)=>(
+            <ListItem alignItems="flex-start" sx={{width:'100%'}}>
             <ListItemAvatar>
             <Avatar />
             </ListItemAvatar>
@@ -42,6 +40,17 @@ export default function MyOffers() {
             </ListItemButton>
         </ListItem>
       
-    </List>
-  );
+        ))}
+            
+        </List>
+      );
+}
+export default function MyOffers() {
+   
+    const {hostOffers,Annoc} =useHostOffers() 
+    useEffect(()=>{hostOffers()},[])
+
+  return(<Grid container>
+    {Annoc && <OfferLists Annoc={Annoc}/>}
+  </Grid>);
 }

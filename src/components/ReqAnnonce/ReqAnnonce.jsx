@@ -9,7 +9,8 @@ import {
    Grid
 } from '@mui/material';
 import React, { useState, useEffect } from "react";
-
+import {useAcceptReq} from '../../hooks/useAcceptReq'
+import {useRejectReq} from '../../hooks/useRejectReq'
 
 export default function ReqAnnonces({ isDialogOpened, handleCloseDialog }){
     useEffect(() => {
@@ -18,14 +19,23 @@ export default function ReqAnnonces({ isDialogOpened, handleCloseDialog }){
 
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth] = React.useState("sm");
-  
-    const handleClickOpen = () => {};
+
+    const {AcceptReq}=useAcceptReq()
+    const handelClickAccept=async(event)=>{
+        event.preventDefault();
+        AcceptReq()
+    };
     
+    const {RejectReq}=useRejectReq()
+    const handelClickReject=async(event)=>{
+        event.preventDefault();
+        RejectReq()
+    };
+
+    const handleClickOpen = () => {};
     const handleClose = () => {
         handleCloseDialog(false)};
     return (
-       <React.Fragment> 
-            
             <Dialog
             fullWidth={fullWidth}
             maxWidth={maxWidth}
@@ -54,13 +64,12 @@ export default function ReqAnnonces({ isDialogOpened, handleCloseDialog }){
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Accept</Button>
-                        <Button size="small">Reject</Button>
+                        <Button size="small" onClick={handelClickAccept}>Accept</Button>
+                        <Button size="small" onClick={handelClickReject}>Reject</Button>
                     </CardActions>
                 </Card>
 
             </Dialog>
         
-       </React.Fragment>
     );
 }

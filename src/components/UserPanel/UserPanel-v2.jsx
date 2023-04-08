@@ -28,11 +28,11 @@ import { GiTwoCoins } from "react-icons/gi";
 import { BsStarHalf } from "react-icons/bs";
 import MyAnnouncements from './RightBar/MyAnnouncements';
 import AboutMe from './RightBar/About';
-import MyPosts from './RightBar/Posts';
+import MyPosts from './RightBar/myPosts/MyPosts';
 import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
 import Overview from './Overview';
-import MyOffers from './RightBar/MyOffers'
+import MyOffers from './RightBar/myOffers/MyOffers'
 import {useUserData} from '../../hooks/useSetUserData'
 
 
@@ -106,8 +106,8 @@ const UserPanelNew = () => {
                                             </Item>
                                             <Divider variant={`middle`} flexItem/>
                                             <Item>
-                                                <h1 style={{ fontWeight: "bold", marginBottom: "-2rem" }}>{userData.first_name}</h1>
-                                                <h1 style={{ fontWeight: "bold" }}>{userData.last_name}</h1>
+                                                <h1 style={{ fontWeight: "bold", marginBottom: "-2rem" }}>{userInfo.first_name}</h1>
+                                                <h1 style={{ fontWeight: "bold" }}>{userInfo.last_name}</h1>
                                             </Item>
                                             <Stack direction="row" spacing={2}>
                                                 <Item>

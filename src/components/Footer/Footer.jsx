@@ -5,30 +5,36 @@ import "./Footer.css"
 
 const Footer = () => {
   return (
-    <div className='footer'>
-      <footer style={{ backgroundColor: '#D97D54', color : '#fff', height: '100px', width: '100%'}}>
+      // <footer className='footer' style={{ backgroundColor: '#E55405', color : '#fff', height: '100px', width: '100%'}}>
+      //     <div className='container'>
+      //       <div className="row">
+      //         <div className='col-lg-12'>
+      //           <h4 style={{marginLeft : "595px"}}>Nomad Journey</h4>
+      //           <p style={{marginLeft : "510px"}} >&copy; 2023 Nomad Journey. All Rights Reserved.</p>
+      //           <div className="social-links">
+      //             
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
 
-            <div className="texts">
-              <h4 >Nomad Journey</h4>
-              About
-            </div>
+      // </footer>
 
-            <div className="links">
-              <div className="social-links">
-                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaInstagram size={24} /></a>
-                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaLinkedin size={24} /></a>
-                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaTwitter size={24} /></a>
-              </div>
-            </div>
-
-
-
-        <div className="under-text">
-          <p>&copy; 2023 Nomad Journey. All Rights Reserved.</p>
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Copyright © 2023 <a href="#">Nomad Journey</a> All rights reserved. 
+            <br/>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaInstagram size={24} /></a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaLinkedin size={24} /></a>
+            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaTwitter size={24} /></a>
+            </p>
+          </div>
         </div>
+      </div>
+    </footer>
 
-      </footer>
-    </div>
   );
 };
 

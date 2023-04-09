@@ -11,12 +11,14 @@ import {
 import React, { useState, useEffect } from "react";
 import {useAcceptReq} from '../../hooks/useAcceptReq'
 import {useRejectReq} from '../../hooks/useRejectReq'
-
+import {useHostOffers} from '../../hooks/useAllHostOffers'
 export default function ReqAnnonces({ isDialogOpened, handleCloseDialog }){
     useEffect(() => {
       handleClickOpen();
     }, []);
-
+    const {hostOffers,Annoc} =useHostOffers() 
+    useEffect(()=>{hostOffers()},[])
+    
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth] = React.useState("sm");
 

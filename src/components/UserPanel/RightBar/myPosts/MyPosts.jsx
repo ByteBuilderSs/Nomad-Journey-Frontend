@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import {Card ,CardActions,CardContent,CardMedia,Button,Typography,Grid} from '@mui/material';
-
-
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.bubble.css';
 import './MyPosts.css'
 import {useMyBlogs} from '../../../../hooks/useMyBlogs'
+import axios from 'axios';
 
 
 const AllPosts=({blogs})=> {
@@ -22,6 +23,13 @@ const AllPosts=({blogs})=> {
       <CardContent sx={{justifyContent:'center',alignContent:'center',display:'flex',flexWrap:'wrap'}}>
         <Typography gutterBottom variant="h5" component="div" sx={{alignItems:'center'}}>
           {blog.blog_title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <ReactQuill
+            value={blog.json_data}
+            readOnly={true}
+            theme={"bubble"}
+          />
         </Typography>
       </CardContent>
     </Card>

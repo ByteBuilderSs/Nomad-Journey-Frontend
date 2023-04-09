@@ -91,8 +91,11 @@ const EditorForm = () => {
             toast.error("Please select a title for your post.");
             isDataValid = false;
         }
-        console.log("***** The editor content ****", editorValue.ops[0].insert);
-        if (!editorValue.ops[0].insert || 
+        console.log("***** The editor content ****", editorValue.ops);
+        
+        if (editorValue.ops === undefined || 
+            editorValue.ops.length == 0 || 
+            !editorValue.ops[0].insert || 
             editorValue.ops[0].insert === undefined ||
             editorValue.ops[0].insert === null ||
             editorValue.ops[0].insert.length === 0 || 

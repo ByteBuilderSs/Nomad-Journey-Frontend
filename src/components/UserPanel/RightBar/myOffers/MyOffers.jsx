@@ -14,7 +14,9 @@ const OfferLists=({Annoc})=>{
     const handleOpen = () => {setIsOpen(!isOpen)};
     return (
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {Annoc.map((item)=>(
+        {Annoc.map((item)=>{
+          {item.hosts.map((k)=>{
+            
             <ListItem alignItems="flex-start" sx={{width:'100%'}}>
             <ListItemAvatar>
             <Avatar />
@@ -23,24 +25,25 @@ const OfferLists=({Annoc})=>{
                         handleCloseDialog={() => setIsOpen(false)}/>
             <ListItemButton >
             <Link  onClick={() => {handleOpen()}}>
-                <ListItemText sx={{color:'ButtonText'}}
-                primary="Host Name"
-                secondary={
-                <React.Fragment>
-                <Typography 
-                    sx={{ display: 'inline' }}
-                    component="span"
-                    variant="body2"
-                    color="text.secondary">
-                    Ali Connors
-                </Typography>
-                </React.Fragment>
-                }/>
-                </Link>
-            </ListItemButton>
+              <ListItemText sx={{color:'ButtonText'}}
+              
+              primary="You have offer from :"
+              secondary={
+              <React.Fragment>
+              <Typography 
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.secondary">
+                  {k.username}
+              </Typography>
+              {console.log(k.username)}
+              </React.Fragment>}/>
+              </Link>
+          </ListItemButton>
         </ListItem>
       
-        ))}
+          })} })}
             
         </List>
       );
@@ -49,7 +52,7 @@ export default function MyOffers() {
    
     const {hostOffers,Annoc} =useHostOffers() 
     useEffect(()=>{hostOffers()},[])
-
+    console.log(Annoc)
   return(<Grid container>
     {Annoc && <OfferLists Annoc={Annoc}/>}
   </Grid>);

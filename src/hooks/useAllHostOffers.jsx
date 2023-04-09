@@ -15,12 +15,12 @@ export const useHostOffers=()=>{
         console.log(json)
         if(!respone.ok)
         {
-            
+            console.log(respone)
         }
         if(respone.ok)
         {
-            localStorage.setItem('AnnonceId',JSON.stringify(json))
-            console.log(respone.statusText)
+            // console.log(json)
+            // json.map((item)=>{item.hosts.map((k,v)=>{console.log(k)})})
             setAnnocments(json)
         }
     }

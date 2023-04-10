@@ -4,11 +4,10 @@ import { toast } from "react-toastify";
 export const useAcceptReq=()=>{
 
     
-    const AcceptReq= async() =>{
+    const AcceptReq= async(anc_id) =>{
         const allData=JSON.parse(localStorage.getItem('tokens'))
         const access=allData.access
-        const id=1
-        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTSREQ+'accept-request/'+id,{ 
+        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTSREQ+'accept-request/'+anc_id,{ 
             method :'PUT',
             headers :{'Content-Type':'application/json','Authorization': `Bearer ${access}`},
         })
@@ -21,7 +20,7 @@ export const useAcceptReq=()=>{
         }
         if(respone.ok)
         {
-            toast.success("...")
+            toast.success("You have accept your host !")
         }
     }
     return{AcceptReq}

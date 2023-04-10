@@ -103,7 +103,7 @@ function DeleteAnnouncement(props)
             }, 5000);
             toast.success("You deleted an announcement");
         })
-
+        window.location.reload(false); 
     }
     return (
         <>

@@ -294,12 +294,12 @@ export default function UnAuthAnnouncement(props)
                                         <Item>
                                             <h3>{announcement.host_firstName} {announcement.host_lastName}</h3>
                                         </Item>
-                                        <Item>
+                                        {/* <Item>
                                             From {announcement.host_nationality}
-                                        </Item>
-                                        <Item>
+                                        </Item> */}
+                                        {/* <Item>
                                             {evalAge(announcement.host_birthdate)}
-                                        </Item>
+                                        </Item> */}
                                     </Stack>
                                 </Item>
                                 <Item>

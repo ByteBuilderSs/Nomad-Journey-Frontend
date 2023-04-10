@@ -133,12 +133,13 @@ export default function EditAnnouncementForm(props) {
                     setIsDptDateFelxible(props.anc.departure_date_is_flexible);
                     setTravelersCount(props.anc.travelers_count);
                     setMessage(props.anc.anc_description);
-
+                    
                 })
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");
                 });
         }
+        window.location.reload(false); 
     }
 
 

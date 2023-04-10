@@ -168,6 +168,7 @@ export default function NewAnnouncementForm(props) {
                     // setMessage('');
                 });
         }
+        window.location.reload(false); 
     }
 
 

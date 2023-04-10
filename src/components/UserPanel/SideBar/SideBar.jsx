@@ -70,7 +70,7 @@ const SideBarCmp = () => {
                     <Item>
                         <Stack alignItems={`center`} spacing={1}>
                             <Item>
-                                <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }} />
+                                <Avatar sx={{ width:"5px", height:"5px", marginTop: "3rem"}} />
                             </Item>
                             <Divider variant={`middle`} flexItem/>
                             <Item>

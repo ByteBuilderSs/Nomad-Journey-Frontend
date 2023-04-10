@@ -6,6 +6,7 @@ import DeleteAnnouncement from "../../Announcements/DeleteAnnouncement";
 import EditAnnouncement from "../../Announcements/EditAnnouncement";
 import ShowAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
 import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
+import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
 import {Button, Divider, IconButton, Skeleton, Stack} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import {FaHome, FaLongArrowAltRight} from "react-icons/fa";
@@ -110,41 +111,44 @@ function MyAnnouncements({username}) {
             return`${travler_count} Traveler`;
         return `${travler_count} Travelers`;
     }
-    const check_EditTrash = (announcementStatus) => {
-        if (local_storage.username === username && (announcementStatus === "P" || announcementStatus === "A"))
-        {
-            return(
-                <h1>
-                    <Row>
-                    <Col md='6' xs={6} sm={6}>
-                        <EditAnnouncement />
-                    </Col>
-                    <Col md='6'>
-                        <DeleteAnnouncement />
-                    </Col>
-                    </Row>
-                </h1>
-            );
-        }
-    }
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    const local_username = allData.username;
     const checkNotNull = (ancId) => {
         if (ancId != null)
         {
+            if(local_username === username)
+                return (
+                    <>
+                        <AuthAnnouncement
+                            announcement_id={ancId}
+                            set_anc_id={setAnc_id}
+                            open={open}
+                            setOpen={setOpen}
+                            disabled={disabled}
+                            setDisabled={setDisabled}
+                            dayOfdate={getDayOfDate}
+                            checkStatus={statusMode}
+                            numOfTravelers={numberOftravelers}
+                            numOfNights={diffDays}
+                        />
+                    </>
+                )
             return(
-            <>
-                <UnAuthAnnouncement
-                    announcement_id={ancId}
-                    open={open}
-                    setOpen={setOpen}
-                    disabled={disabled}
-                    setDisabled={setDisabled}
-                    dayOfdate={getDayOfDate}
-                    checkStatus={statusMode}
-                    numOfTravelers={numberOftravelers}
-                    numOfNights={diffDays}
-                />
-            </>
-            )
+                <>
+                    <UnAuthAnnouncement
+                        announcement_id={ancId}
+                        open={open}
+                        setOpen={setOpen}
+                        disabled={disabled}
+                        setDisabled={setDisabled}
+                        dayOfdate={getDayOfDate}
+                        checkStatus={statusMode}
+                        numOfTravelers={numberOftravelers}
+                        numOfNights={diffDays}
+                    />
+                </>
+                )
+
         }
     }
     const checkLoading = (isLoading) => {
@@ -215,11 +219,6 @@ function MyAnnouncements({username}) {
                                                         </Item>
                                                     </Stack>
                                                 </Item>
-                                                <Col md={{offset: 8}}>
-                                                    <Item>
-                                                        {check_EditTrash(anc.anc_status)}
-                                                    </Item>
-                                                </Col>
                                             </Stack>
                                         </Item>
                                         <Item className={classes.eachAnnouncement}>

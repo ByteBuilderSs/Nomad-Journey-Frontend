@@ -5,7 +5,8 @@ import {
     Button,
     Divider,
     Card,
-    Typography
+    Typography,
+    Avatar
 } from '@mui/material';
 
 import PublicIcon from '@mui/icons-material/Public';
@@ -73,8 +74,7 @@ const Overview = () => {
                     <Typography
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
-                        <FemaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {todayYear}, {userInfo.User_gender==1 ? <p>Male</p> :<p>Female</p>}
+                        {userInfo.User_gender==1 ? (<p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />Male, Age: {userInfo.user_age}</p>) :(userInfo.User_gender==2? <p><FemaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Female, Age: {userInfo.user_age}</p> : <p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Non Binary, Age: {userInfo.user_age}</p> )  }
                     </Typography>
                 </Grid>
                 {/* Where you grow up */}

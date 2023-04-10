@@ -11,18 +11,23 @@ import ReqAnnonces from '../../../ReqAnnonce/ReqAnnonce';
 
 const OfferLists=({Annoc})=>{
     const [isOpen, setIsOpen] = useState(false);
-    const handleOpen = () => {setIsOpen(!isOpen)};
+    const handleOpen = () => {
+      setIsOpen(!isOpen)
+      
+
+    };
     return (
         <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-        {Annoc.map((item)=>{
-          {item.hosts.map((k)=>{
-            
-            <ListItem alignItems="flex-start" sx={{width:'100%'}}>
+         
+        {Annoc.map((item)=>
+          item.volunteer_hosts.map((val)=>
+          <ListItem alignItems="flex-start" sx={{width:'100%'}}>
             <ListItemAvatar>
             <Avatar />
             </ListItemAvatar>
             <ReqAnnonces isDialogOpened={isOpen} 
-                        handleCloseDialog={() => setIsOpen(false)}/>
+                         handleCloseDialog={() => setIsOpen(false)}
+                         anc_id={item.id}/>
             <ListItemButton >
             <Link  onClick={() => {handleOpen()}}>
               <ListItemText sx={{color:'ButtonText'}}
@@ -35,16 +40,14 @@ const OfferLists=({Annoc})=>{
                   component="span"
                   variant="body2"
                   color="text.secondary">
-                  {k.username}
               </Typography>
-              {console.log(k.username)}
+              {val.username}
               </React.Fragment>}/>
               </Link>
           </ListItemButton>
-        </ListItem>
-      
-          })} })}
-            
+          </ListItem>
+          ))}
+          
         </List>
       );
 }
@@ -54,6 +57,6 @@ export default function MyOffers() {
     useEffect(()=>{hostOffers()},[])
     console.log(Annoc)
   return(<Grid container>
-    {Annoc && <OfferLists Annoc={Annoc}/>}
+    {Annoc.length>0 ? <OfferLists Annoc={Annoc}/> :<p>you have no offers from anyone</p>}
   </Grid>);
 }

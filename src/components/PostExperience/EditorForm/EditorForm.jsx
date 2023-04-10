@@ -47,10 +47,12 @@ const modules = {
 const EditorForm = () => {
     let allData;
     let access_token;
+    let username;
     if (localStorage.getItem('tokens'))
     {
         allData = JSON.parse(localStorage.getItem('tokens'));
         access_token = allData.access;
+        username = allData.username;
     }
     const navigate = useNavigate()
     const [disabled, setDisabled] = useState(false);
@@ -127,6 +129,7 @@ const EditorForm = () => {
                     setTitle('');
                     setEditorValue('');
                     setSelectedTags([]);
+                    navigate(`/home/Profile/${username}/`)
                 }).catch((error) => {
                     toast.error("Something went wrong.")
                 });

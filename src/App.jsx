@@ -9,6 +9,7 @@ import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import Login from "./pages/login";
+import PostDetailPage from "./pages/PostDetail";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Loader.css';
@@ -87,6 +88,7 @@ function App() {
                   <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
                   <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
                   <Route exact path="/home/PostExperience/" element={<PostExperience />}/>
+                  <Route exact path="/home/PostExperience/:slug" element={<PostDetailPage />}/>
                 </Routes>
 
               </div>

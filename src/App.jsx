@@ -30,6 +30,7 @@ function App() {
     display: "flex",
     "flex-direction": "column",
     "min-height": "100vh",
+    "background-color": "#EDE7E6"
   }
 
   const content = {

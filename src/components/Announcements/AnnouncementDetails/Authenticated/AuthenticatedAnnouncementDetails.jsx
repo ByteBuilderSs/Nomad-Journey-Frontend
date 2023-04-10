@@ -32,6 +32,8 @@ import Card from "react-bootstrap/Card";
 import axios from "axios";
 import DeleteAnnouncement from "../../DeleteAnnouncement";
 import EditAnnouncement from "../../EditAnnouncement";
+import {useAcceptReq} from "../../../../hooks/useAcceptReq";
+import {useRejectReq} from "../../../../hooks/useRejectReq";
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -170,6 +172,16 @@ export default function UnAuthAnnouncement(props)
             })
     }, [])
     const classes = useStyles();
+    const {AcceptReq}=useAcceptReq()
+    const {RejectReq} = useRejectReq();
+    const handleAcceptReq = (anc_id, host_id) => {
+        AcceptReq(anc_id, host_id);
+        window.location.reload(false);
+    }
+    const handleRejectReq = (anc_id, host_id) => {
+        RejectReq(anc_id, host_id);
+        window.location.reload(false);
+    }
     const checkButton = (anc_status) => {
         if(anc_status === "P" || anc_status === "A")
         return (
@@ -205,7 +217,7 @@ export default function UnAuthAnnouncement(props)
             </>
         )
     }
-    const volunteer_hosts = (volunteer_host) =>
+    const volunteer_hosts = (volunteer_host, anc_id) =>
     {
         if(volunteer_host.length === 0)
             return(
@@ -232,10 +244,12 @@ export default function UnAuthAnnouncement(props)
                                     <a href={`../${item.username}`}>
                                         {item.first_name} {item.last_name}
                                     </a>
-                                    <IconButton color={`success`}>
+                                    <IconButton color={`success`} onClick={()=> {
+                                        handleAcceptReq(anc_id, item.id)}}>
                                         <AiFillCheckCircle />
                                     </IconButton>
-                                    <IconButton color={`error`}>
+                                    <IconButton color={`error`} onClick={()=> {
+                                        handleRejectReq(anc_id, item.id)}}>
                                         <MdCancel />
                                     </IconButton>
                             </TableRow>
@@ -245,7 +259,7 @@ export default function UnAuthAnnouncement(props)
             </>
         )
     }
-    const renderHostBox = (status, anc_volunteers) => {
+    const renderHostBox = (status, anc_volunteers, anc_id) => {
         switch (status) {
             case "P":
                 return(<>
@@ -254,7 +268,7 @@ export default function UnAuthAnnouncement(props)
                             Volunteers</div>
                     </Card.Title>
                     <Card.Body>
-                        {volunteer_hosts(anc_volunteers)}
+                        {volunteer_hosts(anc_volunteers, anc_id)}
                     </Card.Body>
                 </>)
             case "E":
@@ -410,7 +424,7 @@ export default function UnAuthAnnouncement(props)
                             <Item>
                                 <Box className={classes.profileCard}>
                                     <Card className={classes.announcerCard}>
-                                        {renderHostBox(announcement.anc_status, announcement.volunteers)}
+                                        {renderHostBox(announcement.anc_status, announcement.volunteers, announcement.id)}
                                     </Card>
                                 </Box>
                             </Item>

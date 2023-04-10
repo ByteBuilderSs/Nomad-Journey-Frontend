@@ -107,7 +107,7 @@ const PostDetail = (props) => {
                                     <Grid item xs={12}>
                                         <Box sx={{ mt: "0.75rem" }}>
                                             <Typography
-                                            sx={{ marginTop: "1rem", fontSize: 14, display: "flex", alignItems: "center" }}
+                                            sx={{ marginTop: "1rem", fontSize: 14, display: "flex", alignItems: "center", fontWeight: "bold" }}
                                             variant="h1"
                                             component="div"
                                             >
@@ -155,10 +155,10 @@ const PostDetail = (props) => {
                                                 </Button>
                                             </Item>
                                             <Item>
-                                                <Typography sx={{ display: "flex", alignItems: "center" }}>Created at {postData.created_at}</Typography>
+                                                <Typography sx={{ display: "flex", alignItems: "center", ml: "16rem" }} color="text.secondary">Created at {postData.created_at}</Typography>
                                             </Item>
                                             <Item>
-                                                <Typography sx={{ display: "flex", alignItems: "center" }}>Edited at {postData.updated_at}</Typography>
+                                                <Typography sx={{ display: "flex", alignItems: "center" }} color="text.secondary">Edited at {postData.updated_at}</Typography>
                                             </Item>
                                         </Stack>
                                     </Grid>

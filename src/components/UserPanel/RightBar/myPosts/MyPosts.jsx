@@ -78,16 +78,23 @@ const AllPosts=({blogs})=>
                     </Box>
                     <Box sx={{ mt: "0.75rem" }}>
                         <Typography
-                          sx={{ marginTop: "1rem", fontSize: 14 }}
+                          sx={{ marginTop: "1rem", fontSize: 14, display: "flex", alignItems: "center" }}
                           variant="h1"
                           component="div"
                         >
                           Tags:
+                            <Stack direction="row" 
+                                  useFlexGap 
+                                  flexWrap="wrap"
+                                  spacing={1} 
+                                  sx={{ ml: "1rem", '& > *': { flexGrow: 1 } }}>
+                              {
+                                blog.tags_name.map((tag_name) => (
+                                  <Chip label={tag_name} color="primary" variant="outlined" sx={{ mb: "0.25rem"}}/>
+                                ))
+                              }
+                            </Stack>
                         </Typography>
-                      <Stack direction="row" spacing={1} sx={{ ml: "1rem" }}>
-                        <Chip label="My host" color="primary" variant="outlined"/>
-                        <Chip label="Nature" color="primary" variant="outlined"/>
-                      </Stack>
                     </Box>
     
                     <Typography
@@ -122,7 +129,7 @@ const AllPosts=({blogs})=>
               ))
             ) :
             (
-              <span style={{ marginRight: "2rem" }}>
+              <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
                 No Posts Found!
               </span>
             )

@@ -135,8 +135,8 @@ const Announce = (props) => {
   const handleOffer = () => {
       handleClose()
       Make_Offer()
-      // window.location.reload(false); 
-      fetchAnnc(props.setAnncData)
+      window.location.reload(false); 
+      //fetchAnnc(props.setAnncData)
   }
 
   

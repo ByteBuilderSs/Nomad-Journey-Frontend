@@ -101,6 +101,10 @@ export default function SignInSide()
         {
             toast.error("mismatch Confirm Password !")
         }
+        if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
+        {
+            toast.error("Email is not valid")
+        }
         else{
         await signup(FirstName,FamilyName,Email,password,ConfirmPass,UserName,city)}
     };

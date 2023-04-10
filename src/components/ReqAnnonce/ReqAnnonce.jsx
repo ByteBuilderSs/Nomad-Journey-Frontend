@@ -11,14 +11,15 @@ import {
 import React, { useState, useEffect } from "react";
 import {useAcceptReq} from '../../hooks/useAcceptReq'
 import {useRejectReq} from '../../hooks/useRejectReq'
-import {useHostOffers} from '../../hooks/useAllHostOffers'
-export default function ReqAnnonces({ isDialogOpened, handleCloseDialog }){
+import {useAnnoncOffer} from '../../hooks/useAnnoncOffer'
+
+export default function ReqAnnonces({ isDialogOpened, handleCloseDialog ,anc_id}){
     useEffect(() => {
       handleClickOpen();
     }, []);
-    const {hostOffers,Annoc} =useHostOffers() 
-    useEffect(()=>{hostOffers()},[])
-    
+    const {annoneOffer,Annoc} =useAnnoncOffer() 
+    useEffect(()=>{annoneOffer(anc_id)},[])
+
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth] = React.useState("sm");
 
@@ -52,17 +53,17 @@ export default function ReqAnnonces({ isDialogOpened, handleCloseDialog }){
                         component="img"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                        Annoncement Name
+                        <Typography variant="body2" color="text.secondary">
+                        your destination city was:  {Annoc.anc_city}                        
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        Description
+                         Announcement description:   {Annoc.anc_description}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        timeStamp Create
+                        your arrival date was : {Annoc.arrival_date}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        location
+                        you have {Annoc.travelers_count} Fellow traveler(s)
                         </Typography>
                     </CardContent>
                     <CardActions>

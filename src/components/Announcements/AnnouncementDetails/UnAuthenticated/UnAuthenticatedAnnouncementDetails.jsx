@@ -85,7 +85,7 @@ const style = {
     px: 4,
     pb: 3,
 };
-export default function UnAuthAnnouncement(props)
+export default function AuthAnnouncement(props)
 {
     const [announcement, setAnnouncement] = useState('')
     const [error, setError] = useState(null);

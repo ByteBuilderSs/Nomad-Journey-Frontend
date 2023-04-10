@@ -97,14 +97,14 @@ export default function FormContainer(props) {
         }
         if (birthday) {
             birthdate = new DateObject({
-                date: birthdate,
+                date: birthday,
                 formate: "YYYY-MM-DD"
             }).format("YYYY-MM-DD");
         }
         if (validData) {
             axios({
                 method: "patch",
-                url: `http://127.0.0.1:8000//api/v1/accounts/UserProfileEdit1/${username}`,
+                url: `http://127.0.0.1:8000/api/v1/accounts/UserProfileEdit1/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -162,7 +162,7 @@ export default function FormContainer(props) {
                                             <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
                                                 Username <span style={{ color: "red"}}>*</span>
                                             </h6>
-                                            <FormControl variant="outlined">
+                                            <FormControl variant="outlined" disabled={true}>
                                                 <TextField
                                                     sx={{ width: "30rem"}}
                                                     id="outlined-adornment-username"
@@ -170,6 +170,7 @@ export default function FormContainer(props) {
                                                     label="Username"
                                                     value={usernameState}
                                                     onChange={handleChangeUsername}
+                                                    disabled
                                                 />
                                             </FormControl>
                                     </Box>

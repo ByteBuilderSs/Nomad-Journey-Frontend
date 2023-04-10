@@ -8,11 +8,11 @@ export const useUserData=()=>{
     const userdata= async() =>{
         
         const allData=JSON.parse(localStorage.getItem('tokens'))
-        const access=allData.access
-        console.log(access)
-        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'login-user/',{ 
+        const username=allData.username
+        
+        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'GetUserProfileForOverview/'+username,{ 
             method :'GET',
-            headers :{'Content-Type':'application/json','Authorization': `Bearer ${access}`},
+            headers :{'Content-Type':'application/json'},
             
         })
         const json =await respone.json()
@@ -24,8 +24,8 @@ export const useUserData=()=>{
         }
         if(respone.ok)
         {
-            console.log("success"+json)
-            setUserData(json)
+            console.log(json)
+            setUserData(json.data)
         }
     }
     return{userdata,userInfo}

@@ -1,14 +1,13 @@
 import {useNavigate} from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const useRejectReq=(anc_id)=>{
+export const useRejectReq=()=>{
 
-    console.log(anc_id)
-    const RejectReq= async() =>{
+    const RejectReq= async(anc_id,host_id) =>{
         const allData=JSON.parse(localStorage.getItem('tokens'))
         const access=allData.access
 
-        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTSREQ+'reject-request/'+anc_id,{ 
+        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTSREQ+'reject-request/'+anc_id+'/'+host_id,{
             method :'PUT',
             headers :{'Content-Type':'application/json','Authorization': `Bearer ${access}`},
         })

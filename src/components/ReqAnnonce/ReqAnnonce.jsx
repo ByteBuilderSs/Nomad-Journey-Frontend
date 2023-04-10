@@ -13,12 +13,10 @@ import {useAcceptReq} from '../../hooks/useAcceptReq'
 import {useRejectReq} from '../../hooks/useRejectReq'
 import {useAnnoncOffer} from '../../hooks/useAnnoncOffer'
 
-export default function ReqAnnonces({ isDialogOpened, handleCloseDialog ,anc_id}){
+
+const RequestModal=({ isDialogOpened, handleCloseDialog,data})=>{
     useEffect(() => {
-      handleClickOpen();
-    }, []);
-    const {annoneOffer,Annoc} =useAnnoncOffer() 
-    useEffect(()=>{annoneOffer(anc_id)},[])
+        handleClickOpen()}, []);
 
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth] = React.useState("sm");
@@ -54,16 +52,16 @@ export default function ReqAnnonces({ isDialogOpened, handleCloseDialog ,anc_id}
                     />
                     <CardContent>
                         <Typography variant="body2" color="text.secondary">
-                        your destination city was:  {Annoc.anc_city}                        
+                        your destination city was:                  
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                         Announcement description:   {Annoc.anc_description}
+                         Announcement description:   
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        your arrival date was : {Annoc.arrival_date}
+                        your arrival date was : 
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                        you have {Annoc.travelers_count} Fellow traveler(s)
+                        you have  Fellow traveler(s)
                         </Typography>
                     </CardContent>
                     <CardActions>
@@ -75,4 +73,20 @@ export default function ReqAnnonces({ isDialogOpened, handleCloseDialog ,anc_id}
             </Dialog>
         
     );
+}
+
+export default function ReqAnnonces({isDialogOpened, handleCloseDialog,anc_id})
+{
+
+    const {annoneOffer,Annoc} =useAnnoncOffer() 
+    
+        useEffect(() => {
+            annoneOffer({anc_id})
+        }, []);
+    
+    
+    return(
+        <Grid container>
+          {Annoc && <RequestModal dialogOpen={isDialogOpened} closeDialog={handleCloseDialog} data={Annoc}/>}
+        </Grid>);
 }

@@ -18,17 +18,22 @@ import {
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { toast } from "react-toastify";
+
 export default function EditAnnouncementForm(props) {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
+
+    console.log("*********** THE PROPS IN ANNOUNCEMENT DETAILS *********** ", props);
+
     const [country, setCountry] = useState(props.anc.anc_country);
     const [city, setCity] = useState(props.anc.anc_city);
     const [arrival_date, setArrivalDate] = useState(props.anc.arrival_date);
     const [departure_date, setDepartureDate] = useState(props.anc.departure_date);
-    const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(props.arrival_date_is_flexible);
+    const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(props.anc.arrival_date_is_flexible);
     const [departure_date_is_flexible, setIsDptDateFelxible] = useState(props.anc.departure_date_is_flexible);
     const [travelers_count, setTravelersCount] = useState(props.anc.travelers_count);
     const [message, setMessage] = useState(props.anc.anc_description);
+
     const [disabled, setDisabled] = useState(false);
 
 
@@ -249,6 +254,7 @@ export default function EditAnnouncementForm(props) {
                                                             value={arrival_date_is_flexible}
                                                             color="primary"
                                                             onChange={handleChangeIsArrDateFlexible}
+                                                            checked={arrival_date_is_flexible === true}
                                                         />}
                                                         label="Arrival date is flexible"
                                                     />
@@ -288,9 +294,10 @@ export default function EditAnnouncementForm(props) {
                                                 {/* departure date is  flexible */}
                                                 <FormControlLabel
                                                     control={<Checkbox
-                                                        value={arrival_date_is_flexible}
+                                                        value={departure_date_is_flexible}
                                                         color="primary"
                                                         onChange={handleChangeIsDptDateFlexible}
+                                                        checked={departure_date_is_flexible === true}
                                                     />}
                                                     label="Departure date is flexible"
                                                 />

@@ -20,7 +20,7 @@ import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import {useUserData} from '../../hooks/useSetUserData'
 import { useEffect } from 'react';
 const Overview = () => {
-    const {userdata,userInfo}=useUserData()
+    const {userdata, userInfo} = useUserData()
     useEffect(()=>{userdata()},[])
 
     let navigate = useNavigate(); 

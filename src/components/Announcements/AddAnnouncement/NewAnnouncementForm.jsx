@@ -17,8 +17,8 @@ import {
 } from "@mui/material";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
-import {AxiosError} from 'axios';
 import { toast } from "react-toastify";
+import {useUserData} from '../../../hooks/useSetUserData';
 
 
 const intialState = {
@@ -167,8 +167,9 @@ export default function NewAnnouncementForm(props) {
                     // setTravelersCount('');
                     // setMessage('');
                 });
+                props.setOpen(false);
+                window.location.reload(false); 
         }
-        window.location.reload(false); 
     }
 
 

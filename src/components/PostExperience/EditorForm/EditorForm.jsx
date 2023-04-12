@@ -20,6 +20,8 @@ import { Item } from "semantic-ui-react";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import ImageCompress from 'quill-image-compress';
+import ImageResize  from 'quill-image-resize-module-react';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -29,6 +31,8 @@ function sleep(delay = 0) {
         setTimeout(resolve, delay);
     });
 }
+Quill.register('modules/imageCompress', ImageCompress);
+Quill.register('modules/imageResize', ImageResize);
 
 const modules = {
     toolbar: [
@@ -43,6 +47,20 @@ const modules = {
         ["link", "image"],
         ["clean"],
     ],
+    imageCompress :{
+        quality: 0.7, // default
+        maxWidth: 500, 
+        maxHeight: 500, 
+        imageType: ['image/jpeg', 'image/gif', 'image/jpeg', 'image/png', 'image/svg', 'image/webp', 'image/bmp', 'image/vnd'], // default
+        debug: true, // default
+        suppressErrorLogging: false, // default
+        insertIntoEditor: undefined, // default
+    },
+    imageResize: {
+        parchment: Quill.import('parchment'),
+        modules: ['Resize', 'DisplaySize'],
+    }
+
 }
 const EditorForm = () => {
     let allData;

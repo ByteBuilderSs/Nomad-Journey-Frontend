@@ -72,103 +72,104 @@ const PostDetail = (props) => {
 
     
     return (
-        <div className='post-detail'>
-            <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                    <Card dir='ltr'>
-                        <form>
-                        
-                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                <div style={{ paddingLeft: "5rem" }}>
-                                    {/* Title */}
-                                    <Grid item xs={12}>
-                                        <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
-                                            <Item>
-                                                <Typography sx={{ fontSize: "2rem" }} gutterBottom>
-                                                    {postData.blog_title}
-                                                </Typography>
-                                            </Item>
-                                        </Stack>
-                                    </Grid>
-                                    <Divider sx={{ borderBottomWidth: 3, width: "150rem"}} />                                    {/* Body */}
-                                    <Grid item xs={12}>
-                                        <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
-                                            <Item>
-                                                <FormControl>
-                                                    <ReactQuill theme="bubble" 
-                                                                value={postData.json_data} 
-                                                                readOnly={true}
-                                                    />
-                                                </FormControl>
-                                            </Item>
-                                        </Stack>
-                                    </Grid>
-                                    {/* Tags */}
-                                    <Grid item xs={12}>
-                                        <Box sx={{ mt: "0.75rem" }}>
-                                            <Typography
-                                            sx={{ marginTop: "1rem", fontSize: 14, display: "flex", alignItems: "center", fontWeight: "bold" }}
-                                            variant="h1"
-                                            component="div"
-                                            >
-                                            Tags:
-                                                <Stack direction="row" 
-                                                    useFlexGap 
-                                                    flexWrap="wrap"
-                                                    spacing={1} 
-                                                    sx={{ ml: "1rem", '& > *': { flexGrow: 1 } }}>
-                                                {
-                                                    postData.tags_name && 
-                                                    postData.tags_name.map((tag_name) => (
-                                                        <Chip label={tag_name} color="primary" variant="outlined"/>
-                                                    ))
-                                                }
+        <>
+            <div className='post-detail'>
+                <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <Card dir='ltr'>
+                            <form>
+                            
+                                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                    <div style={{ paddingLeft: "5rem" }}>
+                                        {/* Title */}
+                                        <Grid item xs={12}>
+                                            <Box sx={{ mt: "2rem" }}>
+                                                <Stack direction='column'>
+                                                    <Item>
+                                                        <Typography sx={{ fontSize: "2rem" }} gutterBottom>
+                                                            {postData.blog_title}
+                                                            <Button
+                                                                sx={{ width: "11.5rem", ml: "30rem" }}
+                                                                variant="contained"
+                                                                component="label"
+                                                                startIcon={<EditIcon />}
+                                                                >
+                                                                Edit Your Post
+                                                            </Button>
+                                                            <Button
+                                                                sx={{ width: "13rem", ml: "2rem" }}
+                                                                variant="outlined"
+                                                                color="error"
+                                                                startIcon={<DeleteIcon />}
+                                                                >
+                                                                Delete Your Post
+                                                            </Button>
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Stack direction='row' spacing={4}>
+                                                            <Item>
+                                                                <Typography component='p' color="text.secondary">
+                                                                    Viewd # times
+                                                                </Typography>
+                                                            </Item>
+                                                            <Item>
+                                                                <Typography color="text.secondary">Created at {postData.created_at}</Typography>
+                                                            </Item>
+                                                            <Item>
+                                                                <Typography color="text.secondary">Edited at {postData.updated_at}</Typography>
+                                                            </Item>
+                                                        </Stack>
+                                                    </Item>
                                                 </Stack>
-                                            </Typography>
-                                        </Box>
-                                    </Grid>
-                                    {/* Buttons */}
-                                    <Grid item xl={6} lg={6} md={4} sm={12} xs={12}>
-                                        <Stack 
-                                            direction="row" 
-                                            spacing={1}
-                                            sx={{ ml: "1rem", mt: "3rem", mb: "1rem", display: "flex", alignItems: "center" }}
-                                            >
-                                            <Item>
-                                                <Button
-                                                    sx={{ width: "12rem" }}
-                                                    variant="contained"
-                                                    component="label"
-                                                    startIcon={<EditIcon />}
-                                                    >
-                                                    Edit Your Post
-                                                </Button>
-                                            </Item>
-                                            <Item>
-                                                <Button
-                                                    sx={{ width: "15rem" }}
-                                                    variant="outlined"
-                                                    color="error"
-                                                    startIcon={<DeleteIcon />}
-                                                    >
-                                                    Delete Your Post
-                                                </Button>
-                                            </Item>
-                                            <Item>
-                                                <Typography sx={{ display: "flex", alignItems: "center", ml: "16rem" }} color="text.secondary">Created at {postData.created_at}</Typography>
-                                            </Item>
-                                            <Item>
-                                                <Typography sx={{ display: "flex", alignItems: "center" }} color="text.secondary">Edited at {postData.updated_at}</Typography>
-                                            </Item>
-                                        </Stack>
-                                    </Grid>
-                                </div>
-                            </Grid>
-                        </form>
-                    </Card>
-                </Grid>
-            </Container>
-        </div>
+                                            </Box>
+                                        </Grid>
+                                        <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }} />                                    
+                                        {/* Body */}
+                                        <Grid item xs={12}>
+                                            <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                                <Item>
+                                                    <FormControl>
+                                                        <ReactQuill theme="bubble" 
+                                                                    value={postData.json_data} 
+                                                                    readOnly={true}
+                                                        />
+                                                    </FormControl>
+                                                </Item>
+                                            </Stack>
+                                        </Grid>
+                                        {/* Tags */}
+                                        <Grid item xs={12}>
+                                            <Box sx={{ mt: "0.75rem", mb: "1rem" }}>
+                                                <Typography
+                                                    sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center", fontWeight: "bold" }}
+                                                    variant="h1"
+                                                    component="div"
+                                                >
+                                                Tags:
+                                                    <Stack direction="row" 
+                                                        useFlexGap 
+                                                        flexWrap="wrap"
+                                                        spacing={1} 
+                                                        sx={{ ml: "1rem", '& > *': { flexGrow: 1 } }}>
+                                                    {
+                                                        postData.tags_name && 
+                                                        postData.tags_name.map((tag_name) => (
+                                                            <Chip label={tag_name} color="primary" variant="outlined"/>
+                                                        ))
+                                                    }
+                                                    </Stack>
+                                                </Typography>
+                                            </Box>
+                                        </Grid>
+                                    </div>
+                                </Grid>
+                            </form>
+                        </Card>
+                    </Grid>
+                </Container>
+            </div>
+        </>
     )
 }
 

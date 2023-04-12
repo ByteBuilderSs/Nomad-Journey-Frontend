@@ -143,8 +143,9 @@ export default function EditAnnouncementForm(props) {
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");
                 });
+                props.setOpen(false);
+                window.location.reload(false); 
         }
-        window.location.reload(false); 
     }
 
 
@@ -160,7 +161,8 @@ export default function EditAnnouncementForm(props) {
         setMessage(props.anc.anc_description);
     };
 
-    const onCancle = () => {
+    const onCancle = async (event) => {
+        event.preventDefault();
         props.setRequestData({});
         setCountry(props.anc.anc_country);
         setCity(props.anc.anc_city);

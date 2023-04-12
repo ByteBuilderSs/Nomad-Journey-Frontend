@@ -185,7 +185,8 @@ export default function NewAnnouncementForm(props) {
         setMessage('');
     };
 
-    const onCancle = () => {
+    const onCancle = async (event) => {
+        event.preventDefault();
         props.setRequestData({});
         setCountry('');
         setCity('');

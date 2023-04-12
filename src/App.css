@@ -1,7 +1,10 @@
-.NJ {
-    font-weight: normal !important;
-    height     : 100%;
-    min-height : 100%;
-    display    : flex;
-    flex-flow  : column;
+/* body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
+
+footer {
+    margin-top: auto;
+} */
+

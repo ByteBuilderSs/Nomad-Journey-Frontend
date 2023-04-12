@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+
+.login {
+width     : 100%;
+min-height: 50%;
+}
+
+.formBtn {
+display        : flex;
+justify-content: center;
+align-items    : center;
+}
+
+.formBtn {
+display        : flex;
+justify-content: center;
+align-items    : center;
+}
+
+.NJText {
+    font-family: 'Courgette',  sans-serif;
+    color    : #FEA32F !important;
+    font-size: larger;
+}

@@ -1,4 +1,4 @@
-import LogInSide from "../components/login/loginCompo";
+import LogInSide from "../components/login/login";
 
 export default function Login()
 {

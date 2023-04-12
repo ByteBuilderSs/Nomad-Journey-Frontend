@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.request-management-add-request .flex-space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.request-management-add-request .add-request-form {
+    width: 80%;
+    padding: 3px;
+}
+
+.request-management-add-request .request-management-add-request {
+    width: 80%;
+    border: 1px solid rgb(235, 239, 241);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.28);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.28);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.28);
+}
+
+.request-management-add-request .form-title {
+    font-size: 20px;
+}
+
+.request-management-add-request .add-request-center-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-management-add-request .date-picker .rmdp-input {
+    padding: 2vh !important;
+    height: 100% !important;
+}
+
+.request-management-add-request .new-request-date-picker-input {
+    padding: 16.5px 14px;
+    height: 100% !important;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    color: rgba(0, 0, 0, 0.87);
+    cursor: text;
+    border: 1px solid #c4c4c4;
+}
+
+
+

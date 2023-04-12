@@ -1,16 +1,19 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Login from "./pages/login";
-import NewRequestPage from "./pages/NewRequest";
-import DashboardPage from './pages/Dashboard';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from "react-router-dom";
 import InboxPage from './pages/Inbox';
 import ProfilePage from './pages/Profile';
 import SettingsPage from './pages/Settings';
 import Navbar from "./components/navbar/Navbar";
+import EditProfile from "./components/UserPanel/EditProfile/EditProfile";
 import React, { useEffect, useState } from "react";
-import SignInSide from "./pages/signup";
 import MainPageFunc from "./pages/MainPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
+import Login from "./pages/login";
+import PostDetailPage from "./pages/PostDetail";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import './Loader.css';
+import PostExperience from "./pages/PostExperience";
 
 const tabNametoIndex = {
   Dashboard: 1,
@@ -19,66 +22,94 @@ const tabNametoIndex = {
   Settings: 4
 }
 
-function App(props) {
-  // console.log(props);
-  // const { location }  = props;
-  // const [selectedTab, setSelectedTab] = useState(
-  //   tabNametoIndex[location.pathname.split("/")[2]]
-  //   ? tabNametoIndex[location.pathname.split("/")[2]]
-  //   : 1
-  // );
+function App() {
 
-  // const handleTabChange = (newValue) => {
-  //   setSelectedTab(newValue)
-  // };
-
- 
+  let location = useLocation();
+  const navigate=useNavigate()
   const allPagesStyle = {
-    /* set the min-height to 100% minus the height of the footer */
-    "min-height" : "calc(100% - 100px)",/* replace 50px with the actual height of your footer */
-    "padding-bottom": "110px", /* set the padding bottom to the height of the footer */
-    "box-sizing": "border-box",
+    display: "flex",
+    "flex-direction": "column",
+    "min-height": "100vh",
+    "background-color": "#EDE7E6"
   }
 
+  const content = {
+    "flex": 1,
+  }
+
+  const [loading, setLoading] = useState(false);
+    useEffect(() => {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+  }, []);
+  useEffect(()=>{
+    if(!localStorage.getItem('tokens')){
+      console.log('no user exists')
+      navigate("/signup");
+    }
+    },[]);
+
+    
   return (
-      <Router>
-        <Navbar
-          // handleTabChange={handleTabChange}
-          // selectedTab={selectedTab}
-          // setSelectedTab={setSelectedTab}
-          />
-
-        <div style = {allPagesStyle}>
-                      
-            <Routes>
-              <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-            </Routes>
-            <Routes>
-              <Route exact path="/signup" element={<SignInForm />}/>
-            </Routes>
-            <Routes>
-              <Route exact path="/add-new-request" element={<NewRequestPage />}/>
-            </Routes>
-            <Routes>
-              <Route exact path="/signup" element={<SignInForm />}/>
-            </Routes>
-            <Routes>
-              <Route path="/home/" element={<MainPageFunc />}/>
-              <Route path="/home/Dashboard/" element={<DashboardPage />}/>
-              <Route path="/home/Profile/" element={<ProfilePage />}/>
-              <Route path="/home/Inbox/" element={<InboxPage />}/>
-              <Route path="/home/Settings/" element={<SettingsPage />}/>
-              <Route path="/home/AddNewRequest/" element={<NewRequestPage />}/>
-              <Route path="/home/SignUp/" element={<SignInSide />}/>
-            </Routes>
-
-        </div>
-
-        <Footer/>
-
-      </Router>
       
-  );
+      <>
+        <div>
+            
+              {loading ? (
+
+          <div id="js-preloader" class="js-preloader">
+              <div class="preloader-inner">
+              <span class="dot"></span>
+              <div class="dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </div>
+              </div>
+          </div>
+
+
+          ) :<div>
+        {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
+
+            <body  style = {allPagesStyle}>
+
+
+              <div style = {content}>
+
+                <Routes>
+                  
+                  <Route path="/signup" element={<SignInForm />}/>
+                  <Route path="/login" element={< Login/>}/>
+                  <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                  <Route path="/home/Profile/:username/" element={<ProfilePage />} />
+                  <Route path="/home/Inbox/" element={<InboxPage />}/>
+                  <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
+                  <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
+                  <Route exact path="/home/PostExperience/" element={<PostExperience />}/>
+                  <Route exact path="/home/PostExperience/:slug" element={<PostDetailPage />}/>
+                </Routes>
+
+              </div>
+          {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
+
+            </body>
+            <ToastContainer 
+                position="top-left"
+                newestOnTop={true}
+                pauseOnFocusLoss
+                draggable
+                autoClose={7000}
+                closeOnClick
+                pauseOnHover/>
+        </div>}</div>
+
+      </>            
+        );
+      
+  
 
 }
 

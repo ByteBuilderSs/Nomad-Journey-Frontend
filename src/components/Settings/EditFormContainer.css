@@ -1,0 +1,17 @@
+.date-picker .rmdp-input {
+    padding: 2vh !important;
+    height: 100% !important;
+}
+
+.new-request-date-picker-input {
+    padding: 16.5px 14px;
+    height: 100% !important;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4375em;
+    letter-spacing: 0.00938em;
+    color: rgba(0, 0, 0, 0.87);
+    cursor: text;
+    border: 1px solid #c4c4c4;
+}

@@ -1,0 +1,62 @@
+.delete-announcement:hover{
+    background-color: #fdeeee;
+}
+.delete-announcement{
+    border-radius: 40%;
+    border: none;
+    background-color: white;
+    transition: 0.25s ease;
+ }
+.edit-announcement:hover{
+      background-color: #f1f5ff;
+  }
+.edit-announcement{
+    border-radius: 40%;
+    border: none;
+    background-color: white;
+    transition: 0.25s ease;
+}
+.trash {
+    transition: 0.25s ease;
+}
+.trash:hover{
+    color: #c70000;
+}
+.edit{
+    transition: 0.25s ease;
+}
+.edit:hover{
+    color: #003cb9;
+}
+
+
+.no-overflow {
+    overflow: hidden;
+}
+.image{
+    transition: 0.3s ease;
+    overflow: hidden;
+    filter: grayscale(90%);
+}
+.image:hover
+{
+    filter: grayscale(40%);
+    transform: scale(1.1);
+}
+.announcement-user{
+    background-color: rgba(255, 255, 255, 0.75);
+    border: solid;
+}
+.announcement-user:hover{
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.announcement-hovering{
+    transition: 0.08s;
+    cursor: pointer;
+    color: black;
+
+}
+.announcement-hovering:hover{
+    background-color: #f7f7f7;
+
+}

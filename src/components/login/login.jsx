@@ -52,11 +52,11 @@ export default function SignInSide()
     const {login} =useLogin()
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if(Email.length==0)
+        if (!Email)
         {
             toast.error("Email required!")
         }
-        else if(password.length==0)
+        if (!password)
         {
             toast.error("Password required!")
         }
@@ -145,7 +145,7 @@ export default function SignInSide()
                             <FormControl fullWidth variant="outlined">
                                 <Button
                                     onClick={handleSubmit}
-                                    sx={{ mt: 1 }}
+                                    sx={{ m: 1 }}
                                     variant="outlined"
                                     size="large"
                                     type="submit"

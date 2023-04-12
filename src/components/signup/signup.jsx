@@ -116,8 +116,10 @@ export default function SignInSide()
             className="Mui-login-box"
             sx={{ bgcolor: "background.paper", 
             width: 500,
-            height:'94vh', 
-            boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
+            maxHeight: "100vh",
+            minHeight: "69vh",
+            boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'
+            }}>
            <AppBar sx={{ backgroundColor: "#E55405"}} position="static">
            <Tabs
                 value={'0'}

@@ -40,7 +40,7 @@ const AllPosts=({blogs})=>
   
   const handleDetailsClick = (slug) =>
   {
-    navigate(`/home/PostExperience/${slug}`);
+    navigate(`/home/PostExperience/PostDetail/${slug}`);
   };
   const handleNewPostRoute = () =>
   {

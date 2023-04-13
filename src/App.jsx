@@ -91,7 +91,7 @@ function App() {
                   <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
                   <Route exact path="/home/PostExperience/" element={<PostExperience />}/>
                   <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
-                  <Route exact path="/home/PostExperience/PostEdit/:uid/:slug" element={<PostEditPage />}/>
+                  <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
                 </Routes>
 
               </div>

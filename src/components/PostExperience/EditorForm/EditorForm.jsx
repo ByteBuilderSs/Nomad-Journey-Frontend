@@ -48,7 +48,7 @@ const modules = {
         ["clean"],
     ],
     imageCompress :{
-        quality: 0.7, // default
+        quality: 0.9, // default
         maxWidth: 500, 
         maxHeight: 500, 
         imageType: ['image/jpeg', 'image/gif', 'image/jpeg', 'image/png', 'image/svg', 'image/webp', 'image/bmp', 'image/vnd'], // default
@@ -221,7 +221,7 @@ const EditorForm = () => {
                                     </Item>
                                     <Item>
                                         <FormControl>
-                                            <ReactQuill modules={modules} theme="snow" value={editorValue} placeholder="Content goes here ..." onChange={handleChangeEditorContent} style={{ width: "65rem", height: "25rem" }}/>
+                                            <ReactQuill modules={modules} theme="snow" value={editorValue} placeholder="Content goes here ..." onChange={handleChangeEditorContent} style={{ width: "65rem", height: "30rem" }}/>
                                         </FormControl>
                                     </Item>
                                 </Stack>

@@ -28,13 +28,14 @@ import axios from 'axios';
 import { CgDetailsMore } from "react-icons/cg";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AiFillDelete, AiFillLike } from "react-icons/ai";
+import { AiFillDelete, AiFillLike, AiFillEdit } from "react-icons/ai";
 import { FcList, FcHighPriority } from "react-icons/fc";
 import {BsCalendarDateFill, BsFillEyeFill} from "react-icons/bs";
 import { toast } from 'react-toastify';
 import { DateObject } from "react-multi-date-picker";
 import {Item} from "semantic-ui-react";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 
 const theme = createTheme({
   palette: {
@@ -147,6 +148,11 @@ const AllPosts=()=>
   {
     navigate(`/home/PostExperience/PostDetail/${slug}`);
   };
+
+  const handleEditClick = (uid, slug) => 
+  {
+    navigate(`/home/PostExperience/Edit/${uid}/${slug}`);
+  }
   const handleNewPostRoute = () =>
   {
     navigate("/home/PostExperience/");
@@ -259,7 +265,7 @@ const AllPosts=()=>
                     <CardActions
                       sx={{
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                       }}
                     >
@@ -275,7 +281,19 @@ const AllPosts=()=>
                           />
                         </div>
                       </Tooltip>
-                      <Tooltip title="Delete this post" arrow>
+                      <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
+                        <div>
+                          <AiFillEdit
+                            onClick={() =>
+                              handleEditClick(blog.uid, blog.slug)
+                            }
+                            color="#b9b8b8"
+                            style={{ cursor: "pointer" }}
+                            size='2rem'
+                          />
+                        </div>
+                      </Tooltip>
+                      <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
                         <div>
                           <AiFillDelete
                             onClick={() =>

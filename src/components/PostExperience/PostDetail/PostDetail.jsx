@@ -163,9 +163,12 @@ const PostDetail = (props) => {
                                                     <ReactQuill theme="bubble" 
                                                                 value={postData.json_data} 
                                                                 readOnly={true}
+                                                                // style={{ width: "65rem" }}
                                                     />
                                                 </FormControl>
+
                                             </Box>
+                                                
                                         </Grid>
                                         {/* Tags */}
                                         <Grid item xs={12}>

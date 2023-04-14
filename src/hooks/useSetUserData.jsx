@@ -2,10 +2,9 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const useUserData=()=>{
-
-    const[userInfo,setUserData]=useState([])
-    const userdata= async() =>{
+export const useUserData = () => {
+    const[userInfo, setUserData]=useState([])
+    const userdata = async() => {
         
         const allData=JSON.parse(localStorage.getItem('tokens'))
         const username=allData.username

@@ -69,44 +69,46 @@ export default function SignInSide()
     const handleSubmit = async (event) => {
         
         event.preventDefault();
-        if(FirstName.length ==0)
+        if (!FirstName)
         {
-            toast.error("FirstName required!")
+            toast.error("First name is required!")
         }
-        else if(FamilyName.length ==0)
+        if (!FamilyName)
         {
-            toast.error("FamilyName required!")
+            toast.error("Family name is required!")
         }
-        else if(UserName.length ==0)
+        if (!UserName)
         {
-            toast.error("UserName required!")
+            toast.error("Username is required!")
         }
-        else if(Email.length ==0)
+        if (!Email)
         {
-            toast.error("Email required!")
+            toast.error("Email is required!")
         }
-        else if(city.length ==0)
+        if (!city)
         {
-            toast.error("CityName required!")
+            toast.error("City is required!")
         }
-        else if(password.length ==0)
+        if(!password)
         {
-            toast.error("password required!")
+            toast.error("Password is required!")
         }
-        else if(ConfirmPass.length ==0)
+        if (!ConfirmPass)
         {
-            toast.error("Confirm Password!")
+            toast.error("Confirm Password is required!")
         }
-        if(password !=ConfirmPass)
+        if (password && ConfirmPass && password !== ConfirmPass)
         {
-            toast.error("mismatch Confirm Password !")
+            toast.error("Password and Confirm Password do not match!")
         }
-        if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
+        if (Email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
         {
-            toast.error("Email is not valid")
+            toast.error("Email is not valid!")
         }
-        else{
-        await signup(FirstName,FamilyName,Email,password,ConfirmPass,UserName,city)}
+        else
+        {
+            await signup(FirstName,FamilyName,Email,password,ConfirmPass,UserName,city)
+        }
     };
 
     return (
@@ -116,8 +118,10 @@ export default function SignInSide()
             className="Mui-login-box"
             sx={{ bgcolor: "background.paper", 
             width: 500,
-            height:'94vh', 
-            boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
+            maxHeight: "100vh",
+            minHeight: "69vh",
+            boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'
+            }}>
            <AppBar sx={{ backgroundColor: "#E55405"}} position="static">
            <Tabs
                 value={'0'}

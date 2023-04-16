@@ -37,6 +37,7 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-element-popper": "^2.1.6",
+    "react-geolocated": "^4.0.3",
     "react-hook-form": "^7.43.5",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",

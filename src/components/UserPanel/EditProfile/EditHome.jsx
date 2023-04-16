@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 import { Icon } from "leaflet";
 import './EditHome.css';
@@ -24,8 +24,102 @@ import {
 } from '@mui/material';
 import { Item } from "semantic-ui-react";
 import GeoSearchField from './GeoSearch';
+import { usePosition } from 'use-position';
+import L from 'leaflet';
+import { useGeolocated } from "react-geolocated";
+
+const SetViewToCurrentLocation = () => {
+    const [location, setLocation] = useState({});
+    const map = useMap();
+
+    function getGeo() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+        setLocation({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+        });
+        });
+    }
+
+    useEffect(() => {
+        getGeo();
+    }, []);
+
+    useEffect(() => {
+        if (location.lat && location.long) {
+            map.setView([location.lat, location.long]);
+        }
+    }, [location]);
+
+    return null;
+};
 
 const EditHome = () => {
+    const { latitude, longitude, error } = usePosition();
+    // const [location, setLocation] = useState({});
+    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: false,
+            },
+            userDecisionTimeout: 5000,
+        });
+    // let lat = coords.latitude;
+    // let long = coords.longitude;
+    // function getGeo() {
+    //     navigator.geolocation.getCurrentPosition(function (position) {
+    //         setLocation({
+    //             lat: position.coords.latitude,
+    //             long: position.coords.longitude,
+    //             });
+    //         });
+    // }
+    
+    // useEffect(() => {
+    //     getGeo();
+    // }, []);
+    
+    // const map = useMap();
+    // map.setView([location.lat, location.long ])
+    // console.log("********** THE LAT IS *********", location.lat);
+    // console.log("********** THE LANG IS *********", location.long);
+
+    // useEffect(() => {
+        //     const map = L.map('map');
+        //     if (location.lat === undefined || location.lang === undefined) return;
+        
+        //     // if (latitude && longitude && !error) {
+            //     //     console.log("************* EVERYTHING WORKS FINE ***********");
+            //     //     map.setView([latitude, longitude]);
+            //     //     console.log(latitude);
+            //     // }
+    //     // else {
+    //     //     console.log("-------------- YOUR LOCATION CAN NOT BE FETCHED -------------");
+    //     // }
+    //     map.setView([location.lat, location.long ])
+    // }, [location.lat, location.long ]);
+
+    // const locateCurrentPosition = () => new Promise((resolve,reject)=> {
+    //     navigator.geolocation.getCurrentPosition(
+    //     position => {
+    //         console.log(position);
+    //         resolve(position);
+    //     error => {
+    //     },
+    //         console.log(error.message);
+    //         reject(error);
+    //     },
+    //     {
+    //         enableHighAccuracy: false,
+    //         timeout: 10000,
+    //         maximumAge: 1000
+    //     }
+    //     );
+    // }).then(position=>console.log(position));
+
+    // useEffect(() => {
+    //     locateCurrentPosition();
+    // }, []);
 
     return (
         <React.Fragment>
@@ -267,13 +361,14 @@ const EditHome = () => {
                                 <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.8rem" }}>
                                     Specify The Location of Your Home on The Map
                                 </h6>
-                                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}>
+                                <MapContainer center={[0, 0]} zoom={6} scrollWheelZoom={true}>
                                     <TileLayer
                                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                     />
                                     <GeoSearchField />
-                                    <Marker position={[51.505, -0.09]}>
+                                    <SetViewToCurrentLocation />
+                                    <Marker position={[0, 0]}>
                                         <Popup>
                                         A pretty CSS3 popup. <br /> Easily customizable.
                                         </Popup>

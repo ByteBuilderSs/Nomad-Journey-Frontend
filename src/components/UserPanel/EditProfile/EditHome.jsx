@@ -23,8 +23,10 @@ import {
     FormControlLabel,
 } from '@mui/material';
 import { Item } from "semantic-ui-react";
+import GeoSearchField from './GeoSearch';
 
 const EditHome = () => {
+
     return (
         <React.Fragment>
             <Box
@@ -270,6 +272,7 @@ const EditHome = () => {
                                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                     />
+                                    <GeoSearchField />
                                     <Marker position={[51.505, -0.09]}>
                                         <Popup>
                                         A pretty CSS3 popup. <br /> Easily customizable.

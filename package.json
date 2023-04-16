@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "formik": "^2.2.9",
     "leaflet": "^1.9.3",
+    "leaflet-geosearch": "^3.7.0",
     "material-ui-chip-input": "^1.1.0",
     "mdb-react-ui-kit": "^5.1.0",
     "postcss": "^8.4.21",
@@ -49,6 +50,7 @@
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.9",
+    "use-position": "^1.0.0",
     "web-vitals": "^2.1.4",
     "yup": "^1.0.2",
     "zod": "^3.21.4"

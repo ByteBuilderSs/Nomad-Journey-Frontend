@@ -1,4 +1,7 @@
-import React from 'react'
+import React, {useState} from 'react';
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
+import { Icon } from "leaflet";
+import './EditHome.css';
 import {
     Box,
     Paper,
@@ -257,8 +260,25 @@ const EditHome = () => {
                                     </Stack>
                                 </Box>
                             </Grid>
+                            {/* MAP🥳 */}
+                            <Grid item xs={12}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.8rem" }}>
+                                    Specify The Location of Your Home on The Map
+                                </h6>
+                                <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={true}>
+                                    <TileLayer
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    />
+                                    <Marker position={[51.505, -0.09]}>
+                                        <Popup>
+                                        A pretty CSS3 popup. <br /> Easily customizable.
+                                        </Popup>
+                                    </Marker>
+                                </MapContainer>
+                            </Grid>
                             {/* Confirm Button */}
-                            <Grid item xl={3} lg={3} md={3} sm={12} xs={12}>
+                            <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                 <Stack direction="row" spacing={2} sx={{ mt: "2rem" }}>
                                     <Item>
                                         <Button

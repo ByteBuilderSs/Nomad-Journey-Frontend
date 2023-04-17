@@ -1,54 +1,21 @@
-import Box from '@mui/material/Box';
-import "./MainPage.css"
-import "./fontawesome.css"
 import {React, useState, useRef, useEffect } from "react";
-import App from './ImageSlide';
-import { containerClasses } from '@mui/system';
 import axios from 'axios';
-import AlertDialogSlide from './ReactConfirm';
-import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import Button from '@mui/material/Button';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Box from '@mui/material/Box';
+import "./MainPage.css"
+import "./fontawesome.css"
 
 
-  
-const ProgressBar = ({bgcolor,progress,height}) => {
-     
-    const Parentdiv = {
-        height: height,
-        width: '100%',
-        backgroundColor: 'whitesmoke',
-        borderRadius: "20px",
-        margin: 0
-      }
-      
-      const Childdiv = {
-        height: '100%',
-        width: `${progress}%`,
-        backgroundColor: bgcolor,
-        borderRadius:"20px",
-        textAlign: 'right'
-      }
-      
-      const progresstext = {
-        padding: 10,
-        color: 'black',
-        fontWeight: 900
-      }
-        
-    return (
-    <div style={Parentdiv}>
-      <div style={Childdiv}>
-        <span style={progresstext}>{`${progress}%`}</span>
-      </div>
-    </div>
-    )
-}
-
+// slider function :
 function clickInputsInOrder(currentIndex = 0) {
   const inputIds = ['banner1', 'banner2', 'banner3', 'banner4'];
 
@@ -65,7 +32,10 @@ function clickInputsInOrder(currentIndex = 0) {
   clickNextInput();
 }
 
-const fetchAnnc = async (setAnncData) => {
+
+
+/// fetch announcements from backend
+const fetchAnnc = async (setAnncData,setPagination,setPaginCount, value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
@@ -76,9 +46,14 @@ const fetchAnnc = async (setAnncData) => {
       }
     };
 
-    await axios.get('http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/', config).then(
+    await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}`, config).then(
       (response) => {
-        setAnncData(response.data)
+        setAnncData(response.data.results)
+        console.log(response.data)
+        setPaginCount(response.data.count)
+        if(response.data.count != 0){
+          setPagination(true)
+        }
       }
     )
     
@@ -88,39 +63,24 @@ const fetchAnnc = async (setAnncData) => {
   }
 }
 
-const Announce = (props) => {
-  // {image :  , leftDays : , userName : , startDate : , endDate : , desc : , }
 
-  const {anc_city
-  ,
-  anc_country
-  ,
-  anc_description
-  ,
-  anc_status
-  ,
-  announcer
-  ,
-  announcer_image_code
-  ,
-  announcer_username
-  ,
-  arrival_date
-  ,
-  arrival_date_is_flexible
-  ,
-  city_country
-  ,
-  city_name
-  ,
-  departure_date
-  ,
-  departure_date_is_flexible
-  ,
-  id
-  ,
-  travelers_count} = props.anc
-  
+// when data inaccessible
+const NotFound = () => {
+  return(
+    <div class="col-lg-12">
+      <div class="item" style={{height : "500px", justifyItems : "center", justifyContent : "center"}}>
+        <h1 style={{justifyContent : "center",paddingTop : "250px"}}>Not Found!!</h1>
+      </div>
+    </div>
+  )
+}
+
+
+///// show each announcements on mainpage
+const Announce = (props) => {
+
+
+    
   // For offer dialog :
   const [open, setOpen] = useState(false);
 
@@ -135,14 +95,10 @@ const Announce = (props) => {
   const handleOffer = () => {
       handleClose()
       Make_Offer()
-      window.location.reload(false); 
-      //fetchAnnc(props.setAnncData)
+      //window.location.reload(false); 
   }
 
-  
-
   const Make_Offer = async () => {
-
 
     try {
   
@@ -151,10 +107,12 @@ const Announce = (props) => {
       
       axios({
         method: "post",
-        url: `http://127.0.0.1:8000/api/v1/anc_request/create-request/${id}`,
+        url: `http://127.0.0.1:8000/api/v1/anc_request/create-request/${props.anc.id}`,
         headers: {
           'Authorization': `Bearer ${signedInUser.access}`
         },
+      }).then(response => {
+        fetchAnnc(props.setAnncData,props.setPagination,props.setPaginCount);
       })
       
       
@@ -164,10 +122,10 @@ const Announce = (props) => {
   
   }
   let Description = "";
-  if(anc_description.length > 44){
-    Description = anc_description.substring(0, 44) + "..."
+  if(props.anc.anc_description.length > 44){
+    Description = props.anc.anc_description.substring(0, 44) + "..."
   }else{
-    Description = anc_description
+    Description = props.anc.anc_description
   }
    
   return(
@@ -181,16 +139,16 @@ const Announce = (props) => {
             </div>
             <div class="col-lg-6 align-self-center">
               <div class="content">
-                <span class="info">*{travelers_count} Travelers</span>
-                <h4>{announcer_username}</h4>
+                <span class="info">*{props.anc.travelers_count} Travelers</span>
+                <h4>{props.anc.announcer_username}</h4>
                 <div class="row">
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
-                    <span class="list">{arrival_date}</span>
+                    <span class="list">{props.anc.arrival_date}</span>
                   </div>
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
-                    <span class="list">{departure_date}</span>
+                    <span class="list">{props.anc.departure_date}</span>
                   </div>
                 </div>
                 <p>{Description}</p>
@@ -234,44 +192,25 @@ const Announce = (props) => {
   )
 }
 
-const NotFound = () => {
-  return(
-    <div class="col-lg-12">
-      <div class="item" style={{height : "500px"}}>
-        <h1 style={{justifyContent : "center", "paddingTop" : "250px"}}>Not Found!!</h1>
-      </div>
-    </div>
-  )
-}
-
-
-
-
 export default function MainPage(){
 
     const [announcdata,setAnncData] = useState([])
+    // for pagination :
+    const [showPagination, setPagination] = useState(false);
+    const [paginCount, setPaginCount] = useState(1);
+    const [page, setPage] = useState(1);
+
     const iterators = { head: 0, limit : 4};
 
     useEffect(() => {
       clickInputsInOrder(0);
     }, []);
-
-    
-    
-    
-
-
+      
     useEffect(() => {
-
-      fetchAnnc(setAnncData)
-        
+      fetchAnnc(setAnncData,setPagination,setPaginCount)
     }, []);
 
-
   
-
-    
-
 
     const anncData = [
       {image :  require("../../Assets/images/deals-01.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
@@ -280,7 +219,52 @@ export default function MainPage(){
       {image :  require("../../Assets/images/deals-04.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
     ]
 
-    
+    // show all anncs
+    const showAnnc = () => {
+      if(announcdata.length != 0){
+        return(
+          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} />)
+        )
+      }
+      else{
+        return(
+          NotFound()
+        )
+      }
+    }
+
+    const handlePageChange = (event, value) => {
+      setPage(value);
+      fetchAnnc(setAnncData,setPagination,setPaginCount,value)
+    };
+
+    //function for show pagination :
+    const showpageination = () => {
+      const theme = createTheme({
+        palette: {
+          secondary: {
+            main: '#E55405',
+            '&:hover' : '#E55405',
+            },
+          },
+      });
+      if(showPagination){
+        return(
+          <div className = "pagination-container" >
+            <ThemeProvider theme = {theme}>
+              <Pagination 
+              count = {paginCount}
+              page = {page}
+              onChange={handlePageChange}
+              color = "secondary"
+              size = "large"
+              variant = "outlined"
+              /> 
+            </ThemeProvider>   
+          </div>
+        )
+      }
+    }
 
   return(
 
@@ -509,29 +493,11 @@ export default function MainPage(){
               </div>
             </div>
             
-            {
-              
-              announcdata.length != 0 ?   announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} />) : <NotFound/>
-            }
 
-            
-            
-            
-            
-            
+            {showAnnc()}
+            {showpageination()}
 
-            
-
-            
-            <div class="col-lg-12">
-              <ul class="page-numbers">
-                <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
-              </ul>
-            </div>
+         
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 import { Icon } from "leaflet";
 import './EditHome.css';
@@ -21,6 +21,7 @@ import {
     Chip,
     Checkbox,
     FormControlLabel,
+    Tooltip,
 } from '@mui/material';
 import { Item } from "semantic-ui-react";
 import GeoSearchField from './GeoSearch';
@@ -28,17 +29,22 @@ import { usePosition } from 'use-position';
 import L from 'leaflet';
 import { useGeolocated } from "react-geolocated";
 
-const SetViewToCurrentLocation = () => {
-    const [location, setLocation] = useState({});
+const SetViewToCurrentLocation = ({location, setLocation}) => {
     const map = useMap();
 
     function getGeo() {
-        navigator.geolocation.getCurrentPosition(function (position) {
-        setLocation({
-            lat: position.coords.latitude,
-            long: position.coords.longitude,
-        });
-        });
+        navigator.geolocation.getCurrentPosition( 
+            (position) =>  {
+                setLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            }, 
+            (error) => {
+                console.log("--------- ERROR WHILE FETCHING LOCATION ----------- ", error);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
+            ) ;
     }
 
     useEffect(() => {
@@ -46,85 +52,78 @@ const SetViewToCurrentLocation = () => {
     }, []);
 
     useEffect(() => {
-        if (location.lat && location.long) {
-            map.setView([location.lat, location.long]);
+        if (location.lat && location.lng) {
+            map.setView([location.lat, location.lng]);
         }
     }, [location]);
 
     return null;
 };
 
-const EditHome = () => {
-    const { latitude, longitude, error } = usePosition();
-    // const [location, setLocation] = useState({});
-    const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
+const CustomizeMarker = ({location, setLocation}) => {
+    const [draggable, setDraggable] = useState(false);
+    console.log("*************** THE INPUT LOCATION IS ***************** ", location);
+    let lat = location.lat;
+    let lng = location.lng;
+    const [position, setPosition] = useState({lat, lng});
+    console.log("-----------------THE POS VALUE IS ------------------- ", position);
+    const markerRef = useRef(null);
+
+    const eventHandlers = useMemo(
+        () => ({
+            dragend() {
+            const marker = markerRef.current
+            if (marker != null) {
+                console.log("+++++++++++ THE OUTPUT OF getLatLng IS ++++++++++++ ", marker.getLatLng());
+                setPosition(marker.getLatLng());
+                setDraggable(false);
+            }
             },
-            userDecisionTimeout: 5000,
-        });
-    // let lat = coords.latitude;
-    // let long = coords.longitude;
-    // function getGeo() {
-    //     navigator.geolocation.getCurrentPosition(function (position) {
-    //         setLocation({
-    //             lat: position.coords.latitude,
-    //             long: position.coords.longitude,
-    //             });
-    //         });
-    // }
-    
-    // useEffect(() => {
-    //     getGeo();
-    // }, []);
-    
-    // const map = useMap();
-    // map.setView([location.lat, location.long ])
-    // console.log("********** THE LAT IS *********", location.lat);
-    // console.log("********** THE LANG IS *********", location.long);
+        }),
+        [],
+    );
 
-    // useEffect(() => {
-        //     const map = L.map('map');
-        //     if (location.lat === undefined || location.lang === undefined) return;
-        
-        //     // if (latitude && longitude && !error) {
-            //     //     console.log("************* EVERYTHING WORKS FINE ***********");
-            //     //     map.setView([latitude, longitude]);
-            //     //     console.log(latitude);
-            //     // }
-    //     // else {
-    //     //     console.log("-------------- YOUR LOCATION CAN NOT BE FETCHED -------------");
-    //     // }
-    //     map.setView([location.lat, location.long ])
-    // }, [location.lat, location.long ]);
+    const toggleDraggable = useCallback(() => {
+        setDraggable((d) => !d)
+    }, []);
 
-    // const locateCurrentPosition = () => new Promise((resolve,reject)=> {
-    //     navigator.geolocation.getCurrentPosition(
-    //     position => {
-    //         console.log(position);
-    //         resolve(position);
-    //     error => {
-    //     },
-    //         console.log(error.message);
-    //         reject(error);
-    //     },
-    //     {
-    //         enableHighAccuracy: false,
-    //         timeout: 10000,
-    //         maximumAge: 1000
-    //     }
-    //     );
-    // }).then(position=>console.log(position));
+    const saveLocation = () => {
+        if (markerRef.current)
+        {
+            console.log(
+                "+++++++++++ THE NEW LATLONG AFTER SUBMIT IS ++++++++++++ ",
+                markerRef.current.getLatLng()
+            );
+        }
+    };
 
-    // useEffect(() => {
-    //     locateCurrentPosition();
-    // }, []);
+
+    return (
+        <>
+            <Marker
+                draggable={draggable}
+                eventHandlers={eventHandlers}
+                position={[position.lat, position.lng]}
+                ref={markerRef}>
+                <Popup minWidth={100}>
+                    <Typography>You can save your location after clicking on submit button.</Typography>
+                    <Button onClick={saveLocation} type='button' variant='contained' sx={{ position: 'center'}}>Submit</Button>
+                </Popup>
+            </Marker>
+            <Tooltip title='click here to make the marker draggable' arrow placement='top'>
+                <Button  onClick={toggleDraggable} variant='contained' className='edit-location-button' type='button'>Edit Your Location</Button>
+            </Tooltip>
+
+        </>
+    );
+}
+
+const EditHome = () => {
+    const [location, setLocation] = useState({});
 
     return (
         <React.Fragment>
             <Box
-                className="drawerContainer"
                 component="form"
                 sx={{
                 "& .MuiTextField-root": { m: 1, maxWidth: "100%"},
@@ -361,19 +360,17 @@ const EditHome = () => {
                                 <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.8rem" }}>
                                     Specify The Location of Your Home on The Map
                                 </h6>
-                                <MapContainer center={[0, 0]} zoom={6} scrollWheelZoom={true}>
-                                    <TileLayer
-                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                    />
-                                    <GeoSearchField />
-                                    <SetViewToCurrentLocation />
-                                    <Marker position={[0, 0]}>
-                                        <Popup>
-                                        A pretty CSS3 popup. <br /> Easily customizable.
-                                        </Popup>
-                                    </Marker>
-                                </MapContainer>
+                                <div className='map-container'>
+                                    <MapContainer center={[0, 0]} zoom={16} scrollWheelZoom={true}>
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <GeoSearchField />
+                                        <SetViewToCurrentLocation location={location} setLocation={setLocation}/>
+                                        {location.lat && location.lng && (<CustomizeMarker location={location} setLocation={setLocation} />)}
+                                    </MapContainer>
+                                </div>
                             </Grid>
                             {/* Confirm Button */}
                             <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>

@@ -30,7 +30,7 @@
     "primeicons": "^6.0.1",
     "primereact": "^9.2.3",
     "prop-types": "^15.8.1",
-    "quill-image-compress": "^1.2.29",
+    "quill-image-compress": "^1.2.30",
     "quill-image-resize-module": "^3.0.0",
     "quill-image-resize-module-react": "^3.0.0",
     "react": "^18.2.0",

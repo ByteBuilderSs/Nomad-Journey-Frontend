@@ -13,6 +13,7 @@ import PaginationItem from '@mui/material/PaginationItem';
 import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
+import { CSSTransition } from "react-transition-group";
 
 
 // slider function :
@@ -35,7 +36,7 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 /// fetch announcements from backend
-const fetchAnnc = async (setAnncData,setPagination,setPaginCount, value = 1) => {
+const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setShowPagin ,value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
@@ -49,6 +50,7 @@ const fetchAnnc = async (setAnncData,setPagination,setPaginCount, value = 1) => 
     await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}`, config).then(
       (response) => {
         setAnncData(response.data.results)
+        setShowPagin(true)
         console.log(response.data)
         setPaginCount(response.data.count)
         if(response.data.count != 0){
@@ -112,7 +114,7 @@ const Announce = (props) => {
           'Authorization': `Bearer ${signedInUser.access}`
         },
       }).then(response => {
-        fetchAnnc(props.setAnncData,props.setPagination,props.setPaginCount);
+        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setShowPagin);
       })
       
       
@@ -195,6 +197,7 @@ const Announce = (props) => {
 export default function MainPage(){
 
     const [announcdata,setAnncData] = useState([])
+    const [showPagin,setShowPagin] = useState(false)
     // for pagination :
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
@@ -207,7 +210,7 @@ export default function MainPage(){
     }, []);
       
     useEffect(() => {
-      fetchAnnc(setAnncData,setPagination,setPaginCount)
+      fetchAnnc(setAnncData,setPagination,setPaginCount,setShowPagin)
     }, []);
 
   
@@ -221,9 +224,9 @@ export default function MainPage(){
 
     // show all anncs
     const showAnnc = () => {
-      if(announcdata.length != 0){
+      if(announcdata.length != 0 && showPagin == true){
         return(
-          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} />)
+            announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setShowPagin = {setShowPagin}/>)
         )
       }
       else{
@@ -234,8 +237,9 @@ export default function MainPage(){
     }
 
     const handlePageChange = (event, value) => {
+      setShowPagin(false)
       setPage(value);
-      fetchAnnc(setAnncData,setPagination,setPaginCount,value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setShowPagin, value)
     };
 
     //function for show pagination :
@@ -445,21 +449,16 @@ export default function MainPage(){
                   </div>
                   <div class="col-lg-4">
                       <fieldset>
-                          <select name="Location" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
-                              <option selected>Destinations</option>
-                              <option type="checkbox" name="option1" value="Italy">Italy</option>
-                              <option value="France">France</option>
-                              <option value="Switzerland">Switzerland</option>
-                              <option value="Thailand">Thailand</option>
-                              <option value="Australia">Australia</option>
-                              <option value="India">India</option>
-                              <option value="Indonesia">Indonesia</option>
-                              <option value="Malaysia">Malaysia</option>
-                              <option value="Singapore">Singapore</option>
+                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
+                              {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
+                              <option value = "Newest" selected style={{fontSize : "20px"}}>Newest</option>
+                              <option value = "Oldest" style={{fontSize : "20px"}}>Oldest</option>
+                              <option value = "TravelerCountAsc" style={{fontSize : "20px"}}>Traveler Count &#8593; </option>
+                              <option value = "TravelerCountDesc" style={{fontSize : "20px"}}>Traveler Count &#8595; </option>
                           </select>
                       </fieldset>
                   </div>
-                  <div class="col-lg-4">
+                  {/* <div class="col-lg-4">
                       <fieldset>
                           <select name="Price" class="form-select" aria-label="Default select example" id="choosePrice" onChange="this.form.click()">
                               <option selected>Price Range</option>
@@ -470,12 +469,16 @@ export default function MainPage(){
                               <option value="2500+">$2,500+</option>
                           </select>
                       </fieldset>
-                  </div>
+                  </div> */}
                   <div class="col-lg-2">                        
                       <fieldset>
                           <button class="border-button">Search Results</button>
                       </fieldset>
                   </div>
+
+                  {/* for placing in line : */}
+                  {/* <div class="col-lg-2"></div> */}
+
                 </div>
               </form>
             </div>

@@ -19,7 +19,11 @@ import {
 import { Item } from "semantic-ui-react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import LetteredAvatar from 'react-lettered-avatar';
+
 const SideBarCard = () => {
+    let username = JSON.parse(localStorage.getItem('tokens')).username
+
     return (
         <div>
             <Card>
@@ -35,7 +39,8 @@ const SideBarCard = () => {
                                         type="file"
                                         max={20}
                                     />
-                                    <Avatar sx={{ width:'15rem', height:'15rem' }} />
+                                    {/* <Avatar sx={{ width:'15rem', height:'15rem' }} /> */}
+                                    <LetteredAvatar name={username} backgroundColor='#FFE5B4' size={100} />
                                 </IconButton>
                             </Item>
                             <Item>

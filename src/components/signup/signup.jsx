@@ -176,39 +176,43 @@ export default function SignInSide()
         event.preventDefault();
         if (!FirstName)
         {
-            toast.error("First name is required!")
+            toast.error("First name is required!");
         }
         if (!FamilyName)
         {
-            toast.error("Family name is required!")
+            toast.error("Family name is required!");
         }
         if (!UserName)
         {
-            toast.error("Username is required!")
+            toast.error("Username is required!");
         }
         if (!Email)
         {
-            toast.error("Email is required!")
+            toast.error("Email is required!");
+        }
+        if (!selectedCountry) 
+        {
+            toast.error("Country is required!");
         }
         if (!selectedCity)
         {
-            toast.error("City is required!")
+            toast.error("City is required!");
         }
         if(!password)
         {
-            toast.error("Password is required!")
+            toast.error("Password is required!");
         }
         if (!ConfirmPass)
         {
-            toast.error("Confirm Password is required!")
+            toast.error("Confirm Password is required!");
         }
         if (password && ConfirmPass && password !== ConfirmPass)
         {
-            toast.error("Password and Confirm Password do not match!")
+            toast.error("Password and Confirm Password do not match!");
         }
         if (Email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
         {
-            toast.error("Email is not valid!")
+            toast.error("Email is not valid!");
         }
         else
         {

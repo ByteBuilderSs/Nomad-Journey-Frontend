@@ -276,17 +276,18 @@ export default function SignInSide()
                                     onChange={e=>{setName(e.target.value)}}
                                     placeholder="Eg. Nariman"
                                     value={FirstName}
-                                    
+                                    required
                                 />
                             </FormControl>
                             {/* Lastname */}
                             <FormControl fullWidth variant="outlined">
                                 <TextField
-                                id="outlined-adornment-lastname"
-                                label="Lastname"
-                                onChange={e=>{setFamilyName(e.target.value)}}
-                                value={FamilyName}
-                                placeholder="Eg. Masjedi"
+                                    id="outlined-adornment-lastname"
+                                    label="Lastname"
+                                    onChange={e=>{setFamilyName(e.target.value)}}
+                                    value={FamilyName}
+                                    placeholder="Eg. Masjedi"
+                                    required
                                 />
                             </FormControl>
                         </Grid>
@@ -328,6 +329,7 @@ export default function SignInSide()
                                     <TextField 
                                         {...params} 
                                         label="Country"
+                                        required
                                         InputProps={{
                                             ...params.InputProps,
                                             endAdornment: (
@@ -370,6 +372,7 @@ export default function SignInSide()
                                     <TextField 
                                         {...params} 
                                         label="City"
+                                        required
                                         InputProps={{
                                             ...params.InputProps,
                                             endAdornment: (
@@ -386,76 +389,80 @@ export default function SignInSide()
                         {/* Username */}
                         <FormControl fullWidth variant="outlined">
                             <TextField
-                            id="signup-outlined-adornment-username"
-                            label="Username"
-                            onChange={e=>{setUserName(e.target.value)}}
-                            value={UserName}
-                            placeholder="Eg. @Nariman1234"
+                                id="signup-outlined-adornment-username"
+                                label="Username"
+                                onChange={e=>{setUserName(e.target.value)}}
+                                value={UserName}
+                                placeholder="Eg. @Nariman1234"
+                                required
                             />
                         </FormControl>
                         {/* Email */}
                         <FormControl fullWidth variant="outlined">
                             <TextField
-                            id="signup-outlined-adornment-email"
-                            label="Email"
-                            onChange={e=>{setEmail(e.target.value)}}
-                            value={Email}
-                            placeholder="Eg. nariman.masjedi@gmail.com"
+                                id="signup-outlined-adornment-email"
+                                label="Email"
+                                onChange={e=>{setEmail(e.target.value)}}
+                                value={Email}
+                                placeholder="Eg. nariman.masjedi@gmail.com"
+                                required
                             />
                         </FormControl>
                         <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
                             {/* Password */}
                             <FormControl fullWidth variant="outlined">
                                 <TextField
-                                id="outlined-adornment-password"
-                                type={values.showPassword ? "text" : "password"}
-                                onChange={e=>{setPassword(e.target.value)}}
-                                value={password}
-                                InputProps={{
-                                    endAdornment: (
-                                    <InputAdornment>
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                    ),
-                                }}
-                                label="Password"
-                                placeholder="nariman1234"
+                                    id="outlined-adornment-password"
+                                    type={values.showPassword ? "text" : "password"}
+                                    onChange={e=>{setPassword(e.target.value)}}
+                                    value={password}
+                                    required
+                                    InputProps={{
+                                        endAdornment: (
+                                        <InputAdornment>
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                        ),
+                                    }}
+                                    label="Password"
+                                    placeholder="nariman1234"
                                 />
                             </FormControl>
                             {/* Confirm Password */}
                             <FormControl fullWidth variant="outlined">
                                 <TextField
-                                id="outlined-adornment-confirmPassword"
-                                type={values.showConfirmPassword ? "text" : "password"}
-                                onChange={e=>{setConfirmPass(e.target.value)}}
-                                value={ConfirmPass}
-                                InputProps={{
-                                    endAdornment: (
-                                    <InputAdornment>
-                                        <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowConfirmPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                        >
-                                        {values.showConfirmPassword ? (
-                                            <VisibilityOff />
-                                        ) : (
-                                            <Visibility />
-                                        )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                    ),
-                                }}
-                                label="Password confirmation"
-                                placeholder="nariman1234"
+                                    id="outlined-adornment-confirmPassword"
+                                    required
+                                    type={values.showConfirmPassword ? "text" : "password"}
+                                    onChange={e=>{setConfirmPass(e.target.value)}}
+                                    value={ConfirmPass}
+                                    InputProps={{
+                                        endAdornment: (
+                                        <InputAdornment>
+                                            <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowConfirmPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                            >
+                                            {values.showConfirmPassword ? (
+                                                <VisibilityOff />
+                                            ) : (
+                                                <Visibility />
+                                            )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                        ),
+                                    }}
+                                    label="Password confirmation"
+                                    placeholder="nariman1234"
                                 />
                             </FormControl>
                         </Grid>

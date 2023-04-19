@@ -7,7 +7,7 @@ const GeoSearchField = () => {
     
     const map = useMap();
 
-    const provider = new OpenStreetMapProvider();
+    const provider = new OpenStreetMapProvider({icon: null});
 
     // @ts-ignore
     const searchControl = new GeoSearchControl({
@@ -15,6 +15,10 @@ const GeoSearchField = () => {
         searchLabel: "Search in Map",
         notFoundMessage: "No data could be found",
         autoClose: false,
+        // marker: {
+        //     icon: null,
+        //     draggable: false,
+        // },
     });
     
     useEffect(() => {

@@ -14,6 +14,10 @@ import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
 import { CSSTransition } from "react-transition-group";
+import Lottie from 'react-lottie';
+import notFoundGif from '../../lottieAssets/notfoundANC';
+import loaderGif from '../../lottieAssets/loaderANC';
+import { toast } from "react-toastify";
 
 
 // slider function :
@@ -36,7 +40,7 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 /// fetch announcements from backend
-const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setShowPagin ,value = 1) => {
+const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setLoader ,value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
@@ -50,12 +54,15 @@ const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setShowPagin ,v
     await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}`, config).then(
       (response) => {
         setAnncData(response.data.results)
-        setShowPagin(true)
         console.log(response.data)
-        setPaginCount(response.data.count)
+        setPaginCount(response.data.page_count)
         if(response.data.count != 0){
           setPagination(true)
         }
+        setTimeout(() => {
+          setLoader(false);
+        }, 2000);
+        
       }
     )
     
@@ -68,11 +75,45 @@ const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setShowPagin ,v
 
 // when data inaccessible
 const NotFound = () => {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: notFoundGif,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   return(
     <div class="col-lg-12">
-      <div class="item" style={{height : "500px", justifyItems : "center", justifyContent : "center"}}>
-        <h1 style={{justifyContent : "center",paddingTop : "250px"}}>Not Found!!</h1>
-      </div>
+      <Lottie 
+	    options={defaultOptions}
+        height={400}
+        width={400}
+      />
+    </div>
+  )
+}
+// loading for announcements
+const Loader = () => {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderGif,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  return(
+    <div class="col-lg-12">
+      <Lottie 
+	    options={defaultOptions}
+        height={250}
+        width={250}
+      />
     </div>
   )
 }
@@ -96,8 +137,9 @@ const Announce = (props) => {
 
   const handleOffer = () => {
       handleClose()
-      Make_Offer()
-      //window.location.reload(false); 
+      toast.success("your offer submited successfully");
+      props.setLoader(true)
+      Make_Offer() 
   }
 
   const Make_Offer = async () => {
@@ -114,7 +156,7 @@ const Announce = (props) => {
           'Authorization': `Bearer ${signedInUser.access}`
         },
       }).then(response => {
-        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setShowPagin);
+        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader);
       })
       
       
@@ -197,7 +239,7 @@ const Announce = (props) => {
 export default function MainPage(){
 
     const [announcdata,setAnncData] = useState([])
-    const [showPagin,setShowPagin] = useState(false)
+    const [loader,setLoader] = useState(false)
     // for pagination :
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
@@ -210,7 +252,7 @@ export default function MainPage(){
     }, []);
       
     useEffect(() => {
-      fetchAnnc(setAnncData,setPagination,setPaginCount,setShowPagin)
+      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader)
     }, []);
 
   
@@ -224,22 +266,28 @@ export default function MainPage(){
 
     // show all anncs
     const showAnnc = () => {
-      if(announcdata.length != 0 && showPagin == true){
+      if(loader == true){
         return(
-            announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setShowPagin = {setShowPagin}/>)
+          Loader()
         )
       }
-      else{
+      else if(announcdata.length == 0 ){
         return(
           NotFound()
         )
       }
+      else{
+        return(
+          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader}/>)
+        )
+      }
+
     }
 
     const handlePageChange = (event, value) => {
-      setShowPagin(false)
+      setLoader(true)
       setPage(value);
-      fetchAnnc(setAnncData, setPagination, setPaginCount, setShowPagin, value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, value)
     };
 
     //function for show pagination :

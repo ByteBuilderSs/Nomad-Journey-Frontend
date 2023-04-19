@@ -13,14 +13,20 @@ import {
     Checkbox,
     IconButton, 
     Button, 
-    Dialog
+    Dialog,
+    Autocomplete,
+    CircularProgress,
 } from "@mui/material";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { toast } from "react-toastify";
 import {useUserData} from '../../../hooks/useSetUserData';
 
-
+function sleep(delay = 0) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, delay);
+    });
+}
 const intialState = {
     country: "",
     city: "",
@@ -40,8 +46,8 @@ const intialState = {
 export default function NewAnnouncementForm(props) {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
-    const [country, setCountry] = useState('');
-    const [city, setCity] = useState('');
+    const [country, setCountry] = useState(null);
+    const [city, setCity] = useState(null);
     const [arrival_date, setArrivalDate] = useState(null);
     const [departure_date, setDepartureDate] = useState(null);
     const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(false);
@@ -49,15 +55,98 @@ export default function NewAnnouncementForm(props) {
     const [travelers_count, setTravelersCount] = useState('');
     const [message, setMessage] = useState('');
     const [disabled, setDisabled] = useState(false);
+    /* ADDED */
+    const [countries, setCountries] = React.useState([]);
+    const [cities, setCities] = React.useState([]);
+    const [countryInput, setCountryInput] = useState('');
+    const [cityInput, setCityInput] = useState('');
 
+    const [open, setOpen] = React.useState(false);
 
-    const handleChangeCountry = (event) => {
-        setCountry(event.target.value);
+    const loading = open && countries.length === 0;
+    const [openC, setOpenC] = React.useState(false);
+    const loadingC = openC && cities.length === 0;
+
+    const loadCountries = async () => {
+        axios({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/v1/utils/get-countries/",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((result) => {
+            setCountries(result.data);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching countries.")
+        })
+    }
+    
+    console.log("********** THE COUNTRIES ARE ******** ", countries);
+
+    const loadCities = async () => {
+        if (country) {
+            axios({
+                method: "get",
+                url: `http://127.0.0.1:8000/api/v1/utils/get-cities-of-country/${country.id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((result) => {
+                setCities(result.data);
+            }).catch((error) => {
+                toast.error("Something went wrong while fetching cities.")
+            })
+        }
     }
 
-    const handleChangeCity = (event) => {
-        setCity(event.target.value);
-    }
+    console.log("+++++++++++++ THE CORRESPONDING CITIES ARE +++++++++++++ ", cities);
+    
+    React.useEffect(() => {
+        let active = true;
+        if (!loading) {
+            return undefined;
+        }
+        (async () => {
+            await sleep(1e3); // For demo purposes.
+            if (active) 
+            {
+                loadCountries();
+            }
+        })();
+        return () => {
+            active = false;
+        };
+    }, [loading]);
+    
+    React.useEffect(() => {
+        if (!open) {
+            setCountries([]);
+        }
+    }, [open]);
+
+    React.useEffect(() => {
+        let active = true;
+        if (!loadingC) {
+            return undefined;
+        }
+        (async () => {
+            await sleep(1e3); // For demo purposes.
+            if (active) 
+            {
+                loadCities();
+            }
+        })();
+        return () => {
+            active = false;
+        };
+    }, [loadingC, country]);
+    
+    React.useEffect(() => {
+        if (!openC) {
+            setCities([]);
+        }
+    }, [openC]);
+
 
     const handleChangeMessage = (event) => {
         setMessage(event.target.value);
@@ -73,8 +162,18 @@ export default function NewAnnouncementForm(props) {
     const handleChangeTravelersCount = (event) => {
         setTravelersCount(event.target.value);
     }
-    const [values, setValues] = useState(intialState);
     
+    const handleCountrySelection = (value) => {
+        setCountry(value);
+    }
+
+    console.log("!!!!!!!!!!!!!!!!! THE SELECTED COUNTRY IS !!!!!!!!!!!!!!!!", country);
+
+    const handleCitySelection = (value) => {
+        setCity(value);
+    }
+
+    console.log("------------------- THE SELECTED CITY IS ------------------", city);
 
     // Data Validation and Send to Backend
     const onSubmit = async (e) => {
@@ -128,8 +227,7 @@ export default function NewAnnouncementForm(props) {
                         'Authorization': `Bearer ${access_token}`
                     },
                     data: {
-                        anc_country: country,
-                        anc_city: city,
+                        anc_city: city.id,
                         arrival_date: arrDate,
                         departure_date: deptDate,
                         arrival_date_is_flexible: arrival_date_is_flexible,
@@ -146,8 +244,8 @@ export default function NewAnnouncementForm(props) {
                     }, 5000);
                     props.setRequestData({});
                     toast.success("A new announcement created successfully");
-                    setCountry('');
-                    setCity('');
+                    setCountry(null);
+                    setCity(null);
                     setArrivalDate(null);
                     setDepartureDate(null);
                     setIsArrDateFelxible(false);
@@ -175,8 +273,8 @@ export default function NewAnnouncementForm(props) {
 
     const handleClose = () => {
         props.setOpen(false);
-        setCountry('');
-        setCity('');
+        setCountry(null);
+        setCity(null);
         setArrivalDate(null);
         setDepartureDate(null);
         setIsArrDateFelxible(false);
@@ -188,8 +286,8 @@ export default function NewAnnouncementForm(props) {
     const onCancle = async (event) => {
         event.preventDefault();
         props.setRequestData({});
-        setCountry('');
-        setCity('');
+        setCountry(null);
+        setCity(null);
         setArrivalDate(null);
         setDepartureDate(null);
         setIsArrDateFelxible(false);
@@ -216,34 +314,101 @@ export default function NewAnnouncementForm(props) {
                                                 <h1 style={{ marginBottom: "3rem"}}>Enter The Trip Info</h1>
                                             </Box>
                                             <Grid container spacing={2}>
-                                                {/* country name */}
+                                                {/* TODO => country name */}
                                                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                                                     <FormControl sx={{width: "100%"}}>
-                                                        <TextField 
-                                                            id="new-request-country"
-                                                            name="country"
-                                                            type="text"
-                                                            label="Country"
-                                                            variant="outlined"
-                                                            inputProps={{maxLength: 20}}
-                                                            onChange={handleChangeCountry}
+                                                        <Autocomplete
+                                                            id="asynchronous-demo-country"
+                                                            open={open}
+                                                            onOpen={() => {
+                                                                setOpen(true);
+                                                            }}
+                                                            onClose={() => {
+                                                                setOpen(false);
+                                                            }}
+                                                            options={countries ?? []}
                                                             value={country}
-                                                            required/>
+                                                            onChange={(e, newValue) => {
+                                                                handleCountrySelection(newValue);
+                                                            }}
+                                                            inputValue={countryInput}
+                                                            onInputChange={(e, newInputValue) => {
+                                                                setCountryInput(newInputValue);
+                                                            }}
+                                                            isOptionEqualToValue={(option, value) => {
+                                                                if (option && value) {
+                                                                    return option.country === value.country;
+                                                                } else {
+                                                                    return false;
+                                                                }
+                                                            }}
+                                                            getOptionLabel={(option) => {
+                                                                return (option ? option.country : "");
+                                                            }}
+                                                            getOptionSelected={(option, value) => {
+                                                                return option.country === value.country;
+                                                            }}
+                                                            renderInput={(params) => (
+                                                                <TextField 
+                                                                    {...params} 
+                                                                    label="Country"
+                                                                    required
+                                                                    InputProps={{
+                                                                        ...params.InputProps,
+                                                                        endAdornment: (
+                                                                        <React.Fragment>
+                                                                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                                            {params.InputProps.endAdornment}
+                                                                        </React.Fragment>
+                                                                        ),
+                                                                    }} />
+                                                            )}
+                                                        />
                                                     </FormControl>
                                                 </Grid>
-                                                {/* city name */}
+                                                {/* TODO => city name */}
                                                 <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                                                     <FormControl sx={{width: "100%"}}>
-                                                        <TextField 
-                                                            id="new-request-city"
-                                                            name="city"
-                                                            type="text"
-                                                            label="City"
-                                                            variant="outlined"
-                                                            inputProps={{maxLength: 20}}
+                                                        <Autocomplete
+                                                            id="asynchronous-demo-city"
+                                                            open={openC}
+                                                            onOpen={() => {
+                                                                setOpenC(true);
+                                                            }}
+                                                            onClose={() => {
+                                                                setOpenC(false);
+                                                            }}
+                                                            isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+                                                            getOptionLabel={(option) => option.city_name}
+                                                            getOptionSelected={(option, value) => {
+                                                                return option.city_name === value.city_name;
+                                                            }}
+                                                            options={cities}
                                                             value={city}
-                                                            onChange={handleChangeCity}
-                                                            required/>
+                                                            onChange={(e, newValue) => {
+                                                                handleCitySelection(newValue)
+                                                            }}
+                                                            inputValue={cityInput}
+                                                            onInputChange={(e, newInputValue) => {
+                                                                setCityInput(newInputValue);
+                                                            }}
+                                                            renderInput={(params) => (
+                                                                <TextField 
+                                                                    {...params} 
+                                                                    label="City"
+                                                                    required
+                                                                    InputProps={{
+                                                                        ...params.InputProps,
+                                                                        endAdornment: (
+                                                                        <React.Fragment>
+                                                                            {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
+                                                                            {params.InputProps.endAdornment}
+                                                                        </React.Fragment>
+                                                                        ),
+                                                                    }} 
+                                                                />
+                                                            )}
+                                                        />
                                                     </FormControl>
                                                 </Grid>
                                                 {/* Arrival Date */}

@@ -112,7 +112,7 @@ const UserPanelNew = () => {
                     {/* SideBar */}
                     
                         <Grid item xs={12} sm={12} md={3} sx={{marginBottom:'3vh'}} >
-                            <Card  sx={{ bgcolor: "white" }}>
+                            <Card  sx={{ bgcolor: "white" ,height : "max-content"}}>
                                 <Stack spacing={6} sx={{ paddingBottom: "1rem" }}>
                                     <Item>
                                         <Stack alignItems={`center`} spacing={1}>
@@ -168,7 +168,7 @@ const UserPanelNew = () => {
                                         Add Announcement
                                 </Button>
                             </h1>
-                            <p style={{ color: "#BABABA",  marginLeft: "1rem", marginBottom: "0.5rem" }}>Last login HH:MM:SS</p>
+                            {/* <p style={{ color: "#BABABA",  marginLeft: "1rem", marginBottom: "0.5rem" }}>Last login HH:MM:SS</p> */}
                         </Card>
                         <Overview />
                         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">

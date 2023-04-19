@@ -108,6 +108,7 @@ const ChangeAddressDialog = (props) => {
             }).catch((error) => {
                 toast.error("Something went wrong while updating information.")
             })
+            props.setOpen(false);
         }
     }
 

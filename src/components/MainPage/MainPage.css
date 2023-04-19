@@ -330,7 +330,7 @@ Pre-loader Style
     position: absolute;
     width: 80%;
     left: 10%;
-    bottom: -650px;
+    bottom: 130px;
     display: inline-block;
   }
   #section-1 .more-info i {
@@ -665,172 +665,164 @@ Pre-loader Style
   }
 
 
-  
-  /* 
+/* Pagination Style */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 5px;
+}
+
+
+/* 
 ---------------------------------------------
 Responsive Style
 --------------------------------------------- 
 */
 
 body {
-    overflow-x: hidden;
-  }
-  
-  @media (max-width: 575px) {
-  
-  }
-  
-  
-  @media (max-width: 767px) {
-    #section-1 .content-slider .slider .banner .banner-inner-wrapper {
-      padding-top: 120px;
-    }
-    #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
-      font-size: 15px;
-    }
-    #section-1 .content-slider .slider .banner .banner-inner-wrapper h1 {
-      font-size: 36px;
-    }
-    #section-1 .more-info {
-      padding: 30px;
-      margin-top: 50px!important;
-      border-radius: 23px;
-      bottom: -530px;
-      width: 95%;
-      left: 2.5%;
-    }
-    #section-1 .more-info i {
-      width: 36px;
-      height: 36px;
-      line-height: 34px;
-      font-size: 18px;
-      margin-right: 10px;
-      margin-top: 8px;
-    }
-    .visit-country .item .right-content .main-button a {
-      font-size: 14px;
-      padding: 12px 15px;
-    }
-    .main-button a {
-      text-align: center;
-    }
-    
-    #section-1 .more-info h4 {
-      font-size: 14px !important;
-    }
-    #section-1 .content-slider nav .controls label { 
-      width: 7% !important;
-    }
-    .visit-country .item .right-content ul li {
-      width: 30%;
-    }
-    .visit-country .item .right-content h4 {
-      margin-top: 20px;
-    }
-  }
-  
-  @media (max-width: 992px) {
+  overflow-x: hidden;
+}
 
-    #section-1 .more-info {
-      position: flex;
-      display: flex;
-      height: 200px;
-      padding-top: 10px;
-    }
-    #section-1 .more-info h4 span {
-      font-size: 15px;
-    }
-    #section-1 .more-info h4 {
-      font-size: 20px;
-      margin-bottom: 5px;
-    }
-    #section-1 .main-button {
-      text-align: left;
-    }
-    #section-1 .content-slider nav .controls label {
-      width: 15%;
-    }
-    .visit-country .item .right-content ul li {
-      width: 30% !important;
-    }
-    .visit-country .item .right-content {
-      position: relative;
-    }
-    
-    .visit-country .side-bar-map {
-      margin-left: 0px;
-      margin-top: 60px;
-    }
-    .call-to-action h2,
-    .call-to-action h4 {
-      text-align: center;
-    }
-    .call-to-action .border-button {
-      text-align: center;
-      margin-top: 30px;
-    }
-    .about-main-content .content p {
-      padding: 0px 5%;
-    }
-    .weekly-offers .container-fluid {
-      padding: 0px;
-    }
-    .more-about .left-image {
-      margin-right: 0px;
-      margin-bottom: 60px;
-    }
-    .search-form #search-form h4 {
-      margin-bottom: 15px;
-    }
-    .search-form #search-form select {
-      margin-bottom: 30px;
-    }
-    .amazing-deals .item .image {
-      border-top-right-radius: 23px;
-      border-bottom-left-radius: 0px;
-    }
-    .amazing-deals .item {
-      padding-right: 0px;
-    }
-    .amazing-deals .item .content {
-      padding: 30px !important;
-    }
-    .more-info .info-item {
-      margin-bottom: 30px;
-    }
-    .reservation-form #reservation-form {
-      padding: 45px 30px;
-    }
+@media (max-width: 575px) {
+
+}
+
+
+@media (max-width: 767px) {
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper {
+    padding-top: 120px;
+  }
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
+    font-size: 15px;
+  }
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper h1 {
+    font-size: 36px;
+  }
+  #section-1 .more-info {
+    padding: 30px;
+    margin-top: 30px !important;
+    border-radius: 23px;
+    bottom: 110px;
+    width: 95%;
+    left: 2.5%;
+  }
+  #section-1 .more-info i {
+    width: 36px;
+    height: 36px;
+    line-height: 34px;
+    font-size: 18px;
+    margin-right: 10px;
+    margin-top: 8px;
+  }
+  .visit-country .item .right-content .main-button a {
+    font-size: 14px;
+    padding: 12px 15px;
+  }
+  .main-button a {
+    text-align: center;
+  }
+  #section-1 .more-info h4 {
+    font-size: 14px !important;
+  }
+  #section-1 .content-slider nav .controls label { 
+    width: 7% !important;
+  }
+  .visit-country .item .right-content ul li {
+    width: 30%;
+  }
+  .visit-country .item .right-content h4 {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 992px) {
+  #section-1 .more-info {
+    margin-top: 60px;
+    height: 250px;
+  }
+  #section-1 .more-info h4 span {
+    font-size: 15px;
+  }
+  #section-1 .more-info h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  #section-1 .main-button {
+    text-align: left;
+  }
+  #section-1 .content-slider nav .controls label {
+    width: 15%;
+  }
+  .visit-country .item .right-content ul li {
+    width: 30% !important;
+  }
+  .visit-country .item .right-content {
+    position: relative;
   }
   
-  @media (max-width: 1200px) {
-    #section-1 .more-info {
-      margin-top: 50px;
-      margin-bottom: 50px;
-    }
-    #section-1 .more-info h4 span {
-      font-size: 12px;
-    }
-    #section-1 .more-info h4 {
-      font-size: 10px;
-    }
-    .weekly-offers .container-fluid {
-      padding: 0px;
-    }
+  .visit-country .side-bar-map {
+    margin-left: 0px;
+    margin-top: 60px;
   }
-  @media (max-width: 1842px) {
-    #section-1 .more-info {
-      margin-top: 50px;
-      margin-bottom: 50px;
-    }
-     #section-1 .more-info h4 span {
-      font-size: 16px;
-    }
-    #section-1 .more-info h4 {
-      font-size: 16px;
-    }
-    .weekly-offers .container-fluid {
-      padding: 0px;
-    } 
+  .call-to-action h2,
+  .call-to-action h4 {
+    text-align: center;
   }
-  
+  .call-to-action .border-button {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .about-main-content .content p {
+    padding: 0px 5%;
+  }
+  .weekly-offers .container-fluid {
+    padding: 0px;
+  }
+  .more-about .left-image {
+    margin-right: 0px;
+    margin-bottom: 60px;
+  }
+  .search-form #search-form h4 {
+    margin-bottom: 15px;
+  }
+  .search-form #search-form select {
+    margin-bottom: 30px;
+  }
+  .amazing-deals .item .image {
+    border-top-right-radius: 23px;
+    border-bottom-left-radius: 0px;
+  }
+  .amazing-deals .item {
+    padding-right: 0px;
+  }
+  .amazing-deals .item .content {
+    padding: 30px !important;
+  }
+  .more-info .info-item {
+    margin-bottom: 30px;
+  }
+  .reservation-form #reservation-form {
+    padding: 45px 30px;
+  }
+}
+
+@media (max-width: 1200px) {
+  #section-1 .more-info h4 span {
+    font-size: 12px;
+  }
+  #section-1 .more-info h4 {
+    font-size: 15px;
+  }
+  .weekly-offers .container-fluid {
+    padding: 0px;
+  }
+}
+@media (max-width: 1100px) {
+  #section-1 .more-info h4 span {
+    font-size: 12px;
+  }
+  #section-1 .more-info h4 {
+    font-size: 12px;
+  }
+}

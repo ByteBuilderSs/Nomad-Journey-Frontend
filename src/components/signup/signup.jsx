@@ -43,9 +43,9 @@ export default function SignInSide()
     const [ConfirmPass, setConfirmPass] = useState("");
     const [city, setCity] = useState("")
 
-    const [selectedCountry, setSelectedCountry] = useState("");
-    const [selectedCity, setSelectedCity] = useState("");
-    
+    const [selectedCountry, setSelectedCountry] = useState({});
+    const [selectedCity, setSelectedCity] = useState({});
+
     const [values, setValues] = React.useState({
         showPassword: false,
         showConfirmPassword: false,
@@ -55,6 +55,8 @@ export default function SignInSide()
     const [open, setOpen] = React.useState(false);
 
     const loading = open && countries.length === 0;
+    const [openC, setOpenC] = React.useState(false);
+    const loadingC = openC && cities.length === 0;
 
     const loadCountries = async () => {
         axios({
@@ -71,6 +73,21 @@ export default function SignInSide()
     }
     
     console.log("********** THE COUNTRIES ARE ******** ", countries);
+
+    const loadCities = async () => {
+        axios({
+            method: "get",
+            url: `http://127.0.0.1:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((result) => {
+            setCities(result.data);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching cities.")
+        })
+    }
+
 
     React.useEffect(() => {
         let active = true;
@@ -95,6 +112,30 @@ export default function SignInSide()
         }
     }, [open]);
 
+    React.useEffect(() => {
+        let active = true;
+        if (!loadingC) {
+            return undefined;
+        }
+        (async () => {
+            await sleep(1e3); // For demo purposes.
+            if (active) 
+            {
+                loadCities();
+            }
+        })();
+        return () => {
+            active = false;
+        };
+    }, [loadingC]);
+    
+    React.useEffect(() => {
+        if (!openC) {
+            setCities([]);
+        }
+    }, [openC]);
+
+
     const handleClickShowPassword = () => {
         setValues({
         ...values,
@@ -112,6 +153,15 @@ export default function SignInSide()
         event.preventDefault();
     };
     
+    const handleCountrySelection = (e, value) => {
+        setSelectedCountry(value);
+    }
+
+    console.log("++++++++++++++ THE SELECTED COUNTRY IS +++++++++++++++", selectedCountry);
+
+    const handleCitySelection = (e, value) => {
+        setSelectedCity(value);
+    }
     const {signup} =useSignup()
     const handleSubmit = async (event) => {
         
@@ -171,16 +221,25 @@ export default function SignInSide()
                     setOpen(false);
                 }}
                 isOptionEqualToValue={(option, value) => option.country === value.country}
-                getOptionLabel={(option) => option.country}
+                getOptionLabel={(option) => {
+                    console.log("OPTION: ", option, "OPTION COUNTRY ", option.country);
+                    return option.country;
+                }}
                 getOptionSelected={(option, value) => {
                     return option.country === value.country;
                 }}
                 options={countries}
                 loading={loading}
+                value={selectedCountry}
+                onChange={(e, value) => {
+                    handleCountrySelection(value);
+                }}
+                autoSelect
                 renderInput={(params) => (
                     <TextField
                     {...params}
                     label="Country"
+                    
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
@@ -196,40 +255,44 @@ export default function SignInSide()
         );
     }
 
-    // const CityAutoComplete = () => {
-    //     return(
-    //         <Autocomplete
-    //             id="asynchronous-demo-city"
-    //             sx={{ width: 300 }}
-    //             open={open}
-    //             onOpen={() => {
-    //                 setOpen(true);
-    //             }}
-    //             onClose={() => {
-    //                 setOpen(false);
-    //             }}
-    //             isOptionEqualToValue={(option, value) => option.title === value.title}
-    //             getOptionLabel={(option) => option.title}
-    //             options={options}
-    //             loading={loading}
-    //             renderInput={(params) => (
-    //                 <TextField
-    //                 {...params}
-    //                 label="Asynchronous"
-    //                 InputProps={{
-    //                     ...params.InputProps,
-    //                     endAdornment: (
-    //                     <React.Fragment>
-    //                         {loading ? <CircularProgress color="inherit" size={20} /> : null}
-    //                         {params.InputProps.endAdornment}
-    //                     </React.Fragment>
-    //                     ),
-    //                 }}
-    //                 />
-    //             )}
-    //         />
-    //     );
-    // }
+    const CityAutoComplete = () => {
+        return(
+            <Autocomplete
+                id="asynchronous-demo-city"
+                sx={{ width: 483 }}
+                open={openC}
+                onOpen={() => {
+                    setOpenC(true);
+                }}
+                onClose={() => {
+                    setOpenC(false);
+                }}
+                isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+                getOptionLabel={(option) => option.city_name}
+                options={cities}
+                loading={loadingC}
+                value={selectedCity}
+                onChange={(e, value) => {
+                    handleCitySelection(value)
+                }}
+                renderInput={(params) => (
+                    <TextField
+                    {...params}
+                    label="City"
+                    InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                        <React.Fragment>
+                            {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
+                            {params.InputProps.endAdornment}
+                        </React.Fragment>
+                        ),
+                    }}
+                    />
+                )}
+            />
+        );
+    }
 
     return (
     
@@ -306,13 +369,7 @@ export default function SignInSide()
                         </FormControl>
                         {/* TODO => City */}
                         <FormControl fullWidth variant="outlined">
-                            <TextField
-                            id="signup-outlined-adornment-city"
-                            label="City"
-                            onChange={e=>{setCity(e.target.value)}}
-                            value={city}
-                            placeholder="Eg. Tehran"
-                            />
+                            <CityAutoComplete />
                         </FormControl>
                         {/* Username */}
                         <FormControl fullWidth variant="outlined">

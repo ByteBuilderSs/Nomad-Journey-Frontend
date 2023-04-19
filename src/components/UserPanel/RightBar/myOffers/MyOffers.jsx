@@ -50,12 +50,24 @@ const OfferLists=({Annoc})=>{
           item.hosts.map((val)=>
           <ListItem alignItems="flex-start" sx={{width:'100%'}}>
             <ListItemAvatar>
-            <Avatar />
+              <Avatar />
             </ListItemAvatar>
             
             {/* <ListItemButton > */}
               
             {/* <Link onClick={() => {handleOpen();setID(item.id)}}> */}
+              <ListItemText sx={{color:'ButtonText'}}
+              primary="You have offer from :"
+              secondary={
+              <React.Fragment>
+              <Typography 
+                  sx={{ display: 'inline' }}
+                  component="span"
+                  variant="body2"
+                  color="text.secondary">
+              </Typography>
+                {val.username}
+              </React.Fragment>}/>
               <ListItemText sx={{color:'ButtonText'}}
               primary="You have offer from :"
               secondary={

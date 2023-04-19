@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import LetteredAvatar from 'react-lettered-avatar';
 import {
     MdSettings,
     MdLogout,
@@ -74,6 +75,7 @@ const tabs = [
 
 const Navbar = (props) => {
     // const location = useLocation()
+    let username=JSON.parse(localStorage.getItem('tokens')).username
     
     const [dir, setDir] = useState("ltr");
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -161,6 +163,7 @@ const Navbar = (props) => {
                             sx={{ display: {xs: "none", lg: "flex"} }}
                         >
                             <Avatar alt="LOGO" src={SiteLogo} style={{ width: "100%"}}/>
+                            
                         </IconButton>
 
                         <Typography
@@ -210,7 +213,8 @@ const Navbar = (props) => {
                                 }}>
                                     <Tooltip title="Settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                            <Avatar alt="Settings" src={defaultAvatar}/>
+                                            {/* <Avatar alt="Settings" src={defaultAvatar}/> */}
+                                            <LetteredAvatar name={username} backgroundColor='#FFE5B4'/>
                                         </IconButton>
                                     </Tooltip>
                                     <IconButton

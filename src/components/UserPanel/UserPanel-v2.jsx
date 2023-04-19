@@ -1,5 +1,6 @@
 import './UserPanel-v2.css';
 import React, { useEffect, useState } from 'react';
+import LetteredAvatar from 'react-lettered-avatar';
 import {
     Box,
     Paper,
@@ -16,8 +17,10 @@ import {
     Card,
     Container,
     CardHeader,
-    Typography
+    Typography,
+    Badge
 } from '@mui/material';
+
 import { Link, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
@@ -34,6 +37,7 @@ import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncemen
 import Overview from './Overview';
 import MyOffers from './RightBar/myOffers/MyOffers'
 import {useUserData} from '../../hooks/useSetUserData'
+import Notif from '../Badge/Bedge'
 
 
 const UserPanelNew = () => {
@@ -45,7 +49,17 @@ const UserPanelNew = () => {
     const [active, setActive] = useState("My Profile");
     const {userdata,userInfo}=useUserData()
     useEffect(()=>{userdata()},[])
-
+    var editor = "";
+    const [picture, setPicture] = useState({
+      cropperOpen: false,
+      img: null,
+      zoom: 2,
+      croppedImg:
+        "https://upload.wikimedia.org/wikipedia/commons/0/09/Man_Silhouette.png"
+    });
+    const setEditorRef = (ed) => {
+        editor = ed;
+      };
     const [userData, setUserData] = useState({
         first_name : "Aylin",
         last_name : "Naebzadeh",
@@ -72,9 +86,10 @@ const UserPanelNew = () => {
         },
         {
             name : "Hosts Offers",
-            component : <MyOffers />,
-            icon : <TiPin />,
+            component : <MyOffers/>,
+            icon : <Notif />,
         },
+        
         {
             name : "feedback",
             component : <MyFeedbacks />,
@@ -102,7 +117,10 @@ const UserPanelNew = () => {
                                     <Item>
                                         <Stack alignItems={`center`} spacing={1}>
                                             <Item>
-                                                <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }} />
+                                                {/* <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }}>{userInfo.username}</Avatar> */}
+                                                <Box sx={{marginTop:'4px'}}>
+                                                    <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4'  size={100}/>
+                                                </Box>
                                             </Item>
                                             <Divider variant={`middle`} flexItem/>
                                             <Item>

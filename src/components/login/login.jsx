@@ -52,9 +52,9 @@ export default function SignInSide()
     const {login} =useLogin()
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if(Email.length==0)
+        if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
         {
-            toast.error("Email required!")
+            toast.error("Email is not valid")
         }
         else if(password.length==0)
         {

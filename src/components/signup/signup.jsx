@@ -28,12 +28,10 @@ import { toast } from "react-toastify";
 //-------------------------------------------------------------
 
 const citys=[
-    { label: 'The Shawshank Redemption', year: 1994 },
-    { label: 'The Godfather', year: 1972 },
-    { label: 'The Godfather: Part II', year: 1974 },
-    { label: 'The Dark Knight', year: 2008 },
-    { label: '12 Angry Men', year: 1957 },
-    { label: "Schindler's List", year: 1993 }];
+    { label: 'tehran'},
+    { label: 'US'},
+    { label: 'France'}];
+const countries=[{label:'iran'},{label:'NYC'},{label:'paris'}];
 export default function SignInSide()
 {
     
@@ -64,7 +62,9 @@ export default function SignInSide()
     const [password, setPassword] = useState("");
     const [ConfirmPass, setConfirmPass] = useState("");
     const [city,setCity]=useState("")
-    
+    const [country,setCountry]=useState("")
+
+    const [selected,setSelect]=useState("")
     const {signup} =useSignup()
     const handleSubmit = async (event) => {
         
@@ -81,10 +81,10 @@ export default function SignInSide()
         {
             toast.error("UserName required!")
         }
-        else if(Email.length ==0)
-        {
-            toast.error("Email required!")
-        }
+        // else if(Email.length ==0)
+        // {
+        //     toast.error("Email required!")
+        // }
         else if(city.length ==0)
         {
             toast.error("CityName required!")
@@ -97,11 +97,11 @@ export default function SignInSide()
         {
             toast.error("Confirm Password!")
         }
-        if(password !=ConfirmPass)
+        else if(password !=ConfirmPass)
         {
             toast.error("mismatch Confirm Password !")
         }
-        if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
+        else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
         {
             toast.error("Email is not valid")
         }
@@ -175,15 +175,18 @@ export default function SignInSide()
                     />
                 </FormControl>
                 </Grid>
+                <Grid fullWidth sx={{display:'flex',flexDirection:'row'}}>
                 <FormControl fullWidth variant="outlined">
-                    <TextField
-                    id="signup-outlined-adornment-city"
-                    label="City"
-                    onChange={e=>{setCity(e.target.value)}}
-                    value={city}
+                    <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={countries}
+                    sx={{ width: '97%' }}
+                    renderInput={(params) => <TextField {...params} label="country" />}
+                    onChange={e=>{setCountry(e.target.value)}}
                     />
                 </FormControl>
-                {/* <FormControl fullWidth variant="outlined">
+                 <FormControl fullWidth variant="outlined">
                 <Autocomplete
                 disablePortal
                 id="combo-box-demo"
@@ -192,7 +195,10 @@ export default function SignInSide()
                 renderInput={(params) => <TextField {...params} label="city" />}
                 onChange={e=>{setCity(e.target.value)}}
                 />
-                </FormControl> */}
+                </FormControl>
+                
+                </Grid>
+               
                 <FormControl fullWidth variant="outlined">
                     <TextField
                     id="signup-outlined-adornment-username"

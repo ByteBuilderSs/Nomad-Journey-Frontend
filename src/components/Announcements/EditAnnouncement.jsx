@@ -51,12 +51,12 @@ export default function EditAnnouncementForm(props) {
     
     const [countries, setCountries] = React.useState([]);
     const [countryInput, setCountryInput] = useState('');
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const loading = open && countries.length === 0;
     
     const [cities, setCities] = React.useState([]);
     const [cityInput, setCityInput] = useState('');
-    const [openC, setOpenC] = React.useState(true);
+    const [openC, setOpenC] = React.useState(false);
     const loadingC = openC && cities.length === 0;
 
     const loadCountries = async () => {
@@ -99,13 +99,14 @@ export default function EditAnnouncementForm(props) {
         if (!loading) {
             return undefined;
         }
-        (async () => {
+        const asyncFn = async () => {
             await sleep(1e3); // For demo purposes.
             if (active) 
             {
                 loadCountries();
             }
-        })();
+        };
+        asyncFn()
         return () => {
             active = false;
         };
@@ -120,15 +121,17 @@ export default function EditAnnouncementForm(props) {
     React.useEffect(() => {
         let active = true;
         if (!loadingC) {
-            return city;
+            return undefined;
         }
-        (async () => {
+        const asyncFn = async () => {
             await sleep(1e3); // For demo purposes.
             if (active) 
             {
                 loadCities();
             }
-        })();
+        };
+        asyncFn();
+
         return () => {
             active = false;
         };

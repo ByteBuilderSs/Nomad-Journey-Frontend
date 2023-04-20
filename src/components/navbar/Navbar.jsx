@@ -75,7 +75,6 @@ const tabs = [
 
 const Navbar = (props) => {
     // const location = useLocation()
-    let username=JSON.parse(localStorage.getItem('tokens')).username
     
     const [dir, setDir] = useState("ltr");
     const [anchorElNav, setAnchorElNav] = useState(null);

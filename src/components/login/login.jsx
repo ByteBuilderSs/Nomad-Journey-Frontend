@@ -49,7 +49,7 @@ export default function SignInSide()
     const [Email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {login} =useLogin()
+    const {login} = useLogin()
     const handleSubmit = async (event) => {
         event.preventDefault();
         if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))

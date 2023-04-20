@@ -351,14 +351,14 @@ export default function UnAuthAnnouncement(props)
                                     <Item className={classes.items}>
                                         <Typography
                                             component="h4"
-                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold" }}>
-                                            <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.anc_city}, {announcement.anc_country}
+                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center" }}>
+                                            <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.city_name}, {announcement.city_country}
                                         </Typography>
                                     </Item>
                                     <Item className={classes.items}>
                                         <Typography
                                             component="h4"
-                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold" }}>
+                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center" }}>
                                             <FaHome style={{ marginRight: "0.5rem"}} /> {props.numOfNights(announcement.arrival_date, announcement.departure_date)}
                                         </Typography>
                                     </Item>

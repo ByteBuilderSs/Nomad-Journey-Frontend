@@ -13,14 +13,13 @@ export const useLogin=()=>{
         const json = await respone.json()
         if(!respone.ok)
         {
-            console.log("error")
-            
-                
+            console.log("error");
+            toast.error("You are not authorized to login!");
         }
         if(respone.ok)
         {
             /*
-                TODO => break the tokend object into key, value pairs and then add them to Local Storage
+                TODO => break the token object into key, value pairs and then add them to Local Storage
             */
             console.log(json);
             localStorage.setItem('tokens',JSON.stringify(json))
@@ -32,5 +31,3 @@ export const useLogin=()=>{
 }
 
 
-
-  

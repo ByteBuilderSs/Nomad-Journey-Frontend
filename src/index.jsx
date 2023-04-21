@@ -10,10 +10,16 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 // Semantic UI
 import 'semantic-ui-css/semantic.min.css';
 
+// Provide redux store to react :
+import store from './ReduxStore/store'
+import { Provider } from 'react-redux'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

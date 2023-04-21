@@ -573,6 +573,12 @@ Pre-loader Style
     height: 350px;
     width: 270px;
   }
+  /* for transition : */
+
+  .search-form .row {
+    justify-content: center;
+  }
+
   .amazing-deals .item .image {
     border-top-left-radius: 23px;
     border-bottom-left-radius: 23px;
@@ -585,9 +591,32 @@ Pre-loader Style
     border-radius: 23px;
     padding-right: 30px;
     margin-bottom: 30px;
-
+    animation: fade-in 1s ease-in-out;
     
   }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .example-appear {
+    opacity: 0;
+  }
+  
+  .example-appear.example-appear-active {
+    opacity: 1;
+    transition: opacity 500ms ease-out;
+  }
+  
+
   
   .amazing-deals .item span.info {
     color: #E55405;

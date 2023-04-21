@@ -7,7 +7,7 @@ import EditAnnouncement from "../../Announcements/EditAnnouncement";
 import ShowAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
 import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import {Button, Divider, IconButton, Skeleton, Stack} from "@mui/material";
+import {Button, Divider, IconButton, Skeleton, Stack, Typography} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import {FaHome, FaLongArrowAltRight} from "react-icons/fa";
 import {AiOutlineFieldTime} from "react-icons/ai";
@@ -212,10 +212,10 @@ function MyAnnouncements({username}) {
                                                 <Item>
                                                     <Stack>
                                                         <Item>
-                                                            <h1>{anc.anc_city}</h1>
+                                                            <h1>{anc.city_name}</h1>
                                                         </Item>
                                                         <Item>
-                                                            <h4>{anc.anc_country}</h4>
+                                                            <h4>{anc.city_country}</h4>
                                                         </Item>
                                                     </Stack>
                                                 </Item>
@@ -224,16 +224,24 @@ function MyAnnouncements({username}) {
                                         <Item className={classes.eachAnnouncement}>
                                             <Stack direction={`row`} spacing={3} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
                                                 <Item>
-                                                    <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
+                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                        <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
+                                                    </Typography>
                                                 </Item>
                                                 <Item>
-                                                    <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
+                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                        <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
+                                                    </Typography>
                                                 </Item>
                                                 <Item>
-                                                    <IoIosPerson style={{marginRight:"0.5rem"}} /> {numberOftravelers(anc.travelers_count)}
+                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                        <IoIosPerson style={{marginRight:"0.5rem"}} /> {numberOftravelers(anc.travelers_count)}
+                                                    </Typography>
                                                 </Item>
                                                 <Item>
-                                                    <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
+                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                        <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
+                                                    </Typography>
                                                 </Item>
                                             </Stack>
                                         </Item>

@@ -49,7 +49,7 @@ export default function SignInSide()
     const [Email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const {login} =useLogin()
+    const {login} = useLogin()
     const handleSubmit = async (event) => {
         event.preventDefault();
         if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email))
@@ -70,7 +70,7 @@ export default function SignInSide()
             <Box
                 className="Mui-login-box"
                 sx={{ bgcolor: "background.paper", 
-                width: 500,
+                width: 510,
                 maxHeight: "100vh",
                 minHeight: "50vh",
                 boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
@@ -153,15 +153,15 @@ export default function SignInSide()
                                 Submit
                                 </Button>
                                 
-                                <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh'}}>
-                                    <Grid item xs sx={{paddingTop:'1vh'}}>
-                                        <Link to="#" variant="body2">
-                                        Forgot password?
+                                <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
+                                    <Grid item xs>
+                                        <Link to="#" >
+                                            Forgot password?
                                         </Link>
                                     </Grid>
-                                    <Grid item xs  sx={{paddingTop:'1vh'}}>
-                                        <Link to="/signup" variant="body2">
-                                        {"don't have an account? Register Now!"}
+                                    <Grid item xs>
+                                        <Link to="/signup" >
+                                        {"Don't have an account? Register Now!"}
                                         </Link>
                                     </Grid>
                                 </Grid>

@@ -1,25 +1,25 @@
 import {React, useState, useRef, useEffect } from "react";
 import axios from 'axios';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
+import Lottie from 'react-lottie';
+import notFoundGif from '../../lottieAssets/notfoundANC';
+import loaderGif from '../../lottieAssets/loaderANC';
+import { toast } from "react-toastify";
+
 
 
 // slider function :
 function clickInputsInOrder(currentIndex = 0) {
   const inputIds = ['banner1', 'banner2', 'banner3', 'banner4'];
 
-  
   const clickNextInput = () => {
     const currentInput = document.getElementById(inputIds[currentIndex]);
     if (currentInput) {
@@ -35,7 +35,7 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 /// fetch announcements from backend
-const fetchAnnc = async (setAnncData,setPagination,setPaginCount, value = 1) => {
+const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setLoader ,value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
@@ -50,10 +50,14 @@ const fetchAnnc = async (setAnncData,setPagination,setPaginCount, value = 1) => 
       (response) => {
         setAnncData(response.data.results)
         console.log(response.data)
-        setPaginCount(response.data.count)
+        setPaginCount(response.data.page_count)
         if(response.data.count != 0){
           setPagination(true)
         }
+        setTimeout(() => {
+          setLoader(false);
+        }, 2000);
+        
       }
     )
     
@@ -66,11 +70,45 @@ const fetchAnnc = async (setAnncData,setPagination,setPaginCount, value = 1) => 
 
 // when data inaccessible
 const NotFound = () => {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: notFoundGif,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   return(
     <div class="col-lg-12">
-      <div class="item" style={{height : "500px", justifyItems : "center", justifyContent : "center"}}>
-        <h1 style={{justifyContent : "center",paddingTop : "250px"}}>Not Found!!</h1>
-      </div>
+      <Lottie 
+	    options={defaultOptions}
+        height={400}
+        width={400}
+      />
+    </div>
+  )
+}
+// loading for announcements
+const Loader = () => {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderGif,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  return(
+    <div class="col-lg-12">
+      <Lottie 
+	    options={defaultOptions}
+        height={250}
+        width={250}
+      />
     </div>
   )
 }
@@ -78,11 +116,10 @@ const NotFound = () => {
 
 ///// show each announcements on mainpage
 const Announce = (props) => {
-
-
-    
+  
   // For offer dialog :
   const [open, setOpen] = useState(false);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -94,8 +131,9 @@ const Announce = (props) => {
 
   const handleOffer = () => {
       handleClose()
-      Make_Offer()
-      //window.location.reload(false); 
+      toast.success("your offer submited successfully");
+      props.setLoader(true)
+      Make_Offer() 
   }
 
   const Make_Offer = async () => {
@@ -112,7 +150,7 @@ const Announce = (props) => {
           'Authorization': `Bearer ${signedInUser.access}`
         },
       }).then(response => {
-        fetchAnnc(props.setAnncData,props.setPagination,props.setPaginCount);
+        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader);
       })
       
       
@@ -195,10 +233,15 @@ const Announce = (props) => {
 export default function MainPage(){
 
     const [announcdata,setAnncData] = useState([])
+    const [loader,setLoader] = useState(false)
     // for pagination :
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
     const [page, setPage] = useState(1);
+
+
+    
+
 
     const iterators = { head: 0, limit : 4};
 
@@ -207,7 +250,7 @@ export default function MainPage(){
     }, []);
       
     useEffect(() => {
-      fetchAnnc(setAnncData,setPagination,setPaginCount)
+      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader)
     }, []);
 
   
@@ -221,21 +264,28 @@ export default function MainPage(){
 
     // show all anncs
     const showAnnc = () => {
-      if(announcdata.length != 0){
+      if(loader == true){
         return(
-          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} />)
+          Loader()
         )
       }
-      else{
+      else if(announcdata.length == 0 ){
         return(
           NotFound()
         )
       }
+      else{
+        return(
+          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader}/>)
+        )
+      }
+
     }
 
     const handlePageChange = (event, value) => {
+      setLoader(true)
       setPage(value);
-      fetchAnnc(setAnncData,setPagination,setPaginCount,value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, value)
     };
 
     //function for show pagination :
@@ -445,21 +495,16 @@ export default function MainPage(){
                   </div>
                   <div class="col-lg-4">
                       <fieldset>
-                          <select name="Location" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
-                              <option selected>Destinations</option>
-                              <option type="checkbox" name="option1" value="Italy">Italy</option>
-                              <option value="France">France</option>
-                              <option value="Switzerland">Switzerland</option>
-                              <option value="Thailand">Thailand</option>
-                              <option value="Australia">Australia</option>
-                              <option value="India">India</option>
-                              <option value="Indonesia">Indonesia</option>
-                              <option value="Malaysia">Malaysia</option>
-                              <option value="Singapore">Singapore</option>
+                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
+                              {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
+                              <option value = "Newest" selected style={{fontSize : "20px"}}>Newest</option>
+                              <option value = "Oldest" style={{fontSize : "20px"}}>Oldest</option>
+                              <option value = "TravelerCountAsc" style={{fontSize : "20px"}}>Traveler Count &#8593; </option>
+                              <option value = "TravelerCountDesc" style={{fontSize : "20px"}}>Traveler Count &#8595; </option>
                           </select>
                       </fieldset>
                   </div>
-                  <div class="col-lg-4">
+                  {/* <div class="col-lg-4">
                       <fieldset>
                           <select name="Price" class="form-select" aria-label="Default select example" id="choosePrice" onChange="this.form.click()">
                               <option selected>Price Range</option>
@@ -470,12 +515,16 @@ export default function MainPage(){
                               <option value="2500+">$2,500+</option>
                           </select>
                       </fieldset>
-                  </div>
+                  </div> */}
                   <div class="col-lg-2">                        
                       <fieldset>
                           <button class="border-button">Search Results</button>
                       </fieldset>
                   </div>
+
+                  {/* for placing in line : */}
+                  {/* <div class="col-lg-2"></div> */}
+
                 </div>
               </form>
             </div>

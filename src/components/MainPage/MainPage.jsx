@@ -13,6 +13,9 @@ import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from 'react-redux';
+import { setCity, setCountry } from '../../ReduxStore/features/User/citycountry';
+
 
 
 // slider function :
@@ -118,6 +121,7 @@ const Announce = (props) => {
   
   // For offer dialog :
   const [open, setOpen] = useState(false);
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -236,6 +240,10 @@ export default function MainPage(){
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
     const [page, setPage] = useState(1);
+
+
+    
+
 
     const iterators = { head: 0, limit : 4};
 

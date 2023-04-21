@@ -13,8 +13,6 @@ import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from 'react-redux';
-import { setCity, setCountry } from '../../ReduxStore/features/User/citycountry';
 
 
 

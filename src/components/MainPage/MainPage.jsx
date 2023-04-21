@@ -1,19 +1,14 @@
 import {React, useState, useRef, useEffect } from "react";
 import axios from 'axios';
-import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Box from '@mui/material/Box';
 import "./MainPage.css"
 import "./fontawesome.css"
-import { CSSTransition } from "react-transition-group";
 import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
@@ -24,7 +19,6 @@ import { toast } from "react-toastify";
 function clickInputsInOrder(currentIndex = 0) {
   const inputIds = ['banner1', 'banner2', 'banner3', 'banner4'];
 
-  
   const clickNextInput = () => {
     const currentInput = document.getElementById(inputIds[currentIndex]);
     if (currentInput) {
@@ -121,9 +115,7 @@ const Loader = () => {
 
 ///// show each announcements on mainpage
 const Announce = (props) => {
-
-
-    
+  
   // For offer dialog :
   const [open, setOpen] = useState(false);
 

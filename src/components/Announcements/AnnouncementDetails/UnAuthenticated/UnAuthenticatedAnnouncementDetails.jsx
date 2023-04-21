@@ -231,7 +231,7 @@ export default function AuthAnnouncement(props)
                             <Typography
                                 component="h4"
                                 style={{ display: "flex", alignItems: "center", fontWeight: "bold" }}>
-                                <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.anc_city}, {announcement.anc_country}
+                                <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.city_name}, {announcement.city_country}
                             </Typography>
                         </Item>
                         <Item className={classes.items}>

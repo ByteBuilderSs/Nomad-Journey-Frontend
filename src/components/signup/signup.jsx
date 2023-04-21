@@ -329,6 +329,7 @@ export default function SignInSide()
                                     <TextField 
                                         {...params} 
                                         label="Country"
+                                        placeholder="Country"
                                         required
                                         InputProps={{
                                             ...params.InputProps,
@@ -373,6 +374,7 @@ export default function SignInSide()
                                         {...params} 
                                         label="City"
                                         required
+                                        placeholder="City(To view the cities, first select your country)"
                                         InputProps={{
                                             ...params.InputProps,
                                             endAdornment: (
@@ -477,14 +479,14 @@ export default function SignInSide()
                             >
                                 Submit
                             </Button>
-                            <Grid container sx={{paddingLeft:'2vh',paddingRight:'2vh'}}>
-                            <Grid item xs>
-                            </Grid>
-                            <Grid item>
-                                <Link to="/login" variant="body2">
-                                {"Already registered? Login"}
-                                </Link>
-                            </Grid>
+                            <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
+                                <Grid item xs>
+                                </Grid>
+                                <Grid item>
+                                    <Link to="/login" variant="body2">
+                                        {"Already registered? Login"}
+                                    </Link>
+                                </Grid>
                             </Grid>
                         </FormControl>
                     </Grid>

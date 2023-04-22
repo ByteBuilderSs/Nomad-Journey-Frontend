@@ -595,6 +595,14 @@ Pre-loader Style
     
   }
 
+  .item .content p{
+    cursor : pointer;
+  }
+
+  .item .content p:hover{
+    color : #E55405
+  }
+
   @keyframes fade-in {
     from {
       opacity: 0;

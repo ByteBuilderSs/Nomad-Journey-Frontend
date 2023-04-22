@@ -35,7 +35,7 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 /// fetch announcements from backend
-const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setLoader ,value = 1) => {
+const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
@@ -51,6 +51,7 @@ const fetchAnnc = async (setAnncData,setPagination,setPaginCount,setLoader ,valu
         setAnncData(response.data.results)
         console.log(response.data)
         setPaginCount(response.data.page_count)
+        setAncResultCount(response.data.count)
         if(response.data.count != 0){
           setPagination(true)
         }
@@ -106,8 +107,8 @@ const Loader = () => {
     <div class="col-lg-12">
       <Lottie 
 	    options={defaultOptions}
-        height={250}
-        width={250}
+        height={350}
+        width={350}
       />
     </div>
   )
@@ -118,19 +119,18 @@ const Loader = () => {
 const Announce = (props) => {
   
   // For offer dialog :
-  const [open, setOpen] = useState(false);
+  const [openOfferDialog, setOpenOfferDialog] = useState(false);
 
-
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleOpenOfferDialog = () => {
+    setOpenOfferDialog(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseOfferDialog = () => {
+    setOpenOfferDialog(false);
   };
 
   const handleOffer = () => {
-      handleClose()
+      handleCloseOfferDialog()
       toast.success("your offer submited successfully");
       props.setLoader(true)
       Make_Offer() 
@@ -150,7 +150,7 @@ const Announce = (props) => {
           'Authorization': `Bearer ${signedInUser.access}`
         },
       }).then(response => {
-        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader);
+        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader, props.setAncResultCount);
       })
       
       
@@ -189,14 +189,14 @@ const Announce = (props) => {
                     <span class="list">{props.anc.departure_date}</span>
                   </div>
                 </div>
-                <p>{Description}</p>
-                <div class="main-button" style={{cursor : "pointer"}} onClick={handleClickOpen}>
+                <p onClick = {() => {console.log("desppp")}}>{Description}</p>
+                <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
                   <div className='annc' style={{color : "#fff"}}> Give an offer </div>
                 </div>
                 <Dialog
-                    open={open}
+                    open={openOfferDialog}
                     keepMounted
-                    onClose={handleClose}
+                    onClose={handleCloseOfferDialog}
                     aria-describedby="alert-dialog-slide-description"
                     PaperProps={{
                       sx: {
@@ -216,7 +216,7 @@ const Announce = (props) => {
                       <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
                         <div className='annc' style={{color : "#fff"}}> Yes </div>
                       </div>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleClose}>
+                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleCloseOfferDialog}>
                         <div className='annc' style={{color : "#fff"}}> No </div>
                       </div>
                     </DialogActions>
@@ -233,6 +233,7 @@ const Announce = (props) => {
 export default function MainPage(){
 
     const [announcdata,setAnncData] = useState([])
+    const [ancResultCount,setAncResultCount] = useState(0)
     const [loader,setLoader] = useState(false)
     // for pagination :
     const [showPagination, setPagination] = useState(false);
@@ -250,7 +251,7 @@ export default function MainPage(){
     }, []);
       
     useEffect(() => {
-      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader)
+      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader,setAncResultCount)
     }, []);
 
   
@@ -276,7 +277,7 @@ export default function MainPage(){
       }
       else{
         return(
-          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader}/>)
+          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader} setAncResultCount = {setAncResultCount} />)
         )
       }
 
@@ -285,7 +286,7 @@ export default function MainPage(){
     const handlePageChange = (event, value) => {
       setLoader(true)
       setPage(value);
-      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, value)
     };
 
     //function for show pagination :
@@ -495,12 +496,16 @@ export default function MainPage(){
                   </div>
                   <div class="col-lg-4">
                       <fieldset>
-                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
+                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = "">
                               {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
                               <option value = "Newest" selected style={{fontSize : "20px"}}>Newest</option>
                               <option value = "Oldest" style={{fontSize : "20px"}}>Oldest</option>
-                              <option value = "TravelerCountAsc" style={{fontSize : "20px"}}>Traveler Count &#8593; </option>
-                              <option value = "TravelerCountDesc" style={{fontSize : "20px"}}>Traveler Count &#8595; </option>
+                              <option value = "TravelerCountAsc" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
+                              <option value = "TravelerCountDesc" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
+                              <option value = "TimeRangeAsc" style={{fontSize : "20px"}}>Time Range &#8593; </option>
+                              <option value = "TimeRangeDesc" style={{fontSize : "20px"}}>Time Range &#8595; </option>
+                              <option value = "DepDateAsc" style={{fontSize : "20px"}}>Departure Date &#8593; </option>
+                              <option value = "DepDateDesc" style={{fontSize : "20px"}}>Departure Date &#8595; </option>
                           </select>
                       </fieldset>
                   </div>
@@ -516,11 +521,11 @@ export default function MainPage(){
                           </select>
                       </fieldset>
                   </div> */}
-                  <div class="col-lg-2">                        
+                  {/* <div class="col-lg-2">                        
                       <fieldset>
                           <button class="border-button">Search Results</button>
                       </fieldset>
-                  </div>
+                  </div> */}
 
                   {/* for placing in line : */}
                   {/* <div class="col-lg-2"></div> */}
@@ -542,6 +547,7 @@ export default function MainPage(){
               </div>
             </div>
             
+            <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>Results : {ancResultCount}</div>
 
             {showAnnc()}
             {showpageination()}

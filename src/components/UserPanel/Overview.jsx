@@ -55,18 +55,22 @@ const Overview = () => {
                 <Grid item xs={6} sx={{ marginTop: "1rem" }}>
                     <Typography
                         component="h4"
-                        style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
+                        style={{ display: "flex", alignItems: "center", alignContent: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <PublicIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.announcements_count} Announcements 
+                        {userInfo.announcements_count === 0 ? <p>No announcement has been created by the user</p> 
+                                                            : <p>{userInfo.announcements_count === 1 ? <p>1 Announcement</p> 
+                                                            : <p>{userInfo.announcements_count} Announcements</p>}</p>}  
                     </Typography>
                 </Grid>
                 {/* Posts count */}
                 <Grid item xs={6} sx={{ marginTop: "1rem" }}>
                     <Typography
                         component="h4"
-                        style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
+                        style={{ display: "flex", alignItems: "center", alignContent: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <ArticleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.posts_count} Posts 
+                        {userInfo.posts_count === 0 ? <p>No post has been created by the user</p> 
+                                                            : <p>{userInfo.posts_count === 1 ? <p>1 Post</p> 
+                                                            : <p>{userInfo.posts_count} Posts</p>}</p>}  
                     </Typography>
                 </Grid>
                 {/* Age, Gender */}
@@ -74,7 +78,7 @@ const Overview = () => {
                     <Typography
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
-                        {userInfo.User_gender==1 ? (<p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />Male, Age: {userInfo.user_age}</p>) :(userInfo.User_gender==2? <p><FemaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Female, Age: {userInfo.user_age}</p> : <p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Non Binary, Age: {userInfo.user_age}</p> )  }
+                        {userInfo.User_gender == 1 ? (<p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />Male, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</p>) : (userInfo.User_gender==2? <p><FemaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Female, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</p> : <p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Non Binary, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</p> )  }
                     </Typography>
                 </Grid>
                 {/* Where you grow up */}
@@ -83,7 +87,7 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <LocationOnIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.User_city}
+                        {userInfo.hometown ? <p>{userInfo.hometown}</p> : <p>Hometown is not declared yet...</p>}
                     </Typography>
                 </Grid>
                 {/* Occupation */}
@@ -92,7 +96,7 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <WorkIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.User_about_me!=null ? <p>{userInfo.User_about_me}</p> :<p>nothing to share..</p>}
+                        {userInfo.User_job ? <p>{userInfo.User_job}</p> :<p>Occupation is not declared yet...</p>}
                     </Typography>
                 </Grid>
                 {/* Education */}
@@ -101,7 +105,7 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <SchoolIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.User_education!=null ? <p>{userInfo.User_education}</p> :<p>nothing to share..</p>}
+                        {userInfo.User_education ? <p>{userInfo.User_education}</p> :<p>Education is not declared yet...</p>}
                     </Typography>
                 </Grid>
                 {/* Member since (signup date) */}

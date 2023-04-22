@@ -264,6 +264,7 @@ export default function NewAnnouncementForm(props) {
                     // setIsDptDateFelxible(false);
                     // setTravelersCount('');
                     // setMessage('');
+                    props.setOpen(true);
                 });
                 props.setOpen(false);
                 window.location.reload(false); 

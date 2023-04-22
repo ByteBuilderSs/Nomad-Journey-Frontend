@@ -252,7 +252,7 @@ export default function NewAnnouncementForm(props) {
                     setIsDptDateFelxible(false);
                     setTravelersCount('');
                     setMessage('');
-
+                    window.location.reload(false); 
                 })
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");
@@ -266,8 +266,6 @@ export default function NewAnnouncementForm(props) {
                     // setMessage('');
                     props.setOpen(true);
                 });
-                props.setOpen(false);
-                window.location.reload(false); 
         }
     }
 

@@ -140,10 +140,10 @@ const UserPanelNew = () => {
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>
                         <Card  sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
-                            <h1 style={{ display: "flex", alignItems: "center", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem" }} >
+                            <h1 style={{ display: "flex", alignItems: "ceter", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem", justifyContent: "space-between" }} >
                                 {userInfo.hosting_availability ? <span>{userInfo.hosting_availability}</span> : <span>Not Accepting Guests</span>}
                                 <Button
-                                    sx={{ marginLeft: "28rem" }}
+                                    sx={{ mr: "1rem" }}
                                     variant="contained"
                                     size="medium"
                                     color='success'

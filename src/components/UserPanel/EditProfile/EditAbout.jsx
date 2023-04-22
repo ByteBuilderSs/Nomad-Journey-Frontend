@@ -22,13 +22,20 @@ import {
     Chip
 } from '@mui/material';
 import { Item } from "semantic-ui-react";
-
+import axios from 'axios';
+import { useParams } from 'react-router';
 import LabelIcon from '@mui/icons-material/Label';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { toast } from "react-toastify";
 
 
 
 const EditAbout = () => {
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    const access_token = allData.access;
+    const username = allData.username;
+    console.log("The username is: ", username);
+    
     const [items_f, setItemsF] = useState([]);
     const [inputValue_f, setInputValueF] = useState("");
 
@@ -86,6 +93,25 @@ const EditAbout = () => {
         setInterests(_items);
     };
 
+    const loadAboutMeInfo = async () => {
+        axios({
+            method: "get",
+            url: `http://127.0.0.1:8000/api/v1/accounts/GetUserProfileForOverview/${username}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        }).then((result) => {
+            {/* TODO */}
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching data.")
+            {/* TODO => err.response.data.message*/}
+        })
+    }
+
+    useEffect(() => {
+        loadAboutMeInfo();
+    }, []);
     return (
         <React.Fragment>
             {/* <form> */}

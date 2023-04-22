@@ -17,7 +17,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import SchoolIcon from '@mui/icons-material/School';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
-import {useUserData} from '../../hooks/useSetUserData'
+import {useUserData} from '../../hooks/useSetUserData';
 import { useEffect } from 'react';
 const Overview = () => {
     const {userdata, userInfo} = useUserData()
@@ -57,9 +57,9 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", alignContent: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <PublicIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.announcements_count === 0 ? <p>No announcement has been created by the user</p> 
-                                                            : <p>{userInfo.announcements_count === 1 ? <p>1 Announcement</p> 
-                                                            : <p>{userInfo.announcements_count} Announcements</p>}</p>}  
+                        {userInfo.announcements_count === 0 ? <span>No announcement has been created by the user</span> 
+                                                            : <span>{userInfo.announcements_count === 1 ? <span>1 Announcement</span> 
+                                                            : <span>{userInfo.announcements_count} Announcements</span>}</span>}  
                     </Typography>
                 </Grid>
                 {/* Posts count */}
@@ -68,9 +68,9 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", alignContent: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <ArticleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.posts_count === 0 ? <p>No post has been created by the user</p> 
-                                                            : <p>{userInfo.posts_count === 1 ? <p>1 Post</p> 
-                                                            : <p>{userInfo.posts_count} Posts</p>}</p>}  
+                        {userInfo.posts_count === 0 ? <span>No post has been created by the user</span> 
+                                                            : <span>{userInfo.posts_count === 1 ? <span>1 Post</span> 
+                                                            : <span>{userInfo.posts_count} Posts</span>}</span>}  
                     </Typography>
                 </Grid>
                 {/* Age, Gender */}
@@ -78,7 +78,9 @@ const Overview = () => {
                     <Typography
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
-                        {userInfo.User_gender == 1 ? (<p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />Male, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</p>) : (userInfo.User_gender==2? <p><FemaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Female, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</p> : <p><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Non Binary, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</p> )  }
+                        {userInfo.User_gender == 1 ? (<span><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />Male, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</span>) 
+                                                    : (userInfo.User_gender == 2 ? <span><FemaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Female, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</span> 
+                                                    : <span><MaleIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}}/>Non Binary, {userInfo.user_age && userInfo.user_age > 0 ? userInfo.user_age : <span>Age is not declared yet...</span>}</span> )  }
                     </Typography>
                 </Grid>
                 {/* Where you grow up */}
@@ -87,7 +89,7 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <LocationOnIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.hometown ? <p>{userInfo.hometown}</p> : <p>Hometown is not declared yet...</p>}
+                        {userInfo.hometown ? <span>{userInfo.hometown}</span> : <span>Hometown is not declared yet...</span>}
                     </Typography>
                 </Grid>
                 {/* Occupation */}
@@ -96,7 +98,7 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <WorkIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.User_job ? <p>{userInfo.User_job}</p> :<p>Occupation is not declared yet...</p>}
+                        {userInfo.User_job ? <span>{userInfo.User_job}</span> :<span>Occupation is not declared yet...</span>}
                     </Typography>
                 </Grid>
                 {/* Education */}
@@ -105,7 +107,7 @@ const Overview = () => {
                         component="h4"
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <SchoolIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
-                        {userInfo.User_education ? <p>{userInfo.User_education}</p> :<p>Education is not declared yet...</p>}
+                        {userInfo.User_education ? <span>{userInfo.User_education}</span> :<span>Education is not declared yet...</span>}
                     </Typography>
                 </Grid>
                 {/* Member since (signup date) */}

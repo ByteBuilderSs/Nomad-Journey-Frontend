@@ -37,7 +37,6 @@ export default function EditAnnouncementForm(props) {
     console.log("+++++++++++++++ THE COUNTRY IS +++++++++++++ ", country);
     const [city, setCity] = useState({id: props.anc.anc_city, city_name: props.anc.city_name});
     console.log("--------------- THE CITY IS ---------------- ", city);
-    const [cityID, setCityID] = useState(props.anc.anc_city);
     const [arrival_date, setArrivalDate] = useState(props.anc.arrival_date);
     const [departure_date, setDepartureDate] = useState(props.anc.departure_date);
     const [arrival_date_is_flexible, setIsArrDateFelxible] = useState(props.anc.arrival_date_is_flexible);

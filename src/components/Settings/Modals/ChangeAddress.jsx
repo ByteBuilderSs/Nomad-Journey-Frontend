@@ -14,6 +14,8 @@ import {
     Box,
     Typography,
     Grid,
+    Autocomplete,
+    CircularProgress,
 } from '@mui/material';
 import { useParams } from 'react-router';
 import axios from 'axios';
@@ -22,6 +24,13 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { Navigate } from 'react-router';
 
+function sleep(delay = 0) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, delay);
+    });
+}
+
+
 const ChangeAddressDialog = (props) => {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
@@ -29,9 +38,116 @@ const ChangeAddressDialog = (props) => {
 
     const [street, setStreet] = useState("")
     const [apt, setApt] = useState("")
-    const [city, setCity] = useState("")
-    const [country, setCountry] = useState("")
+    const [city, setCity] = useState(null)
+    const [country, setCountry] = useState(null)
     const [postalCode, setPostalCode] = useState("")
+
+    /* ADDED */
+    const [countries, setCountries] = React.useState([]);
+    const [countryInput, setCountryInput] = useState('');
+    const [open, setOpen] = React.useState(false);
+    const loading = open && countries.length === 0;
+    
+    const [cities, setCities] = React.useState([]);
+    const [cityInput, setCityInput] = useState('');
+    const [openC, setOpenC] = React.useState(false);
+    const loadingC = openC && cities.length === 0;
+
+    const loadCountries = async () => {
+        console.log("----------------------- IN LOAD COUNTRIES ------------------- ")
+        axios({
+            method: "get",
+            url: "http://127.0.0.1:8000/api/v1/utils/get-countries/",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((result) => {
+            setCountries(result.data);
+            console.log("The result.data is: ", result.data);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching countries.")
+        })
+    }
+    console.log("********** THE COUNTRIES ARE ******** ", countries);
+
+    const loadCities = async () => {
+        if (country) {
+            axios({
+                method: "get",
+                url: `http://127.0.0.1:8000/api/v1/utils/get-cities-of-country/${country.id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((result) => {
+                setCities(result.data);
+            }).catch((error) => {
+                toast.error("Something went wrong while fetching cities.")
+            })
+        }
+    }
+
+    console.log("+++++++++++++ THE CORRESPONDING CITIES ARE +++++++++++++ ", cities);
+    
+    React.useEffect(() => {
+        let active = true;
+        if (!loading) {
+            return undefined;
+        }
+        const asyncFn = async () => {
+            await sleep(1e3); // For demo purposes.
+            if (active) 
+            {
+                loadCountries();
+            }
+        };
+        asyncFn()
+        return () => {
+            active = false;
+        };
+    }, [loading]);
+    
+    React.useEffect(() => {
+        if (!open) {
+            setCountries([]);
+        }
+    }, [open]);
+
+    React.useEffect(() => {
+        let active = true;
+        if (!loadingC) {
+            return undefined;
+        }
+        const asyncFn = async () => {
+            await sleep(1e3); // For demo purposes.
+            if (active) 
+            {
+                loadCities();
+            }
+        };
+        asyncFn();
+
+        return () => {
+            active = false;
+        };
+    }, [loadingC, country]);
+    
+    React.useEffect(() => {
+        if (!openC) {
+            setCities([]);
+        }
+    }, [openC]);
+
+    const handleCountrySelection = (value) => {
+        setCountry(value);
+    }
+
+    console.log("!!!!!!!!!!!!!!!!! THE SELECTED COUNTRY IS !!!!!!!!!!!!!!!!", country);
+
+    const handleCitySelection = (value) => {
+        setCity(value);
+    }
+
+    console.log("------------------- THE SELECTED CITY IS ------------------", city);
 
     const handleChangeStreet = (event) => {
         setStreet(event.target.value);
@@ -39,12 +155,7 @@ const ChangeAddressDialog = (props) => {
     const handleChangeApt = (event) => {
         setApt(event.target.value);
     }
-    const handleChangeCity = (event) => {
-        setCity(event.target.value);
-    }
-    const handleChangeCountry = (event) => {
-        setCountry(event.target.value);
-    }
+
     const handleChangePostalCode = (event) => {
         setPostalCode(event.target.value);
     }
@@ -64,8 +175,8 @@ const ChangeAddressDialog = (props) => {
         }).then((result) => {
             setStreet(result.data.User_address);
             setApt(result.data.User_apt);
-            setCity(result.data.User_city);
-            setCountry(result.data.User_country);
+            setCity({id: result.data.User_city, city_name: result.data.city_name});
+            setCountry({id: result.data.User_city, country: result.data.city_country});
             setPostalCode(result.data.User_postal_code);
         }).catch((error) => {
             toast.error("Something went wrong while fetching data.")
@@ -99,16 +210,18 @@ const ChangeAddressDialog = (props) => {
                 data : {
                     User_address: street,
                     User_apt: apt,
-                    User_city: city,
-                    User_country: country,
-                    User_postal_code: postalCode
+                    User_city: city.id,
+                    User_postal_code: postalCode,
+                    city_name: city.city_name,
+                    city_country: city.country
                 }
             }).then((res) => {
-                toast.success("Changes updated successfully.")
+                toast.success("Changes updated successfully.");
+                props.setOpen(false);
             }).catch((error) => {
-                toast.error("Something went wrong while updating information.")
+                toast.error("Something went wrong while updating information.");
+                props.setOpen(true);
             })
-            props.setOpen(false);
         }
     }
 
@@ -184,32 +297,112 @@ const ChangeAddressDialog = (props) => {
                                         />
                                 </FormControl>
                             </Grid>
-                            {/* City */}
+                            {/* TODO => City */}
                             <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                                 <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "1rem" }}>
                                     City <span style={{ color: "red"}}>*</span>
                                 </Typography>
                                 <FormControl fullWidth variant='outlined'>
-                                    <TextField 
-                                        type={"text"}
-                                        label="City"
+                                    <Autocomplete
+                                        id="asynchronous-demo-city"
+                                        open={openC}
+                                        onOpen={() => {
+                                            setOpenC(true);
+                                        }}
+                                        onClose={() => {
+                                            setOpenC(false);
+                                        }}
+                                        isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+                                        getOptionLabel={(option) => option.city_name}
+                                        getOptionSelected={(option, value) => {
+                                            return option.city_name === value.city_name;
+                                        }}
+                                        options={cities}
                                         value={city}
-                                        onChange={handleChangeCity}
-                                        />
+                                        onChange={(e, newValue) => {
+                                            handleCitySelection(newValue)
+                                        }}
+                                        inputValue={cityInput}
+                                        onInputChange={(e, newInputValue) => {
+                                            setCityInput(newInputValue);
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField 
+                                                {...params} 
+                                                label="City"
+                                                required
+                                                InputProps={{
+                                                    ...params.InputProps,
+                                                    endAdornment: (
+                                                    <React.Fragment>
+                                                        {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
+                                                        {params.InputProps.endAdornment}
+                                                    </React.Fragment>
+                                                    ),
+                                                }} 
+                                            />
+                                        )}
+                                    />
                                 </FormControl>
                             </Grid>
-                            {/* Country */}
+                            {/* TODO => Country */}
                             <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
                                 <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "1rem" }}>
                                     Country <span style={{ color: "red"}}>*</span>
                                 </Typography>
                                 <FormControl fullWidth variant='outlined'>
-                                    <TextField 
-                                        type={"text"}
-                                        label="Country"
+                                    <Autocomplete
+                                        id="asynchronous-demo-country"
+                                        open={open}
+                                        onOpen={() => {
+                                            setOpen(true);
+                                        }}
+                                        onClose={() => {
+                                            setOpen(false);
+                                        }}
+                                        options={countries ?? []}
                                         value={country}
-                                        onChange={handleChangeCountry}
-                                        />
+                                        onChange={(e, newValue) => {
+                                            handleCountrySelection(newValue);
+                                        }}
+                                        inputValue={countryInput}
+                                        onInputChange={(e, newInputValue) => {
+                                            setCountryInput(newInputValue);
+                                        }}
+                                        isOptionEqualToValue={(option, value) => {
+                                            console.log("isOptionEqualToValue => The value is: ", value);
+                                            console.log("isOptionEqualToValue => The option is: ", option);
+                                            if (option && value) {
+                                                return option.country === value.country;
+                                            } else {
+                                                return false;
+                                            }
+                                        }}
+                                        getOptionLabel={(option) => {
+                                            console.log("getOptionLabel => The option is: ", option);
+                                            return (option ? option.country : "");
+                                        }}
+                                        getOptionSelected={(option, value) => {
+                                            console.log("getOptionSelected => The value is: ", value);
+                                            console.log("getOptionSelected => The option is: ", option);
+                                            return option.country === value.country;
+                                        }}
+                                        renderInput={(params) => (
+                                            <TextField 
+                                                {...params} 
+                                                label="Country"
+                                                required
+                                                InputProps={{
+                                                    ...params.InputProps,
+                                                    endAdornment: (
+                                                    <React.Fragment>
+                                                        {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                        {params.InputProps.endAdornment}
+                                                    </React.Fragment>
+                                                    ),
+                                                }} />
+                                        )}
+                                    />
                                 </FormControl>
                             </Grid>
                             {/* Postal Code */}

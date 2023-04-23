@@ -17,6 +17,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import WorkIcon from '@mui/icons-material/Work';
 import SchoolIcon from '@mui/icons-material/School';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+
 import {useUserData} from '../../hooks/useSetUserData';
 import { useEffect } from 'react';
 const Overview = () => {
@@ -34,7 +36,7 @@ const Overview = () => {
 
     return (
         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
+            <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
                 <Grid item xs={12}>
                     <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem" }}>
                         OVERVIEW
@@ -117,6 +119,18 @@ const Overview = () => {
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <CardMembershipIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
                         Membership :{userInfo.joined_since} ago
+                    </Typography>
+                </Grid>
+                {/* Fluent and learning languages */}
+                <Grid item xs={6} sx={{ mb: "1rem" }}>
+                    <Typography
+                        component="h4"
+                        style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
+                        <QuestionAnswerIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
+                        {userInfo.langF_name && userInfo.langF_name.length > 0 ? <span>Fluent in {(userInfo.langF_name.map((LF, index) => (<span key={index}>{(index ? ', ' : '') + LF}</span>)))}</span>
+                                                                                : <span>""</span>}
+                        {userInfo.langL_name && userInfo.langL_name.length > 0 ? <span>;&nbsp;learning {(userInfo.langL_name.map((LL, index) => (<span key={index}>{(index ? ', ' : ' ') + LL }</span>)))}</span>
+                                                                                : <span>""</span>}
                     </Typography>
                 </Grid>
             </Grid>

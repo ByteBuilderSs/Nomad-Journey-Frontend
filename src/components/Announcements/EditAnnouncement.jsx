@@ -26,7 +26,7 @@ function sleep(delay = 0) {
         setTimeout(resolve, delay);
     });
 }
-
+export let editAnnouncement = 0;
 export default function EditAnnouncementForm(props) {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
@@ -257,7 +257,7 @@ export default function EditAnnouncementForm(props) {
                     toast.error("Unexpected error has occurred");
                 });
                 props.setOpen(false);
-                window.location.reload(false); 
+                editAnnouncement += 1;
         }
     }
 

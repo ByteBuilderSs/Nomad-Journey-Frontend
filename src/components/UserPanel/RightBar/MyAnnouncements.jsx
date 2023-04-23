@@ -2,8 +2,8 @@ import { Col, Row} from "react-bootstrap";
 import "./MyAnnouncement.css";
 import {TiLocation} from "react-icons/ti";
 import {BsCalendarDateFill} from "react-icons/bs";
-import DeleteAnnouncement from "../../Announcements/DeleteAnnouncement";
-import EditAnnouncement from "../../Announcements/EditAnnouncement";
+import DeleteAnnouncement, {delAnnouncement} from "../../Announcements/DeleteAnnouncement";
+import EditAnnouncement, {editAnnouncement} from "../../Announcements/EditAnnouncement";
 import ShowAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
 import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
@@ -18,6 +18,7 @@ import { makeStyles } from '@mui/styles';
 import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import axios from "axios";
+import {addAnnouncement} from "../../Announcements/AddAnnouncement/NewAnnouncementForm";
 const useStyles = makeStyles(theme => (
     {
         announcements:
@@ -56,7 +57,7 @@ function MyAnnouncements({username}) {
             console.log(announcement);
             setLoading(false);
             })
-    }, [])
+    }, [addAnnouncement, delAnnouncement, editAnnouncement])
     const getDayOfDate = (date) => {
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const months = ["January", "February", "March", "April", "May", "June",

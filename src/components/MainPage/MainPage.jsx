@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 
 
 
+
 // slider function :
 function clickInputsInOrder(currentIndex = 0) {
   const inputIds = ['banner1', 'banner2', 'banner3', 'banner4'];
@@ -35,21 +36,23 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 /// fetch announcements from backend
-const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, value = 1) => {
+const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, sort, value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+
 
     const config = {
       headers: {
         Authorization: `Bearer ${signedInUser['access']}`
       }
     };
-
-    await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}`, config).then(
+    
+    await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
       (response) => {
         setAnncData(response.data.results)
         console.log(response.data)
+        console.log(sort)
         setPaginCount(response.data.page_count)
         setAncResultCount(response.data.count)
         if(response.data.count != 0){
@@ -150,7 +153,7 @@ const Announce = (props) => {
           'Authorization': `Bearer ${signedInUser.access}`
         },
       }).then(response => {
-        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader, props.setAncResultCount);
+        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader, props.setAncResultCount, props.sort);
       })
       
       
@@ -235,6 +238,7 @@ export default function MainPage(){
     const [announcdata,setAnncData] = useState([])
     const [ancResultCount,setAncResultCount] = useState(0)
     const [loader,setLoader] = useState(false)
+    const [sort, setSort] = useState("sort_by=anc_timestamp_created")
     // for pagination :
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
@@ -251,7 +255,7 @@ export default function MainPage(){
     }, []);
       
     useEffect(() => {
-      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader,setAncResultCount)
+      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader,setAncResultCount,sort)
     }, []);
 
   
@@ -277,7 +281,7 @@ export default function MainPage(){
       }
       else{
         return(
-          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader} setAncResultCount = {setAncResultCount} />)
+          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader} setAncResultCount = {setAncResultCount} sort = {sort}/>)
         )
       }
 
@@ -286,7 +290,7 @@ export default function MainPage(){
     const handlePageChange = (event, value) => {
       setLoader(true)
       setPage(value);
-      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, sort, value)
     };
 
     //function for show pagination :
@@ -315,6 +319,13 @@ export default function MainPage(){
           </div>
         )
       }
+    }
+
+    const handleSortChange = (event) => {
+      setLoader(true)
+      setPage(1);
+      setSort(event.target.value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
     }
 
   return(
@@ -496,16 +507,16 @@ export default function MainPage(){
                   </div>
                   <div class="col-lg-4">
                       <fieldset>
-                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = "">
+                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = {handleSortChange}  >
                               {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
-                              <option value = "Newest" selected style={{fontSize : "20px"}}>Newest</option>
-                              <option value = "Oldest" style={{fontSize : "20px"}}>Oldest</option>
-                              <option value = "TravelerCountAsc" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
-                              <option value = "TravelerCountDesc" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
-                              <option value = "TimeRangeAsc" style={{fontSize : "20px"}}>Time Range &#8593; </option>
-                              <option value = "TimeRangeDesc" style={{fontSize : "20px"}}>Time Range &#8595; </option>
-                              <option value = "DepDateAsc" style={{fontSize : "20px"}}>Departure Date &#8593; </option>
-                              <option value = "DepDateDesc" style={{fontSize : "20px"}}>Departure Date &#8595; </option>
+                              <option value = "sort_by=anc_timestamp_created" selected style={{fontSize : "20px"}}>Newest</option>
+                              <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Oldest</option>
+                              <option value = "sort_by=travelers_count" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
+                              <option value = "sort_by=travelers_count&descending=True" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
+                              {/* <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Time Range &#8593; </option>
+                              <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Time Range &#8595; </option> */}
+                              <option value = "sort_by=arrival_date" style={{fontSize : "20px"}}>Arrival Date &#8595; </option>
+                              <option value = "sort_by=arrival_date&descending=True" style={{fontSize : "20px"}}>Arrival Date &#8593; </option>
                           </select>
                       </fieldset>
                   </div>

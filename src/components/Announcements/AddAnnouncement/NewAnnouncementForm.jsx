@@ -1,5 +1,5 @@
 import  "./NewAnnouncementForm.css";
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import axios from 'axios'
 import {
     FormControl,
@@ -21,7 +21,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { toast } from "react-toastify";
 import {useUserData} from '../../../hooks/useSetUserData';
-
+export let addAnnouncement = 0;
 function sleep(delay = 0) {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
@@ -252,7 +252,7 @@ export default function NewAnnouncementForm(props) {
                     setIsDptDateFelxible(false);
                     setTravelersCount('');
                     setMessage('');
-                    window.location.reload(false); 
+                    addAnnouncement += 1;
                 })
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");

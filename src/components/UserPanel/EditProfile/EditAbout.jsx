@@ -221,8 +221,8 @@ const EditAbout = () => {
                 teach_learn_share: TLS,
                 what_Ican_share_with_host: share,
                 interests: interests,
-                langF: [1, 3],    
-                langL: [2]
+                langF: langF_IDs,    
+                langL: langL_IDs
             }
         }).then((res) => {
             toast.success("Changes updated successfully.");
@@ -254,7 +254,7 @@ const EditAbout = () => {
                                     </h6>
                                     <FormControl sx={{ width: "15rem" }}>
                                         <Select
-                                            defaultValue={3}
+                                            // defaultValue={"Not Accepting Guests"}
                                             labelId="hosting-availability-label"
                                             id="hosting-availability"
                                             sx={{ height: "2rem" }}

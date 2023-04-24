@@ -31,7 +31,7 @@ import DoNotDisturbOnIcon from '@mui/icons-material/DoNotDisturbOn';
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import DeleteAnnouncement from "../../DeleteAnnouncement";
-import EditAnnouncement from "../../EditAnnouncement";
+import EditAnnouncement, {editAnnouncement} from "../../EditAnnouncement";
 import {useAcceptReq} from "../../../../hooks/useAcceptReq";
 import {useRejectReq} from "../../../../hooks/useRejectReq";
 const useStyles = makeStyles(theme => (
@@ -170,7 +170,7 @@ export default function UnAuthAnnouncement(props)
                 console.log(announcement);
                 setLoading(false);
             })
-    }, [])
+    }, [editAnnouncement])
     const classes = useStyles();
     const {AcceptReq}=useAcceptReq()
     const {RejectReq} = useRejectReq();
@@ -211,6 +211,7 @@ export default function UnAuthAnnouncement(props)
                         anc_id={announcement.id}
                         open={openDelete}
                         setOpen={setOpenDelete}
+                        closeAnnouncement={handleClose}
                         close={closeDelete}
                         setClose={setCloseDelete}/>
                 </Item>

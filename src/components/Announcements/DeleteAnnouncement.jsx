@@ -76,6 +76,7 @@ const style = {
     px: 4,
     pb: 3,
 };
+export let delAnnouncement = 0;
 function DeleteAnnouncement(props)
 {
     const classes = useStyles();
@@ -102,8 +103,10 @@ function DeleteAnnouncement(props)
                 props.setClose(false);
             }, 5000);
             toast.success("You deleted an announcement");
+            delAnnouncement -= 1;
+            console.log(delAnnouncement);
+            props.closeAnnouncement();
         })
-        window.location.reload(false); 
     }
     return (
         <>

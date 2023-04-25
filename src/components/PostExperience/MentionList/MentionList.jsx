@@ -16,11 +16,8 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import LetteredAvatar from 'react-lettered-avatar';
 
 
-
-        
 const CheckboxListSecondary=({mentions})=>{
   return(
-   
       <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       
       <>
@@ -30,7 +27,7 @@ const CheckboxListSecondary=({mentions})=>{
           disablePadding>
           
             <ListItemAvatar>
-              <LetteredAvatar size={36} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.main_host_name}/>
+              <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.main_host_name}/>
             </ListItemAvatar>
             <ListItemText primary={mentions.host_username} secondary={" was your host in "+mentions.city_name} />
           </ListItem>

@@ -69,7 +69,7 @@ const SideBarDrawer = (props) => {
                             </ListItemButton>
                         </ListItem>
                         <Divider />
-                        <ListItem>
+                        {/* <ListItem>
                             <ListItemButton component={Link} to="/home/PostExperience/">
                                 <ListItemIcon>
                                     <MdNoteAdd style={{  fontSize: "1.2rem" }}/>
@@ -77,7 +77,7 @@ const SideBarDrawer = (props) => {
                                 <ListItemText primary={"Post Experience"} sx={{ color: "black"}}/>
                             </ListItemButton>
                         </ListItem>
-                        <Divider />
+                        <Divider /> */}
                     </List>
                 </Box>
 

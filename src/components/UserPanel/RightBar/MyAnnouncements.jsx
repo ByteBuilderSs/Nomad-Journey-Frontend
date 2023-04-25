@@ -75,7 +75,7 @@ function MyAnnouncements({username}) {
     }, [addAnnouncement, delAnnouncement, editAnnouncement])
     
     const handelClickPost=(announcement_id)=>{
-        navigate(`/home/PostExperience/${announcement_id}`)
+        navigate(`/home/PostExperience/announcement/${announcement_id}`)
     }
     const getDayOfDate = (date) => {
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -231,29 +231,28 @@ function MyAnnouncements({username}) {
                                                         <h1> <TiLocation style={{marginRight:"0.25rem"}} /> </h1>
                                                     </Item>
                                                     <Item>
-                                                        <div style={{display:'flex',alignItems:'center',alignContent:'center',justifyContent:'space-between'}}>
                                                         <Stack>
-                                                            
-                                                            <Item >
-                                                                <h1>{anc.city_name}</h1>
+                                                            <Item>
+                                                                <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                    <span>{anc.city_name}</span>
+                                                                    {anc.anc_status=="D"?<>
+                                                                    <Button
+                                                                        sx={{ ml: "40rem" }}
+                                                                        onClick={()=>{handelClickPost(anc.id)}}
+                                                                        variant="contained"
+                                                                        color="secondary"
+                                                                        size="medium"
+                                                                        startIcon={<AddIcon />}
+                                                                        >
+                                                                        Add Post
+                                                                    </Button>
+                                                                    </> :null}
+                                                                </h1>
                                                             </Item>
-                                                
                                                             <Item>
                                                                 <h4>{anc.city_country}</h4>
                                                             </Item>
                                                         </Stack>
-                                                        {anc.anc_status=="D"?<>
-                                                        <Button
-                                                            onClick={()=>{handelClickPost(anc.id)}}
-                                                            sx={{ mt: 1, width: "100%",marginLeft:'44rem' }}
-                                                            variant="contained"
-                                                            color="secondary"
-                                                            startIcon={<AddIcon />}
-                                                            >
-                                                            Add Post
-                                                        </Button>
-                                                        </> :null}
-                                                        </div>
                                                     </Item>
                                                 </Stack>
                                             

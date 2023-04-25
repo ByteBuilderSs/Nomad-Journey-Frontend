@@ -230,7 +230,6 @@ const EditorForm = () => {
                                         </FormControl>
                                     </Item>
                                 </Stack>
-                                
                             </Grid>
                             {/* Body */}
                             <Grid item xs={12}>

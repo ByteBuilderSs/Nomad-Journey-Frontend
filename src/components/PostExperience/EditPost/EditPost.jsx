@@ -32,6 +32,7 @@ import  { DateObject } from "react-multi-date-picker";
 import ImageCompress from 'quill-image-compress';
 import ImageResize  from 'quill-image-resize-module-react';
 
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 Quill.register('modules/imageCompress', ImageCompress);
@@ -260,6 +261,21 @@ const EditPost = () => {
                                                 </Item>
                                             </Stack>
                                         </Grid>
+                                        {/* Host name */}
+                                        {/* <Grid item xs={12} direction='row'>
+                                            <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                                <Item>
+                                                    <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                                        Your host name in this trip was:
+                                                    </h6>
+                                                </Item>
+                                                <Item>
+                                                    <FormControl>
+                                                        <Mentions props={mentions}/>
+                                                    </FormControl>
+                                                </Item>
+                                            </Stack>
+                                        </Grid> */}
                                         {/* Body */}
                                         <Grid item xs={12}>
                                             <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>

@@ -64,13 +64,13 @@ const tabs = [
         mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
         route: "/home/Inbox/",
     },
-    {
-        label: "Post Experience",
-        value: 4,
-        desktopIcon: <MdNoteAdd style={{ color: "white", fontSize: "1.2rem" }}/>,
-        mobileIcon: <MdNoteAdd style={{  fontSize: "small" }}/>,
-        route: "/home/PostExperience/",
-    }
+    // {
+    //     label: "Post Experience",
+    //     value: 4,
+    //     desktopIcon: <MdNoteAdd style={{ color: "white", fontSize: "1.2rem" }}/>,
+    //     mobileIcon: <MdNoteAdd style={{  fontSize: "small" }}/>,
+    //     route: "/home/PostExperience/",
+    // }
 ]
 
 const Navbar = (props) => {

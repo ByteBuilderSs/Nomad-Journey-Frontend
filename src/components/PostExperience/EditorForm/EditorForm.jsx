@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {
@@ -12,8 +13,8 @@ import {
     Typography,
     Autocomplete,
     Checkbox,
+    Divider,Box
 } from '@mui/material';
-
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Item } from "semantic-ui-react";
@@ -22,7 +23,8 @@ import { toast } from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import ImageCompress from 'quill-image-compress';
 import ImageResize  from 'quill-image-resize-module-react';
-
+import Mentions from '../MentionList/MentionList'
+import {useMentionInPosts} from '../../../hooks/useMentionInPosts'
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -72,6 +74,13 @@ const EditorForm = () => {
         access_token = allData.access;
         username = allData.username;
     }
+    let announcement_id = useParams();
+    console.log(announcement_id.announcement_id)
+    const {mentionPosts,mentions} =useMentionInPosts() ;
+   
+    useEffect(()=>{mentionPosts(announcement_id.announcement_id)},[])
+
+
     const navigate = useNavigate()
     const [disabled, setDisabled] = useState(false);
     const [title, setTitle] = useState('');
@@ -206,6 +215,22 @@ const EditorForm = () => {
                                     </Item>
                                 </Stack>
                             </Grid>
+                            {/*Mentions */}
+                            <Grid item xs={12} direction='row'>
+                                <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                    <Item>
+                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                            Your host name in this trip was:
+                                        </h6>
+                                    </Item>
+                                    <Item>
+                                        <FormControl>
+                                            <Mentions props={mentions}/>
+                                        </FormControl>
+                                    </Item>
+                                </Stack>
+                                
+                            </Grid>
                             {/* Body */}
                             <Grid item xs={12}>
                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
@@ -226,9 +251,11 @@ const EditorForm = () => {
                                     </Item>
                                 </Stack>
                             </Grid>
-                            {/* Tags */}
+                            {/* Tags*/}
                             <Grid item xs={12}>
                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                    <Grid item xs={7}>
+                                   
                                     <Item>
                                         <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
                                             Tags
@@ -279,6 +306,7 @@ const EditorForm = () => {
                                             />
                                         </FormControl>
                                     </Item>
+                                    </Grid>                        
                                 </Stack>
                             </Grid>
                             {/* Buttons */}

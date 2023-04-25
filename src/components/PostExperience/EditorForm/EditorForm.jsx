@@ -145,7 +145,8 @@ const EditorForm = () => {
                 data: {
                     blog_title: title,
                     json_data: editorValue,
-                    tags: tagIDs
+                    tags: tagIDs,
+                    annoncement:announcement_id.announcement_id
                 },
                 }).then((res) => {
                     setDisabled(true);

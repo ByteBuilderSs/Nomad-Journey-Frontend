@@ -32,7 +32,7 @@ const CheckboxListSecondary=({mentions})=>{
             <ListItemAvatar>
               <LetteredAvatar size={36} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.main_host_name}/>
             </ListItemAvatar>
-            <ListItemText primary={mentions.main_host_name} secondary={"he/she was your host in "+mentions.city_name} />
+            <ListItemText primary={mentions.host_username} secondary={" was your host in "+mentions.city_name} />
           </ListItem>
         </ListItemButton>
         <Divider />

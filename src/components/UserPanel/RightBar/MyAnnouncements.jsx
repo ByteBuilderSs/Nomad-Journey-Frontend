@@ -73,7 +73,7 @@ function MyAnnouncements({username}) {
             setLoading(false);
             })
     }, [addAnnouncement, delAnnouncement, editAnnouncement])
-    }, [])
+    
     const handelClickPost=(announcement_id)=>{
         navigate(`/home/PostExperience/${announcement_id}`)
     }

@@ -60,7 +60,7 @@ function MyAnnouncements({username}) {
     const [anc_id,setAnc_id] = useState(null);
     useEffect( () =>
     {
-        axios(`http://127.0.0.1:8000/api/v1/announcement/get-user-announcements/${username}`)
+        axios(`http://91.107.166.228:8000/api/v1/announcement/get-user-announcements/${username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>

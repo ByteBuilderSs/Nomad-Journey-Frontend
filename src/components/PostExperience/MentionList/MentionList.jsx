@@ -27,7 +27,7 @@ const CheckboxListSecondary=({mentions})=>{
           disablePadding>
           
             <ListItemAvatar>
-              <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.main_host_name}/>
+              <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.host_username}/>
             </ListItemAvatar>
             <ListItemText primary={mentions.host_username} secondary={" was your host in "+mentions.city_name} />
           </ListItem>

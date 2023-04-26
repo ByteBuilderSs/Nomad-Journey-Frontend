@@ -149,6 +149,7 @@ const EditorForm = () => {
                     annoncement:announcement_id.announcement_id
                 },
                 }).then((res) => {
+                    console.log("+++++ THE RESULT AFTER CREATING THE POST IS +++++ ", res.data);
                     setDisabled(true);
                     setTimeout(() => {
                         setDisabled(false);

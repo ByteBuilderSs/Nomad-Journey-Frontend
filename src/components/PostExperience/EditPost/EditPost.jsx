@@ -196,11 +196,14 @@ const EditPost = () => {
                         setDisabled(false);
                     }, 5000);
                     toast.success("Post updated successfully.");
+                    console.log("************* THE RESULT AFTER UPDATE IS ************** ", res.data);
+                    slug = res.data.data.slug;
+                    console.log("------------- THE SLUG AFTER EDITING POST IS ------------- ", slug);
+                    navigate(`/home/PostExperience/PostDetail/${slug}`);
                 }).catch((error) => {
-                    toast.error("Something went wrong.")
+                    toast.error("Something went wrong while updating the post.");
                 });
             
-            navigate(`/home/PostExperience/PostDetail/${slug}`);
         }
     }
 

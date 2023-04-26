@@ -61,7 +61,9 @@ export default function SignInSide()
             toast.error("Password required!")
         }
         else{
-        await login(Email,password)}
+            await login(Email,password)
+            
+        }
     };
 
     return (

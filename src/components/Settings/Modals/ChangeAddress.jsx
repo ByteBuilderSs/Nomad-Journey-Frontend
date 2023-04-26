@@ -57,7 +57,7 @@ const ChangeAddressDialog = (props) => {
         console.log("----------------------- IN LOAD COUNTRIES ------------------- ")
         axios({
             method: "get",
-            url: "http://91.107.166.228:8000/api/v1/utils/get-countries/",
+            url: "http://91.107.163.14:8000/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -74,7 +74,7 @@ const ChangeAddressDialog = (props) => {
         if (country) {
             axios({
                 method: "get",
-                url: `http://91.107.166.228:8000/api/v1/utils/get-cities-of-country/${country.id}`,
+                url: `http://91.107.163.14:8000/api/v1/utils/get-cities-of-country/${country.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -167,7 +167,7 @@ const ChangeAddressDialog = (props) => {
     const loadUserInfo = async () => {
         axios({
             method: "get",
-            url: `http://91.107.166.228:8000/api/v1/accounts/user/${username}/`,
+            url: `http://91.107.163.14:8000/api/v1/accounts/user/${username}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -202,7 +202,7 @@ const ChangeAddressDialog = (props) => {
         {
             axios({
                 method: "patch",
-                url: `http://91.107.166.228:8000//api/v1/accounts/UserProfileEdit2/${username}`,
+                url: `http://91.107.163.14:8000//api/v1/accounts/UserProfileEdit2/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`

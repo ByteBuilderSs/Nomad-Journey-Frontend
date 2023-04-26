@@ -63,7 +63,7 @@ export default function SignInSide()
     const loadCountries = async () => {
         axios({
             method: "get",
-            url: "http://91.107.166.228:8000/api/v1/utils/get-countries/",
+            url: "http://91.107.163.14:8000/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -80,7 +80,7 @@ export default function SignInSide()
         if (selectedCountry) {
             axios({
                 method: "get",
-                url: `http://91.107.166.228:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
+                url: `http://91.107.163.14:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }

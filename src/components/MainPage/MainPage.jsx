@@ -13,6 +13,7 @@ import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
 import { toast } from "react-toastify";
+import { useSelector } from 'react-redux';
 
 
 
@@ -70,6 +71,7 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
   } catch (error) {
     console.error(error);
   }
+  
 }
 
 
@@ -250,9 +252,10 @@ export default function MainPage(){
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
     const [page, setPage] = useState(1);
+    const [userCity, setUserCity] = useState("test");
+    // const useSel = useSelector()
 
-
-    
+    // setUserCity(useSel(state => state.user.city))
 
 
     const iterators = { head: 0, limit : 4};
@@ -561,11 +564,14 @@ export default function MainPage(){
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading text-center">
                 <h2>Announcements In Your City</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
+                <h2>Results : {ancResultCount} </h2>
               </div>
             </div>
             
-            <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>Results : {ancResultCount}</div>
+            {/* <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>
+              
+            </div> */}
 
             {showAnnc()}
             {showpageination()}

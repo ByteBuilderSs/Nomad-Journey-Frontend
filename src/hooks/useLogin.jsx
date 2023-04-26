@@ -1,8 +1,30 @@
 import {useNavigate} from "react-router-dom";
+import axios from 'axios';
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {setCountry, setCity, setUserName, setFirstName, setLastName, setMail} from "../ReduxStore/features/User/useSlice"
+
+const FetchUserInfo = async (userName) => {
+    try {
+          
+        await axios({
+          method: "get",
+          url: `http://91.107.163.14:8000/api/v1/accounts/user/${userName}`,
+        }).then(response => {
+        
+            return response.data;
+        })
+        
+        
+      } catch (error) {
+        console.error(error);
+      }
+}
+
 
 export const useLogin=()=>{
 
+    const dispatch = useDispatch()
     const navigate=useNavigate()
     const login= async(email,password) => {
         const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'token/',{ 
@@ -22,7 +44,20 @@ export const useLogin=()=>{
                 TODO => break the token object into key, value pairs and then add them to Local Storage
             */
             console.log(json);
-            localStorage.setItem('tokens',JSON.stringify(json))
+
+            const result = JSON.stringify(json)
+            const userInfo = FetchUserInfo(result.username)
+            
+            dispatch(setCity(userInfo.city_name))
+            dispatch(setCountry(userInfo.city_country))
+            dispatch(setUserName(userInfo.username))
+            dispatch(setFirstName(userInfo.first_name))
+            dispatch(setLastName(userInfo.last_name))
+            dispatch(setMail(userInfo.email))
+
+            
+
+            localStorage.setItem('tokens', result)
             navigate("/home/Dashboard/", { replace: true });
             toast.success("You logged in successfully")
         }

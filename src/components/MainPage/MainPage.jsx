@@ -48,7 +48,7 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
       }
     };
     
-    await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
+    await axios.get(`http://91.107.163.14:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
       (response) => {
         setAnncData(response.data.results)
         console.log(response.data)
@@ -58,9 +58,10 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
         if(response.data.count != 0){
           setPagination(true)
         }
-        setTimeout(() => {
-          setLoader(false);
-        }, 2000);
+        // setTimeout(() => {
+          
+        // }, 2000);
+        setLoader(false);
         
       }
     )
@@ -148,7 +149,7 @@ const Announce = (props) => {
       
       axios({
         method: "post",
-        url: `http://127.0.0.1:8000/api/v1/anc_request/create-request/${props.anc.id}`,
+        url: `http://91.107.163.14:8000/api/v1/anc_request/create-request/${props.anc.id}`,
         headers: {
           'Authorization': `Bearer ${signedInUser.access}`
         },
@@ -163,6 +164,12 @@ const Announce = (props) => {
   
   }
   let Description = "";
+  if(props.anc.anc_description.includes("\n")){
+    props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
+  }
+  else if(props.anc.anc_description.includes("\t")){
+    props.anc.anc_description = props.anc.anc_description.replace(/\t/g, " ");
+  }
   if(props.anc.anc_description.length > 44){
     Description = props.anc.anc_description.substring(0, 44) + "..."
   }else{
@@ -515,8 +522,8 @@ export default function MainPage(){
                               <option value = "sort_by=travelers_count&descending=True" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
                               {/* <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Time Range &#8593; </option>
                               <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Time Range &#8595; </option> */}
-                              <option value = "sort_by=arrival_date" style={{fontSize : "20px"}}>Arrival Date &#8595; </option>
-                              <option value = "sort_by=arrival_date&descending=True" style={{fontSize : "20px"}}>Arrival Date &#8593; </option>
+                              <option value = "sort_by=time_range" style={{fontSize : "20px"}}> Time Range &#8595; </option>
+                              <option value = "sort_by=time_range&descending=True" style={{fontSize : "20px"}}>Time Range &#8593; </option>
                           </select>
                       </fieldset>
                   </div>

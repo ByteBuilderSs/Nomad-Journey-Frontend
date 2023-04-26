@@ -158,7 +158,7 @@ export default function UnAuthAnnouncement(props)
     }
     useEffect( () =>
     {
-        axios(`http://127.0.0.1:8000/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
+        axios(`http://91.107.166.228:8000/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>

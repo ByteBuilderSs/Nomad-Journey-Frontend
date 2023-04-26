@@ -7,7 +7,7 @@ import EditAnnouncement, {editAnnouncement} from "../../Announcements/EditAnnoun
 import ShowAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
 import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import {Button, Divider, IconButton, Skeleton, Stack, Typography} from "@mui/material";
+import {Button, Divider, IconButton, Skeleton, Stack, Typography,Grid} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import {FaHome, FaLongArrowAltRight} from "react-icons/fa";
 import {AiOutlineFieldTime} from "react-icons/ai";
@@ -15,10 +15,24 @@ import {IoIosPerson} from "react-icons/io";
 import {MdDescription} from "react-icons/md";
 import {FiMoreHorizontal} from "react-icons/fi";
 import { makeStyles } from '@mui/styles';
+import AddIcon from '@mui/icons-material/Add';
 import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useParams,useNavigate} from "react-router-dom";
 import axios from "axios";
 import {addAnnouncement} from "../../Announcements/AddAnnouncement/NewAnnouncementForm";
+import { blue, deepOrange } from '@mui/material/colors';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+    palette: {
+      primary: blue,
+      secondary: 
+      {
+        main: '#ffd180'
+      }
+    }
+  });
+
 const useStyles = makeStyles(theme => (
     {
         announcements:
@@ -35,6 +49,7 @@ const useStyles = makeStyles(theme => (
     }
 ));
 function MyAnnouncements({username}) {
+    const navigate=useNavigate()
     const local_storage = JSON.parse(localStorage.tokens);
     const classes = useStyles();
     const [error, setError] = useState(null);
@@ -45,7 +60,7 @@ function MyAnnouncements({username}) {
     const [anc_id,setAnc_id] = useState(null);
     useEffect( () =>
     {
-        axios(`http://127.0.0.1:8000/api/v1/announcement/get-user-announcements/${username}`)
+        axios(`http://91.107.166.228:8000/api/v1/announcement/get-user-announcements/${username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -58,6 +73,10 @@ function MyAnnouncements({username}) {
             setLoading(false);
             })
     }, [addAnnouncement, delAnnouncement, editAnnouncement])
+    
+    const handelClickPost=(announcement_id)=>{
+        navigate(`/home/PostExperience/announcement/${announcement_id}`)
+    }
     const getDayOfDate = (date) => {
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const months = ["January", "February", "March", "April", "May", "June",
@@ -193,72 +212,91 @@ function MyAnnouncements({username}) {
             );
         }
         return (
-            <h5>
-            <Stack>
-                {announcement.map((anc, key) =>
-                    (
-                            <div
-                                className="announcement-hovering"
-                                onClick={() => {
-                                        setOpen(true);
-                                        setDisabled(false);
-                                        setAnc_id(anc.id);}}>
-                                <Item>
-                                    <Stack className={classes.announcements}>
-                                        <Item>
-                                            <Stack direction={`row`}>
-                                                <Item>
-                                                    <h1> <TiLocation style={{marginRight:"0.25rem"}} /> </h1>
-                                                </Item>
-                                                <Item>
-                                                    <Stack>
-                                                        <Item>
-                                                            <h1>{anc.city_name}</h1>
-                                                        </Item>
-                                                        <Item>
-                                                            <h4>{anc.city_country}</h4>
-                                                        </Item>
-                                                    </Stack>
-                                                </Item>
-                                            </Stack>
-                                        </Item>
-                                        <Item className={classes.eachAnnouncement}>
-                                            <Stack direction={`row`} spacing={3} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
-                                                <Item>
-                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                                                        <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
-                                                    </Typography>
-                                                </Item>
-                                                <Item>
-                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                                                        <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
-                                                    </Typography>
-                                                </Item>
-                                                <Item>
-                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                                                        <IoIosPerson style={{marginRight:"0.5rem"}} /> {numberOftravelers(anc.travelers_count)}
-                                                    </Typography>
-                                                </Item>
-                                                <Item>
-                                                    <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                                                        <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
-                                                    </Typography>
-                                                </Item>
-                                            </Stack>
-                                        </Item>
-                                        <Item className={classes.eachAnnouncement}>
-                                            {checkDescription(anc.anc_description)}
-                                        </Item>
-                                    </Stack>
-                                    <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
-                                </Item>
+            <ThemeProvider theme={theme}>
+                <h5>
+                <Stack>
+                    {announcement.map((anc, key) =>
+                        (
+                                <div
+                                    className="announcement-hovering"
+                                    onClick={() => {
+                                            setOpen(true);
+                                            setDisabled(false);
+                                            setAnc_id(anc.id);}}>
+                                    <Item>
+                                        <Stack className={classes.announcements}>
+                                            <Item>
+                                                <Stack direction={`row`}>
+                                                    <Item>
+                                                        <h1> <TiLocation style={{marginRight:"0.25rem"}} /> </h1>
+                                                    </Item>
+                                                    <Item>
+                                                        <Stack>
+                                                            <Item>
+                                                                <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                    <span>{anc.city_name}</span>
+                                                                    {anc.anc_status=="D"?<>
+                                                                    <Button
+                                                                        sx={{ ml: "40rem" }}
+                                                                        onClick={()=>{handelClickPost(anc.id)}}
+                                                                        variant="contained"
+                                                                        color="secondary"
+                                                                        size="medium"
+                                                                        startIcon={<AddIcon />}
+                                                                        >
+                                                                        Add Post
+                                                                    </Button>
+                                                                    </> :null}
+                                                                </h1>
+                                                            </Item>
+                                                            <Item>
+                                                                <h4>{anc.city_country}</h4>
+                                                            </Item>
+                                                        </Stack>
+                                                    </Item>
+                                                </Stack>
+                                            
+                                            </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                                <Stack direction={`row`} spacing={3} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <IoIosPerson style={{marginRight:"0.5rem"}} /> {numberOftravelers(anc.travelers_count)}
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
+                                                        </Typography>
+                                                    </Item>
+                                                    
+                                                </Stack>
+                                            </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                                {checkDescription(anc.anc_description)}
+                                            </Item>
+                                        </Stack>
+                                        <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
+                                    </Item>
 
-                            </div>
-                    ))}
-            </Stack>
-                {checkNotNull(anc_id)}
-                {() => setAnc_id(null)}
-            </h5>
+                                </div>
+                        ))}
+                </Stack>
+                    {checkNotNull(anc_id)}
+                    {() => setAnc_id(null)}
+                </h5>
+            </ThemeProvider>
+
         )
     }
     return (

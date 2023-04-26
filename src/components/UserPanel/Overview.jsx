@@ -129,9 +129,10 @@ const Overview = () => {
                         style={{ display: "flex", alignItems: "center", paddingLeft: "1rem", fontWeight: "bold" }}> 
                         <QuestionAnswerIcon sx={{ color: "#C4D6E5", marginRight: "0.5rem"}} />
                         {userInfo.langF_name && userInfo.langF_name.length > 0 ? <span>Fluent in {(userInfo.langF_name.map((LF, index) => (<span key={index}>{(index ? ', ' : '') + LF}</span>)))}</span>
-                                                                                : <span>""</span>}
-                        {userInfo.langL_name && userInfo.langL_name.length > 0 ? <span>;&nbsp;learning {(userInfo.langL_name.map((LL, index) => (<span key={index}>{(index ? ', ' : ' ') + LL }</span>)))}</span>
-                                                                                : <span>""</span>}
+                                                                                : <span>No language to be fluent in is declared yet</span>}
+                        {userInfo.langL_name && userInfo.langL_name.length > 0 ? <span>.&nbsp;Learning {(userInfo.langL_name.map((LL, index) => (<span key={index}>{(index ? ', ' : ' ') + LL }</span>)))}</span>
+                                                                                : <span>.No language to be learning is declared yet.</span>}
+                        
                     </Typography>
                 </Grid>
             </Grid>

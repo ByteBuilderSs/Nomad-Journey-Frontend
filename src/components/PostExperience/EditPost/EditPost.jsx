@@ -32,6 +32,7 @@ import  { DateObject } from "react-multi-date-picker";
 import ImageCompress from 'quill-image-compress';
 import ImageResize  from 'quill-image-resize-module-react';
 
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 Quill.register('modules/imageCompress', ImageCompress);
@@ -91,7 +92,7 @@ const EditPost = () => {
     const loadTags = async () => {
         axios({
             method: "get",
-            url: "http://127.0.0.1:8000/api/v1/blog/tags/",
+            url: "http://91.107.166.228:8000/api/v1/blog/tags/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -108,7 +109,7 @@ const EditPost = () => {
     const loadPostInfo = async () => {
         axios({
             method: "get",
-            url: `http://127.0.0.1:8000/api/v1/blog/post/${slug}`,
+            url: `http://91.107.166.228:8000/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -178,7 +179,7 @@ const EditPost = () => {
         if (isDataValid) {
             axios({
                 method: "patch",
-                url: "http://127.0.0.1:8000/api/v1/blog/userpost/",
+                url: "http://91.107.166.228:8000/api/v1/blog/userpost/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -195,11 +196,14 @@ const EditPost = () => {
                         setDisabled(false);
                     }, 5000);
                     toast.success("Post updated successfully.");
+                    console.log("************* THE RESULT AFTER UPDATE IS ************** ", res.data);
+                    slug = res.data.data.slug;
+                    console.log("------------- THE SLUG AFTER EDITING POST IS ------------- ", slug);
+                    navigate(`/home/PostExperience/PostDetail/${slug}`);
                 }).catch((error) => {
-                    toast.error("Something went wrong.")
+                    toast.error("Something went wrong while updating the post.");
                 });
             
-            navigate(`/home/PostExperience/PostDetail/${slug}`);
         }
     }
 
@@ -260,6 +264,21 @@ const EditPost = () => {
                                                 </Item>
                                             </Stack>
                                         </Grid>
+                                        {/* Host name */}
+                                        {/* <Grid item xs={12} direction='row'>
+                                            <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                                <Item>
+                                                    <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                                        Your host name in this trip was:
+                                                    </h6>
+                                                </Item>
+                                                <Item>
+                                                    <FormControl>
+                                                        <Mentions props={mentions}/>
+                                                    </FormControl>
+                                                </Item>
+                                            </Stack>
+                                        </Grid> */}
                                         {/* Body */}
                                         <Grid item xs={12}>
                                             <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>

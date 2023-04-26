@@ -64,13 +64,13 @@ const tabs = [
         mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
         route: "/home/Inbox/",
     },
-    {
-        label: "Post Experience",
-        value: 4,
-        desktopIcon: <MdNoteAdd style={{ color: "white", fontSize: "1.2rem" }}/>,
-        mobileIcon: <MdNoteAdd style={{  fontSize: "small" }}/>,
-        route: "/home/PostExperience/",
-    }
+    // {
+    //     label: "Post Experience",
+    //     value: 4,
+    //     desktopIcon: <MdNoteAdd style={{ color: "white", fontSize: "1.2rem" }}/>,
+    //     mobileIcon: <MdNoteAdd style={{  fontSize: "small" }}/>,
+    //     route: "/home/PostExperience/",
+    // }
 ]
 
 const Navbar = (props) => {
@@ -122,7 +122,7 @@ const Navbar = (props) => {
     //     let access = localStorage.getItem('access');
     //     axios({
     //         method: "post",
-    //         url: "http://127.0.0.1:8000/api/v1/accounts/logout/",
+    //         url: "http://91.107.166.228:8000/api/v1/accounts/logout/",
     //         headers: {
     //             'Content-Type': 'application/json',
     //             'Authorization': `Bearer ${access}`

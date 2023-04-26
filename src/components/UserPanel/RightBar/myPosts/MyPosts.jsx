@@ -76,7 +76,7 @@ const AllPosts=()=>
   const getPosts = () => {
     axios({
       method: "get",
-      url: 'http://127.0.0.1:8000/api/v1/blog/userpost/',
+      url: 'http://91.107.166.228:8000/api/v1/blog/userpost/',
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -117,7 +117,7 @@ const AllPosts=()=>
   const confirmDeletePost = (post) => {
     axios({
       method: "delete",
-      url: "http://127.0.0.1:8000/api/v1/blog/userpost/",
+      url: "http://91.107.166.228:8000/api/v1/blog/userpost/",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -169,7 +169,7 @@ const AllPosts=()=>
       }}
     >
       <div>
-        <Button
+        {/* <Button
           sx={{ marginLeft: "48.25rem" }}
           variant="contained"
           size="medium"
@@ -178,7 +178,7 @@ const AllPosts=()=>
           onClick={handleNewPostRoute}
           >
           Add new post
-        </Button>
+        </Button> */}
         <Box sx={{ marginTop: 1 }}>
           <Grid sx={{ marginTop: 1 }} container spacing={1}>
             {
@@ -311,9 +311,14 @@ const AllPosts=()=>
                 ))
               ) :
               (
-                <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
-                  No Posts Found!
-                </span>
+                <div>
+                  <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
+                    No Posts Found!
+                  </span>
+                  <p style={{ marginLeft: "9rem" , fontSize: 15, marginTop: "0.3rem", color: "#0F3E86" }}>
+                    You would be able to create a post for your corresponding announcement, only when it is done.
+                  </p>
+                </div>
               )
             }
           </Grid>

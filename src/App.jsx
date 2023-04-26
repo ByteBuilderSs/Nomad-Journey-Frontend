@@ -90,7 +90,7 @@ function App() {
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
                   <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
                   <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
-                  <Route exact path="/home/PostExperience/" element={<PostExperience />}/>
+                  <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
                   <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
                   <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
                 </Routes>

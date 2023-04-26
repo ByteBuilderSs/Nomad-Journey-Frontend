@@ -91,7 +91,7 @@ function DeleteAnnouncement(props)
     {
         axios({
             method: "delete",
-            url: `http://127.0.0.1:8000/api/v1/announcement/delete/${props.anc_id}/`,
+            url: `http://91.107.166.228:8000/api/v1/announcement/delete/${props.anc_id}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

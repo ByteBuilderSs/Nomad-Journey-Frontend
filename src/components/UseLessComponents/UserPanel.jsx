@@ -74,7 +74,7 @@ function UserPanelPage() {
     const [loading, setLoading] = useState(true);
     // useEffect(() =>
     // {
-    //     axios.get(`http://127.0.0.1:8000/NormandJourney/user/${profile_params.user_name}`)
+    //     axios.get(`http://91.107.166.228:8000/NormandJourney/user/${profile_params.user_name}`)
     //         .then(response => setUserData(response.data))
     //         .catch(error => {
     //             console.log("error: ",error);

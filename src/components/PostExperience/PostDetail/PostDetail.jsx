@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import { Item } from "semantic-ui-react";
@@ -26,20 +27,22 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 const PostDetail = (props) => {
     let allData;
     let access_token;
+    let username;
     if (localStorage.getItem('tokens'))
     {
         allData = JSON.parse(localStorage.getItem('tokens'));
         access_token = allData.access;
+        username = allData.username;
     }
     let {slug } = useParams();
     console.log("************** The slug is **************** ", slug);
     const [postData, setPostData] = useState("");
-
+    let navigate = useNavigate();
     const loadPost = async () => {
         console.log("In load post request");
         axios({
             method: "get",
-            url: `http://127.0.0.1:8000/api/v1/blog/post/${slug}`,
+            url: `http://188.121.102.52:8000/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -70,7 +73,29 @@ const PostDetail = (props) => {
         loadPost();
     }, []);
 
-    
+    const handleEditClick = (uid, slug) => 
+    {
+        navigate(`/home/PostExperience/Edit/${uid}/${slug}`);
+    }
+
+    const handlePostDelete = async (event, uid) => {
+        event.preventDefault();
+        axios({
+            method: "delete",
+            url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`,
+                },
+                data: {
+                uid: uid
+                }
+            }).then((res) => {
+                console.log("********* THE RESULT IN POST DELETE REQUEST **********", res);
+                toast.success("Your post deleted successfully.");
+                navigate(`/home/Profile/${username}/`);
+            });
+    };
     return (
         <>
             <div className='post-detail'>
@@ -88,29 +113,13 @@ const PostDetail = (props) => {
                                                     <Item>
                                                         <Typography sx={{ fontSize: "2rem" }} gutterBottom>
                                                             {postData.blog_title}
-                                                            <Button
-                                                                sx={{ width: "11.5rem", ml: "30rem" }}
-                                                                variant="contained"
-                                                                component="label"
-                                                                startIcon={<EditIcon />}
-                                                                >
-                                                                Edit Your Post
-                                                            </Button>
-                                                            <Button
-                                                                sx={{ width: "13rem", ml: "2rem" }}
-                                                                variant="outlined"
-                                                                color="error"
-                                                                startIcon={<DeleteIcon />}
-                                                                >
-                                                                Delete Your Post
-                                                            </Button>
                                                         </Typography>
                                                     </Item>
                                                     <Item>
-                                                        <Stack direction='row' spacing={4}>
+                                                        <Stack direction='row' spacing={4} sx={{ display: "flex", alignContent: "center", alignItems: "center" }}>
                                                             <Item>
                                                                 <Typography component='p' color="text.secondary">
-                                                                    Viewd # times
+                                                                    Viewed # times
                                                                 </Typography>
                                                             </Item>
                                                             <Item>
@@ -118,6 +127,28 @@ const PostDetail = (props) => {
                                                             </Item>
                                                             <Item>
                                                                 <Typography color="text.secondary">Edited at {postData.updated_at}</Typography>
+                                                            </Item>
+                                                            <Item>
+                                                                <Button
+                                                                    sx={{ width: "11.5rem", ml: "6.5rem" }}
+                                                                    variant="contained"
+                                                                    component="label"
+                                                                    startIcon={<EditIcon />}
+                                                                    onClick={() => handleEditClick(postData.uid, postData.slug)}
+                                                                    >
+                                                                    Edit Your Post
+                                                                </Button>
+                                                            </Item>
+                                                            <Item>
+                                                                <Button
+                                                                    sx={{ width: "13rem" }}
+                                                                    variant="outlined"
+                                                                    color="error"
+                                                                    startIcon={<DeleteIcon />}
+                                                                    onClick={(event) => handlePostDelete(event, postData.uid)}
+                                                                    >
+                                                                    Delete Your Post
+                                                                </Button>
                                                             </Item>
                                                         </Stack>
                                                     </Item>
@@ -127,16 +158,17 @@ const PostDetail = (props) => {
                                         <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }} />                                    
                                         {/* Body */}
                                         <Grid item xs={12}>
-                                            <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
-                                                <Item>
-                                                    <FormControl>
-                                                        <ReactQuill theme="bubble" 
-                                                                    value={postData.json_data} 
-                                                                    readOnly={true}
-                                                        />
-                                                    </FormControl>
-                                                </Item>
-                                            </Stack>
+                                            <Box sx={{ display: "flex", alignItems: "center", alignContent: "center", width: "50%"}}>
+                                                <FormControl>
+                                                    <ReactQuill theme="bubble" 
+                                                                value={postData.json_data} 
+                                                                readOnly={true}
+                                                                // style={{ width: "65rem" }}
+                                                    />
+                                                </FormControl>
+
+                                            </Box>
+                                                
                                         </Grid>
                                         {/* Tags */}
                                         <Grid item xs={12}>

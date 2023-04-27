@@ -100,7 +100,7 @@ const Login = () => {
       if (isDataValid) {
         axios({
           method: "post",
-          url: "http://127.0.0.1:8000/api/v1/accounts/token/",
+          url: "http://188.121.102.52:8000/api/v1/accounts/token/",
           headers: {
             'Content-Type': 'application/json',
           },

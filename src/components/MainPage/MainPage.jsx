@@ -1,58 +1,27 @@
-import Box from '@mui/material/Box';
-import "./MainPage.css"
-import "./fontawesome.css"
 import {React, useState, useRef, useEffect } from "react";
-import App from './ImageSlide';
-import { containerClasses } from '@mui/system';
 import axios from 'axios';
-import AlertDialogSlide from './ReactConfirm';
-import Button from '@mui/material/Button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import Pagination from '@mui/material/Pagination';
+import "./MainPage.css"
+import "./fontawesome.css"
+import Lottie from 'react-lottie';
+import notFoundGif from '../../lottieAssets/notfoundANC';
+import loaderGif from '../../lottieAssets/loaderANC';
+import { toast } from "react-toastify";
+import { useSelector } from 'react-redux';
 
 
-  
-const ProgressBar = ({bgcolor,progress,height}) => {
-     
-    const Parentdiv = {
-        height: height,
-        width: '100%',
-        backgroundColor: 'whitesmoke',
-        borderRadius: "20px",
-        margin: 0
-      }
-      
-      const Childdiv = {
-        height: '100%',
-        width: `${progress}%`,
-        backgroundColor: bgcolor,
-        borderRadius:"20px",
-        textAlign: 'right'
-      }
-      
-      const progresstext = {
-        padding: 10,
-        color: 'black',
-        fontWeight: 900
-      }
-        
-    return (
-    <div style={Parentdiv}>
-      <div style={Childdiv}>
-        <span style={progresstext}>{`${progress}%`}</span>
-      </div>
-    </div>
-    )
-}
 
+
+// slider function :
 function clickInputsInOrder(currentIndex = 0) {
   const inputIds = ['banner1', 'banner2', 'banner3', 'banner4'];
 
-  
   const clickNextInput = () => {
     const currentInput = document.getElementById(inputIds[currentIndex]);
     if (currentInput) {
@@ -65,20 +34,36 @@ function clickInputsInOrder(currentIndex = 0) {
   clickNextInput();
 }
 
-const fetchAnnc = async (setAnncData) => {
+
+
+/// fetch announcements from backend
+const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, sort, value = 1) => {
   try {
 
     const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+
 
     const config = {
       headers: {
         Authorization: `Bearer ${signedInUser['access']}`
       }
     };
-
-    await axios.get('http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/', config).then(
+    
+    await axios.get(`http://188.121.102.52:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
       (response) => {
-        setAnncData(response.data)
+        setAnncData(response.data.results)
+        console.log(response.data)
+        console.log(sort)
+        setPaginCount(response.data.page_count)
+        setAncResultCount(response.data.count)
+        if(response.data.count != 0){
+          setPagination(true)
+        }
+        // setTimeout(() => {
+          
+        // }, 2000);
+        setLoader(false);
+        
       }
     )
     
@@ -86,63 +71,87 @@ const fetchAnnc = async (setAnncData) => {
   } catch (error) {
     console.error(error);
   }
+  
 }
 
-const Announce = (props) => {
-  // {image :  , leftDays : , userName : , startDate : , endDate : , desc : , }
 
-  const {anc_city
-  ,
-  anc_country
-  ,
-  anc_description
-  ,
-  anc_status
-  ,
-  announcer
-  ,
-  announcer_image_code
-  ,
-  announcer_username
-  ,
-  arrival_date
-  ,
-  arrival_date_is_flexible
-  ,
-  city_country
-  ,
-  city_name
-  ,
-  departure_date
-  ,
-  departure_date_is_flexible
-  ,
-  id
-  ,
-  travelers_count} = props.anc
-  
-  // For offer dialog :
-  const [open, setOpen] = useState(false);
+// when data inaccessible
+const NotFound = () => {
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: notFoundGif,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  return(
+    <div class="col-lg-12">
+      <Lottie 
+	    options={defaultOptions}
+        height={400}
+        width={400}
+      />
+    </div>
+  )
+}
+// loading for announcements
+const Loader = () => {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loaderGif,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  return(
+    <div class="col-lg-12">
+      <Lottie 
+	    options={defaultOptions}
+        height={350}
+        width={350}
+      />
+    </div>
+  )
+}
+
+
+///// show each announcements on mainpage
+const Announce = (props) => {
+  
+  // For offer dialog :
+  const [openOfferDialog, setOpenOfferDialog] = useState(false);
+  const [openDiscDialog, setOpenDiscDialog] = useState(false);
+
+  const handleOpenDiscDialog = () => {
+    setOpenDiscDialog(true);
+  };
+
+  const handleCloseDiscDialog = () => {
+    setOpenDiscDialog(false);
+  };
+
+  const handleOpenOfferDialog = () => {
+    setOpenOfferDialog(true);
+  };
+
+  const handleCloseOfferDialog = () => {
+    setOpenOfferDialog(false);
   };
 
   const handleOffer = () => {
-      handleClose()
-      Make_Offer()
-      window.location.reload(false); 
-      //fetchAnnc(props.setAnncData)
+      handleCloseOfferDialog()
+      toast.success("your offer submited successfully");
+      props.setLoader(true)
+      Make_Offer() 
   }
 
-  
-
   const Make_Offer = async () => {
-
 
     try {
   
@@ -151,10 +160,12 @@ const Announce = (props) => {
       
       axios({
         method: "post",
-        url: `http://127.0.0.1:8000/api/v1/anc_request/create-request/${id}`,
+        url: `http://188.121.102.52:8000/api/v1/anc_request/create-request/${props.anc.id}`,
         headers: {
           'Authorization': `Bearer ${signedInUser.access}`
         },
+      }).then(response => {
+        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader, props.setAncResultCount, props.sort);
       })
       
       
@@ -164,10 +175,16 @@ const Announce = (props) => {
   
   }
   let Description = "";
-  if(anc_description.length > 44){
-    Description = anc_description.substring(0, 44) + "..."
+  if(props.anc.anc_description.includes("\n")){
+    props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
+  }
+  else if(props.anc.anc_description.includes("\t")){
+    props.anc.anc_description = props.anc.anc_description.replace(/\t/g, " ");
+  }
+  if(props.anc.anc_description.length > 44){
+    Description = props.anc.anc_description.substring(0, 44) + "..."
   }else{
-    Description = anc_description
+    Description = props.anc.anc_description
   }
    
   return(
@@ -181,50 +198,76 @@ const Announce = (props) => {
             </div>
             <div class="col-lg-6 align-self-center">
               <div class="content">
-                <span class="info">*{travelers_count} Travelers</span>
-                <h4>{announcer_username}</h4>
+                <span class="info">*{props.anc.travelers_count} Travelers</span>
+                <h4>{props.anc.announcer_username}</h4>
                 <div class="row">
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
-                    <span class="list">{arrival_date}</span>
+                    <span class="list">{props.anc.arrival_date}</span>
                   </div>
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
-                    <span class="list">{departure_date}</span>
+                    <span class="list">{props.anc.departure_date}</span>
                   </div>
                 </div>
-                <p>{Description}</p>
-                <div class="main-button" style={{cursor : "pointer"}} onClick={handleClickOpen}>
+                <p onClick = {() => {if(props.anc.anc_description.length != 0){handleOpenDiscDialog()}}}>{Description}</p>
+                <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
                   <div className='annc' style={{color : "#fff"}}> Give an offer </div>
                 </div>
                 <Dialog
-                    open={open}
-                    keepMounted
-                    onClose={handleClose}
-                    aria-describedby="alert-dialog-slide-description"
-                    PaperProps={{
-                      sx: {
-                        width: "100%",
-                        maxWidth: "450px!important",
-                        "border-radius" : "50px",
-                        backgroundColor : "white"
-                      },
-                    }}
-                    >
-                    <DialogTitle>{"Are You Sure?"}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions style={{justifyContent : "center"}}>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
-                        <div className='annc' style={{color : "#fff"}}> Yes </div>
+                  open={openOfferDialog}
+                  keepMounted
+                  onClose={handleCloseOfferDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                  PaperProps={{
+                    sx: {
+                      width: "100%",
+                      maxWidth: "450px!important",
+                      "border-radius" : "50px",
+                      backgroundColor : "white"
+                    },
+                  }}
+                  >
+                  <DialogTitle>{"Are You Sure?"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions style={{justifyContent : "center"}}>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
+                      <div className='annc' style={{color : "#fff"}}> Yes </div>
+                    </div>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={handleCloseOfferDialog}>
+                      <div className='annc' style={{color : "#fff"}}> No </div>
+                    </div>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog
+                  open={openDiscDialog}
+                  keepMounted
+                  onClose={handleCloseDiscDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                  PaperProps={{
+                    sx: {
+                      width: "100%",
+                      maxWidth: "450px!important",
+                      "border-radius" : "50px",
+                      backgroundColor : "white"
+                    },
+                  }}
+                  >
+                  <DialogTitle>{`${props.anc.announcer_username}'s Discription`}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                      <div className = "dialogdesc">
+                        <p>{props.anc.anc_description}</p>
                       </div>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleClose}>
-                        <div className='annc' style={{color : "#fff"}}> No </div>
-                      </div>
-                    </DialogActions>
-                  </Dialog>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions style={{justifyContent : "center"}}>
+                  </DialogActions>
+                </Dialog>
               </div>
             </div>
           </div>
@@ -234,44 +277,33 @@ const Announce = (props) => {
   )
 }
 
-const NotFound = () => {
-  return(
-    <div class="col-lg-12">
-      <div class="item" style={{height : "500px"}}>
-        <h1 style={{justifyContent : "center", "paddingTop" : "250px"}}>Not Found!!</h1>
-      </div>
-    </div>
-  )
-}
-
-
-
-
 export default function MainPage(){
 
     const [announcdata,setAnncData] = useState([])
+    const [ancResultCount,setAncResultCount] = useState(0)
+    const [loader,setLoader] = useState(false)
+    const [sort, setSort] = useState("sort_by=anc_timestamp_created&descending=True")
+    // for pagination :
+    const [showPagination, setPagination] = useState(false);
+    const [paginCount, setPaginCount] = useState(1);
+    const [page, setPage] = useState(1);
+    const [userCity, setUserCity] = useState("test");
+    // const useSel = useSelector()
+
+    // setUserCity(useSel(state => state.user.city))
+
+
     const iterators = { head: 0, limit : 4};
 
     useEffect(() => {
       clickInputsInOrder(0);
     }, []);
-
-    
-    
-    
-
-
+      
     useEffect(() => {
-
-      fetchAnnc(setAnncData)
-        
+      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader,setAncResultCount,sort)
     }, []);
 
-
   
-
-    
-
 
     const anncData = [
       {image :  require("../../Assets/images/deals-01.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
@@ -280,7 +312,66 @@ export default function MainPage(){
       {image :  require("../../Assets/images/deals-04.jpg"), leftDays : 'X', userName : "user", startDate : "start", endDate : "end", desc : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. "},
     ]
 
-    
+    // show all anncs
+    const showAnnc = () => {
+      if(loader == true){
+        return(
+          Loader()
+        )
+      }
+      else if(announcdata.length == 0 ){
+        return(
+          NotFound()
+        )
+      }
+      else{
+        return(
+          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader} setAncResultCount = {setAncResultCount} sort = {sort}/>)
+        )
+      }
+
+    }
+
+    const handlePageChange = (event, value) => {
+      setLoader(true)
+      setPage(value);
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, sort, value)
+    };
+
+    //function for show pagination :
+    const showpageination = () => {
+      const theme = createTheme({
+        palette: {
+          secondary: {
+            main: '#E55405',
+            '&:hover' : '#E55405',
+            },
+          },
+      });
+      if(showPagination){
+        return(
+          <div className = "pagination-container" >
+            <ThemeProvider theme = {theme}>
+              <Pagination 
+              count = {paginCount}
+              page = {page}
+              onChange={handlePageChange}
+              color = "secondary"
+              size = "large"
+              variant = "outlined"
+              /> 
+            </ThemeProvider>   
+          </div>
+        )
+      }
+    }
+
+    const handleSortChange = (event) => {
+      setLoader(true)
+      setPage(1);
+      setSort(event.target.value)
+      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
+    }
 
   return(
 
@@ -461,21 +552,20 @@ export default function MainPage(){
                   </div>
                   <div class="col-lg-4">
                       <fieldset>
-                          <select name="Location" class="form-select" aria-label="Default select example" id="chooseLocation" onChange="this.form.click()">
-                              <option selected>Destinations</option>
-                              <option type="checkbox" name="option1" value="Italy">Italy</option>
-                              <option value="France">France</option>
-                              <option value="Switzerland">Switzerland</option>
-                              <option value="Thailand">Thailand</option>
-                              <option value="Australia">Australia</option>
-                              <option value="India">India</option>
-                              <option value="Indonesia">Indonesia</option>
-                              <option value="Malaysia">Malaysia</option>
-                              <option value="Singapore">Singapore</option>
+                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = {handleSortChange}  >
+                              {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
+                              <option value = "sort_by=anc_timestamp_created&descending=True" selected style={{fontSize : "20px"}}>Newest</option>
+                              <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Oldest</option>
+                              <option value = "sort_by=travelers_count" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
+                              <option value = "sort_by=travelers_count&descending=True" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
+                              {/* <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Time Range &#8593; </option>
+                              <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Time Range &#8595; </option> */}
+                              <option value = "sort_by=time_range" style={{fontSize : "20px"}}> Time Range &#8595; </option>
+                              <option value = "sort_by=time_range&descending=True" style={{fontSize : "20px"}}>Time Range &#8593; </option>
                           </select>
                       </fieldset>
                   </div>
-                  <div class="col-lg-4">
+                  {/* <div class="col-lg-4">
                       <fieldset>
                           <select name="Price" class="form-select" aria-label="Default select example" id="choosePrice" onChange="this.form.click()">
                               <option selected>Price Range</option>
@@ -486,12 +576,16 @@ export default function MainPage(){
                               <option value="2500+">$2,500+</option>
                           </select>
                       </fieldset>
-                  </div>
-                  <div class="col-lg-2">                        
+                  </div> */}
+                  {/* <div class="col-lg-2">                        
                       <fieldset>
                           <button class="border-button">Search Results</button>
                       </fieldset>
-                  </div>
+                  </div> */}
+
+                  {/* for placing in line : */}
+                  {/* <div class="col-lg-2"></div> */}
+
                 </div>
               </form>
             </div>
@@ -505,33 +599,19 @@ export default function MainPage(){
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading text-center">
                 <h2>Announcements In Your City</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
+                <h2>Results : {ancResultCount} </h2>
               </div>
             </div>
             
-            {
+            {/* <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>
               
-              announcdata.length != 0 ?   announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} />) : <NotFound/>
-            }
+            </div> */}
 
-            
-            
-            
-            
-            
+            {showAnnc()}
+            {showpageination()}
 
-            
-
-            
-            <div class="col-lg-12">
-              <ul class="page-numbers">
-                <li><a href="#"><i class="fa fa-arrow-left"></i></a></li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#"><i class="fa fa-arrow-right"></i></a></li>
-              </ul>
-            </div>
+         
           </div>
         </div>
       </div>

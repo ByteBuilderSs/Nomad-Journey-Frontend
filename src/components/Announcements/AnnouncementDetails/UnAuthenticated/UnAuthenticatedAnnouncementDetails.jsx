@@ -133,7 +133,7 @@ export default function AuthAnnouncement(props)
     }
     useEffect( () =>
     {
-        axios(`http://127.0.0.1:8000/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
+        axios(`http://188.121.102.52:8000/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -231,7 +231,7 @@ export default function AuthAnnouncement(props)
                             <Typography
                                 component="h4"
                                 style={{ display: "flex", alignItems: "center", fontWeight: "bold" }}>
-                                <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.anc_city}, {announcement.anc_country}
+                                <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.city_name}, {announcement.city_country}
                             </Typography>
                         </Item>
                         <Item className={classes.items}>

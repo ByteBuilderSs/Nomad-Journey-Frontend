@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import LetteredAvatar from 'react-lettered-avatar';
 import {
     MdSettings,
     MdLogout,
@@ -63,13 +64,13 @@ const tabs = [
         mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
         route: "/home/Inbox/",
     },
-    {
-        label: "Post Experience",
-        value: 4,
-        desktopIcon: <MdNoteAdd style={{ color: "white", fontSize: "1.2rem" }}/>,
-        mobileIcon: <MdNoteAdd style={{  fontSize: "small" }}/>,
-        route: "/home/PostExperience/",
-    }
+    // {
+    //     label: "Post Experience",
+    //     value: 4,
+    //     desktopIcon: <MdNoteAdd style={{ color: "white", fontSize: "1.2rem" }}/>,
+    //     mobileIcon: <MdNoteAdd style={{  fontSize: "small" }}/>,
+    //     route: "/home/PostExperience/",
+    // }
 ]
 
 const Navbar = (props) => {
@@ -121,7 +122,7 @@ const Navbar = (props) => {
     //     let access = localStorage.getItem('access');
     //     axios({
     //         method: "post",
-    //         url: "http://127.0.0.1:8000/api/v1/accounts/logout/",
+    //         url: "http://188.121.102.52:8000/api/v1/accounts/logout/",
     //         headers: {
     //             'Content-Type': 'application/json',
     //             'Authorization': `Bearer ${access}`
@@ -161,6 +162,7 @@ const Navbar = (props) => {
                             sx={{ display: {xs: "none", lg: "flex"} }}
                         >
                             <Avatar alt="LOGO" src={SiteLogo} style={{ width: "100%"}}/>
+                            
                         </IconButton>
 
                         <Typography
@@ -210,7 +212,8 @@ const Navbar = (props) => {
                                 }}>
                                     <Tooltip title="Settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                            <Avatar alt="Settings" src={defaultAvatar}/>
+                                            {/* <Avatar alt="Settings" src={defaultAvatar}/> */}
+                                            <LetteredAvatar name={username} backgroundColor='#FFE5B4'/>
                                         </IconButton>
                                     </Tooltip>
                                     <IconButton

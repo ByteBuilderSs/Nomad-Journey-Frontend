@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import "../UserPanel/RightBar/MyAnnouncement.css";
+import "../../RightBar/MyAnnouncement.css";
 import {Modal, Box, Typography, Button} from "@mui/material";
 import {Col, Row} from "react-bootstrap";
 import {makeStyles} from "@mui/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
+import {useRejectReq} from "../../../../hooks/useRejectReq";
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -76,37 +77,29 @@ const style = {
     px: 4,
     pb: 3,
 };
-export let delAnnouncement = 0;
-function DeleteAnnouncement(props)
+export let rejectOffer = 0;
+
+function RejectOffers(props)
 {
     const classes = useStyles();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
+    const {RejectReq} = useRejectReq();
+    const handleRejectReq = (anc_id, host_id) => {
+        RejectReq(anc_id, host_id);
+    }
     const handleClose = () =>
     {
         props.setOpen(false);
         props.setClose(true);
+        props.setHost_id(null);
     }
     const onSubmit = () =>
     {
-        axios({
-            method: "delete",
-            url: `http://188.121.102.52:8000/api/v1/announcement/delete/${props.anc_id}/`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-            }
-        }).then(() => {
-            props.setOpen(false);
-            props.setClose(true);
-            setTimeout(() => {
-                props.setClose(false);
-            }, 5000);
-            toast.success("You deleted an announcement");
-            delAnnouncement -= 1;
-            console.log(delAnnouncement);
-            props.closeAnnouncement();
-        })
+        handleRejectReq(props.anc_id, props.host_id);
+        rejectOffer += 1;
+        props.setOpen(false);
+        props.setClose(true);
     }
     return (
         <>
@@ -139,4 +132,4 @@ function DeleteAnnouncement(props)
 
         </>  )
 }
-export default DeleteAnnouncement;
+export default RejectOffers;

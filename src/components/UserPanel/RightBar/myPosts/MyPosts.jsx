@@ -4,7 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Button,
   Typography,
   Grid,
@@ -12,19 +11,31 @@ import {
   Tooltip,
   Chip,
   Stack,
-  Divider,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  DialogContentText,
 } from '@mui/material';
 import 'react-quill/dist/quill.bubble.css';
-import './MyPosts.css'
-import {useMyBlogs} from '../../../../hooks/useMyBlogs';
+import './MyPosts.css';
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeflex/primeflex.css";
 import {useNavigate} from "react-router-dom";
+import { useState } from 'react';
+import axios from 'axios';
 import { CgDetailsMore } from "react-icons/cg";
-import { blue, yellow, red, deepOrange } from '@mui/material/colors';
+import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AiOutlineFieldTime, AiFillDelete, AiFillLike } from "react-icons/ai";
-import TitleIcon from '@mui/icons-material/Title';
-import { FcList } from "react-icons/fc";
+import { AiFillDelete, AiFillLike, AiFillEdit } from "react-icons/ai";
+import { FcList, FcHighPriority } from "react-icons/fc";
 import {BsCalendarDateFill, BsFillEyeFill} from "react-icons/bs";
+import { toast } from 'react-toastify';
+import { DateObject } from "react-multi-date-picker";
+import {Item} from "semantic-ui-react";
+import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 
 const theme = createTheme({
   palette: {
@@ -33,22 +44,120 @@ const theme = createTheme({
   }
 });
 
-
-const AllPosts=({blogs})=> 
+const emptyPost = {
+  uid: "",
+  created_at: null,
+  updated_at: null,
+  author: null,
+  blog_title: "",
+  blog_text: "",
+  json_data: null,
+  main_image_64: null,
+  slug: "",
+  tags: null,
+  tags_name: null
+}
+const AllPosts=()=> 
 {
+  let allData;
+  let access_token;
+  if (localStorage.getItem('tokens'))
+  {
+      allData = JSON.parse(localStorage.getItem('tokens'));
+      access_token = allData.access;
+  }
+
+  const [deletePostDialog, setDeletePostDialog] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState(emptyPost);
+
+
+  const getPosts = () => {
+    axios({
+      method: "get",
+      url: 'http://188.121.102.52:8000/api/v1/blog/userpost/',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${access_token}`,
+      }
+    }).then((res) => {
+      let result = res.data.data; 
+      for (let i = 0; i < result.length; i++) {
+        if (result[i].created_at) {
+            let time = new Date(result[i].created_at);
+            result[i].created_at = new DateObject({
+                date: time,
+                format: "YYYY/MM/DD,   HH:MM:SS"
+            }).format("YYYY/MM/DD, HH:MM:SS");
+        }
+      }
+      setPosts(result);
+      console.log("*************** POSTS TOTAL COUNT ***************** ", result.length);
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  console.log("########### THE POSTS ARE ############ ", posts);
+
+  const hideDeletePostDialog = () => {
+    setDeletePostDialog(false);
+  };
+
+  const openDeleteDialog = (post) => {
+    console.log("++++++++ THE POST IS ++++++++++ ", post);
+    setPost(post);
+    setDeletePostDialog(true);
+  };
+  console.log("----------- THE DIALOG VALUE IS ----------", deletePostDialog);
+  const confirmDeletePost = (post) => {
+    axios({
+      method: "delete",
+      url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${access_token}`,
+      },
+      data: {
+        uid: post.uid
+      }
+    }).then((res) => {
+      console.log("********* THE RESULT IN POST DELETE REQUEST **********", res);
+    });
+  };
+
+  const deletePost = () => {
+    let _posts = posts.filter((val) => val.uid !== post.uid);
+    setPosts(_posts);
+    setDeletePostDialog(false);
+    setPost(emptyPost);
+    confirmDeletePost(post);
+    toast.success("Your post deleted successfully.")
+  };
+
+
+  
+
   const navigate = useNavigate();
   
   const handleDetailsClick = (slug) =>
   {
-    navigate(`/home/PostExperience/${slug}`);
+    navigate(`/home/PostExperience/PostDetail/${slug}`);
   };
+
+  const handleEditClick = (uid, slug) => 
+  {
+    navigate(`/home/PostExperience/Edit/${uid}/${slug}`);
+  }
   const handleNewPostRoute = () =>
   {
     navigate("/home/PostExperience/");
   };
-  const handleDeletePostClick = () => {
 
-  };
 
   return (
   <ThemeProvider theme={theme}>
@@ -60,7 +169,7 @@ const AllPosts=({blogs})=>
       }}
     >
       <div>
-        <Button
+        {/* <Button
           sx={{ marginLeft: "48.25rem" }}
           variant="contained"
           size="medium"
@@ -69,12 +178,12 @@ const AllPosts=({blogs})=>
           onClick={handleNewPostRoute}
           >
           Add new post
-        </Button>
+        </Button> */}
         <Box sx={{ marginTop: 1 }}>
           <Grid sx={{ marginTop: 1 }} container spacing={1}>
             {
-              blogs.length > 0 ? (
-                blogs.map((blog)=>( 
+              posts.length > 0 ? (
+                posts.map((blog)=>( 
                   <Grid
                     key={blog.slug}
                     item
@@ -107,7 +216,7 @@ const AllPosts=({blogs})=>
                       </Box>
                       <Box sx={{ mt: "0.75rem" }}>
                           <Typography
-                            sx={{ marginTop: "1rem", fontSize: 14, display: "flex", alignItems: "center" }}
+                            sx={{ marginTop: "1rem", fontSize: 20, display: "flex", alignItems: "center" }}
                             variant="p"
                             component="div"
                           >
@@ -119,7 +228,7 @@ const AllPosts=({blogs})=>
                                     sx={{ ml: "1rem", '& > *': { flexGrow: 2 } }}>
                                 {
                                   blog.tags_name.length > 0  ? (blog.tags_name.map((tag_name) => (
-                                    <Chip label={tag_name} color="primary" variant="outlined" sx={{ mb: "0.25rem"}}/>
+                                    <Chip label={tag_name} color="primary" variant="outlined" />
                                   ))) : (
                                     <span> No related tag found </span>
                                   )
@@ -156,7 +265,7 @@ const AllPosts=({blogs})=>
                     <CardActions
                       sx={{
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                       }}
                     >
@@ -172,11 +281,23 @@ const AllPosts=({blogs})=>
                           />
                         </div>
                       </Tooltip>
-                      <Tooltip title="Delete this post" arrow>
+                      <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
+                        <div>
+                          <AiFillEdit
+                            onClick={() =>
+                              handleEditClick(blog.uid, blog.slug)
+                            }
+                            color="#b9b8b8"
+                            style={{ cursor: "pointer" }}
+                            size='2rem'
+                          />
+                        </div>
+                      </Tooltip>
+                      <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
                         <div>
                           <AiFillDelete
                             onClick={() =>
-                              handleDeletePostClick()
+                              openDeleteDialog(blog)
                             }
                             color="#b9b8b8"
                             style={{ cursor: "pointer" }}
@@ -190,13 +311,65 @@ const AllPosts=({blogs})=>
                 ))
               ) :
               (
-                <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
-                  No Posts Found!
-                </span>
+                <div>
+                  <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
+                    No Posts Found!
+                  </span>
+                  <p style={{ marginLeft: "9rem" , fontSize: 15, marginTop: "0.3rem", color: "#0F3E86" }}>
+                    You would be able to create a post for your corresponding announcement, only when it is done.
+                  </p>
+                </div>
               )
             }
           </Grid>
         </Box>
+        <Dialog
+            visible={deletePostDialog}
+            onHide={hideDeletePostDialog}
+            open={deletePostDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            
+            <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6"}}>
+              <Stack direction={'column'}>
+                <Item>
+                  <FcHighPriority size='4rem' />
+                </Item>
+                <Item>
+                  {`Delete`} <b style={{ color: "#e66969" }}>«{post.blog_title}» </b>{`Post`}
+                </Item>
+              </Stack>
+            </DialogTitle>
+
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {post && (
+                    <div style={{ fontWeight: 'bold' }}>
+                      Are you sure?
+                    </div>
+                  )}
+                </DialogContentText>
+                <DialogActions>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    className="p-button-text"
+                    onClick={deletePost}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    className="p-button-text"
+                    onClick={hideDeletePostDialog}
+                  >
+                    Cancel
+                  </Button>
+                </DialogActions>
+            </DialogContent>
+          </Dialog>
       </div>
 
     </Box>
@@ -205,11 +378,9 @@ const AllPosts=({blogs})=>
 }
 export default function MyPosts()
 {
-  const {myblogs,blogs}=useMyBlogs()
-  useEffect(()=>{myblogs()},[])
   return(
     <Grid container>
-      {blogs && <AllPosts blogs={blogs}/>}
+      <AllPosts />
     </Grid>
   );
 }

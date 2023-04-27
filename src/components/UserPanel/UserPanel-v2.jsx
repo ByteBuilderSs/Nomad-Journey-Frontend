@@ -1,5 +1,6 @@
 import './UserPanel-v2.css';
 import React, { useEffect, useState } from 'react';
+import LetteredAvatar from 'react-lettered-avatar';
 import {
     Box,
     Paper,
@@ -16,8 +17,10 @@ import {
     Card,
     Container,
     CardHeader,
-    Typography
+    Typography,
+    Badge
 } from '@mui/material';
+
 import { Link, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
@@ -32,8 +35,9 @@ import MyPosts from './RightBar/myPosts/MyPosts';
 import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
 import Overview from './Overview';
-import MyOffers from './RightBar/myOffers/MyOffers'
-import {useUserData} from '../../hooks/useSetUserData'
+import MyOffers from './RightBar/myOffers/MyOffers';
+import {useUserData} from '../../hooks/useSetUserData';
+import Notif from '../Badge/Bedge';
 
 
 const UserPanelNew = () => {
@@ -43,15 +47,9 @@ const UserPanelNew = () => {
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
     const [active, setActive] = useState("My Profile");
-    const {userdata,userInfo}=useUserData()
-    useEffect(()=>{userdata()},[])
-
-    const [userData, setUserData] = useState({
-        first_name : "Aylin",
-        last_name : "Naebzadeh",
-        email : "aylin@gmail.com",
-        username : "AylinNZ",
-    });
+    const {userdata, userInfo} = useUserData()
+    useEffect(() => {userdata()}, [])
+    
 
     const user_params = useParams();
     const menuItem = [
@@ -72,9 +70,10 @@ const UserPanelNew = () => {
         },
         {
             name : "Hosts Offers",
-            component : <MyOffers />,
-            icon : <TiPin />,
+            component : <MyOffers/>,
+            icon : <Notif />,
         },
+        
         {
             name : "feedback",
             component : <MyFeedbacks />,
@@ -102,7 +101,10 @@ const UserPanelNew = () => {
                                     <Item>
                                         <Stack alignItems={`center`} spacing={1}>
                                             <Item>
-                                                <Avatar sx={{ width:'15rem', height:'15rem', marginTop: "3rem" }} />
+                                                {/* <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }}>{userInfo.username}</Avatar> */}
+                                                <Box sx={{marginTop:'4px'}}>
+                                                    <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4'  size={100}/>
+                                                </Box>
                                             </Item>
                                             <Divider variant={`middle`} flexItem/>
                                             <Item>
@@ -138,10 +140,10 @@ const UserPanelNew = () => {
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>
                         <Card  sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
-                            <h1 style={{ display: "flex", alignItems: "center", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem" }} >
-                                Not Accepting Guests
+                            <h1 style={{ display: "flex", alignItems: "ceter", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem", justifyContent: "space-between" }} >
+                                {userInfo.hosting_availability ? <span>{userInfo.hosting_availability}</span> : <span>Not Accepting Guests</span>}
                                 <Button
-                                    sx={{ marginLeft: "28rem" }}
+                                    sx={{ mr: "1rem" }}
                                     variant="contained"
                                     size="medium"
                                     color='success'

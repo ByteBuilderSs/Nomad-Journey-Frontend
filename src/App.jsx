@@ -10,10 +10,12 @@ import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import Login from "./pages/login";
 import PostDetailPage from "./pages/PostDetail";
+import PostEditPage from "./pages/PostEdit";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Loader.css';
 import PostExperience from "./pages/PostExperience";
+
 
 const tabNametoIndex = {
   Dashboard: 1,
@@ -50,7 +52,7 @@ function App() {
       navigate("/signup");
     }
     },[]);
-
+  
     
   return (
       
@@ -88,8 +90,9 @@ function App() {
                   <Route path="/home/Inbox/" element={<InboxPage />}/>
                   <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
                   <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
-                  <Route exact path="/home/PostExperience/" element={<PostExperience />}/>
-                  <Route exact path="/home/PostExperience/:slug" element={<PostDetailPage />}/>
+                  <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
+                  <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
+                  <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
                 </Routes>
 
               </div>

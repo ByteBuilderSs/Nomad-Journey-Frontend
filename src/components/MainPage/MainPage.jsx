@@ -210,7 +210,7 @@ const Announce = (props) => {
                     <span class="list">{props.anc.departure_date}</span>
                   </div>
                 </div>
-                <p onClick = {handleOpenDiscDialog}>{Description}</p>
+                <p onClick = {() => {if(props.anc.anc_description.length != 0){handleOpenDiscDialog()}}}>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
                   <div className='annc' style={{color : "#fff"}}> Give an offer </div>
                 </div>
@@ -260,10 +260,12 @@ const Announce = (props) => {
                   <DialogTitle>{`${props.anc.announcer_username}'s Discription`}</DialogTitle>
                   <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                      <div className = "dialogdesc">
+                        <p>{props.anc.anc_description}</p>
+                      </div>
                     </DialogContentText>
                   </DialogContent>
                   <DialogActions style={{justifyContent : "center"}}>
-                    <p style={{marginLeft : "20px", marginBottom : "20px", marginRight : "20px"}}>{props.anc.anc_description}</p>
                   </DialogActions>
                 </Dialog>
               </div>

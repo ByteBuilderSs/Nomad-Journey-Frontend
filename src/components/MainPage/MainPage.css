@@ -664,6 +664,16 @@ Pre-loader Style
     word-wrap: break-word; /* Breaks long words to fit the container */
     white-space: pre-wrap; 
   }
+
+  .dialogdesc{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .dialogdesc p{
+    word-wrap: break-word !important; /* Breaks long words to fit the container */
+    white-space: pre-wrap;
+
+  }
   
   .amazing-deals ul.page-numbers {
     text-align: center;

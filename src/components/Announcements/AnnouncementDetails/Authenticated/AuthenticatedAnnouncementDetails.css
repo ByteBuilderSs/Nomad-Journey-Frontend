@@ -2,3 +2,55 @@
     height: 100%;
     width: 100%;
 }
+.slider {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 1000px;
+    height: 600px;
+    border-radius: 10px;
+}
+
+.right-arrow {
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    font-size: 3rem;
+    color: #8d8d8d;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.2s ease;
+}
+.right-arrow:hover{
+    color: #afafaf;
+}
+.left-arrow {
+    position: absolute;
+    top: 50%;
+    left: 32px;
+    font-size: 3rem;
+    color: #8d8d8d;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.2s ease;
+}
+.left-arrow:hover{
+    color: #afafaf;
+}
+.slide {
+    opacity: 0;
+    transition-duration: 1s;
+}
+
+.slide.active {
+    opacity: 1;
+    transition-duration: 1s;
+    transform: scale(1.08);
+}

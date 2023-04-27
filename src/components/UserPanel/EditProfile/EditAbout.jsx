@@ -60,12 +60,12 @@ const EditAbout = () => {
     const loadLanguages = async () => {
         axios({
             method: "get",
-            url: "http://91.107.163.14:8000/api/v1/utils/get-languages/",
+            url: "http://188.121.102.52:8000/api/v1/accounts/GetLanguages",
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then((result) => {
-            setLanguages(result.data);
+            setLanguages(result.data.data);
             console.log("********** The Languages are ******** ", languages);
         }).catch((error) => {
             toast.error("Something went wrong while fetching languages.", error);
@@ -95,7 +95,7 @@ const EditAbout = () => {
     const loadAboutMeInfo = async () => {
         axios({
             method: "get",
-            url: `http://91.107.163.14:8000/api/v1/accounts/GetUserProfileForOverview/${username}`,
+            url: `http://188.121.102.52:8000/api/v1/accounts/GetUserProfileForOverview/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -204,7 +204,7 @@ const EditAbout = () => {
 
         axios({
             method: "patch",
-            url: `http://91.107.163.14:8000/api/v1/accounts/UserProfileEdit3/${username}`,
+            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit3/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

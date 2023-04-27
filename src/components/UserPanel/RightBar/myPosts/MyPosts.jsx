@@ -76,7 +76,7 @@ const AllPosts=()=>
   const getPosts = () => {
     axios({
       method: "get",
-      url: 'http://91.107.163.14:8000/api/v1/blog/userpost/',
+      url: 'http://188.121.102.52:8000/api/v1/blog/userpost/',
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -117,7 +117,7 @@ const AllPosts=()=>
   const confirmDeletePost = (post) => {
     axios({
       method: "delete",
-      url: "http://91.107.163.14:8000/api/v1/blog/userpost/",
+      url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,

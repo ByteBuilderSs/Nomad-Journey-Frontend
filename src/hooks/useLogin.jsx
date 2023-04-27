@@ -9,7 +9,7 @@ const FetchUserInfo = async (userName) => {
           
         await axios({
           method: "get",
-          url: `http://91.107.163.14:8000/api/v1/accounts/user/${userName}`,
+          url: `http://188.121.102.52:8000/api/v1/accounts/user/${userName}`,
         }).then(response => {
         
             return response.data;

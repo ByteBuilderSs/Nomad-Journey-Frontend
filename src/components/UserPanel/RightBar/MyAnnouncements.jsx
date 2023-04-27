@@ -22,6 +22,7 @@ import axios from "axios";
 import {addAnnouncement} from "../../Announcements/AddAnnouncement/NewAnnouncementForm";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {acceptOffer} from "./myOffers/AcceptOffers";
 
 const theme = createTheme({
     palette: {
@@ -60,7 +61,7 @@ function MyAnnouncements({username}) {
     const [anc_id,setAnc_id] = useState(null);
     useEffect( () =>
     {
-        axios(`http://91.107.166.228:8000/api/v1/announcement/get-user-announcements/${username}`)
+        axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -72,7 +73,7 @@ function MyAnnouncements({username}) {
             console.log(announcement);
             setLoading(false);
             })
-    }, [addAnnouncement, delAnnouncement, editAnnouncement])
+    }, [addAnnouncement, delAnnouncement, editAnnouncement, acceptOffer])
     
     const handelClickPost=(announcement_id)=>{
         navigate(`/home/PostExperience/announcement/${announcement_id}`)

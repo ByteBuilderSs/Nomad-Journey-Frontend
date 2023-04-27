@@ -62,7 +62,7 @@ export default function EditAnnouncementForm(props) {
         console.log("----------------------- IN LOAD COUNTRIES ------------------- ")
         axios({
             method: "get",
-            url: "http://91.107.166.228:8000/api/v1/utils/get-countries/",
+            url: "http://188.121.102.52:8000/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -79,7 +79,7 @@ export default function EditAnnouncementForm(props) {
         if (country) {
             axios({
                 method: "get",
-                url: `http://91.107.166.228:8000/api/v1/utils/get-cities-of-country/${country.id}`,
+                url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${country.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -218,7 +218,7 @@ export default function EditAnnouncementForm(props) {
             console.log(`********** the access token is: ${access_token}`);
             axios({
                 method: "put",
-                url: `http://91.107.166.228:8000/api/v1/announcement/edit/${props.anc.id}/`,
+                url: `http://188.121.102.52:8000/api/v1/announcement/edit/${props.anc.id}/`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`

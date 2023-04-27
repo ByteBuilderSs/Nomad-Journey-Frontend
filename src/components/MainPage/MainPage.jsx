@@ -48,7 +48,7 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
       }
     };
     
-    await axios.get(`http://91.107.166.228:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
+    await axios.get(`http://188.121.102.52:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
       (response) => {
         setAnncData(response.data.results)
         console.log(response.data)
@@ -148,7 +148,7 @@ const Announce = (props) => {
       
       axios({
         method: "post",
-        url: `http://91.107.166.228:8000/api/v1/anc_request/create-request/${props.anc.id}`,
+        url: `http://188.121.102.52:8000/api/v1/anc_request/create-request/${props.anc.id}`,
         headers: {
           'Authorization': `Bearer ${signedInUser.access}`
         },

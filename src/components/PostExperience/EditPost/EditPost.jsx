@@ -92,7 +92,7 @@ const EditPost = () => {
     const loadTags = async () => {
         axios({
             method: "get",
-            url: "http://91.107.166.228:8000/api/v1/blog/tags/",
+            url: "http://188.121.102.52:8000/api/v1/blog/tags/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -109,7 +109,7 @@ const EditPost = () => {
     const loadPostInfo = async () => {
         axios({
             method: "get",
-            url: `http://91.107.166.228:8000/api/v1/blog/post/${slug}`,
+            url: `http://188.121.102.52:8000/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -179,7 +179,7 @@ const EditPost = () => {
         if (isDataValid) {
             axios({
                 method: "patch",
-                url: "http://91.107.166.228:8000/api/v1/blog/userpost/",
+                url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`

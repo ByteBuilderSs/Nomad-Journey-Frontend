@@ -61,7 +61,7 @@ export default function FormContainer(props) {
     const loadUserInfo = async () => {
         axios({
             method: "get",
-            url: `http://91.107.166.228:8000/api/v1/accounts/user/${username}/`,
+            url: `http://188.121.102.52:8000/api/v1/accounts/user/${username}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -104,7 +104,7 @@ export default function FormContainer(props) {
         if (validData) {
             axios({
                 method: "patch",
-                url: `http://91.107.166.228:8000/api/v1/accounts/UserProfileEdit1/${username}`,
+                url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit1/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`

@@ -60,7 +60,7 @@ const EditAbout = () => {
     const loadLanguages = async () => {
         axios({
             method: "get",
-            url: "http://91.107.166.228:8000/api/v1/utils/get-languages/",
+            url: "http://188.121.102.52:8000/api/v1/utils/get-languages/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -95,7 +95,7 @@ const EditAbout = () => {
     const loadAboutMeInfo = async () => {
         axios({
             method: "get",
-            url: `http://91.107.166.228:8000/api/v1/accounts/GetUserProfileForOverview/${username}`,
+            url: `http://188.121.102.52:8000/api/v1/accounts/GetUserProfileForOverview/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -204,7 +204,7 @@ const EditAbout = () => {
 
         axios({
             method: "patch",
-            url: `http://91.107.166.228:8000/api/v1/accounts/UserProfileEdit3/${username}`,
+            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit3/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

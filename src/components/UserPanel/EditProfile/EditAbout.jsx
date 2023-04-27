@@ -60,12 +60,12 @@ const EditAbout = () => {
     const loadLanguages = async () => {
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/utils/get-languages/",
+            url: "http://188.121.102.52:8000/api/v1/accounts/GetLanguages",
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then((result) => {
-            setLanguages(result.data);
+            setLanguages(result.data.data);
             console.log("********** The Languages are ******** ", languages);
         }).catch((error) => {
             toast.error("Something went wrong while fetching languages.", error);
@@ -86,7 +86,7 @@ const EditAbout = () => {
             setInterestValue("");
         }
     };
-    
+
     const removeInterest = (item) => {
         const _items = interests.filter((x) => x !== item);
         setInterests(_items);
@@ -102,7 +102,7 @@ const EditAbout = () => {
             }
         }).then((result) => {
             {/* TODO */}
-            const userInfo = result.data.data; 
+            const userInfo = result.data.data;
             setHostAvailability(userInfo.hosting_availability);
             setHometown(userInfo.hometown);
             setOccupation(userInfo.User_job);
@@ -183,7 +183,7 @@ const EditAbout = () => {
     const handleChangeWhy = (event) => {
         setWhy(event.target.value);
     }
-    
+
     console.log("************** THE SELECTED FLUENT LANGUAGES ARE ********************* ", selectedLangsF);
     console.log("++++++++++++++ THE SELECTED LEARNING LANGUAGES ARE ++++++++++++++++++++ ", selectedLangsL);
 
@@ -221,7 +221,7 @@ const EditAbout = () => {
                 teach_learn_share: TLS,
                 what_Ican_share_with_host: share,
                 interests: interests,
-                langF: langF_IDs,    
+                langF: langF_IDs,
                 langL: langL_IDs
             }
         }).then((res) => {
@@ -245,99 +245,99 @@ const EditAbout = () => {
                         {/* Hosting Availability */}
                         <Grid item xs={12}>
                             <Box sx={{ display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                    }}>
-                                    <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
-                                        Hosting Availability
-                                    </h6>
-                                    <FormControl sx={{ width: "15rem" }}>
-                                        <Select
-                                            // defaultValue={"Not Accepting Guests"}
-                                            labelId="hosting-availability-label"
-                                            id="hosting-availability"
-                                            sx={{ height: "2rem" }}
-                                            value={hostAvailability}
-                                            onChange={handleChangeHostingAvailablity}
-                                        >
-                                            <MenuItem value={`Accepting Guests`}>Accepting Guests</MenuItem>
-                                            <MenuItem value={`Maybe Accepting Guests`}>Maybe Accepting Guests</MenuItem>
-                                            <MenuItem value={`Not Accepting Guests`}>Not Accepting Guests</MenuItem>
-                                            <MenuItem value={`Wants to Meet Up`}>Wants to Meet Up</MenuItem>
-                                        </Select>
-                                    </FormControl>
+                                alignContent: "center",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                            }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                    Hosting Availability
+                                </h6>
+                                <FormControl sx={{ width: "15rem" }}>
+                                    <Select
+                                        // defaultValue={"Not Accepting Guests"}
+                                        labelId="hosting-availability-label"
+                                        id="hosting-availability"
+                                        sx={{ height: "2rem" }}
+                                        value={hostAvailability}
+                                        onChange={handleChangeHostingAvailablity}
+                                    >
+                                        <MenuItem value={`Accepting Guests`}>Accepting Guests</MenuItem>
+                                        <MenuItem value={`Maybe Accepting Guests`}>Maybe Accepting Guests</MenuItem>
+                                        <MenuItem value={`Not Accepting Guests`}>Not Accepting Guests</MenuItem>
+                                        <MenuItem value={`Wants to Meet Up`}>Wants to Meet Up</MenuItem>
+                                    </Select>
+                                </FormControl>
                                 <Divider sx={{ width: "100rem", borderBottomWidth: 3, mt: "1rem" }}/>
                             </Box>
                         </Grid>
                         {/* Hometown */}
                         <Grid item xs={12}>
                             <Box sx={{ display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                        mt: "1rem"
-                                    }}>
-                                    <h6 style={{ fontWeight: "bold", paddingRight: "11.5rem" }}>
-                                        Where I Grew Up
-                                    </h6>
-                                    <FormControl>
-                                        <TextField
-                                            sx={{ width: "30rem" }}
-                                            id="outlined-adornment-firstname"
-                                            type={"text"}
-                                            placeholder='e.g. Italy'
-                                            size='small'
-                                            value={hometown}
-                                            onChange={handleChangeHometown}
-                                        />
-                                    </FormControl>
+                                alignContent: "center",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                mt: "1rem"
+                            }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "11.5rem" }}>
+                                    Where I Grew Up
+                                </h6>
+                                <FormControl>
+                                    <TextField
+                                        sx={{ width: "30rem" }}
+                                        id="outlined-adornment-firstname"
+                                        type={"text"}
+                                        placeholder='e.g. Italy'
+                                        size='small'
+                                        value={hometown}
+                                        onChange={handleChangeHometown}
+                                    />
+                                </FormControl>
                             </Box>
                         </Grid>
                         {/* Occupation */}
                         <Grid item xs={12}>
                             <Box sx={{ display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                        mt: "1rem"
-                                    }}>
-                                    <h6 style={{ fontWeight: "bold", paddingRight: "13.8rem" }}>
-                                        Occupation
-                                    </h6>
-                                    <FormControl>
-                                        <TextField
-                                            sx={{ width: "30rem" }}
-                                            id="outlined-adornment-firstname"
-                                            type={"text"}
-                                            size='small'
-                                            value={occupation}
-                                            onChange={handleChangeOccupation}
-                                        />
-                                    </FormControl>
+                                alignContent: "center",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                mt: "1rem"
+                            }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "13.8rem" }}>
+                                    Occupation
+                                </h6>
+                                <FormControl>
+                                    <TextField
+                                        sx={{ width: "30rem" }}
+                                        id="outlined-adornment-firstname"
+                                        type={"text"}
+                                        size='small'
+                                        value={occupation}
+                                        onChange={handleChangeOccupation}
+                                    />
+                                </FormControl>
                             </Box>
                         </Grid>
                         {/* Education */}
                         <Grid item xs={12}>
                             <Box sx={{ display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                        mt: "1rem"
-                                    }}>
-                                    <h6 style={{ fontWeight: "bold", paddingRight: "14.4rem" }}>
-                                        Education
-                                    </h6>
-                                    <FormControl>
-                                        <TextField
-                                            sx={{ width: "30rem" }}
-                                            id="outlined-adornment-firstname"
-                                            type={"text"}
-                                            size='small'
-                                            value={education}
-                                            onChange={handleChangeEducation}
-                                        />
-                                    </FormControl>
+                                alignContent: "center",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                mt: "1rem"
+                            }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "14.4rem" }}>
+                                    Education
+                                </h6>
+                                <FormControl>
+                                    <TextField
+                                        sx={{ width: "30rem" }}
+                                        id="outlined-adornment-firstname"
+                                        type={"text"}
+                                        size='small'
+                                        value={education}
+                                        onChange={handleChangeEducation}
+                                    />
+                                </FormControl>
                             </Box>
                             <Divider sx={{ borderBottomWidth: 3, mb: "1rem", mt: "1rem" }} />
                         </Grid>
@@ -345,112 +345,112 @@ const EditAbout = () => {
                         <Grid item xs={12}>
                             <p style={{ color: "#072147",  marginLeft: "0.1rem", marginBottom: "0.5rem" }}>You may type languages or search for them ...</p>
                             <Box sx={{ display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                        mt: "1rem"
-                                    }}>
-                                    <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
-                                        Languages I'm Fluent In
-                                    </h6>
-                                    <FormControl>
-                                        <Autocomplete
-                                            clearIcon={false}
-                                            multiple
-                                            id="lls-outlined"
-                                            options={languages}
-                                            value={selectedLangsF}
-                                            isOptionEqualToValue={(option, value) => option.language_name === value.language_name}
-                                            getOptionSelected={(option, value) => {
-                                                return option.language_name === value.language_name;
-                                            }}
-                                            getOptionLabel={(option) => option.language_name}
-                                            sx={{ width: "50rem" }}
-                                            size="small"
-                                            disableCloseOnSelect
-                                            noOptionsText="No related language is available"
-                                            onChange={(e, values) => {
-                                                handleLFSelection(values);
-                                            }}
-                                            renderOption={(props, option, { selected }) => (
-                                                <li {...props}>
-                                                    <Checkbox
+                                alignContent: "center",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                mt: "1rem"
+                            }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
+                                    Languages I'm Fluent In
+                                </h6>
+                                <FormControl>
+                                    <Autocomplete
+                                        clearIcon={false}
+                                        multiple
+                                        id="lls-outlined"
+                                        options={languages}
+                                        value={selectedLangsF}
+                                        isOptionEqualToValue={(option, value) => option.language_name === value.language_name}
+                                        getOptionSelected={(option, value) => {
+                                            return option.language_name === value.language_name;
+                                        }}
+                                        getOptionLabel={(option) => option.language_name}
+                                        sx={{ width: "50rem" }}
+                                        size="small"
+                                        disableCloseOnSelect
+                                        noOptionsText="No related language is available"
+                                        onChange={(e, values) => {
+                                            handleLFSelection(values);
+                                        }}
+                                        renderOption={(props, option, { selected }) => (
+                                            <li {...props}>
+                                                <Checkbox
                                                     icon={icon}
                                                     checkedIcon={checkedIcon}
                                                     style={{ marginRight: 8 }}
                                                     checked={
                                                         selected
                                                     }
-                                                    />
-                                                    {option.language_name}
-                                                </li>
-                                                )}
-                                                style={{ width: 500 }}
-                                                renderInput={(params) => (
-                                                    <TextField {...params} label=""  />
-                                                )}
-                                            ListboxProps={
-                                                {
-                                                    style:{
-                                                        maxHeight: '10rem',
-                                                    }
+                                                />
+                                                {option.language_name}
+                                            </li>
+                                        )}
+                                        style={{ width: 500 }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label=""  />
+                                        )}
+                                        ListboxProps={
+                                            {
+                                                style:{
+                                                    maxHeight: '10rem',
                                                 }
                                             }
-                                        />
-                                    </FormControl>
+                                        }
+                                    />
+                                </FormControl>
                             </Box>
                         </Grid>
                         {/* TODO => Languages I'm Learning */}
                         <Grid item xs={12}>
                             <Box sx={{ display: "flex",
-                                        alignContent: "center",
-                                        alignItems: "center",
-                                        flexWrap: "wrap",
-                                        mt: "1rem",
-                                        mb: "1rem"
-                                    }}>
-                                    <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
-                                        Languages I'm Learning
-                                    </h6>
-                                    <FormControl>
-                                        <Autocomplete
-                                            clearIcon={false}
-                                            multiple
-                                            id="tags-outlined"
-                                            options={languages}
-                                            value={selectedLangsL}
-                                            isOptionEqualToValue={(option, value) => option.language_name === value.language_name}
-                                            getOptionSelected={(option, value) => {
-                                                return option.language_name === value.language_name;
-                                            }}
-                                            getOptionLabel={(option) => option.language_name}
-                                            sx={{ width: "50rem" }}
-                                            size="small"
-                                            disableCloseOnSelect
-                                            noOptionsText="No related language is available"
-                                            onChange={(e, values) => {
-                                                handleLLSelection(values);
-                                            }}
-                                            renderOption={(props, option, { selected }) => (
-                                                
-                                                <li {...props}>
-                                                    <Checkbox
+                                alignContent: "center",
+                                alignItems: "center",
+                                flexWrap: "wrap",
+                                mt: "1rem",
+                                mb: "1rem"
+                            }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
+                                    Languages I'm Learning
+                                </h6>
+                                <FormControl>
+                                    <Autocomplete
+                                        clearIcon={false}
+                                        multiple
+                                        id="tags-outlined"
+                                        options={languages}
+                                        value={selectedLangsL}
+                                        isOptionEqualToValue={(option, value) => option.language_name === value.language_name}
+                                        getOptionSelected={(option, value) => {
+                                            return option.language_name === value.language_name;
+                                        }}
+                                        getOptionLabel={(option) => option.language_name}
+                                        sx={{ width: "50rem" }}
+                                        size="small"
+                                        disableCloseOnSelect
+                                        noOptionsText="No related language is available"
+                                        onChange={(e, values) => {
+                                            handleLLSelection(values);
+                                        }}
+                                        renderOption={(props, option, { selected }) => (
+
+                                            <li {...props}>
+                                                <Checkbox
                                                     icon={icon}
                                                     checkedIcon={checkedIcon}
                                                     style={{ marginRight: 8 }}
                                                     checked={
                                                         selected
                                                     }
-                                                    />
-                                                    {option.language_name}
-                                                </li>
-                                                )}
-                                                style={{ width: 500 }}
-                                                renderInput={(params) => (
-                                                    <TextField {...params} label=""  />
-                                                )}
-                                            />
-                                    </FormControl>
+                                                />
+                                                {option.language_name}
+                                            </li>
+                                        )}
+                                        style={{ width: 500 }}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label=""  />
+                                        )}
+                                    />
+                                </FormControl>
                             </Box>
                             <Divider  sx={{ borderBottomWidth: 3, mb: "1rem" }} />
                         </Grid>
@@ -463,18 +463,18 @@ const EditAbout = () => {
                                             About Me
                                         </h6>
                                         <FormControl sx={{ width: "56rem" }}>
-                                            <TextField 
+                                            <TextField
                                                 id="edit-profile-aboutme"
                                                 name="aboutme"
                                                 type="text"
-                                                multiline 
+                                                multiline
                                                 fullWidth="true"
                                                 size="medium"
                                                 rows={8}
                                                 maxRows={10}
                                                 value={aboutme}
                                                 onChange={handleChangeAboutMe}
-                                                />
+                                            />
                                         </FormControl>
                                     </Item>
                                     {/* Why I'm on Nomad Journey */}
@@ -483,37 +483,37 @@ const EditAbout = () => {
                                             Why I'm on Nomad Journey
                                         </h6>
                                         <FormControl sx={{ width: "56rem" }}>
-                                            <TextField 
+                                            <TextField
                                                 id="edit-profile-aboutme"
                                                 name="aboutme"
                                                 type="text"
-                                                multiline 
+                                                multiline
                                                 fullWidth="true"
                                                 size="medium"
                                                 rows={8}
                                                 maxRows={10}
                                                 value={why}
                                                 onChange={handleChangeWhy}
-                                                />
+                                            />
                                         </FormControl>
                                     </Item>
                                     {/* My Interests */}
                                     <Item>
-                                        <h6 style={{ fontWeight: "bold", 
-                                                        paddingRight: "8rem",  
-                                                        display: "flex", 
-                                                        alignItems: "center", 
-                                                        alignContent: "center" }}>
+                                        <h6 style={{ fontWeight: "bold",
+                                            paddingRight: "8rem",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            alignContent: "center" }}>
                                             <LabelIcon sx={{ mr: "0.5rem" }}/>
                                             My Interests
                                         </h6>
                                         <FormControl>
-                                        <p style={{ color: "#072147",  marginLeft: "0.1rem", marginBottom: "0.5rem" }}>You may name five  things, which your are interested in ...</p>
+                                            <p style={{ color: "#072147",  marginLeft: "0.1rem", marginBottom: "0.5rem" }}>You may name five  things, which your are interested in ...</p>
                                             <div className="wrapper">
                                                 {interests.map((item) => (
                                                     <div className="chip">
-                                                    {item}
-                                                    <span onClick={() => removeInterest(item)}><HighlightOffIcon size="large"/></span>
+                                                        {item}
+                                                        <span onClick={() => removeInterest(item)}><HighlightOffIcon size="large"/></span>
                                                     </div>
                                                 ))}
                                                 <input
@@ -532,18 +532,18 @@ const EditAbout = () => {
                                             My Favorite Music, Movies & Books
                                         </h6>
                                         <FormControl sx={{ width: "56rem" }}>
-                                            <TextField 
+                                            <TextField
                                                 id="edit-profile-aboutme"
                                                 name="aboutme"
                                                 type="text"
-                                                multiline 
+                                                multiline
                                                 fullWidth="true"
                                                 size="medium"
                                                 rows={8}
                                                 maxRows={10}
                                                 value={favs}
                                                 onChange={handleChangeFavs}
-                                                />
+                                            />
                                         </FormControl>
                                     </Item>
                                     {/* One Amazing Thing I’ve Done */}
@@ -552,18 +552,18 @@ const EditAbout = () => {
                                             One Amazing Thing I’ve Done
                                         </h6>
                                         <FormControl sx={{ width: "56rem" }}>
-                                            <TextField 
+                                            <TextField
                                                 id="edit-profile-aboutme"
                                                 name="aboutme"
                                                 type="text"
-                                                multiline 
+                                                multiline
                                                 fullWidth="true"
                                                 size="medium"
                                                 rows={8}
                                                 maxRows={10}
                                                 value={amaz}
                                                 onChange={handleChangeAmaz}
-                                                />
+                                            />
                                         </FormControl>
                                     </Item>
                                     {/* Teach, Learn, Share */}
@@ -572,18 +572,18 @@ const EditAbout = () => {
                                             Teach, Learn, Share
                                         </h6>
                                         <FormControl sx={{ width: "56rem" }}>
-                                            <TextField 
+                                            <TextField
                                                 id="edit-profile-aboutme"
                                                 name="aboutme"
                                                 type="text"
-                                                multiline 
+                                                multiline
                                                 fullWidth="true"
                                                 size="medium"
                                                 rows={8}
                                                 maxRows={10}
                                                 value={TLS}
                                                 onChange={handleChangeTLS}
-                                                />
+                                            />
                                         </FormControl>
                                     </Item>
                                     {/* What I Can Share with Hosts */}
@@ -592,18 +592,18 @@ const EditAbout = () => {
                                             What I Can Share with Hosts
                                         </h6>
                                         <FormControl sx={{ width: "56rem" }}>
-                                            <TextField 
+                                            <TextField
                                                 id="edit-profile-aboutme"
                                                 name="aboutme"
                                                 type="text"
-                                                multiline 
+                                                multiline
                                                 fullWidth="true"
                                                 size="medium"
                                                 rows={8}
                                                 maxRows={10}
                                                 value={share}
                                                 onChange={handleChangeShare}
-                                                />
+                                            />
                                         </FormControl>
                                     </Item>
                                 </Stack>
@@ -629,7 +629,7 @@ const EditAbout = () => {
                                     <Button
                                         variant="outlined"
                                         sx={{
-                                        width: "100%",
+                                            width: "100%",
                                         }}
                                         type="submit"
                                         // disabled={disabled}

@@ -13,6 +13,7 @@ import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
 import { toast } from "react-toastify";
+import { useSelector } from 'react-redux';
 
 
 
@@ -58,9 +59,10 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
         if(response.data.count != 0){
           setPagination(true)
         }
-        setTimeout(() => {
-          setLoader(false);
-        }, 2000);
+        // setTimeout(() => {
+          
+        // }, 2000);
+        setLoader(false);
         
       }
     )
@@ -69,6 +71,7 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
   } catch (error) {
     console.error(error);
   }
+  
 }
 
 
@@ -123,6 +126,15 @@ const Announce = (props) => {
   
   // For offer dialog :
   const [openOfferDialog, setOpenOfferDialog] = useState(false);
+  const [openDiscDialog, setOpenDiscDialog] = useState(false);
+
+  const handleOpenDiscDialog = () => {
+    setOpenDiscDialog(true);
+  };
+
+  const handleCloseDiscDialog = () => {
+    setOpenDiscDialog(false);
+  };
 
   const handleOpenOfferDialog = () => {
     setOpenOfferDialog(true);
@@ -163,6 +175,12 @@ const Announce = (props) => {
   
   }
   let Description = "";
+  if(props.anc.anc_description.includes("\n")){
+    props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
+  }
+  else if(props.anc.anc_description.includes("\t")){
+    props.anc.anc_description = props.anc.anc_description.replace(/\t/g, " ");
+  }
   if(props.anc.anc_description.length > 44){
     Description = props.anc.anc_description.substring(0, 44) + "..."
   }else{
@@ -192,38 +210,62 @@ const Announce = (props) => {
                     <span class="list">{props.anc.departure_date}</span>
                   </div>
                 </div>
-                <p onClick = {() => {console.log("desppp")}}>{Description}</p>
+                <p onClick = {handleOpenDiscDialog}>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
                   <div className='annc' style={{color : "#fff"}}> Give an offer </div>
                 </div>
                 <Dialog
-                    open={openOfferDialog}
-                    keepMounted
-                    onClose={handleCloseOfferDialog}
-                    aria-describedby="alert-dialog-slide-description"
-                    PaperProps={{
-                      sx: {
-                        width: "100%",
-                        maxWidth: "450px!important",
-                        "border-radius" : "50px",
-                        backgroundColor : "white"
-                      },
-                    }}
-                    >
-                    <DialogTitle>{"Are You Sure?"}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions style={{justifyContent : "center"}}>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
-                        <div className='annc' style={{color : "#fff"}}> Yes </div>
-                      </div>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleCloseOfferDialog}>
-                        <div className='annc' style={{color : "#fff"}}> No </div>
-                      </div>
-                    </DialogActions>
-                  </Dialog>
+                  open={openOfferDialog}
+                  keepMounted
+                  onClose={handleCloseOfferDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                  PaperProps={{
+                    sx: {
+                      width: "100%",
+                      maxWidth: "450px!important",
+                      "border-radius" : "50px",
+                      backgroundColor : "white"
+                    },
+                  }}
+                  >
+                  <DialogTitle>{"Are You Sure?"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions style={{justifyContent : "center"}}>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
+                      <div className='annc' style={{color : "#fff"}}> Yes </div>
+                    </div>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={handleCloseOfferDialog}>
+                      <div className='annc' style={{color : "#fff"}}> No </div>
+                    </div>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog
+                  open={openDiscDialog}
+                  keepMounted
+                  onClose={handleCloseDiscDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                  PaperProps={{
+                    sx: {
+                      width: "100%",
+                      maxWidth: "450px!important",
+                      "border-radius" : "50px",
+                      backgroundColor : "white"
+                    },
+                  }}
+                  >
+                  <DialogTitle>{`${props.anc.announcer_username}'s Discription`}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions style={{justifyContent : "center"}}>
+                    <p style={{marginLeft : "20px", marginBottom : "20px", marginRight : "20px"}}>{props.anc.anc_description}</p>
+                  </DialogActions>
+                </Dialog>
               </div>
             </div>
           </div>
@@ -238,14 +280,15 @@ export default function MainPage(){
     const [announcdata,setAnncData] = useState([])
     const [ancResultCount,setAncResultCount] = useState(0)
     const [loader,setLoader] = useState(false)
-    const [sort, setSort] = useState("sort_by=anc_timestamp_created")
+    const [sort, setSort] = useState("sort_by=anc_timestamp_created&descending=True")
     // for pagination :
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
     const [page, setPage] = useState(1);
+    const [userCity, setUserCity] = useState("test");
+    // const useSel = useSelector()
 
-
-    
+    // setUserCity(useSel(state => state.user.city))
 
 
     const iterators = { head: 0, limit : 4};
@@ -509,14 +552,14 @@ export default function MainPage(){
                       <fieldset>
                           <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = {handleSortChange}  >
                               {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
-                              <option value = "sort_by=anc_timestamp_created" selected style={{fontSize : "20px"}}>Newest</option>
-                              <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Oldest</option>
+                              <option value = "sort_by=anc_timestamp_created&descending=True" selected style={{fontSize : "20px"}}>Newest</option>
+                              <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Oldest</option>
                               <option value = "sort_by=travelers_count" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
                               <option value = "sort_by=travelers_count&descending=True" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
                               {/* <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Time Range &#8593; </option>
                               <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Time Range &#8595; </option> */}
-                              <option value = "sort_by=arrival_date" style={{fontSize : "20px"}}>Arrival Date &#8595; </option>
-                              <option value = "sort_by=arrival_date&descending=True" style={{fontSize : "20px"}}>Arrival Date &#8593; </option>
+                              <option value = "sort_by=time_range" style={{fontSize : "20px"}}> Time Range &#8595; </option>
+                              <option value = "sort_by=time_range&descending=True" style={{fontSize : "20px"}}>Time Range &#8593; </option>
                           </select>
                       </fieldset>
                   </div>
@@ -554,11 +597,14 @@ export default function MainPage(){
             <div class="col-lg-6 offset-lg-3">
               <div class="section-heading text-center">
                 <h2>Announcements In Your City</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
+                <h2>Results : {ancResultCount} </h2>
               </div>
             </div>
             
-            <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>Results : {ancResultCount}</div>
+            {/* <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>
+              
+            </div> */}
 
             {showAnnc()}
             {showpageination()}

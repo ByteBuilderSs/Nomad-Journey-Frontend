@@ -100,8 +100,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "50%",
-    height: "70%",
+    width: "55%",
+    height: "85%",
     bgcolor: '#EDE7E6FF',
     boxShadow: 24,
     pt: 2,
@@ -191,7 +191,7 @@ export default function UnAuthAnnouncement(props)
         return (
             <>
                 <Item className={classes.items}>
-                    <Stack sx={{marginTop:"50%"}} direction={`row`}>
+                    <Stack sx={{marginTop:"50%"}} direction={`column`}>
                         <Item>
                     <IconButton size={`large`} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
                         <BiEdit />
@@ -257,7 +257,7 @@ export default function UnAuthAnnouncement(props)
         }
         return (
             <>
-                <div style={{marginTop:"50%"}}>
+                <div style={{marginTop:"10%"}}>
                 <BiChevronLeft className='left-arrow' onClick={prevSlide} />
                 <BiChevronRight className='right-arrow' onClick={nextSlide} />
                 {volunteer_host.map((item, key) =>
@@ -412,11 +412,33 @@ export default function UnAuthAnnouncement(props)
                                     <Item>
                                 <Stack spacing={6} direction={`row`}>
                                     <Item className={classes.items}>
-                                        <Typography
+                                        {/* <Typography
                                             component="h4"
                                             style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"large" }}>
-                                                <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.city_name}, {announcement.city_country}
+                                                <TiLocation style={{ marginRight: "0.5rem"}} /> {announcement.city_name}, 
                                         </Typography>
+                                        <Typography component="h4">
+                                            {announcement.city_country}
+                                        </Typography> */}
+                                        <Stack direction={`row`}>
+                                            <Item>
+                                                <h4><TiLocation style={{ marginRight: "0.5rem"}} /></h4>
+                                            </Item>
+                                            <Item>
+                                                <Stack>
+                                                    <Item>
+                                                        <Typography component="h4"
+                                                                style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"medium" }}>
+                                                                <span>{announcement.city_name}</span>
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Typography component="h6"
+                                                            style={{ display: "flex", alignItems: "center", alignContent: "center"}}>{announcement.city_country}</Typography>
+                                                    </Item>
+                                                </Stack>
+                                            </Item>
+                                        </Stack>
                                     </Item>
                                     <Item className={classes.items}>
                                         <Typography

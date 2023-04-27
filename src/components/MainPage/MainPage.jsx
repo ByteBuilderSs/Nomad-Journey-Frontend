@@ -126,6 +126,15 @@ const Announce = (props) => {
   
   // For offer dialog :
   const [openOfferDialog, setOpenOfferDialog] = useState(false);
+  const [openDiscDialog, setOpenDiscDialog] = useState(false);
+
+  const handleOpenDiscDialog = () => {
+    setOpenDiscDialog(true);
+  };
+
+  const handleCloseDiscDialog = () => {
+    setOpenDiscDialog(false);
+  };
 
   const handleOpenOfferDialog = () => {
     setOpenOfferDialog(true);
@@ -201,38 +210,62 @@ const Announce = (props) => {
                     <span class="list">{props.anc.departure_date}</span>
                   </div>
                 </div>
-                <p onClick = {() => {console.log("desppp")}}>{Description}</p>
+                <p onClick = {handleOpenDiscDialog}>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
                   <div className='annc' style={{color : "#fff"}}> Give an offer </div>
                 </div>
                 <Dialog
-                    open={openOfferDialog}
-                    keepMounted
-                    onClose={handleCloseOfferDialog}
-                    aria-describedby="alert-dialog-slide-description"
-                    PaperProps={{
-                      sx: {
-                        width: "100%",
-                        maxWidth: "450px!important",
-                        "border-radius" : "50px",
-                        backgroundColor : "white"
-                      },
-                    }}
-                    >
-                    <DialogTitle>{"Are You Sure?"}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
-                      </DialogContentText>
-                    </DialogContent>
-                    <DialogActions style={{justifyContent : "center"}}>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
-                        <div className='annc' style={{color : "#fff"}}> Yes </div>
-                      </div>
-                      <div class="main-button" style={{cursor : "pointer"}} onClick={handleCloseOfferDialog}>
-                        <div className='annc' style={{color : "#fff"}}> No </div>
-                      </div>
-                    </DialogActions>
-                  </Dialog>
+                  open={openOfferDialog}
+                  keepMounted
+                  onClose={handleCloseOfferDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                  PaperProps={{
+                    sx: {
+                      width: "100%",
+                      maxWidth: "450px!important",
+                      "border-radius" : "50px",
+                      backgroundColor : "white"
+                    },
+                  }}
+                  >
+                  <DialogTitle>{"Are You Sure?"}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions style={{justifyContent : "center"}}>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={handleOffer}>
+                      <div className='annc' style={{color : "#fff"}}> Yes </div>
+                    </div>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={handleCloseOfferDialog}>
+                      <div className='annc' style={{color : "#fff"}}> No </div>
+                    </div>
+                  </DialogActions>
+                </Dialog>
+
+                <Dialog
+                  open={openDiscDialog}
+                  keepMounted
+                  onClose={handleCloseDiscDialog}
+                  aria-describedby="alert-dialog-slide-description"
+                  PaperProps={{
+                    sx: {
+                      width: "100%",
+                      maxWidth: "450px!important",
+                      "border-radius" : "50px",
+                      backgroundColor : "white"
+                    },
+                  }}
+                  >
+                  <DialogTitle>{`${props.anc.announcer_username}'s Discription`}</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description" style={{justifyContent : "center"}}>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions style={{justifyContent : "center"}}>
+                    <p style={{marginLeft : "20px", marginBottom : "20px", marginRight : "20px"}}>{props.anc.anc_description}</p>
+                  </DialogActions>
+                </Dialog>
               </div>
             </div>
           </div>
@@ -247,7 +280,7 @@ export default function MainPage(){
     const [announcdata,setAnncData] = useState([])
     const [ancResultCount,setAncResultCount] = useState(0)
     const [loader,setLoader] = useState(false)
-    const [sort, setSort] = useState("sort_by=anc_timestamp_created")
+    const [sort, setSort] = useState("sort_by=anc_timestamp_created&descending=True")
     // for pagination :
     const [showPagination, setPagination] = useState(false);
     const [paginCount, setPaginCount] = useState(1);
@@ -519,8 +552,8 @@ export default function MainPage(){
                       <fieldset>
                           <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = {handleSortChange}  >
                               {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
-                              <option value = "sort_by=anc_timestamp_created" selected style={{fontSize : "20px"}}>Newest</option>
-                              <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Oldest</option>
+                              <option value = "sort_by=anc_timestamp_created&descending=True" selected style={{fontSize : "20px"}}>Newest</option>
+                              <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Oldest</option>
                               <option value = "sort_by=travelers_count" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
                               <option value = "sort_by=travelers_count&descending=True" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
                               {/* <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Time Range &#8593; </option>

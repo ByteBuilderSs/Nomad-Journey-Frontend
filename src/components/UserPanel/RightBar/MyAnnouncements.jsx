@@ -22,6 +22,7 @@ import axios from "axios";
 import {addAnnouncement} from "../../Announcements/AddAnnouncement/NewAnnouncementForm";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {acceptOffer} from "./myOffers/AcceptOffers";
 
 const theme = createTheme({
     palette: {
@@ -72,7 +73,7 @@ function MyAnnouncements({username}) {
             console.log(announcement);
             setLoading(false);
             })
-    }, [addAnnouncement, delAnnouncement, editAnnouncement])
+    }, [addAnnouncement, delAnnouncement, editAnnouncement, acceptOffer])
     
     const handelClickPost=(announcement_id)=>{
         navigate(`/home/PostExperience/announcement/${announcement_id}`)

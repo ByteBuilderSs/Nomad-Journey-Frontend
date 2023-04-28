@@ -21,6 +21,8 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { toast } from "react-toastify";
 import {useUserData} from '../../../hooks/useSetUserData';
+import { useCounter, useCounterActions } from "../../../Context/CounterProvider";
+
 export let addAnnouncement = 0;
 function sleep(delay = 0) {
     return new Promise((resolve) => {
@@ -66,6 +68,9 @@ export default function NewAnnouncementForm(props) {
     const loading = open && countries.length === 0;
     const [openC, setOpenC] = React.useState(false);
     const loadingC = openC && cities.length === 0;
+
+    const counter = useCounter();
+    const setCounter = useCounterActions();
 
     const loadCountries = async () => {
         axios({
@@ -252,7 +257,7 @@ export default function NewAnnouncementForm(props) {
                     setIsDptDateFelxible(false);
                     setTravelersCount('');
                     setMessage('');
-                    addAnnouncement += 1;
+                    setCounter(counter + 1);
                 })
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");

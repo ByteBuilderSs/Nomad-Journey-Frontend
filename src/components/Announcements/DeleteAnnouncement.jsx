@@ -5,6 +5,9 @@ import {Col, Row} from "react-bootstrap";
 import {makeStyles} from "@mui/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
+import { useCounter, useCounterActions } from "../../Context/CounterProvider";
+import { set } from "zod";
+
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -80,6 +83,8 @@ export let delAnnouncement = 0;
 function DeleteAnnouncement(props)
 {
     const classes = useStyles();
+    const counter = useCounter();
+    const setCounter = useCounterActions();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const handleClose = () =>
@@ -103,7 +108,7 @@ function DeleteAnnouncement(props)
                 props.setClose(false);
             }, 5000);
             toast.success("You deleted an announcement");
-            delAnnouncement -= 1;
+            setCounter(counter - 1);
             console.log(delAnnouncement);
             props.closeAnnouncement();
         })

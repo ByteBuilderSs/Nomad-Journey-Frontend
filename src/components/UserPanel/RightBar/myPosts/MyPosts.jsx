@@ -36,6 +36,7 @@ import { DateObject } from "react-multi-date-picker";
 import {Item} from "semantic-ui-react";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
+import { useCounterActions, useCounter } from '../../../../Context/CounterProvider';
 
 const theme = createTheme({
   palette: {
@@ -72,6 +73,9 @@ const AllPosts=()=>
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(emptyPost);
 
+  const Counter = useCounter();
+  console.log("************* THE POST COUNTER BEFORE DELETE IS ************* ", Counter);
+  const setCounter = useCounterActions();
 
   const getPosts = () => {
     axios({
@@ -127,6 +131,7 @@ const AllPosts=()=>
       }
     }).then((res) => {
       console.log("********* THE RESULT IN POST DELETE REQUEST **********", res);
+      setCounter(Counter - 1); //where I reduce the post counter by one
     });
   };
 
@@ -136,8 +141,10 @@ const AllPosts=()=>
     setDeletePostDialog(false);
     setPost(emptyPost);
     confirmDeletePost(post);
-    toast.success("Your post deleted successfully.")
+    toast.success("Your post deleted successfully.");
   };
+
+  console.log("************* THE POST COUNTER AFTER DELETE IS ************* ", Counter);
 
 
   

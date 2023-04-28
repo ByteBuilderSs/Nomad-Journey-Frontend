@@ -15,6 +15,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Loader.css';
 import PostExperience from "./pages/PostExperience";
+import CounterProvider from "./Context/CounterProvider";
 
 
 const tabNametoIndex = {
@@ -81,19 +82,20 @@ function App() {
 
               <div style = {content}>
 
-                <Routes>
-                  
-                  <Route path="/signup" element={<SignInForm />}/>
-                  <Route path="/login" element={< Login/>}/>
-                  <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
-                  <Route path="/home/Profile/:username/" element={<ProfilePage />} />
-                  <Route path="/home/Inbox/" element={<InboxPage />}/>
-                  <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
-                  <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
-                  <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
-                  <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
-                  <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
-                </Routes>
+                <CounterProvider>
+                  <Routes>
+                    <Route path="/signup" element={<SignInForm />}/>
+                    <Route path="/login" element={< Login/>}/>
+                    <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                    <Route path="/home/Profile/:username/" element={<ProfilePage />} />
+                    <Route path="/home/Inbox/" element={<InboxPage />}/>
+                    <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
+                    <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
+                    <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
+                    <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
+                    <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
+                  </Routes>
+                </CounterProvider>
 
               </div>
           {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}

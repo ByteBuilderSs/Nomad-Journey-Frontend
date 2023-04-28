@@ -20,13 +20,14 @@ import {
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import transition from "react-element-popper/animations/transition";
 import { toast } from "react-toastify";
+import { useCounter, useCounterActions } from "../../Context/CounterProvider";
 
 function sleep(delay = 0) {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
     });
 }
-export let editAnnouncement = 0;
+
 export default function EditAnnouncementForm(props) {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
@@ -57,6 +58,9 @@ export default function EditAnnouncementForm(props) {
     const [cityInput, setCityInput] = useState('');
     const [openC, setOpenC] = React.useState(false);
     const loadingC = openC && cities.length === 0;
+
+    const counter = useCounter();
+    const setCounter = useCounterActions();
 
     const loadCountries = async () => {
         console.log("----------------------- IN LOAD COUNTRIES ------------------- ")
@@ -250,13 +254,13 @@ export default function EditAnnouncementForm(props) {
                     setIsDptDateFelxible(props.anc.departure_date_is_flexible);
                     setTravelersCount(props.anc.travelers_count);
                     setMessage(props.anc.anc_description);
-                    
+                    setCounter(counter + 1);
                 })
                 .catch((error) => {
                     toast.error("Unexpected error has occurred");
                 });
                 props.setOpen(false);
-                editAnnouncement += 1;
+                
         }
     }
 

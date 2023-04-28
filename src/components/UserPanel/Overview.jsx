@@ -23,9 +23,16 @@ import {useUserData} from '../../hooks/useSetUserData';
 import { useEffect } from 'react';
 import {addAnnouncement} from "../Announcements/AddAnnouncement/NewAnnouncementForm";
 import {delAnnouncement} from "../Announcements/DeleteAnnouncement";
+import { useCounter } from '../../Context/CounterProvider';
+
 const Overview = () => {
-    const {userdata, userInfo} = useUserData()
-    useEffect(()=>{userdata()},[delAnnouncement, addAnnouncement])
+    const Counter = useCounter();
+    const {userdata, userInfo} = useUserData();
+    useEffect(() => {
+        userdata()
+    },
+    [Counter]);
+    
     let navigate = useNavigate(); 
     const routeChange = () =>{ 
         let path = `/home/Members/Edit/`; 

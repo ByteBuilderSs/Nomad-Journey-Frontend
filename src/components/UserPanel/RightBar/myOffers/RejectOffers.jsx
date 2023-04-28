@@ -6,6 +6,8 @@ import {makeStyles} from "@mui/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useRejectReq} from "../../../../hooks/useRejectReq";
+import { useCounter, useCounterActions } from "../../../../Context/CounterProvider";
+
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -84,6 +86,10 @@ function RejectOffers(props)
     const classes = useStyles();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
+
+    const counter = useCounter();
+    const setCounter = useCounterActions();
+
     const {RejectReq} = useRejectReq();
     const handleRejectReq = (anc_id, host_id) => {
         RejectReq(anc_id, host_id);
@@ -97,7 +103,7 @@ function RejectOffers(props)
     const onSubmit = () =>
     {
         handleRejectReq(props.anc_id, props.host_id);
-        rejectOffer += 1;
+        setCounter(counter - 1);
         props.setOpen(false);
         props.setClose(true);
     }

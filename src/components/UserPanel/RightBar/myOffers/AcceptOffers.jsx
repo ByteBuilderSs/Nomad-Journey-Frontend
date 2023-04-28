@@ -6,6 +6,8 @@ import {makeStyles} from "@mui/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useAcceptReq} from "../../../../hooks/useAcceptReq";
+import { useCounter, useCounterActions } from "../../../../Context/CounterProvider";
+
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -82,6 +84,8 @@ export let acceptOffer = 0;
 function AcceptOffers(props)
 {
     const classes = useStyles();
+    const counter = useCounter();
+    const setCounter = useCounterActions();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const {AcceptReq}=useAcceptReq()
@@ -97,7 +101,7 @@ function AcceptOffers(props)
     const onSubmit = () =>
     {
         handleAcceptReq(props.anc_id, props.host_id);
-        acceptOffer += 1;
+        setCounter(counter + 1);
         props.setOpen(false);
         props.setClose(true);
     }

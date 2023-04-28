@@ -39,6 +39,8 @@ import {BiEdit, BiTrash, BiChevronRight, BiChevronLeft} from "react-icons/bi";
 import LetteredAvatar from "react-lettered-avatar";
 import RejectOffers, {rejectOffer} from "../../../UserPanel/RightBar/myOffers/RejectOffers";
 import AcceptOffers, {acceptOffer} from "../../../UserPanel/RightBar/myOffers/AcceptOffers";
+import { useCounter, useCounterActions } from "../../../../Context/CounterProvider";
+
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -128,6 +130,10 @@ export default function UnAuthAnnouncement(props)
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hostId, setHostId] = useState(null);
+
+    const counter = useCounter();
+    const setCounter = useCounterActions();
+
     const evalAge = (birthdate) => {
         let age = Date.now() - new Date(birthdate);
         let dateOfAge = new Date(age);
@@ -184,7 +190,7 @@ export default function UnAuthAnnouncement(props)
                 console.log(announcement);
                 setLoading(false);
             })
-    }, [editAnnouncement, acceptOffer, rejectOffer])
+    }, [counter])
     const classes = useStyles();
     const checkButton = (anc_status) => {
         if(anc_status === "P" || anc_status === "A")

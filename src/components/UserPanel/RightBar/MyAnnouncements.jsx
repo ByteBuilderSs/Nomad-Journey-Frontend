@@ -23,16 +23,17 @@ import {addAnnouncement} from "../../Announcements/AddAnnouncement/NewAnnounceme
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {acceptOffer} from "./myOffers/AcceptOffers";
+import { useCounter } from "../../../Context/CounterProvider";
 
 const theme = createTheme({
     palette: {
-      primary: blue,
-      secondary: 
-      {
-        main: '#ffd180'
-      }
-    }
-  });
+        primary: blue,
+        secondary: 
+        {
+            main: '#ffd180'
+        }
+        }
+});
 
 const useStyles = makeStyles(theme => (
     {
@@ -50,7 +51,8 @@ const useStyles = makeStyles(theme => (
     }
 ));
 function MyAnnouncements({username}) {
-    const navigate=useNavigate()
+    const navigate = useNavigate();
+    const counter = useCounter();
     const local_storage = JSON.parse(localStorage.tokens);
     const classes = useStyles();
     const [error, setError] = useState(null);
@@ -58,7 +60,7 @@ function MyAnnouncements({username}) {
     const [announcement, setAnnouncement] = useState([]);
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
-    const [anc_id,setAnc_id] = useState(null);
+    const [anc_id, setAnc_id] = useState(null);
     useEffect( () =>
     {
         axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${username}`)
@@ -70,10 +72,10 @@ function MyAnnouncements({username}) {
                 setError(error);
             })
             .finally( () => {
-            console.log(announcement);
-            setLoading(false);
+                console.log(announcement);
+                setLoading(false);
             })
-    }, [addAnnouncement, delAnnouncement, editAnnouncement, acceptOffer])
+    }, [counter])
     
     const handelClickPost=(announcement_id)=>{
         navigate(`/home/PostExperience/announcement/${announcement_id}`)

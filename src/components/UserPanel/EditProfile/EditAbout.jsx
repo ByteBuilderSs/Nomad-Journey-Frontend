@@ -30,11 +30,14 @@ import { useParams } from 'react-router';
 import LabelIcon from '@mui/icons-material/Label';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const EditAbout = () => {
+    const navigate = useNavigate();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const username = allData.username;
@@ -225,8 +228,9 @@ const EditAbout = () => {
                 langL: langL_IDs
             }
         }).then((res) => {
-            toast.success("Changes updated successfully.");
             console.log(res);
+            navigate(`/home/Profile/${username}/`);
+            toast.success("Changes updated successfully.");
         }).catch((error) => {
             toast.error("Something went wrong while updating information.");
             console.log(error);

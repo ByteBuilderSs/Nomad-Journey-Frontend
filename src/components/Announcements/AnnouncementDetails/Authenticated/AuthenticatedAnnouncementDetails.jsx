@@ -220,6 +220,7 @@ export default function UnAuthAnnouncement(props)
                     </IconButton>
                     <DeleteAnnouncement
                         anc_id={announcement.id}
+                        announcement={announcement}
                         open={openDelete}
                         setOpen={setOpenDelete}
                         closeAnnouncement={handleClose}
@@ -311,26 +312,30 @@ export default function UnAuthAnnouncement(props)
                                         </Stack>
                                     </>
                                 )}
+                            <RejectOffers
+                                anc_id={anc_id}
+                                host_id={hostId}
+                                setHost_id={setHostId}
+                                open={openReject}
+                                setOpen={setOpenReject}
+                                close={closeReject}
+                                host_firstName={item.first_name}
+                                host_lastName={item.last_name}
+                                setClose={setCloseReject}/>
+        
+                            <AcceptOffers
+                                anc_id={anc_id}
+                                host_id={hostId}
+                                setHost_id={setHostId}
+                                open={openAccept}
+                                setOpen={setOpenAccept}
+                                close={closeAccept}
+                                host_firstName={item.first_name}
+                                host_lastName={item.last_name}
+                                setClose={setCloseAccept}/>
                             </div>
                         </>
-                    ))}
-                    <RejectOffers
-                        anc_id={anc_id}
-                        host_id={hostId}
-                        setHost_id={setHostId}
-                        open={openReject}
-                        setOpen={setOpenReject}
-                        close={closeReject}
-                        setClose={setCloseReject}/>
-
-                    <AcceptOffers
-                        anc_id={anc_id}
-                        host_id={hostId}
-                        setHost_id={setHostId}
-                        open={openAccept}
-                        setOpen={setOpenAccept}
-                        close={closeAccept}
-                        setClose={setCloseAccept}/>
+                ))}
 
                 </div>
 

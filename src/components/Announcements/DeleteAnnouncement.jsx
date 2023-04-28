@@ -1,6 +1,19 @@
 import React, {useState} from "react";
 import "../UserPanel/RightBar/MyAnnouncement.css";
-import {Modal, Box, Typography, Button} from "@mui/material";
+import { 
+    Modal,
+    Box,
+    Typography,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    Stack,
+    DialogTitle,
+} from "@mui/material";
+import { FcHighPriority } from "react-icons/fc";
+import { Item } from "semantic-ui-react";
 import {Col, Row} from "react-bootstrap";
 import {makeStyles} from "@mui/styles";
 import axios from "axios";
@@ -82,6 +95,7 @@ const style = {
 export let delAnnouncement = 0;
 function DeleteAnnouncement(props)
 {
+    console.log("--------------- THE PROPS IN DELETE ANNOUNCEMENT ---------------", props)
     const classes = useStyles();
     const counter = useCounter();
     const setCounter = useCounterActions();
@@ -115,33 +129,50 @@ function DeleteAnnouncement(props)
     }
     return (
         <>
-            <Modal open={props.open} onClose={handleClose} >
-                <Box sx={{...style}}>
-                    <Typography
-                        component="h4"
-                        style={{ display: "flex", alignItems: "center", fontWeight: "bold", justifyContent:"center"}}>
-                        <h1>Are you sure?</h1>
-                    </Typography>
-                    <Typography
-                        component="h4"
-                        style={{ display: "flex", alignItems: "center", fontWeight: "bold", justifyContent:"center"}}>
-                        <Row style={{paddingTop:"7%"}}>
-                            <Col md={6}>
-                                <Button  variant={`contained`} type={`submit`} onClick={onSubmit}>
-                                    Yes
-                                </Button>
-                            </Col>
-                            <Col md={6}>
-                                <Button variant={`outlined`} type={`submit`} onClick={handleClose}>
-                                    No
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Typography>
+            <Dialog
+                onHide={handleClose}
+                open={props.open}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6"}}>
+                    <Stack direction={'column'}>
+                        <Item>
+                            <FcHighPriority size='4rem' />
+                        </Item>
+                        <Item>
+                        {`Delete Announcement Of `} <b style={{ color: "#e66969" }}>«{props.announcement.city_name}, {props.announcement.city_country}» </b>{`Journey`}
+                        </Item>
+                    </Stack>
+                </DialogTitle>
 
-                </Box>
-            </Modal>
-
-        </>  )
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <div style={{ fontWeight: 'bold', marginTop: "0.5rem", fontSize: 20 }}>
+                            Are you sure?
+                        </div>
+                    </DialogContentText>
+                    <DialogActions>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            className="p-button-text"
+                            onClick={onSubmit}
+                        >
+                            Delete
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className="p-button-text"
+                            onClick={handleClose}
+                        >
+                            Cancel
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
+            </Dialog>
+        </>  
+    )
 }
 export default DeleteAnnouncement;

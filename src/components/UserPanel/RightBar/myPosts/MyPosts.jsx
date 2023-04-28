@@ -376,7 +376,7 @@ const AllPosts=()=>
                   </Button>
                 </DialogActions>
             </DialogContent>
-          </Dialog>
+        </Dialog>
       </div>
 
     </Box>

@@ -1,12 +1,25 @@
 import React, {useState} from "react";
 import "../../RightBar/MyAnnouncement.css";
-import {Modal, Box, Typography, Button} from "@mui/material";
+import { 
+    Modal,
+    Box,
+    Typography,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    Stack,
+    DialogTitle,
+} from "@mui/material";
+import { Item } from "semantic-ui-react";
 import {Col, Row} from "react-bootstrap";
 import {makeStyles} from "@mui/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
 import {useAcceptReq} from "../../../../hooks/useAcceptReq";
 import { useCounter, useCounterActions } from "../../../../Context/CounterProvider";
+import { FcApproval } from "react-icons/fc";
 
 const useStyles = makeStyles(theme => (
     {
@@ -83,21 +96,25 @@ export let acceptOffer = 0;
 
 function AcceptOffers(props)
 {
+    console.log("++++++++++++++ THE PROPS IN ACCEPT OFFERS ++++++++++++++ ", props);
     const classes = useStyles();
     const counter = useCounter();
     const setCounter = useCounterActions();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
-    const {AcceptReq}=useAcceptReq()
+    const {AcceptReq} = useAcceptReq();
+
     const handleAcceptReq = (anc_id, host_id) => {
         AcceptReq(anc_id, host_id);
     }
+
     const handleClose = () =>
     {
         props.setOpen(false);
         props.setClose(true);
         props.setHost_id(null);
     }
+
     const onSubmit = () =>
     {
         handleAcceptReq(props.anc_id, props.host_id);
@@ -105,35 +122,53 @@ function AcceptOffers(props)
         props.setOpen(false);
         props.setClose(true);
     }
+
     return (
         <>
-            <Modal open={props.open} onClose={handleClose} >
-                <Box sx={{...style}}>
-                    <Typography
-                        component="h4"
-                        style={{ display: "flex", alignItems: "center", fontWeight: "bold", justifyContent:"center"}}>
-                        <h1>Are you sure?</h1>
-                    </Typography>
-                    <Typography
-                        component="h4"
-                        style={{ display: "flex", alignItems: "center", fontWeight: "bold", justifyContent:"center"}}>
-                        <Row style={{paddingTop:"7%"}}>
-                            <Col md={6}>
-                                <Button  variant={`contained`} type={`submit`} onClick={onSubmit}>
-                                    Yes
-                                </Button>
-                            </Col>
-                            <Col md={6}>
-                                <Button variant={`outlined`} type={`submit`} onClick={handleClose}>
-                                    No
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Typography>
+            <Dialog
+                onHide={handleClose}
+                open={props.open}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#BECFB8"}}>
+                    <Stack direction={'column'}>
+                        <Item>
+                            <FcApproval size='4rem' />
+                        </Item>
+                        <Item>
+                        {`Accept Offer By`} <b style={{ color: "#33691E" }}>«{props.host_firstName} {props.host_lastName}» </b>{`For This Journey`}
+                        </Item>
+                    </Stack>
+                </DialogTitle>
 
-                </Box>
-            </Modal>
-
-        </>  )
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <div style={{ fontWeight: 'bold', marginTop: "0.5rem", fontSize: 20 }}>
+                            Are you sure?
+                        </div>
+                    </DialogContentText>
+                    <DialogActions>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className="p-button-text"
+                            onClick={onSubmit}
+                        >
+                            Yes
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            className="p-button-text"
+                            onClick={handleClose}
+                        >
+                            No
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
+            </Dialog>
+        </>  
+    )
 }
 export default AcceptOffers;

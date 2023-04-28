@@ -123,33 +123,6 @@ function RejectOffers(props)
     }
     return (
         <>
-            <Modal open={props.open} onClose={handleClose} >
-                <Box sx={{...style}}>
-                    <Typography
-                        component="h4"
-                        style={{ display: "flex", alignItems: "center", fontWeight: "bold", justifyContent:"center"}}>
-                        <h1>Are you sure?</h1>
-                    </Typography>
-                    <Typography
-                        component="h4"
-                        style={{ display: "flex", alignItems: "center", fontWeight: "bold", justifyContent:"center"}}>
-                        <Row style={{paddingTop:"7%"}}>
-                            <Col md={6}>
-                                <Button  variant={`contained`} type={`submit`} onClick={onSubmit}>
-                                    Yes
-                                </Button>
-                            </Col>
-                            <Col md={6}>
-                                <Button variant={`outlined`} type={`submit`} onClick={handleClose}>
-                                    No
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Typography>
-
-                </Box>
-            </Modal>
-
             <Dialog
                 onHide={handleClose}
                 open={props.open}

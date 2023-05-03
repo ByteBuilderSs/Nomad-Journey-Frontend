@@ -14,46 +14,44 @@ import {
 } from "@mui/material";
 import { FcHighPriority } from "react-icons/fc";
 import { Item } from "semantic-ui-react";
-import {Col, Row} from "react-bootstrap";
-import {makeStyles} from "@mui/styles";
 import axios from "axios";
 import {toast} from "react-toastify";
 import { useCounter, useCounterActions } from "../../Context/CounterProvider";
-import { set } from "zod";
 
 
-function DeleteAnnouncement(props)
+function DeletePostDialog(props)
 {
-    console.log("--------------- THE PROPS IN DELETE ANNOUNCEMENT ---------------", props)
-    const counter = useCounter();
+    console.log("--------------- THE PROPS IN DELETE POST ---------------", props)
+    const Counter = useCounter();
     const setCounter = useCounterActions();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
+
     const handleClose = () =>
     {
         props.setOpen(false);
         props.setClose(true);
     }
+
     const onSubmit = () =>
     {
         axios({
             method: "delete",
-            url: `http://188.121.102.52:8000/api/v1/announcement/delete/${props.anc_id}/`,
+            url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`,
+            },
+            data: {
+                uid: props.post_id
             }
-        }).then(() => {
-            props.setOpen(false);
-            props.setClose(true);
-            setTimeout(() => {
-                props.setClose(false);
-            }, 5000);
-            toast.success("You deleted an announcement");
-            setCounter(counter - 1);
-            props.closeAnnouncement();
-        })
+            }).then((res) => {
+                console.log("********* THE RESULT IN POST DELETE REQUEST **********", res);
+                setCounter(Counter - 1); //where I reduce the post counter by one
+                props.closePost();
+            });
     }
+
     return (
         <>
             <Dialog
@@ -68,7 +66,7 @@ function DeleteAnnouncement(props)
                             <FcHighPriority size='4rem' />
                         </Item>
                         <Item>
-                        {`Delete Announcement Of `} <b style={{ color: "#e66969" }}>«{props.announcement.city_name}, {props.announcement.city_country}» </b>{`Journey`}
+                        {`Delete`} <b style={{ color: "#e66969" }}>«{props.post_title}» </b>{`Post`}
                         </Item>
                     </Stack>
                 </DialogTitle>
@@ -102,4 +100,4 @@ function DeleteAnnouncement(props)
         </>  
     )
 }
-export default DeleteAnnouncement;
+export default DeletePostDialog;

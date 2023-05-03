@@ -3,6 +3,7 @@
   background-color: #fafbff !important;
   border          : 1px solid #ececec;
   min-height      : 7rem;
+  margin-left: 1.5rem;
   transition: all .25s linear;
   box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.4);
 }

@@ -103,7 +103,6 @@ const PostDetail = (props) => {
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Card dir='ltr'>
                             <form>
-                            
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <div style={{ paddingLeft: "5rem" }}>
                                         {/* Title */}

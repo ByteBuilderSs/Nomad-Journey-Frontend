@@ -29,6 +29,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AiFillDelete, AiFillLike, AiFillEdit } from "react-icons/ai";
+import SummarizeIcon from '@mui/icons-material/Summarize';
 import { FcList, FcHighPriority } from "react-icons/fc";
 import {BsCalendarDateFill, BsFillEyeFill} from "react-icons/bs";
 import { toast } from 'react-toastify';
@@ -37,6 +38,7 @@ import {Item} from "semantic-ui-react";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import { useCounterActions, useCounter } from '../../../../Context/CounterProvider';
+import PostDetailDialog from '../../../PostExperience/PostDetail/PostDetailDialog';
 
 const theme = createTheme({
   palette: {
@@ -72,6 +74,11 @@ const AllPosts=()=>
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(emptyPost);
+  /* For Opening the Dialog */
+  const [postSlug, setPostSlug] = useState("");
+  const [openPostDialog, setOpenPostDialog] = useState(false);
+  const [postDisabled, setPostDisabled] = useState(false);
+  console.log(" $$$$$$$$$$$$$$$$$$$$ ", postSlug);
 
   const Counter = useCounter();
   console.log("************* THE POST COUNTER BEFORE DELETE IS ************* ", Counter);
@@ -104,7 +111,7 @@ const AllPosts=()=>
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [Counter]);
 
   console.log("########### THE POSTS ARE ############ ", posts);
 
@@ -165,6 +172,50 @@ const AllPosts=()=>
     navigate("/home/PostExperience/");
   };
 
+  const checkSummary = (summary) => {
+    if (summary === null || summary === "") {
+      return;
+    }
+    if (summary. length >= 50) {
+      let counter = 0, uppercase = 0;
+      for (; counter < 50; counter++) {
+        if (summary[counter] === summary[counter].toUpperCase()) {
+          uppercase++;
+        }
+      }
+      return (
+        <>
+          <Typography>{summary.substring(0, 50 - (uppercase/3))}...</Typography>
+        </>
+      );
+    }
+
+    return (
+      <>
+          <Typography>{summary}</Typography>
+      </>
+    )
+  }
+
+  const checkNotNull = () => {
+    console.log("^^^^^^^^^^^^^ THE POST SLUG IN CHECK NOT NULL IS ^^^^^^^^^^^ ", postSlug);
+    if (postSlug && postSlug !== "")
+    {
+      return (
+        <>
+          <PostDetailDialog
+            post_slug={postSlug}
+            set_post_slug={setPostSlug}
+            open={openPostDialog}
+            setOpen={setOpenPostDialog}
+            disabled={postDisabled}
+            setDisabled={setPostDisabled}
+            access_token={access_token}
+            />
+        </>
+      )
+    }
+  }
 
   return (
   <ThemeProvider theme={theme}>
@@ -176,16 +227,6 @@ const AllPosts=()=>
       }}
     >
       <div>
-        {/* <Button
-          sx={{ marginLeft: "48.25rem" }}
-          variant="contained"
-          size="medium"
-          style={{ minWidth: 150 }}
-          color="secondary" 
-          onClick={handleNewPostRoute}
-          >
-          Add new post
-        </Button> */}
         <Box sx={{ marginTop: 1 }}>
           <Grid sx={{ marginTop: 1 }} container spacing={1}>
             {
@@ -243,29 +284,38 @@ const AllPosts=()=>
                               </Stack>
                           </Typography>
                       </Box>
-                      <Typography
-                        sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
-                        variant="p"
-                        component="div"
-                      >
-                        <AiFillLike style={{ marginRight: "0.5rem" }} /> # Likes
-                      </Typography>
+                      <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                        <Typography
+                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
+                          variant="p"
+                          component="div"
+                          color="text.secondary"
+                        >
+                          <AiFillLike style={{ marginRight: "0.5rem" }} /> # Likes
+                        </Typography>
 
+                        <Typography
+                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center" , marginLeft: "2rem" }}
+                          variant="p"
+                          component="div"
+                          color="text.secondary"
+                        >
+                          <BsFillEyeFill style={{ marginRight: "0.5rem" }} /> # Views
+                        </Typography>
+                        <Typography
+                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center", ml: "2rem" }}
+                          variant="p"
+                          component="div"
+                          color="text.secondary"
+                        >
+                          <BsCalendarDateFill style={{ marginRight: "0.5rem" }}/>
+                          Created at: { blog.created_at }
+                        </Typography>
+                      </div>
+                      
                       <Typography
-                        sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
-                        variant="p"
-                        component="div"
-                      >
-                        <BsFillEyeFill style={{ marginRight: "0.5rem" }} /> # Views
-                      </Typography>
-
-                      <Typography
-                        sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center" }}
-                        variant="p"
-                        component="div"
-                      >
-                        <BsCalendarDateFill style={{ marginRight: "0.5rem" }}/>
-                        Created at: { blog.created_at }
+                        sx={{ mt: "1rem", display: "flex", alignItems: "center" }}  color="text.secondary">
+                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto consectetur optio dolores libero, ...
                       </Typography>
                     </CardContent>
 
@@ -279,8 +329,12 @@ const AllPosts=()=>
                       <Tooltip title="Details" arrow>
                         <div>
                           <CgDetailsMore
-                            onClick={() =>
-                              handleDetailsClick(blog.slug)
+                            onClick={() => {
+                              // handleDetailsClick(blog.slug)
+                              setPostSlug(blog.slug);
+                              setOpenPostDialog(true);
+                              setPostDisabled(false);
+                              }
                             }
                             color="#b9b8b8"
                             style={{ cursor: "pointer" }}
@@ -330,6 +384,7 @@ const AllPosts=()=>
             }
           </Grid>
         </Box>
+
         <Dialog
             visible={deletePostDialog}
             onHide={hideDeletePostDialog}
@@ -378,8 +433,9 @@ const AllPosts=()=>
             </DialogContent>
         </Dialog>
       </div>
-
     </Box>
+    {checkNotNull()}
+    {() => setPostSlug(null)}
   </ThemeProvider>
   );
 }

@@ -37,7 +37,7 @@ import { cyan, teal } from '@mui/material/colors';
 
 const theme = createTheme({
     palette: {
-            primary: 
+            secondary: 
             {
                 main: teal[900]
             }
@@ -216,7 +216,7 @@ const EditorForm = () => {
                                         style={{
                                             width: "58.5rem",
                                             height: 240,
-                                            borderRadius: '0.5rem',
+                                            borderRadius: '0.25rem',
                                             objectFit: 'fill'
                                         }}
                                     />
@@ -231,7 +231,7 @@ const EditorForm = () => {
                                     variant="contained"
                                     component="label"
                                     startIcon={<CameraAltIcon />}
-                                    color='primary'
+                                    color='secondary'
                                     onClick={(event) => console.log("The change buttom is clicked", event)}
                                     >
                                     Change

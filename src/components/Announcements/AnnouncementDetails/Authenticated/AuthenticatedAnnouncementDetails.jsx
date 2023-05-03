@@ -139,6 +139,7 @@ export default function UnAuthAnnouncement(props)
         let dateOfAge = new Date(age);
         return `Age ${Math.abs(dateOfAge.getUTCFullYear() - 1970)}`;
     }
+    
     const checkDescription = (description) => {
         if(description == null || description.length === 0)
             return
@@ -190,8 +191,10 @@ export default function UnAuthAnnouncement(props)
                 console.log(announcement);
                 setLoading(false);
             })
-    }, [counter])
+    }, [counter]);
+
     const classes = useStyles();
+
     const checkButton = (anc_status) => {
         if(anc_status === "P" || anc_status === "A")
         return (
@@ -410,7 +413,9 @@ export default function UnAuthAnnouncement(props)
     }
     const handleClose = () => {
         props.setOpen(false);
-        props.set_anc_id(null);}
+        props.set_anc_id(null);
+    }
+
     console.log(props.announcement_id)
     return(
         <Modal open={props.open} onClose={handleClose} >

@@ -514,12 +514,15 @@ Pre-loader Style
     background-color: #E55405;
     border-bottom-left-radius: 23px;
     border-bottom-right-radius: 23px;
+    border-top-right-radius: 23px;
+    border-top-left-radius: 23px;
     padding: 35px 60px;
+    margin-bottom: 25px;
   }
   
   .search-form #search-form h4 {
-    color: #fff;
-    font-size: 16px;
+    color: black;
+    font-size: 25px;
     font-weight: 700;
     margin-top: 20px;
   }
@@ -541,8 +544,58 @@ Pre-loader Style
   .search-form #search-form option {
     background-color: #E55405;
   }
-  
-  .search-form #search-form button {
+
+  .search-form  .row{
+    margin-top: 10px;
+  }
+
+
+
+  .search-form .innerFilter{
+    background-color: rgb(255, 254, 254);
+    border-bottom-left-radius: 23px;
+    border-bottom-right-radius: 23px;
+    border-top-right-radius: 23px;
+    border-top-left-radius: 23px;
+    padding: 20px 40px;
+    margin-bottom: 20px;
+  }
+
+  .search-form .filterTag{
+    background-color: #E55405;
+    border: 1px solid #E55405;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #E55405;
+    border-radius: 25px;
+    font-weight: 500;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 10px;
+  }
+
+  .search-form .filterTag:hover{
+
+    background-color: #fff;
+    border-color: #E55405;
+    color: #E55405;
+    opacity: 0.8;
+  }
+
+  .search-form .filterTag .deletebutton{
+    cursor: pointer;
+    margin-left: 15px;
+    border: 1px solid white;
+    border-radius: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  /* .search-form #search-form button {
     width: 100%;
     text-align: center;
     font-size: 14px;
@@ -558,20 +611,21 @@ Pre-loader Style
     transition: all .3s;
     position: relative;
     overflow: hidden;
-  }
+  } */
   
-  .search-form #search-form button:hover {
+  /* .search-form #search-form button:hover {
     background-color: #fff;
     color: #E55405;
-  }
+  } */
 
   .amazing-deals {
     margin-top: 120px;
   }
   
   .amazing-deals .image {
-    height: 350px;
-    width: 270px;
+    height: 360px;
+    overflow: hidden;
+    width: 260px;
   }
   /* for transition : */
 
@@ -674,6 +728,18 @@ Pre-loader Style
     white-space: pre-wrap;
 
   }
+
+  .my-date-picker{
+    height: 53px;
+    border-radius: 4px;
+    border: 1px solid #c4c3c3;
+    margin-left: 30px;
+    padding-left: 20px;
+    
+  }
+  .my-date-picker:hover{    
+    border: 1px solid black;
+  }
   
   .amazing-deals ul.page-numbers {
     text-align: center;
@@ -718,6 +784,8 @@ Pre-loader Style
   justify-content: center;
   padding-bottom: 10px;
   padding-top: 5px;
+  /* background-color: #f7f7f7;
+  border-radius: 20px; */
 }
 
 

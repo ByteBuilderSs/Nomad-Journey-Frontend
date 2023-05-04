@@ -15,6 +15,8 @@ import loaderGif from '../../lottieAssets/loaderANC';
 import { toast } from "react-toastify";
 import { useSelector } from 'react-redux';
 
+import FilterLanguage from "./Filter";
+
 
 
 
@@ -343,8 +345,8 @@ export default function MainPage(){
       const theme = createTheme({
         palette: {
           secondary: {
-            main: '#E55405',
-            '&:hover' : '#E55405',
+            main: '#f7f7f7',
+            '&:hover' : '#f7f7f7',
             },
           },
       });
@@ -541,76 +543,38 @@ export default function MainPage(){
         </div>
       </section>
 
-      <div class="search-form">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <form id="search-form" name="gs" method="submit" role="search" action="#">
-                <div class="row">
-                  <div class="col-lg-2">
-                    <h4>Sort Announcements By:</h4>
-                  </div>
-                  <div class="col-lg-4">
-                      <fieldset>
-                          <select name="Time" class="form-select" aria-label="Default select example" id="chooseLocation" onChange = {handleSortChange}  >
-                              {/* <option value = "None" selected style={{fontSize : "20px"}}>Time</option> */}
-                              <option value = "sort_by=anc_timestamp_created&descending=True" selected style={{fontSize : "20px"}}>Newest</option>
-                              <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Oldest</option>
-                              <option value = "sort_by=travelers_count" style={{fontSize : "20px"}}>Traveler's Count &#8595; </option>
-                              <option value = "sort_by=travelers_count&descending=True" style={{fontSize : "20px"}}>Traveler's Count &#8593; </option>
-                              {/* <option value = "sort_by=anc_timestamp_created" style={{fontSize : "20px"}}>Time Range &#8593; </option>
-                              <option value = "sort_by=anc_timestamp_created&descending=True" style={{fontSize : "20px"}}>Time Range &#8595; </option> */}
-                              <option value = "sort_by=time_range" style={{fontSize : "20px"}}> Time Range &#8595; </option>
-                              <option value = "sort_by=time_range&descending=True" style={{fontSize : "20px"}}>Time Range &#8593; </option>
-                          </select>
-                      </fieldset>
-                  </div>
-                  {/* <div class="col-lg-4">
-                      <fieldset>
-                          <select name="Price" class="form-select" aria-label="Default select example" id="choosePrice" onChange="this.form.click()">
-                              <option selected>Price Range</option>
-                              <option value="100">$100 - $250</option>
-                              <option value="250">$250 - $500</option>
-                              <option value="500">$500 - $1,000</option>
-                              <option value="1000">$1,000 - $2,500</option>
-                              <option value="2500+">$2,500+</option>
-                          </select>
-                      </fieldset>
-                  </div> */}
-                  {/* <div class="col-lg-2">                        
-                      <fieldset>
-                          <button class="border-button">Search Results</button>
-                      </fieldset>
-                  </div> */}
-
-                  {/* for placing in line : */}
-                  {/* <div class="col-lg-2"></div> */}
-
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="amazing-deals">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-6 offset-lg-3">
-              <div class="section-heading text-center">
-                <h2>Announcements In Your City</h2>
-                {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
-                <h2>Results : {ancResultCount} </h2>
+
+          <div class="col-lg-6 offset-lg-3">
+            <div class="section-heading text-center">
+              <h2>Announcements In Your City</h2>
+              {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
+              <h2>Results : {ancResultCount} </h2>
+            </div>
+          </div>
+
+          <div class="search-form">
+            <div class="container">
+              <div class="row">
+              
+                {/* <FilterBar/> */}
+                <div id="search-form">
+                  <FilterLanguage></FilterLanguage>
+                  <div class = "row">
+                    {showAnnc()}
+                    {showpageination()}
+                  </div>
+                </div>
+                
               </div>
             </div>
+          </div>
+
+          <div class="row">
             
-            {/* <div style={{marginBottom : "25px", marginLeft : "5px", fontSize : "30px"}}>
-              
-            </div> */}
-
-            {showAnnc()}
-            {showpageination()}
-
+            
          
           </div>
         </div>

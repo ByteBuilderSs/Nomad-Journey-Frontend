@@ -1,17 +1,21 @@
 import "./MainPage.css"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_orange.css";
+import { FetchAnnc } from "../../hooks/useAnnounceFetchMainPage";
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+
+import { useDispatch,useSelector } from 'react-redux';
+import { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage } from "../../ReduxStore/features/MainPage/mainPageSlice"
 
 const options = ['Option 1', 'Option 2'];
 
@@ -28,9 +32,13 @@ const theme = createTheme({
 });
 
 export default function Filters() {
-
+  
+    const fetchAnnc = FetchAnnc()
+    const dispatch = useDispatch()
+    const sort = useSelector((state) => state.mainpage.sort)
     const [selectedTags, setSelectedTags] = useState([]);
-    const [sort, setSort] = React.useState('');
+    
+    
 
     const Language = () => {
     
@@ -141,28 +149,38 @@ export default function Filters() {
     }
 
     const Sort = () => {
+      
 
       const handleChange = (event) => {
-        setSort(event.target.value);
+
+        dispatch(setLoader(true))
+        dispatch(setPage(1));
+        dispatch(setSort(event.target.value));
+        fetchAnnc(1,event.target.value)
+        
       };
 
       return(
-      <Box sx={{ minWidth: 120 }}>
-        <FormControl fullWidth>
-          <InputLabel id="sort-label">Sort</InputLabel>
-          <Select
-            labelId="sort-label"
-            id="sort"
-            value={sort}
-            label="Sort"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+        <Box sx={{ minWidth: 150 }}>
+          <FormControl fullWidth>
+            <InputLabel id="sort-label">Sort</InputLabel>
+            <Select
+              labelId="sort-label"
+              id="sort"
+              value={sort}
+              label="Sort"
+              onChange={handleChange}
+            >
+              <MenuItem value={"sort_by=anc_timestamp_created&descending=True"}>Newest</MenuItem>
+              <MenuItem value={"sort_by=anc_timestamp_created"}>Oldest</MenuItem>
+              <MenuItem value={"sort_by=travelers_count" }>Traveler's Count &#8595;</MenuItem>
+              <MenuItem value={"sort_by=travelers_count&descending=True"}>Traveler's Count &#8593;</MenuItem>
+              <MenuItem value={"sort_by=time_range" }>Time Range &#8595;</MenuItem>
+              <MenuItem value={"sort_by=time_range&descending=True" }>Time Range &#8593;</MenuItem>
+
+            </Select>
+          </FormControl>
+        </Box>
     )
     }
 

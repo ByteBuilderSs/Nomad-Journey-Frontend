@@ -139,6 +139,7 @@ export default function UnAuthAnnouncement(props)
         let dateOfAge = new Date(age);
         return `Age ${Math.abs(dateOfAge.getUTCFullYear() - 1970)}`;
     }
+    
     const checkDescription = (description) => {
         if(description == null || description.length === 0)
             return
@@ -190,8 +191,10 @@ export default function UnAuthAnnouncement(props)
                 console.log(announcement);
                 setLoading(false);
             })
-    }, [counter])
+    }, [counter]);
+
     const classes = useStyles();
+
     const checkButton = (anc_status) => {
         if(anc_status === "P" || anc_status === "A")
         return (
@@ -220,6 +223,7 @@ export default function UnAuthAnnouncement(props)
                     </IconButton>
                     <DeleteAnnouncement
                         anc_id={announcement.id}
+                        announcement={announcement}
                         open={openDelete}
                         setOpen={setOpenDelete}
                         closeAnnouncement={handleClose}
@@ -311,26 +315,30 @@ export default function UnAuthAnnouncement(props)
                                         </Stack>
                                     </>
                                 )}
+                            <RejectOffers
+                                anc_id={anc_id}
+                                host_id={hostId}
+                                setHost_id={setHostId}
+                                open={openReject}
+                                setOpen={setOpenReject}
+                                close={closeReject}
+                                host_firstName={item.first_name}
+                                host_lastName={item.last_name}
+                                setClose={setCloseReject}/>
+        
+                            <AcceptOffers
+                                anc_id={anc_id}
+                                host_id={hostId}
+                                setHost_id={setHostId}
+                                open={openAccept}
+                                setOpen={setOpenAccept}
+                                close={closeAccept}
+                                host_firstName={item.first_name}
+                                host_lastName={item.last_name}
+                                setClose={setCloseAccept}/>
                             </div>
                         </>
-                    ))}
-                    <RejectOffers
-                        anc_id={anc_id}
-                        host_id={hostId}
-                        setHost_id={setHostId}
-                        open={openReject}
-                        setOpen={setOpenReject}
-                        close={closeReject}
-                        setClose={setCloseReject}/>
-
-                    <AcceptOffers
-                        anc_id={anc_id}
-                        host_id={hostId}
-                        setHost_id={setHostId}
-                        open={openAccept}
-                        setOpen={setOpenAccept}
-                        close={closeAccept}
-                        setClose={setCloseAccept}/>
+                ))}
 
                 </div>
 
@@ -405,7 +413,9 @@ export default function UnAuthAnnouncement(props)
     }
     const handleClose = () => {
         props.setOpen(false);
-        props.set_anc_id(null);}
+        props.set_anc_id(null);
+    }
+
     console.log(props.announcement_id)
     return(
         <Modal open={props.open} onClose={handleClose} >

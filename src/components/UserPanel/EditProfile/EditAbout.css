@@ -18,14 +18,17 @@
 }
 
 .chip {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding-left: 0.25rem;
-    height: 2rem;
+    /* border: 1px solid black; */
+    border-radius: 20px;
+    padding-left: 8px;
+    padding-right: 2px;
+    height: 1.75rem;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: rgba(0, 0, 0, 0.08);
 }
 
 .chip > span {
-    margin-left: 14px;
+    margin-left: 5px;
     cursor: pointer;
     /* height: 2rem; */
 }

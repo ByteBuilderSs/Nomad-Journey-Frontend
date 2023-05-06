@@ -2,7 +2,7 @@ import "./MyAnnouncement.css";
 import { TiLocation } from "react-icons/ti";
 import { BsCalendarDateFill } from "react-icons/bs";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid } from "@mui/material";
+import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid, Box } from "@mui/material";
 import { Item } from "semantic-ui-react";
 import { FaHome, FaLongArrowAltRight } from "react-icons/fa";
 import { AiOutlineFieldTime } from "react-icons/ai";
@@ -213,7 +213,8 @@ function MyAnnouncements(props) {
             <ThemeProvider theme={theme}>
                 <h5>
                 <Stack>
-                    {announcement.map((anc, key) =>
+                    {
+                        announcement.length > 0 ? announcement.map((anc, key) =>
                         (
                                 <div
                                     className="announcement-hovering"
@@ -288,7 +289,21 @@ function MyAnnouncements(props) {
                                     </Item>
 
                                 </div>
-                        ))}
+                        )) : 
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                bgcolor: "background.paper",
+                                p: 2,
+                            }}
+                            >
+                            <div>
+                                <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
+                                    No Announcements Found!
+                                </span>
+                            </div>
+                        </Box>
+                    }
                 </Stack>
                     {checkNotNull(anc_id)}
                     {() => setAnc_id(null)}

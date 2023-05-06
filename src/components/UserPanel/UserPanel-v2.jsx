@@ -25,12 +25,13 @@ import { Link, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
 import { AiFillNotification } from "react-icons/ai";
-import { MdFeedback } from "react-icons/md";
+import { MdFeedback, MdHome } from "react-icons/md";
 import { HiCamera } from "react-icons/hi";
 import { GiTwoCoins } from "react-icons/gi";
 import { BsStarHalf } from "react-icons/bs";
 import MyAnnouncements from './RightBar/MyAnnouncements';
 import AboutMe from './RightBar/About';
+import Home from './RightBar/Home';
 import MyPosts from './RightBar/myPosts/MyPosts';
 import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
@@ -46,7 +47,7 @@ const UserPanelNew = () => {
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
-    const [active, setActive] = useState("My Profile");
+    const [active, setActive] = useState("About Me");
     const {userdata, userInfo} = useUserData()
     useEffect(() => {userdata()}, [])
     
@@ -54,32 +55,29 @@ const UserPanelNew = () => {
     const user_params = useParams();
     const menuItem = [
         {
-            name : "My Profile",
+            id: 0,
+            name : "About Me",
             component : <AboutMe />,
-            icon : <TiUser />,
+            icon : <TiUser style={{ marginTop : "-0.2rem" }}/>,
         },
         {
+            id: 1,
+            name : "My Home",
+            component : <Home />,
+            icon : <MdHome style={{ marginTop : "-0.2rem" }}/>,
+        },
+        {
+            id: 2,
             name : "Announcements",
             component : <MyAnnouncements username={user_params.username} />,
-            icon : <AiFillNotification />,
+            icon : <AiFillNotification style={{ marginTop : "-0.2rem" }}/>,
         },
         {
+            id: 3,
             name : "Posts",
             component : <MyPosts />,
-            icon : <HiCamera />,
-        },
-        {
-            name : "Hosts Offers",
-            component : <MyOffers/>,
-            icon : <Notif />,
-        },
-        
-        {
-            name : "feedback",
-            component : <MyFeedbacks />,
-            icon : <MdFeedback />,
-        },
-        
+            icon : <HiCamera style={{ marginTop : "-0.2rem" }}/>,
+        }
     ]
     const openCreateRequest = (event) => {
         setOpen(true);

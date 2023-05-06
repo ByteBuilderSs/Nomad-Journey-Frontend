@@ -31,10 +31,10 @@ const BlogForm = () => {
                                 Post Your Journey Experience
                         </h1>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <Grid item xs={12} sm={12} md={12} lg={9}>
                         <EditorForm />
                     </Grid>
-                    {/* <Grid item xs={12} sm={12} md={4} lg={3}>
+                    <Grid item xs={12} sm={12} md={4} lg={3}>
                         <Card>
                             <CardContent>
                                 <Typography sx={{ fontSize: 14, display: "flex", alignItems: "center", fontWeight: "bold"  }} gutterBottom>
@@ -43,7 +43,7 @@ const BlogForm = () => {
                                 </Typography>
                             </CardContent>
                         </Card>
-                    </Grid> */}
+                    </Grid>
                 </Grid>
             </Container>
         </div>

@@ -60,7 +60,8 @@ const emptyPost = {
   tags: null,
   tags_name: null
 }
-const AllPosts=()=> 
+
+const AllPosts = (props) => 
 {
   let allData;
   let access_token;
@@ -87,7 +88,7 @@ const AllPosts=()=>
   const getPosts = () => {
     axios({
       method: "get",
-      url: 'http://188.121.102.52:8000/api/v1/blog/userpost/',
+      url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${props.url_username}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -211,6 +212,8 @@ const AllPosts=()=>
             disabled={postDisabled}
             setDisabled={setPostDisabled}
             access_token={access_token}
+            url_username={props.url_username}
+            local_storage_username={props.local_storage_username}
             />
         </>
       )
@@ -251,6 +254,7 @@ const AllPosts=()=>
                           justifyContent: "space-between",
                         }}
                       >
+                        {/* Blog Title */}
                         <Box >
                           <Typography
                             sx={{ fontSize: 25, fontWeight: "bold", display: "flex", alignItems: "center" }}
@@ -262,6 +266,7 @@ const AllPosts=()=>
                           </Typography>
                         </Box>
                       </Box>
+                      {/* Blog Tags */}
                       <Box sx={{ mt: "0.75rem" }}>
                           <Typography
                             sx={{ marginTop: "1rem", fontSize: 20, display: "flex", alignItems: "center" }}
@@ -285,6 +290,7 @@ const AllPosts=()=>
                           </Typography>
                       </Box>
                       <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                        {/* Likes */}
                         <Typography
                           sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
                           variant="p"
@@ -292,8 +298,8 @@ const AllPosts=()=>
                           color="text.secondary"
                         >
                           <AiFillLike style={{ marginRight: "0.5rem" }} /> # Likes
-                        </Typography>
-
+                        </Typography> 
+                        {/* Views */}
                         <Typography
                           sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center" , marginLeft: "2rem" }}
                           variant="p"
@@ -302,6 +308,7 @@ const AllPosts=()=>
                         >
                           <BsFillEyeFill style={{ marginRight: "0.5rem" }} /> # Views
                         </Typography>
+                        {/* Created date */}
                         <Typography
                           sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center", ml: "2rem" }}
                           variant="p"
@@ -312,10 +319,10 @@ const AllPosts=()=>
                           Created at: { blog.created_at }
                         </Typography>
                       </div>
-                      
+                      {/* Blog Description */}
                       <Typography
                         sx={{ mt: "1rem", display: "flex", alignItems: "center" }}  color="text.secondary">
-                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto consectetur optio dolores libero, ...
+                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> { blog.description }
                       </Typography>
                     </CardContent>
 
@@ -342,30 +349,37 @@ const AllPosts=()=>
                           />
                         </div>
                       </Tooltip>
-                      <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
-                        <div>
-                          <AiFillEdit
-                            onClick={() =>
-                              handleEditClick(blog.uid, blog.slug)
-                            }
-                            color="#b9b8b8"
-                            style={{ cursor: "pointer" }}
-                            size='2rem'
-                          />
-                        </div>
-                      </Tooltip>
-                      <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
-                        <div>
-                          <AiFillDelete
-                            onClick={() =>
-                              openDeleteDialog(blog)
-                            }
-                            color="#b9b8b8"
-                            style={{ cursor: "pointer" }}
-                            size='2rem'
-                          />
-                        </div>
-                      </Tooltip>
+                      {/* Edit + Delete Post on Card */}
+                      {
+                        props.url_username === props.local_storage_username ?
+                        <>
+                          <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
+                              <div>
+                                <AiFillEdit
+                                  onClick={() =>
+                                    handleEditClick(blog.uid, blog.slug)
+                                  }
+                                  color="#b9b8b8"
+                                  style={{ cursor: "pointer" }}
+                                  size='2rem'
+                                />
+                              </div>
+                          </Tooltip>
+                          <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
+                            <div>
+                              <AiFillDelete
+                                onClick={() =>
+                                  openDeleteDialog(blog)
+                                }
+                                color="#b9b8b8"
+                                style={{ cursor: "pointer" }}
+                                size='2rem'
+                                />
+                            </div>
+                          </Tooltip>
+                        </>
+                          : null
+                        }
                     </CardActions>
                   </Card>
                 </Grid>

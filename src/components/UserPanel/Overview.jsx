@@ -25,9 +25,9 @@ import {addAnnouncement} from "../Announcements/AddAnnouncement/NewAnnouncementF
 import {delAnnouncement} from "../Announcements/DeleteAnnouncement";
 import { useCounter } from '../../Context/CounterProvider';
 
-const Overview = () => {
+const Overview = (props) => {
     const Counter = useCounter();
-    const {userdata, userInfo} = useUserData();
+    const {userdata, userInfo} = useUserData(props.url_username);
     useEffect(() => {
         userdata()
     },
@@ -90,16 +90,18 @@ const Overview = () => {
                 <Grid item xs={12}>
                     <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem" }}>
                         OVERVIEW
-                        <Button
-                            sx={{ marginLeft: "41.5rem", backgroundColor: "#088AD1" }}
-                            variant="contained"
-                            size="medium"
-                            style={{ minWidth: 150 }}
-                            /* TODO => ONCLICK => GO TO EDIT PAGE */
-                            onClick={routeChange}
-                        >
-                            Edit My Profile
-                        </Button>
+                        {props.url_username === props.local_storage_username ? 
+                            <Button
+                                sx={{ marginLeft: "41.5rem", backgroundColor: "#088AD1" }}
+                                variant="contained"
+                                size="medium"
+                                style={{ minWidth: 150 }}
+                                /* TODO => ONCLICK => GO TO EDIT PAGE */
+                                onClick={routeChange}
+                            >
+                                Edit My Profile
+                            </Button> : null
+                        }
                     </h3>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
                 </Grid>

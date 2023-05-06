@@ -110,7 +110,8 @@ const style = {
     px: 4,
     pb: 3,
 };
-export default function UnAuthAnnouncement(props)
+
+export default function AuthAnnouncement(props)
 {
     const [openDelete, setOpenDelete] = useState(false);
     const [closeDelete, setCloseDelete] = useState(true);
@@ -202,36 +203,40 @@ export default function UnAuthAnnouncement(props)
                 <Item className={classes.items}>
                     <Stack sx={{marginTop:"50%"}} direction={`column`}>
                         <Item>
-                    <IconButton size={`large`} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
-                        <BiEdit />
-                    </IconButton>
+                            {props.local_storage_username === props.url_username ? 
+                                <IconButton size={`large`} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
+                                    <BiEdit />
+                                </IconButton> : null
+                            }
 
-                    <EditAnnouncement
-                        anc={announcement}
-                        open={openEdit}
-                        setOpen={setOpenEdit}
-                        close={closeEdit}
-                        setClose={setCloseEdit}
-                        requestData={requestData}
-                        setRequestData={setRequestData}
-                    />
+                                <EditAnnouncement
+                                    anc={announcement}
+                                    open={openEdit}
+                                    setOpen={setOpenEdit}
+                                    close={closeEdit}
+                                    setClose={setCloseEdit}
+                                    requestData={requestData}
+                                    setRequestData={setRequestData}
+                                />
                         </Item>
+
                         <Item>
-                    <IconButton size={`large`} onClick={() => {setOpenDelete(true); setCloseDelete(false);}
-                    }>
-                        <BiTrash />
-                    </IconButton>
-                    <DeleteAnnouncement
-                        anc_id={announcement.id}
-                        announcement={announcement}
-                        open={openDelete}
-                        setOpen={setOpenDelete}
-                        closeAnnouncement={handleClose}
-                        close={closeDelete}
-                        setClose={setCloseDelete}/>
+                            {props.local_storage_username === props.url_username ? 
+                                <IconButton size={`large`} onClick={() => {setOpenDelete(true); setCloseDelete(false);}}>
+                                    <BiTrash />
+                                </IconButton> : null
+                            }
+                            <DeleteAnnouncement
+                                anc_id={announcement.id}
+                                announcement={announcement}
+                                open={openDelete}
+                                setOpen={setOpenDelete}
+                                closeAnnouncement={handleClose}
+                                close={closeDelete}
+                                setClose={setCloseDelete}/>
                         </Item>
                     </Stack>
-                    </Item>
+                </Item>
             </>
         )
     }
@@ -298,19 +303,23 @@ export default function UnAuthAnnouncement(props)
                                             </Stack>
                                         </Item>
                                         <Item>
+                                            {props.local_storage_username === props.url_username ? 
                                             <Button color={`success`} onClick={()=> {
                                                 setOpenAccept(true);
                                                 setCloseAccept(false);
                                                 setHostId(item.id);}}>
                                                 Accept
-                                            </Button>
+                                            </Button> : null
+                                            }
+                                            {props.local_storage_username === props.url_username ? 
                                             <Button color={`error`} onClick={()=> {
                                                 setOpenReject(true);
                                                 setCloseReject(false);
                                                 setHostId(item.id);
                                                 }} >
                                                 Reject
-                                            </Button>
+                                            </Button> : null
+                                            }
                                         </Item>
                                         </Stack>
                                     </>

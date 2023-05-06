@@ -42,17 +42,19 @@ import Notif from '../Badge/Bedge';
 
 
 const UserPanelNew = () => {
+    const user_params = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = () => {setIsOpen(!isOpen)};
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
     const [active, setActive] = useState("About Me");
-    const {userdata, userInfo} = useUserData()
-    useEffect(() => {userdata()}, [])
-    
+    const {userdata, userInfo} = useUserData(user_params.username);
+    const allData = JSON.parse(localStorage.getItem('tokens'))
+    const local_storage_username = allData.username
 
-    const user_params = useParams();
+    console.log("++++++++++++++++ THE USER PARAM IS ++++++++++++++++ ", user_params.username);
+
     const menuItem = [
         {
             id: 0,
@@ -69,13 +71,19 @@ const UserPanelNew = () => {
         {
             id: 2,
             name : "Announcements",
-            component : <MyAnnouncements username={user_params.username} />,
+            component : <MyAnnouncements 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />,
             icon : <AiFillNotification style={{ marginTop : "-0.2rem" }}/>,
         },
         {
             id: 3,
             name : "Posts",
-            component : <MyPosts />,
+            component : <MyPosts 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />,
             icon : <HiCamera style={{ marginTop : "-0.2rem" }}/>,
         }
     ]
@@ -83,9 +91,8 @@ const UserPanelNew = () => {
         setOpen(true);
         setDisabled(false);
     }
-
+    useEffect(() => {userdata()}, [])
     
-
 
     return (
         <div className='userpanel'>
@@ -134,13 +141,14 @@ const UserPanelNew = () => {
                                 </Stack>
                             </Card>
                         </Grid>
-      
+
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>
                         <Card  sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
                             <h1 style={{ display: "flex", alignItems: "ceter", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem", justifyContent: "space-between" }} >
                                 {userInfo.hosting_availability ? <span>{userInfo.hosting_availability}</span> : <span>Not Accepting Guests</span>}
-                                <Button
+                                {userInfo.username === local_storage_username ? 
+                                    <Button
                                     sx={{ mr: "1rem" }}
                                     variant="contained"
                                     size="medium"
@@ -148,11 +156,15 @@ const UserPanelNew = () => {
                                     style={{ minWidth: 150 }}
                                     onClick={(e) => openCreateRequest()}>
                                         Add Announcement
-                                </Button>
+                                    </Button> : null}
+                                
                             </h1>
                             {/* <p style={{ color: "#BABABA",  marginLeft: "1rem", marginBottom: "0.5rem" }}>Last login HH:MM:SS</p> */}
                         </Card>
-                        <Overview />
+                        <Overview 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />
                         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
                             {menuItem.map((item, key) => (
                                     <div id={`${item.name}`}>
@@ -163,14 +175,16 @@ const UserPanelNew = () => {
                     </Grid>
                 </Grid>
             </Container>
-            <NewAnnouncementForm 
-                open={open}
-                setOpen={setOpen}
-                disabled={disabled}
-                setDisabled={setDisabled}
-                setRequestData={setRequestData}
-                requestData={requestData}
-            />
+            {userInfo.username === local_storage_username ? 
+                <NewAnnouncementForm 
+                    open={open}
+                    setOpen={setOpen}
+                    disabled={disabled}
+                    setDisabled={setDisabled}
+                    setRequestData={setRequestData}
+                    requestData={requestData}
+                /> : null
+            }
         </div>
     )
 }

@@ -65,7 +65,11 @@ const UserPanelNew = () => {
         {
             id: 1,
             name : "My Home",
-            component : <Home />,
+            component : <Home 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                            first_name={userInfo.first_name}
+                        />,
             icon : <MdHome style={{ marginTop : "-0.2rem" }}/>,
         },
         {

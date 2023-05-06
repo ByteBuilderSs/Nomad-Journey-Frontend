@@ -42,6 +42,7 @@ const SetViewToCurrentLocation = ({location, setLocation}) => {
             }, 
             (error) => {
                 console.log("--------- ERROR WHILE FETCHING LOCATION ----------- ", error);
+                setLocation({lat: 51.505, lng: -0.09});
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
             ) ;

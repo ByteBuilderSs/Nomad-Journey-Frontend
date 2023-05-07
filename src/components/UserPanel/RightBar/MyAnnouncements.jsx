@@ -298,8 +298,8 @@ function MyAnnouncements(props) {
                             }}
                             >
                             <div>
-                                <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
-                                    No Announcements Found!
+                                <span style={{ marginLeft: "20rem" , fontWeight: "bold", fontSize: 20}}>
+                                    No Announcement Found!
                                 </span>
                             </div>
                         </Box>

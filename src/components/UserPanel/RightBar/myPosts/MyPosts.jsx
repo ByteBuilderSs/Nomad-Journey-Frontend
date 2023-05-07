@@ -388,7 +388,7 @@ const AllPosts = (props) =>
               (
                 <div>
                   <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
-                    No Posts Found!
+                    No Post Found!
                   </span>
                   <p style={{ marginLeft: "9rem" , fontSize: 15, marginTop: "0.3rem", color: "#0F3E86" }}>
                     You would be able to create a post for your corresponding announcement, only when it is done.

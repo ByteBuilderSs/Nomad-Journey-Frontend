@@ -11,8 +11,8 @@ import {
 import LabelIcon from '@mui/icons-material/Label';
 import {useUserData} from '../../../hooks/useSetUserData';
 
-function About() {
-    const {userdata, userInfo} = useUserData();
+function About(props) {
+    const {userdata, userInfo} = useUserData(props.url_username);
     useEffect(() => {userdata()}, []);
 
     return(

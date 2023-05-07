@@ -59,7 +59,10 @@ const UserPanelNew = () => {
         {
             id: 0,
             name : "About Me",
-            component : <AboutMe />,
+            component : <AboutMe 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />,
             icon : <TiUser style={{ marginTop : "-0.2rem" }}/>,
         },
         {

@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/Navbar";
 import EditProfile from "./components/UserPanel/EditProfile/EditProfile";
 import React, { useEffect, useState } from "react";
 import MainPageFunc from "./pages/MainPage";
+import LandingPageFunc from "./pages/LandingPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import Login from "./pages/login";
@@ -75,7 +76,7 @@ function App() {
 
 
           ) :<div>
-        {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
+        {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
 
             <body  style = {allPagesStyle}>
 
@@ -84,6 +85,7 @@ function App() {
 
                 <CounterProvider>
                   <Routes>
+                    <Route path="/landing" element={<LandingPageFunc/>}/>
                     <Route path="/signup" element={<SignInForm />}/>
                     <Route path="/login" element={< Login/>}/>
                     <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
@@ -98,7 +100,7 @@ function App() {
                 </CounterProvider>
 
               </div>
-          {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
+          {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
 
             </body>
             <ToastContainer 

@@ -13,6 +13,7 @@ import 'semantic-ui-css/semantic.min.css';
 // Provide redux store to react :
 import store from './ReduxStore/store'
 import { Provider } from 'react-redux'
+import $ from 'jquery';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

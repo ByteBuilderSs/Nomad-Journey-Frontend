@@ -25,6 +25,7 @@ import ImageCompress from 'quill-image-compress';
 import ImageResize  from 'quill-image-resize-module-react';
 import Mentions from '../MentionList/MentionList'
 import {useMentionInPosts} from '../../../hooks/useMentionInPosts'
+import FeedbackQs from '../feedBack/feedBack'
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -307,6 +308,19 @@ const EditorForm = () => {
                                         </FormControl>
                                     </Item>
                                     </Grid>                        
+                                </Stack>
+                            </Grid>
+                            {/*feedback */}
+                            <Grid item xs={12} direction='row'>
+                                <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                    <Item>
+                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                            Your host name in this trip was:
+                                        </h6>
+                                    </Item>
+                                    <Item>
+                                        <FeedbackQs/>
+                                    </Item>
                                 </Stack>
                             </Grid>
                             {/* Buttons */}

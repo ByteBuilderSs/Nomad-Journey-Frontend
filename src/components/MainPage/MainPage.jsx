@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Pagination from '@mui/material/Pagination';
 import "./MainPage.css"
 import "./fontawesome.css"
+import GeneralPosts from '../generalPosts/generalPosts'
 import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
@@ -48,7 +49,7 @@ const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, s
       }
     };
     
-    await axios.get(`http://91.107.166.228:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
+    await axios.get(`http://127.0.0.1:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
       (response) => {
         setAnncData(response.data.results)
         console.log(response.data)
@@ -327,7 +328,11 @@ export default function MainPage(){
       setSort(event.target.value)
       fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
     }
-
+    const showGeneralost=()=>{
+      return(      
+      <GeneralPosts/>
+      );
+    }
   return(
 
     <div className='mainpage'>
@@ -495,7 +500,14 @@ export default function MainPage(){
           </nav>
         </div>
       </section>
-
+      <div class="card-silder">
+        <div class="container">
+          <div class="row">
+          {showGeneralost()}
+          </div>
+        </div>
+      </div>
+      
       <div class="search-form">
         <div class="container">
           <div class="row">

@@ -3,12 +3,15 @@ import Avatar from "@mui/material/Avatar";
 import Header from "./Header";
 import walkGif from '../../lottieAssets/walk.json';
 import Lottie from 'react-lottie';
+import { useNavigate } from "react-router-dom";
 
 import "./LandingPage.css"
 
 
 
 export default function LandingPage(){
+
+    const navigate = useNavigate()
 
     const Walk = () => {
 
@@ -46,8 +49,8 @@ export default function LandingPage(){
                             <div class="line-dec"></div>
                             <h2>Welcome To Nomad-Journey</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt uttersi labore et dolore magna aliqua is ipsum suspendisse ultrices gravida</p>
-                            <div class="main-button">
-                            <a href="reservation.html">Discover More</a>
+                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                <div className='landing1' style={{color : "#fff"}}> Discover More </div>
                             </div>
                         </div>
                         </div>
@@ -127,7 +130,7 @@ export default function LandingPage(){
                 <div class="row" >
                     <div class="col-lg-6 offset-lg-3" >
                     <div class="section-heading text-center" style={{marginTop : "50px"}}>
-                        <h2>Best Weekly Offers In Each City</h2>
+                        <h2>Weekly Announcements</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
                     </div>
                     </div>
@@ -141,17 +144,17 @@ export default function LandingPage(){
                         <div class="thumb">
                             <img src={require("../../Assets/images/offers-01.jpg")} alt=""/>
                             <div class="text">
-                            <h4>Havana<br/><span><i class="fa fa-users"></i> 234 Check Ins</span></h4>
-                            <h6>$420<br/><span>/person</span></h6>
+                            <h4>Sina<br/><span><i class="fa fa-users"></i> 12 Travelers Count</span></h4>
+                            <h6>Rate<br/></h6>
                             <div class="line-dec"></div>
                             <ul>
-                                <li>Deal Includes:</li>
-                                <li><i class="fa fa-taxi"></i> 5 Days Trip {'>'} Hotel Included</li>
-                                <li><i class="fa fa-plane"></i> Airplane Bill Included</li>
-                                <li><i class="fa fa-building"></i> Daily Places Visit</li>
+                                <li>Includes:</li>
+                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
+                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
+                                <li><i class="fa fa-building"></i> City</li>
                             </ul>
-                            <div class="main-button">
-                                <a href="reservation.html">Make a Reservation</a>
+                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
                             </div>
                             </div>
                         </div>
@@ -160,17 +163,17 @@ export default function LandingPage(){
                         <div class="thumb">
                             <img src={require("../../Assets/images/offers-02.jpg")} alt=""/>
                             <div class="text">
-                            <h4>Kingston<br/><span><i class="fa fa-users"></i> 234 Check Ins</span></h4>
-                            <h6>$420<br/><span>/person</span></h6>
+                            <h4>Baktash<br/><span><i class="fa fa-users"></i> 12 Travelers Count</span></h4>
+                            <h6>Rate<br/></h6>
                             <div class="line-dec"></div>
                             <ul>
-                                <li>Deal Includes:</li>
-                                <li><i class="fa fa-taxi"></i> 5 Days Trip {'>'} Hotel Included</li>
-                                <li><i class="fa fa-plane"></i> Airplane Bill Included</li>
-                                <li><i class="fa fa-building"></i> Daily Places Visit</li>
+                                <li>Includes:</li>
+                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
+                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
+                                <li><i class="fa fa-building"></i> City</li>
                             </ul>
-                            <div class="main-button">
-                                <a href="reservation.html">Make a Reservation</a>
+                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
                             </div>
                             </div>
                         </div>
@@ -179,17 +182,17 @@ export default function LandingPage(){
                         <div class="thumb">
                             <img src={require("../../Assets/images/offers-01.jpg")} alt=""/>
                             <div class="text">
-                            <h4>George Town<br/><span><i class="fa fa-users"></i> 234 Check Ins</span></h4>
-                            <h6>$420<br/><span>/person</span></h6>
+                            <h4>Sina<br/><span><i class="fa fa-users"></i> 12 Travelers Count</span></h4>
+                            <h6>Rate<br/></h6>
                             <div class="line-dec"></div>
                             <ul>
-                                <li>Deal Includes:</li>
-                                <li><i class="fa fa-taxi"></i> 5 Days Trip {'>'} Hotel Included</li>
-                                <li><i class="fa fa-plane"></i> Airplane Bill Included</li>
-                                <li><i class="fa fa-building"></i> Daily Places Visit</li>
+                                <li>Includes:</li>
+                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
+                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
+                                <li><i class="fa fa-building"></i> City</li>
                             </ul>
-                            <div class="main-button">
-                                <a href="reservation.html">Make a Reservation</a>
+                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
                             </div>
                             </div>
                         </div>
@@ -268,7 +271,7 @@ export default function LandingPage(){
                     </div>
                     <div class="col-lg-6">
                     <div class="section-heading">
-                        <h2>Discover More About Our Country</h2>
+                        <h2>Discover More About Our Project</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
                     </div>
                     <div class="row">
@@ -300,8 +303,8 @@ export default function LandingPage(){
                         </div>
                     </div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                    <div class="main-button">
-                        <a href="reservation.html">Discover More</a>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                        <div className='landing2' style={{color : "#fff"}}> Discover More </div>
                     </div>
                     </div>
                 </div>
@@ -313,11 +316,11 @@ export default function LandingPage(){
                 <div class="row">
                     <div class="col-lg-8" style={{justifyContent : "left"}}>
                     <h2>Are You Looking To Travel ?</h2>
-                    <h4>Make A Reservation By Clicking The Button</h4>
+                    <h4>Make An Announcement By Clicking The Button</h4>
                     </div>
                     <div class="col-lg-4">
-                    <div class="border-button">
-                        <a href="reservation.html">Book Yours Now</a>
+                    <div class="border-button" onClick={() => {navigate("/signup")}}>
+                        <div className='landing3' style={{color : "#fff"}}> SignUp Now </div>
                     </div>
                     </div>
                 </div>

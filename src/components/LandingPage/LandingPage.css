@@ -15,6 +15,75 @@
   justify-content : center
 }
 
+
+.main-button .landing1 {
+  font-size: 14px;
+  color: #E55405 !important;
+  background-color: #fff;
+  border: 1px solid #fff;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-button .landing1:hover {
+  background-color: #E55405;
+  color: #fff !important ;
+  border: 1px solid #E55405
+}
+.main-button .landing2 {
+  font-size: 14px;
+  color: #fff !important;
+  background-color: #E55405;
+  border: 1px solid #E55405;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-button .landing2:hover {
+  background-color: #fff;
+  color: #E55405 !important ;
+  border: 1px solid #E55405
+}
+
+
+.border-button .landing3 {
+  font-size: 14px;
+  color: #E55405;
+  background-color: transparent;
+  border: 1px solid #fff;
+  padding: 12px 30px;
+  display: inline-block;
+  border-radius: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.border-button .landing3:hover {
+  background-color: #fff;
+  color: #E55405 !important;
+}
+
+
+
 /* 
 ---------------------------------------------
 LandingPage Styles
@@ -22,9 +91,9 @@ LandingPage Styles
 */
 
 
-.login-signup a {
+.main-button .login-signup  {
     font-size: 16px;
-    color: #E55405;
+    color: #E55405 !important;
     /* background-color: transparent; */
     background-color: #f7f7f7;;
     border: 1px solid #E55405;
@@ -40,10 +109,10 @@ LandingPage Styles
     margin-top: 5px;
   }
   
-  .login-signup a:hover {
+  .main-button .login-signup:hover {
     background-color: #E55405;
     border: 1px solid #f7f7f7;
-    color: #f7f7f7;
+    color: #f7f7f7 !important;
   }
 
 .about-main-content {

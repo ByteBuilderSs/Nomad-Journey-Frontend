@@ -6,12 +6,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from '@mui/material/Button';
-
+import { useNavigate } from "react-router-dom";
 
 import SiteLogo from "../../Assets/images/nomad-journey-logo-3.jpg";
 
 
 function Header(){
+    const navigate = useNavigate()
     return(
         <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">
             <Container maxWidth="xl">
@@ -56,7 +57,9 @@ function Header(){
                                 alignItems: "center",
                                 justifyContent: "center",
                             }}>
-                            <div class="login-signup"><a href="about.html">Login/SignUp</a></div>
+                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                <div className='login-signup' style={{color : "#fff"}}> Login/SignUp </div>
+                            </div>
                         </Box>
                         
                     </Box>

@@ -14,10 +14,11 @@ import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
 import { toast } from "react-toastify";
-import { useSelector } from 'react-redux';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage } from "../../ReduxStore/features/MainPage/mainPageSlice"
 import FilterLanguage from "./Filter";
-
+import {FetchAnnc} from "../../hooks/useAnnounceFetchMainPage";
+import {Make_Offer} from "../../hooks/useOfferAnnc"
 
 
 
@@ -40,42 +41,7 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 /// fetch announcements from backend
-const fetchAnnc = async (setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, sort, value = 1) => {
-  try {
 
-    const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${signedInUser['access']}`
-      }
-    };
-    
-    await axios.get(`http://188.121.102.52:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}`, config).then(
-      (response) => {
-        setAnncData(response.data.results)
-        console.log(response.data)
-        console.log(sort)
-        setPaginCount(response.data.page_count)
-        setAncResultCount(response.data.count)
-        if(response.data.count != 0){
-          setPagination(true)
-        }
-        // setTimeout(() => {
-          
-        // }, 2000);
-        setLoader(false);
-        
-      }
-    )
-    
-    
-  } catch (error) {
-    console.error(error);
-  }
-  
-}
 
 
 // when data inaccessible
@@ -124,12 +90,15 @@ const Loader = () => {
 }
 
 
+
 ///// show each announcements on mainpage
 const Announce = (props) => {
   
   // For offer dialog :
   const [openOfferDialog, setOpenOfferDialog] = useState(false);
   const [openDiscDialog, setOpenDiscDialog] = useState(false);
+  const fetchOffer = Make_Offer()
+  
 
   const handleOpenDiscDialog = () => {
     setOpenDiscDialog(true);
@@ -150,33 +119,11 @@ const Announce = (props) => {
   const handleOffer = () => {
       handleCloseOfferDialog()
       toast.success("your offer submited successfully");
-      props.setLoader(true)
-      Make_Offer() 
+      props.dispatch(setLoader(true))
+      fetchOffer(props.anc.id) 
   }
 
-  const Make_Offer = async () => {
-
-    try {
   
-      const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-      console.log(signedInUser)
-      
-      axios({
-        method: "post",
-        url: `http://188.121.102.52:8000/api/v1/anc_request/create-request/${props.anc.id}`,
-        headers: {
-          'Authorization': `Bearer ${signedInUser.access}`
-        },
-      }).then(response => {
-        fetchAnnc(props.setAnncData, props.setPagination, props.setPaginCount, props.setLoader, props.setAncResultCount, props.sort);
-      })
-      
-      
-    } catch (error) {
-      console.error(error);
-    }
-  
-  }
   let Description = "";
   if(props.anc.anc_description.includes("\n")){
     props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
@@ -282,28 +229,23 @@ const Announce = (props) => {
 
 export default function MainPage(){
 
-    const [announcdata,setAnncData] = useState([])
-    const [ancResultCount,setAncResultCount] = useState(0)
-    const [loader,setLoader] = useState(false)
-    const [sort, setSort] = useState("sort_by=anc_timestamp_created&descending=True")
+    const fetchAnnc = FetchAnnc()
+    const dispatch = useDispatch()
+    const announcdata = useSelector((state) => state.mainpage.announcData)
+    const loader = useSelector((state) => state.mainpage.loader)
+    const sort = useSelector((state) => state.mainpage.sort)
     // for pagination :
-    const [showPagination, setPagination] = useState(false);
-    const [paginCount, setPaginCount] = useState(1);
-    const [page, setPage] = useState(1);
-    const [userCity, setUserCity] = useState("test");
-    // const useSel = useSelector()
+    const showPagination = useSelector((state) => state.mainpage.showPagination)
+    const paginCount = useSelector((state) => state.mainpage.paginCount)
+    const page = useSelector((state) => state.mainpage.page)
 
-    // setUserCity(useSel(state => state.user.city))
-
-
-    const iterators = { head: 0, limit : 4};
 
     useEffect(() => {
       clickInputsInOrder(0);
     }, []);
       
     useEffect(() => {
-      fetchAnnc(setAnncData,setPagination,setPaginCount,setLoader,setAncResultCount,sort)
+      fetchAnnc()
     }, []);
 
   
@@ -329,16 +271,16 @@ export default function MainPage(){
       }
       else{
         return(
-          announcdata.map(data => <Announce anc = {data} setAnncData = {setAnncData} setPagination = {setPagination} setPaginCount = {setPaginCount} setLoader = {setLoader} setAncResultCount = {setAncResultCount} sort = {sort}/>)
+          announcdata.map(data => <Announce anc = {data} dispatch = {dispatch} sort = {sort}/>)
         )
       }
 
     }
 
     const handlePageChange = (event, value) => {
-      setLoader(true)
-      setPage(value);
-      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, sort, value)
+      dispatch(setLoader(true))
+      dispatch(setPage(value));
+      fetchAnnc(value, sort)
     };
 
     //function for show pagination :
@@ -369,12 +311,12 @@ export default function MainPage(){
       }
     }
 
-    const handleSortChange = (event) => {
-      setLoader(true)
-      setPage(1);
-      setSort(event.target.value)
-      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
-    }
+    // const handleSortChange = (event) => {
+    //   setLoader(true)
+    //   setPage(1);
+    //   setSort(event.target.value)
+    //   fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
+    // }
     const showGeneralost=()=>{
       return(      
       <GeneralPosts/>
@@ -563,7 +505,7 @@ export default function MainPage(){
             <div class="section-heading text-center">
               <h2>Announcements In Your City</h2>
               {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
-              <h2>Results : {ancResultCount} </h2>
+              {/* <h2>Results : {ancResultCount} </h2> */}
             </div>
           </div>
 

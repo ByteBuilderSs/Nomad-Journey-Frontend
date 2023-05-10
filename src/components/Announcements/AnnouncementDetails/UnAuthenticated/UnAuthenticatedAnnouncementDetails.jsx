@@ -16,6 +16,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DoNotDisturbOnIcon from '@mui/icons-material/DoNotDisturbOn';
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+
 const useStyles = makeStyles(theme => (
     {
         announcement_design:{
@@ -85,16 +86,19 @@ const style = {
     px: 4,
     pb: 3,
 };
-export default function AuthAnnouncement(props)
+
+export default function UnAuthAnnouncement(props)
 {
     const [announcement, setAnnouncement] = useState('')
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+
     const evalAge = (birthdate) => {
         let age = Date.now() - new Date(birthdate);
         let dateOfAge = new Date(age);
         return `Age ${Math.abs(dateOfAge.getUTCFullYear() - 1970)}`;
     }
+
     const checkDescription = (description) => {
         if(description != null)
             return(
@@ -103,30 +107,31 @@ export default function AuthAnnouncement(props)
                 </>
             )
     }
+
     const StatusCheck = (status) => {
         switch (status) {
             case "P":
                 return(
                     <>
-                         Status: Pending <PendingIcon sx={{marginLeft:"0.5rem", color:"#88949f"}} />
+                        Status: Pending <PendingIcon sx={{marginLeft:"0.5rem", color:"#88949f"}} />
                     </>
                 )
             case "A":
                 return(
                     <>
-                         Status: Accepted <DoneIcon sx={{marginLeft:"0.5rem", color:"#2b672b"}} />
+                        Status: Accepted <DoneIcon sx={{marginLeft:"0.5rem", color:"#2b672b"}} />
                     </>
                 )
             case "D" :
                 return (
                     <>
-                         Status: Done <DoneAllIcon sx={{marginLeft:"0.5rem", color:"#2b672b"}}/>
+                        Status: Done <DoneAllIcon sx={{marginLeft:"0.5rem", color:"#2b672b"}}/>
                     </>
                 )
             case "E":
                 return (
                     <>
-                         Status: Expired <DoNotDisturbOnIcon sx={{marginLeft:"0.5rem", color:"#af0000"}} />
+                        Status: Expired <DoNotDisturbOnIcon sx={{marginLeft:"0.5rem", color:"#af0000"}} />
                     </>
                 )
         }

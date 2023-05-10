@@ -42,13 +42,19 @@ const SetViewToCurrentLocation = ({location, setLocation}) => {
             }, 
             (error) => {
                 console.log("--------- ERROR WHILE FETCHING LOCATION ----------- ", error);
+                setLocation({lat: 51.505, lng: -0.09});
             },
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
             ) ;
     }
 
     useEffect(() => {
-        getGeo();
+        console.log("+++++++++++++++++ TRY TO GET LOCATION FROM BROWSER +++++++++++++++++++");
+        if (!location.lat &&  !location.lng) {
+            console.log("LATITUDE IS: ", location.lat);
+            console.log("LONGTITUDE IS: ", location.lng);
+            getGeo();
+        }
     }, []);
 
     useEffect(() => {
@@ -119,7 +125,94 @@ const CustomizeMarker = ({location, setLocation}) => {
 }
 
 const EditHome = () => {
+    // User_address_lat, User_address_long
     const [location, setLocation] = useState({});
+    const [sat, setSat] = useState(false);
+    const [sun, setSun] = useState(false);
+    const [mon, setMon] = useState(false);
+    const [tue, setTue] = useState(false);
+    const [wed, setWed] = useState(false);
+    const [thu, setThu] = useState(false);
+    const [fri, setFri] = useState(false);
+    const [guestsCount, setGuestsCount] = useState('');
+    const [prefGender, setPrefGender] = useState('');
+    const [isPetFriendly, setIsPetFriendly] = useState(false);
+    const [isKidFriendly, setIsKidFriendly] = useState(false);
+    const [isSmokingAllowed, setIsSmokingAllowed] = useState(false);
+    const [sleepArg, setSleepArg] = useState('');
+    const [descArg, setDescArg] = useState('');
+    const [roomateSituation, setRoomateSituation] = useState('');
+    const [additionalInfo, setAdditionalInfo] = useState('');
+    const [havePet, setHavePet] = useState(false);
+    const [haveKid, setHaveKid] = useState(false);
+    const [doesSmoke, setDoesSmoke] = useState(false);
+    const [wheelchair, setWheelchair] = useState(false);
+
+    const handleChangeSat = (event) => {
+        setSat(event.target.checked);
+    };
+    const handleChangeSun = (event) => {
+        setSun(event.target.checked);
+    };
+    const handleChangeMon = (event) => {
+        setMon(event.target.checked);
+    };
+    const handleChangeTue = (event) => {
+        setTue(event.target.checked);
+    };
+    const handleChangeWed = (event) => {
+        setWed(event.target.checked);
+    };
+    const handleChangeThu = (event) => {
+        setThu(event.target.checked);
+    };
+    const handleChangeFri = (event) => {
+        setFri(event.target.checked);
+    };
+
+    const handleMaxGuestCount = (event) => {
+        setGuestsCount(event.target.value);
+    }
+
+    const handleChangeGender = (event) => {
+        setPrefGender(event.target.value);
+    }
+    const handleChangeKF = (event) => {
+        setIsKidFriendly(event.target.checked);
+    };
+    const handleChangePF = (event) => {
+        setIsPetFriendly(event.target.checked);
+    };
+    const handleChangSA = (event) => {
+        setIsSmokingAllowed(event.target.checked);
+    };
+    const handleChangeSleepArg = (event) => {
+        setSleepArg(event.target.value);
+    }
+
+    const handleChangeSleepArgDesc = (event) => {
+        setDescArg(event.target.value);
+    }
+
+    const handleChangeRoomateSituation = (event) => {
+        setRoomateSituation(event.target.value);
+    }
+
+    const handleChangeHP = (event) => {
+        setHavePet(event.target.checked);
+    };
+    const handleChangeHK = (event) => {
+        setHaveKid(event.target.checked);
+    };
+    const handleChangeDS = (event) => {
+        setDoesSmoke(event.target.checked);
+    };
+    const handleWheel = (event) => {
+        setWheelchair(event.target.checked);
+    };
+    const handleChangeAdditionalInfo = (event) => {
+        setAdditionalInfo(event.target.value);
+    }
 
     return (
         <React.Fragment>
@@ -144,13 +237,13 @@ const EditHome = () => {
                                         <h6 style={{  fontWeight: "bold", marginTop: "2rem", paddingRight: "3rem", marginLeft: "-7rem" }}>
                                             Available Nights to Host 
                                         </h6>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Sun" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Mon" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Tue" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Wed" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Thu" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Fri" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid"/>} label="Sat" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={sun} onChange={handleChangeSun}/>} label="Sun" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={mon} onChange={handleChangeMon}/>} label="Mon" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={tue} onChange={handleChangeTue}/>} label="Tue" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={wed} onChange={handleChangeWed}/>} label="Wed" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={thu} onChange={handleChangeThu}/>} label="Thu" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={fri} onChange={handleChangeFri}/>} label="Fri" labelPlacement='top'/>
+                                        <FormControlLabel control={<Checkbox  variant="solid" value={sat} onChange={handleChangeSat}/>} label="Sat" labelPlacement='top'/>
                                 </Box>
                             </Grid>
                             {/* Maximum Number of Guests */}
@@ -173,6 +266,8 @@ const EditHome = () => {
                                                     maxHeight: "10rem",
                                                 }}}
                                                 defaultValue={1}
+                                                value={guestsCount}
+                                                onChange={handleMaxGuestCount}
                                             >
                                                 <MenuItem value={1}>1</MenuItem>
                                                 <MenuItem value={2}>2</MenuItem>
@@ -211,6 +306,8 @@ const EditHome = () => {
                                                 id="max-guests-number"
                                                 sx={{ height: "2rem" }}
                                                 defaultValue={1}
+                                                value={prefGender}
+                                                onChange={handleChangeGender}
                                             >
                                                 <MenuItem value={1}>Any</MenuItem>
                                                 <MenuItem value={2}>Male</MenuItem>
@@ -230,9 +327,9 @@ const EditHome = () => {
                                             Children, Pets, Smoking
                                         </h6>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label="Kid Friendly" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label="Pet Friendly" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label="Smoking is Allowed" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={isKidFriendly} onChange={handleChangeKF}/>} label="Kid Friendly" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={isPetFriendly} onChange={handleChangePF}/>} label="Pet Friendly" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={isSmokingAllowed} onChange={handleChangSA}/>} label="Smoking is Allowed" labelPlacement='right'/>
                                         </Box>
                                 </Box>
                             </Grid>
@@ -261,6 +358,8 @@ const EditHome = () => {
                                                 id="max-guests-number"
                                                 sx={{ height: "2rem" }}
                                                 defaultValue={3}
+                                                value={sleepArg}
+                                                onChange={handleChangeSleepArg}
                                             >
                                                 <MenuItem value={1}>Shared Bed</MenuItem>
                                                 <MenuItem value={2}>Shared Room</MenuItem>
@@ -289,6 +388,8 @@ const EditHome = () => {
                                                     size="medium"
                                                     rows={5}
                                                     maxRows={10}
+                                                    value={descArg}
+                                                    onChange={handleChangeSleepArgDesc}
                                                     />
                                             </FormControl>
                                         </Item>
@@ -307,6 +408,8 @@ const EditHome = () => {
                                                     size="medium"
                                                     rows={5}
                                                     maxRows={10}
+                                                    value={roomateSituation}
+                                                    onChange={handleChangeRoomateSituation}
                                                     />
                                             </FormControl>
                                         </Item>
@@ -324,10 +427,10 @@ const EditHome = () => {
                                             Miscellaneous
                                         </h6>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label=" I Have a Pet" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label="Kids at Home" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label="Smoking at Home" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid"/>} label="Wheelchair Accessible" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={havePet} onChnge={handleChangeHP}/>} label=" I Have a Pet" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={haveKid} onChange={handleChangeHK}/>} label="Kids at Home" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={doesSmoke} onChange={handleChangeDS}/>} label="Smoking at Home" labelPlacement='right'/>
+                                            <FormControlLabel control={<Checkbox  variant="solid" value={wheelchair} onChange={handleWheel}/>} label="Wheelchair Accessible" labelPlacement='right'/>
                                         </Box>
                                 </Box>
                             </Grid>
@@ -349,6 +452,8 @@ const EditHome = () => {
                                                     size="medium"
                                                     rows={5}
                                                     maxRows={10}
+                                                    value={additionalInfo}
+                                                    onChange={handleChangeAdditionalInfo}
                                                     />
                                             </FormControl>
                                         </Item>
@@ -367,7 +472,8 @@ const EditHome = () => {
                                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
                                         <GeoSearchField />
-                                        <SetViewToCurrentLocation location={location} setLocation={setLocation}/>
+                                        {/* TODO => اگر فقط یک کاربر موقعیتش رو قبلا وارد نکرده بود بریم از مرورگر موقعیتش رو دربیاریم */}
+                                        <SetViewToCurrentLocation location={location} setLocation={setLocation}/> 
                                         {location.lat && location.lng && (<CustomizeMarker location={location} setLocation={setLocation} />)}
                                     </MapContainer>
                                 </div>

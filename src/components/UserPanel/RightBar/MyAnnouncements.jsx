@@ -1,9 +1,8 @@
 import "./MyAnnouncement.css";
 import { TiLocation } from "react-icons/ti";
 import { BsCalendarDateFill } from "react-icons/bs";
-import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid } from "@mui/material";
+import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid, Box } from "@mui/material";
 import { Item } from "semantic-ui-react";
 import { FaHome, FaLongArrowAltRight } from "react-icons/fa";
 import { AiOutlineFieldTime } from "react-icons/ai";
@@ -44,10 +43,10 @@ const useStyles = makeStyles(theme => (
             }
     }
 ));
-function MyAnnouncements({username}) {
+
+function MyAnnouncements(props) {
     const navigate = useNavigate();
     const counter = useCounter();
-    const local_storage = JSON.parse(localStorage.tokens);
     const classes = useStyles();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -55,9 +54,10 @@ function MyAnnouncements({username}) {
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [anc_id, setAnc_id] = useState(null);
+
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${username}`)
+        axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${props.url_username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -128,12 +128,12 @@ function MyAnnouncements({username}) {
             return`${travler_count} Traveler`;
         return `${travler_count} Travelers`;
     }
-    const allData = JSON.parse(localStorage.getItem('tokens'));
-    const local_username = allData.username;
+    // const allData = JSON.parse(localStorage.getItem('tokens'));
+    // const local_username = allData.username;
     const checkNotNull = (ancId) => {
         if (ancId != null)
         {
-            if(local_username === username)
+            // if(local_username === username)
                 return (
                     <>
                         <AuthAnnouncement
@@ -147,25 +147,26 @@ function MyAnnouncements({username}) {
                             checkStatus={statusMode}
                             numOfTravelers={numberOftravelers}
                             numOfNights={diffDays}
+                            url_username={props.url_username}
+                            local_storage_username={props.local_storage_username}
                         />
                     </>
                 )
-            return(
-                <>
-                    <UnAuthAnnouncement
-                        announcement_id={ancId}
-                        open={open}
-                        setOpen={setOpen}
-                        disabled={disabled}
-                        setDisabled={setDisabled}
-                        dayOfdate={getDayOfDate}
-                        checkStatus={statusMode}
-                        numOfTravelers={numberOftravelers}
-                        numOfNights={diffDays}
-                    />
-                </>
-                )
-
+            // return(
+            //     <>
+            //         <UnAuthAnnouncement
+            //             announcement_id={ancId}
+            //             open={open}
+            //             setOpen={setOpen}
+            //             disabled={disabled}
+            //             setDisabled={setDisabled}
+            //             dayOfdate={getDayOfDate}
+            //             checkStatus={statusMode}
+            //             numOfTravelers={numberOftravelers}
+            //             numOfNights={diffDays}
+            //         />
+            //     </>
+            //     )
         }
     }
     const checkLoading = (isLoading) => {
@@ -212,7 +213,8 @@ function MyAnnouncements({username}) {
             <ThemeProvider theme={theme}>
                 <h5>
                 <Stack>
-                    {announcement.map((anc, key) =>
+                    {
+                        announcement.length > 0 ? announcement.map((anc, key) =>
                         (
                                 <div
                                     className="announcement-hovering"
@@ -287,7 +289,21 @@ function MyAnnouncements({username}) {
                                     </Item>
 
                                 </div>
-                        ))}
+                        )) : 
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                bgcolor: "background.paper",
+                                p: 2,
+                            }}
+                            >
+                            <div>
+                                <span style={{ marginLeft: "20rem" , fontWeight: "bold", fontSize: 20}}>
+                                    No Announcement Found!
+                                </span>
+                            </div>
+                        </Box>
+                    }
                 </Stack>
                     {checkNotNull(anc_id)}
                     {() => setAnc_id(null)}

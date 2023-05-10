@@ -10,8 +10,220 @@ import {
 } from '@mui/material';
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 import './Home.css';
+import axios from 'axios';
+import { toast } from "react-toastify";
+
+const allData = JSON.parse(localStorage.getItem('tokens'));
+const access_token = allData.access;
+
+const RecenterAutomatically = ({lat, lng}) => {
+    const map = useMap();
+    useEffect(() => {
+        map.setView([lat, lng]);
+    }, [lat, lng]);
+    return null;
+}
 
 const Home = (props) => {
+    const [lat, setLat] = useState(51.505);
+    const [lng, setLng] = useState(-0.09);
+    const [sat, setSat] = useState(false);
+    const [sun, setSun] = useState(false);
+    const [mon, setMon] = useState(false);
+    const [tue, setTue] = useState(false);
+    const [wed, setWed] = useState(false);
+    const [thu, setThu] = useState(false);
+    const [fri, setFri] = useState(false);
+    const [guestsCount, setGuestsCount] = useState('');
+    const [prefGender, setPrefGender] = useState('');
+    const [isPetFriendly, setIsPetFriendly] = useState(false);
+    const [isKidFriendly, setIsKidFriendly] = useState(false);
+    const [isSmokingAllowed, setIsSmokingAllowed] = useState(false);
+    const [sleepArg, setSleepArg] = useState('');
+    const [descArg, setDescArg] = useState('');
+    const [roomateSituation, setRoomateSituation] = useState('');
+    const [additionalInfo, setAdditionalInfo] = useState('');
+    const [havePet, setHavePet] = useState(false);
+    const [haveKid, setHaveKid] = useState(false);
+    const [doesSmoke, setDoesSmoke] = useState(false);
+    const [wheelchair, setWheelchair] = useState(false);
+    const [days, setDays] = useState([]);
+
+
+
+    const loadUserHomeInfo = async () => {
+        axios({
+            method: "get",
+            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit5/${props.url_username}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        }).then((result) => {
+            console.log("+++++++++ THE RESULT IS ++++++++ ", result);
+            if (result.data.data.User_address_lat) {
+                console.log("++++++++++++++++");
+                setLat(result.data.data.User_address_lat);
+            }
+            if (result.data.data.User_address_long) {
+                console.log("----------------------");
+                setLng(result.data.data.User_address_long);
+            }
+            
+            let is_sat = result.data.data.is_sat;
+            setSat(is_sat);
+            if (is_sat === true) {
+                console.log("ddddddddddddd");
+                setDays(oldArray => [...oldArray, "Saturday"]);
+            }
+
+            let is_sun = result.data.data.is_sun;
+            setSun(is_sun);
+            if (is_sun === true) {
+                setDays(oldArray => [...oldArray, "Sunday"]);
+            }
+
+            let is_mon = result.data.data.is_mon;
+            setMon(is_mon);
+            if (is_mon === true) {
+                setDays(oldArray => [...oldArray, "Monday"]);
+            }
+
+            let is_tue = result.data.data.is_tue;
+            setTue(is_tue);
+            if (is_tue === true) {
+                setDays(oldArray => [...oldArray, "Tuesday"]);
+            }
+
+            let is_wed = result.data.data.is_wed;
+            setWed(is_wed);
+            if (is_wed === true) {
+                setDays(oldArray => [...oldArray, "Wednesday"]);
+            }
+            
+            let is_thu = result.data.data.is_thu;
+            setThu(is_thu);
+            if (is_thu === true) {
+                setDays(oldArray => [...oldArray, "Thursday"]);
+            }
+
+            let is_fri = result.data.data.is_fri;
+            setFri(is_fri);
+            if (is_fri === true) {
+                setDays(oldArray => [...oldArray, "Friday"]);
+            }
+
+            setGuestsCount(result.data.data.maximum_number_of_guests);
+            setPrefGender(result.data.data.prefered_gender_to_host);
+            setIsPetFriendly(result.data.data.is_pet_friendly);
+            setIsKidFriendly(result.data.data.is_kid_friendly);
+            setIsSmokingAllowed(result.data.data.is_smoking_allowed);
+            setSleepArg(result.data.data.sleeping_arrangments);
+            setDescArg(result.data.data.description_of_sleeping_arrangement);
+            setRoomateSituation(result.data.data.roommate_situation);
+            setAdditionalInfo(result.data.data.additional_information);
+            setHavePet(result.data.data.i_have_pet);
+            setHaveKid(result.data.data.kids_at_home);
+            setDoesSmoke(result.data.data.smoking_at_home);
+            setWheelchair(result.data.data.wheelchair_accessible);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching user home info.")
+            {/* TODO => err.response.data.message*/}
+        })
+    }
+    
+    useEffect(() => {
+        loadUserHomeInfo();
+    }, []);
+    
+
+    const DaysCheck = (days) => {
+        console.log("THE DAYS ARE: ", days);
+        if (days.length === 0) {
+            return (
+                <>
+                    <span>No preferred day is declared yet.</span>
+                </>
+            );
+        }
+        return (
+            <>
+                <span>{(days.map((d, index) => (<span key={index}>{(index ? ', ' : ' ') + d }</span>)))}</span>
+            </>
+        );
+    };
+
+    const GenderCheck = (gender) => {
+        if (gender == 1) {
+            return (
+                <>
+                    <span>Any</span>
+                </>
+            );
+        }
+        else if (gender == 2) {
+            return (
+                <>
+                    <span>Male</span>
+                </>
+            )
+        }
+        else if (gender == 3) {
+            return (
+                <>
+                    <span>Female</span>
+                </>
+            )
+        }
+        else {
+            <>
+                <span>No preferred gender is declared yet.</span>
+            </>
+        }
+    }
+    /*
+        SHARED_BED= 1
+        SHARED_ROOM = 2
+        PRIVATE_ROOM = 3
+        PUBLIC_ROOM = 4
+     */
+    const SleepCheck = (sleep) => {
+        if (sleep === 1) {
+            return (
+                <>
+                    <span>Shared Bed</span>
+                </>
+            )
+        }
+        else if (sleep === 2) {
+            return (
+                <>
+                    <span>Shared Room</span>
+                </>
+            )
+        }
+        else if (sleep === 3) {
+            return (
+                <>
+                    <span>Privet Room</span>
+                </>
+            )
+        }
+        else if (sleep === 4) {
+            return (
+                <>
+                    <span>Public Room</span>
+                </>
+            )
+        }
+        else {
+            return (
+                <>
+                    <span>No sleeping arrangement is declared yet.</span>
+                </>
+            )
+        }
+    }
     return (
         <>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
@@ -23,19 +235,18 @@ const Home = (props) => {
                     {
                         props.url_username === props.local_storage_username ? 
                         <Grid item xs={12} sx={{ ml: "2.2rem" }}>
-                            <div className='map-container'>
-                                <MapContainer center={[51.505, -0.09]} zoom={16} scrollWheelZoom={true}>
-                                    <TileLayer
-                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                    />
-                                    <Marker position={[51.505, -0.09]}>
-                                        <Popup>
-                                            Your Home Location on The Map.
-                                        </Popup>
-                                    </Marker>
-                                </MapContainer>
-                            </div>
+                            <MapContainer center={[lat, lng]} zoom={16} scrollWheelZoom={true}>
+                                <TileLayer
+                                attribution='<a href="https://www.openstreetmap.org/copyright"></a>'
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                                <Marker position={[lat,lng]}>
+                                <Popup>
+                                    Your Home Location on The Map.
+                                </Popup>
+                                </Marker>
+                                <RecenterAutomatically lat={lat} lng={lng} />
+                            </MapContainer>
                         </Grid>
                         : null
                     }
@@ -48,37 +259,44 @@ const Home = (props) => {
                 {/* WHICH DAYS IN THE WEEK */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Preferred Days to Host: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sunday, Monday</span>
+                        Preferred Days to Host: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{DaysCheck(days)}</span>
                     </h3>
                 </Grid>
                 {/* Maximum Number of Guests */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Max Number of Guests: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1</span>
+                        Max Number of Guests: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{guestsCount}</span>
                     </h3>
                 </Grid>
                 {/* Preferred Gender to Host */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Preferred Gender to Host: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Female</span>
+                        Preferred Gender to Host: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{GenderCheck(prefGender)}</span>
                     </h3>
                 </Grid>
                 {/* Kid Friendly? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Kid Friendly? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Kid Friendly? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{isKidFriendly === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}
+                                    </span>
                     </h3>
                 </Grid>
                 {/* Pet Friendly? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Pet Friendly? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Pet Friendly? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{isPetFriendly === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}</span>
                     </h3>
                 </Grid>
                 {/* Smoking Allowed? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Smoking Allowed? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Smoking Allowed? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{isSmokingAllowed === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}</span>
                     </h3>
                 </Grid>
                 {/* --------------------------- Home Info -----------------------------*/}
@@ -92,25 +310,33 @@ const Home = (props) => {
                 {/* Has Kid? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Has Children? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Has Children? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{haveKid === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}</span>
                     </h3>
                 </Grid>
                 {/* Has Pet? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Has Pets? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Has Pets? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{havePet === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}</span>
                     </h3>
                 </Grid>
                 {/* Smoking Allowed? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Smoking at Home? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Smoking at Home? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{doesSmoke === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}</span>
                     </h3>
                 </Grid>
                 {/* Wheelchair Accessible? */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Wheelchair Accessible? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No</span>
+                        Wheelchair Accessible? <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{wheelchair === true 
+                                                                                                                        ? (<span>Yes</span> ) 
+                                                                                                                        : (<span>No</span>)}</span>
                     </h3>
                 </Grid>
                 {/* --------------------------- Sleeping Arrangements -----------------------------*/}
@@ -124,10 +350,23 @@ const Home = (props) => {
                 {/* Description of Sleeping Arrangement */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        <span style={{ fontSize: 15, color: "#0F3E86"}}>Private Room</span>
+                        <span style={{ fontSize: 15, color: "#0F3E86"}}>{SleepCheck(sleepArg)}</span>
                     </h3>
                     <Typography component="p" sx={{ width: "95%", color: "#0F3E86" }} >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, ut molestias earum magnam accusantium iure tenetur sed dicta ex voluptate, porro cum officia corporis dignissimos voluptatum aspernatur eveniet voluptates dolorem tempora, veniam perspiciatis et. Quia deserunt consequuntur facilis doloribus est, consectetur dicta quod quidem voluptatum mollitia assumenda sint nemo ratione velit culpa, voluptate amet eligendi reprehenderit. Similique, recusandae sint? Sapiente similique asperiores itaque qui, quis nostrum illum voluptatem debitis cumque sed error enim maxime nisi modi aspernatur molestias praesentium velit voluptatibus fugiat maiores odio ipsam odit! Labore mollitia consectetur voluptatum quisquam eum sit minima repellat accusamus perferendis. Inventore nemo doloribus, distinctio voluptate autem eum atque vel ab culpa error reiciendis deleniti harum recusandae eos quisquam rem hic sit nam doloremque consectetur odit est. Aliquid laboriosam beatae aspernatur consequatur error nobis vitae quisquam, vel in fugiat minima numquam, et ipsam porro.
+                        {descArg && descArg.length > 0 ? <p style={{ marginLeft: "0.04rem" }}>{descArg}</p> : <p style={{ marginLeft: "0.04rem" }}>No more description is declared yet...</p>}
+                    </Typography>
+                </Grid>
+                {/* ---------------------------------------------- Roomate Situation ---------------------------------*/}
+                <Grid item xs={12}>
+                    <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }}/>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "#E55405" }}>
+                        Roomate Situation
+                    </h3>
+                    <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
+                </Grid>
+                <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                    <Typography component="p" sx={{ width: "95%", color: "#0F3E86" }} >
+                        {roomateSituation && roomateSituation.length > 0 ? <p style={{ marginLeft: "0.04rem" }}>{roomateSituation}</p> : <p style={{ marginLeft: "0.04rem" }}>No description is declared yet...</p>}
                     </Typography>
                 </Grid>
                 {/* --------------------------- More Details -----------------------------*/}
@@ -141,7 +380,7 @@ const Home = (props) => {
                 {/* Description of more details */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem", mb: "1rem" }}>
                     <Typography component="p" sx={{ width: "95%", color: "#0F3E86" }} >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, ut molestias earum magnam accusantium iure tenetur sed dicta ex voluptate, porro cum officia corporis dignissimos voluptatum aspernatur eveniet voluptates dolorem tempora, veniam perspiciatis et. Quia deserunt consequuntur facilis doloribus est, consectetur dicta quod quidem voluptatum mollitia assumenda sint nemo ratione velit culpa, voluptate amet eligendi reprehenderit. Similique, recusandae sint? Sapiente similique asperiores itaque qui, quis nostrum illum voluptatem debitis cumque sed error enim maxime nisi modi aspernatur molestias praesentium velit voluptatibus fugiat maiores odio ipsam odit! Labore mollitia consectetur voluptatum quisquam eum sit minima repellat accusamus perferendis. Inventore nemo doloribus, distinctio voluptate autem eum atque vel ab culpa error reiciendis deleniti harum recusandae eos quisquam rem hic sit nam doloremque consectetur odit est. Aliquid laboriosam beatae aspernatur consequatur error nobis vitae quisquam, vel in fugiat minima numquam, et ipsam porro.
+                        {additionalInfo && additionalInfo.length > 0 ? <p style={{ marginLeft: "0.04rem" }}>{additionalInfo}</p> : <p style={{ marginLeft: "0.04rem" }}>No more information is declared yet...</p>}
                     </Typography>
                 </Grid>
             </Grid>

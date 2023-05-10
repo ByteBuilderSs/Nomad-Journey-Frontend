@@ -2,14 +2,15 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { toast } from "react-toastify";
 
-export const useUserData = () => {
+export const useUserData = (url_username) => {
+    console.log("THE USERNAME IN URL IS ", url_username);
     const[userInfo, setUserData]=useState([])
     const userdata = async() => {
         
-        const allData=JSON.parse(localStorage.getItem('tokens'))
-        const username=allData.username
+        const allData = JSON.parse(localStorage.getItem('tokens'))
+        const username = allData.username
         
-        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'GetUserProfileForOverview/'+username,{ 
+        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'GetUserProfileForOverview/'+url_username,{ 
             method :'GET',
             headers :{'Content-Type':'application/json'},
             
@@ -18,8 +19,6 @@ export const useUserData = () => {
         if(!respone.ok)
         {
             console.log("error")
-            console.log()
-                
         }
         if(respone.ok)
         {
@@ -30,6 +29,3 @@ export const useUserData = () => {
     return{userdata,userInfo}
 }
 
-
-
-  

@@ -101,6 +101,7 @@ const PostDetailDialog = (props) => {
                 maxWidth={'md'}
             >
             <DialogTitle id="scroll-dialog-title">
+                {/* Main Image */}
                 <img
                     variant="square"
                     src={SamplePostMainImage} 
@@ -174,7 +175,9 @@ const PostDetailDialog = (props) => {
                     </form>
                 </Grid>
             </DialogContent>
-            <DialogActions>
+            {
+                props.url_username === props.local_storage_username ? 
+                <DialogActions>
                 <Item>
                     <Button
                         sx={{ width: "100%" }}
@@ -203,7 +206,10 @@ const PostDetailDialog = (props) => {
                         Edit Your Post
                     </Button>
                 </Item>
-            </DialogActions>
+                </DialogActions>
+                : null
+            }
+            
         </Dialog>
         <DeletePostDialog 
             post_id={postData.uid}

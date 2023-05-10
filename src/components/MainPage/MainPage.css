@@ -619,7 +619,12 @@ Pre-loader Style
     background-color: #fff;
     color: #E55405;
   } */
-
+  .card-silder {
+    margin-top: 120px;
+  }
+  .card-silder .row{
+    justify-content: center;
+  }
   .amazing-deals {
     margin-top: 120px;
   }

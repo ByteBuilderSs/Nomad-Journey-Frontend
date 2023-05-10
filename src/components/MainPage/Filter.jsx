@@ -17,6 +17,11 @@ import Select from '@mui/material/Select';
 import { useDispatch,useSelector } from 'react-redux';
 import { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage } from "../../ReduxStore/features/MainPage/mainPageSlice"
 
+import { toast } from "react-toastify";
+import axios from 'axios';
+import {CircularProgress} from "@mui/material"
+import { setCity } from "../../ReduxStore/features/User/useSlice";
+
 const options = ['Option 1', 'Option 2'];
 
 const theme = createTheme({
@@ -32,12 +37,36 @@ const theme = createTheme({
 });
 
 export default function Filters() {
-  
-    const fetchAnnc = FetchAnnc()
-    const dispatch = useDispatch()
-    const sort = useSelector((state) => state.mainpage.sort)
-    const [selectedTags, setSelectedTags] = useState([]);
-    
+
+
+  const [countries, setCountries] = React.useState([]);
+  const fetchAnnc = FetchAnnc()
+  const dispatch = useDispatch()
+  const sort = useSelector((state) => state.mainpage.sort)
+  const [dateTags, setDateTags] = useState([]);
+  const [cityTags, setCityTags] = useState([]);
+  const [countryTags, setCountryTags] = useState([]);
+  const [languageTags, setLanguageTags] = useState([]);
+
+  const loadCountries = async () => {
+    await axios({
+        method: "get",
+        url: "http://188.121.102.52:8000/api/v1/utils/get-countries/",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        let cntrs = []
+        for (const cnt of result.data) {
+          cntrs.push(cnt.country)
+        }
+        setCountries(cntrs);
+        console.log(cntrs);
+    }).catch((error) => {
+        toast.error("Something went wrong while fetching countries.")
+    })
+  }
+      
     
 
     const Language = () => {
@@ -53,8 +82,9 @@ export default function Filters() {
               // value={value}
               onChange={(event, newValue) => {
                 setValue(newValue);
-                if(newValue.length > 0 && (!selectedTags.includes(newValue)))
-                  setSelectedTags([...selectedTags, newValue]);
+                if(newValue.length > 0 && (!languageTags.includes(newValue))){
+                  setLanguageTags([...languageTags, newValue]);
+                }
               }}
               inputValue={inputValue}
               onInputChange={(event, newInputValue) => {
@@ -86,8 +116,9 @@ export default function Filters() {
               // value={value}
               onChange={(event, newValue) => {
                 setValue(newValue);
-                if(newValue.length > 0 && (!selectedTags.includes(newValue)))
-                  setSelectedTags([...selectedTags, newValue]);
+                if(newValue.length > 0 && (!cityTags.includes(newValue))){
+                  setCityTags([...cityTags, newValue]);
+                }
               }}
               inputValue={inputValue}
               onInputChange={(event, newInputValue) => {
@@ -106,20 +137,11 @@ export default function Filters() {
         );
     }
 
-    const TimeRange = () => {
-    
-        const [value, setValue] = React.useState('');
-        
-        return (
-            <div></div>
-        );
-    }
 
     const State = () => {
     
         const [value, setValue] = React.useState('');
         const [inputValue, setInputValue] = React.useState('');
-        
         return (
           <div>
             {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
@@ -128,19 +150,28 @@ export default function Filters() {
               // value={value}
               onChange={(event, newValue) => {
                 setValue(newValue);
-                if(newValue.length > 0 && (!selectedTags.includes(newValue)))
-                  setSelectedTags([...selectedTags, newValue]);
+                if(newValue.length > 0 && (!countryTags.includes(newValue))){
+                  setCountryTags([...countryTags, newValue]);
+                }
+                  
               }}
               inputValue={inputValue}
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
-              id="controllable-states-demo"
-              options={options}
+              id="asynchronous-demo-country"
+              options={countries}
+              // open={open}
+              // onOpen={() => {
+              //     setOpen(true);
+              // }}
+              // onClose={() => {
+              //     setOpen(false);
+              // }}
               sx={{ width: 150,
                     marginLeft : 4,
                 }}
-              renderInput={(params) => <TextField {...params} label="State" />}
+              renderInput={(params) => <TextField {...params} label="Country" />}
             />
       
           
@@ -193,8 +224,9 @@ export default function Filters() {
         setDateRange(newDateRange);
         console.log(`${newDateRange[0].toLocaleDateString()} - ${newDateRange[1].toLocaleDateString()}`);
         const stdFormat = `${newDateRange[0].toLocaleDateString()} - ${newDateRange[1].toLocaleDateString()}`
-        if(stdFormat.length > 0 && (!selectedTags.includes(stdFormat)))
-          setSelectedTags([...selectedTags, stdFormat]);
+        if(stdFormat.length > 0 && (!dateTags.includes(stdFormat))){
+          setDateTags([...dateTags, stdFormat]);
+        }
         
       };
       return (
@@ -220,10 +252,35 @@ export default function Filters() {
     }
 
 
-    const handleTagDelete = (tag) => {
-        const updatedTags = selectedTags.filter((t) => t !== tag);
-        setSelectedTags(updatedTags);
+    const handleTagDelete = (tag, type) => {
+        let updatedTags;
+        if (type == "country"){
+          updatedTags = countryTags
+          updatedTags = updatedTags.filter((t) => t !== tag);
+          setCountryTags(updatedTags);
+        }
+        else if (type == "city"){
+          updatedTags = cityTags
+          updatedTags = updatedTags.filter((t) => t !== tag);
+          setCityTags(updatedTags);
+        }
+        else if (type == "language"){
+          updatedTags = languageTags
+          updatedTags = updatedTags.filter((t) => t !== tag);
+          setLanguageTags(updatedTags);
+        }
+        else if (type == "date"){
+          updatedTags = dateTags
+          updatedTags = updatedTags.filter((t) => t !== tag);
+          setDateTags(updatedTags);
+        }
+        
+        
     };
+
+    useEffect(() => {
+      loadCountries()
+    }, []);
 
     return(
         <div className="innerFilter">
@@ -245,17 +302,53 @@ export default function Filters() {
                     <p style={{marginTop : "5px",marginRight : 0, marginBottom : "15px"}}><b>Filters : </b></p>
                 </div>
                 <div>
-                    {selectedTags.length > 0 && (
+                    {dateTags.length > 0 && (
                         <div style={{display : "flex"}}>
-                        {selectedTags.map((tag) => (
-                            // <span style={{borderRadius : "1px"}} key={tag} className="bg-gray-200 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            // {tag}
-                            // <button className="ml-2" onClick={() => handleTagDelete(tag)}>
-                            //     X
-                            // </button>
-                            // </span>
+                        {dateTags.map((tag) => (
                             <div>
-                              <div className="filterTag" onClick={() => handleTagDelete(tag)}>
+                              <div className="filterTag" onClick={() => handleTagDelete(tag,"date")}>
+                                  {tag}
+                                  <div className="deletebutton" >X</div>
+                              </div>
+                            </div>
+                        ))}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    {languageTags.length > 0 && (
+                        <div style={{display : "flex"}}>
+                        {languageTags.map((tag) => (
+                            <div>
+                              <div className="filterTag" onClick={() => handleTagDelete(tag, "language")}>
+                                  {tag}
+                                  <div className="deletebutton" >X</div>
+                              </div>
+                            </div>
+                        ))}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    {countryTags.length > 0 && (
+                        <div style={{display : "flex"}}>
+                        {countryTags.map((tag) => (
+                            <div>
+                              <div className="filterTag" onClick={() => handleTagDelete(tag, "country")}>
+                                  {tag}
+                                  <div className="deletebutton" >X</div>
+                              </div>
+                            </div>
+                        ))}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    {cityTags.length > 0 && (
+                        <div style={{display : "flex"}}>
+                        {cityTags.map((tag) => (
+                            <div>
+                              <div className="filterTag" onClick={() => handleTagDelete(tag, "city")}>
                                   {tag}
                                   <div className="deletebutton" >X</div>
                               </div>

@@ -18,7 +18,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage } from "../../ReduxStore/features/MainPage/mainPageSlice"
 import FilterLanguage from "./Filter";
 import {FetchAnnc} from "../../hooks/useAnnounceFetchMainPage";
-
+import {Make_Offer} from "../../hooks/useOfferAnnc"
 
 
 
@@ -90,12 +90,14 @@ const Loader = () => {
 }
 
 
+
 ///// show each announcements on mainpage
 const Announce = (props) => {
   
   // For offer dialog :
   const [openOfferDialog, setOpenOfferDialog] = useState(false);
   const [openDiscDialog, setOpenDiscDialog] = useState(false);
+  const fetchOffer = Make_Offer()
   
 
   const handleOpenDiscDialog = () => {
@@ -118,33 +120,10 @@ const Announce = (props) => {
       handleCloseOfferDialog()
       toast.success("your offer submited successfully");
       props.dispatch(setLoader(true))
-      Make_Offer() 
+      fetchOffer(props.anc.id) 
   }
 
-  const Make_Offer = async () => {
-    const fetchAnnc = FetchAnnc()
-    try {
   
-      const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-      console.log(signedInUser)
-      
-      axios({
-        method: "post",
-        url: `http://188.121.102.52:8000/api/v1/anc_request/create-request/${props.anc.id}`,
-        headers: {
-          'Authorization': `Bearer ${signedInUser.access}`
-        },
-      }).then(response => {
-        
-        fetchAnnc();
-      })
-      
-      
-    } catch (error) {
-      console.error(error);
-    }
-  
-  }
   let Description = "";
   if(props.anc.anc_description.includes("\n")){
     props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
@@ -332,12 +311,12 @@ export default function MainPage(){
       }
     }
 
-    const handleSortChange = (event) => {
-      setLoader(true)
-      setPage(1);
-      setSort(event.target.value)
-      fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
-    }
+    // const handleSortChange = (event) => {
+    //   setLoader(true)
+    //   setPage(1);
+    //   setSort(event.target.value)
+    //   fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
+    // }
     const showGeneralost=()=>{
       return(      
       <GeneralPosts/>

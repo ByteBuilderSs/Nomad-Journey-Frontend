@@ -42,10 +42,6 @@ const theme = createTheme({
             secondary: 
             {
                 main: '#8C8C8C',
-            },
-            primary: 
-            {
-                main: 'rgba(0, 0, 0, 0.87)'
             }
         }
 });

@@ -40,7 +40,6 @@ function clickInputsInOrder(currentIndex = 0) {
 
 
 
-/// fetch announcements from backend
 
 
 
@@ -234,6 +233,7 @@ export default function MainPage(){
     const announcdata = useSelector((state) => state.mainpage.announcData)
     const loader = useSelector((state) => state.mainpage.loader)
     const sort = useSelector((state) => state.mainpage.sort)
+    const filters = useSelector((state) => state.mainpage.filters)
     // for pagination :
     const showPagination = useSelector((state) => state.mainpage.showPagination)
     const paginCount = useSelector((state) => state.mainpage.paginCount)
@@ -280,7 +280,7 @@ export default function MainPage(){
     const handlePageChange = (event, value) => {
       dispatch(setLoader(true))
       dispatch(setPage(value));
-      fetchAnnc(value, sort)
+      fetchAnnc(value, sort, filters)
     };
 
     //function for show pagination :

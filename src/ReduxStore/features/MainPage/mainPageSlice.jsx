@@ -10,6 +10,7 @@ export const mainPageSlice = createSlice({
     loader : false,
     // sort announcements
     sort : "sort_by=anc_timestamp_created&descending=True",
+    filters : {"language" : [], "city" : [], "country" : [], "dates" : []},
     showPagination : false,
     // number of page shown in pagination
     paginCount : 1,
@@ -38,11 +39,14 @@ export const mainPageSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload
     },
+    setFilters: (state, action) => {
+      state.page = action.payload
+    },
 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage } = mainPageSlice.actions
+export const { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage, setFilters } = mainPageSlice.actions
 
 export default mainPageSlice.reducer

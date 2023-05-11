@@ -15,7 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { useDispatch,useSelector } from 'react-redux';
-import { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage } from "../../ReduxStore/features/MainPage/mainPageSlice"
+import { setAnncData, setLoader, setSort, setPagination, setPaginCount, setPage, setFilters } from "../../ReduxStore/features/MainPage/mainPageSlice"
 
 import { toast } from "react-toastify";
 import axios from 'axios';
@@ -47,6 +47,7 @@ export default function Filters() {
   const [cityTags, setCityTags] = useState([]);
   const [countryTags, setCountryTags] = useState([]);
   const [languageTags, setLanguageTags] = useState([]);
+  const filters = useSelector((state) => state.mainpage.filters)
 
   const loadCountries = async () => {
     await axios({
@@ -67,7 +68,17 @@ export default function Filters() {
     })
   }
       
-    
+  const fetchFilter = (cityTags, countryTags, dateTags, languageTags) => {
+    let dictFilter = {}
+    dictFilter["city"] = cityTags
+    dictFilter["country"] = countryTags
+    dictFilter["date"] = dateTags
+    dictFilter["language"] = languageTags
+    dispatch(setLoader(true))
+    dispatch(setPage(1));
+    dispatch(setFilters(dictFilter))
+    fetchAnnc(1, sort, dictFilter)
+  }
 
     const Language = () => {
     
@@ -84,6 +95,7 @@ export default function Filters() {
                 setValue(newValue);
                 if(newValue.length > 0 && (!languageTags.includes(newValue))){
                   setLanguageTags([...languageTags, newValue]);
+                  fetchFilter(cityTags, countryTags, dateTags, [...languageTags, newValue])
                 }
               }}
               inputValue={inputValue}
@@ -118,6 +130,7 @@ export default function Filters() {
                 setValue(newValue);
                 if(newValue.length > 0 && (!cityTags.includes(newValue))){
                   setCityTags([...cityTags, newValue]);
+                  fetchFilter([...cityTags, newValue], countryTags, dateTags, languageTags)
                 }
               }}
               inputValue={inputValue}
@@ -152,6 +165,8 @@ export default function Filters() {
                 setValue(newValue);
                 if(newValue.length > 0 && (!countryTags.includes(newValue))){
                   setCountryTags([...countryTags, newValue]);
+
+                  fetchFilter(cityTags, [...countryTags, newValue], dateTags, languageTags)
                 }
                   
               }}
@@ -187,7 +202,7 @@ export default function Filters() {
         dispatch(setLoader(true))
         dispatch(setPage(1));
         dispatch(setSort(event.target.value));
-        fetchAnnc(1,event.target.value)
+        fetchAnnc(1,event.target.value, filters)
         
       };
 
@@ -258,22 +273,27 @@ export default function Filters() {
           updatedTags = countryTags
           updatedTags = updatedTags.filter((t) => t !== tag);
           setCountryTags(updatedTags);
+          fetchFilter(cityTags, updatedTags, dateTags, languageTags)
         }
         else if (type == "city"){
           updatedTags = cityTags
           updatedTags = updatedTags.filter((t) => t !== tag);
           setCityTags(updatedTags);
+          fetchFilter(updatedTags, countryTags, dateTags, languageTags)
         }
         else if (type == "language"){
           updatedTags = languageTags
           updatedTags = updatedTags.filter((t) => t !== tag);
           setLanguageTags(updatedTags);
+          fetchFilter(cityTags, countryTags, dateTags, updatedTags)
         }
         else if (type == "date"){
           updatedTags = dateTags
           updatedTags = updatedTags.filter((t) => t !== tag);
           setDateTags(updatedTags);
         }
+
+        
         
         
     };

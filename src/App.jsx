@@ -51,11 +51,10 @@ function App() {
   useEffect(()=>{
     if(!localStorage.getItem('tokens')){
       console.log('no user exists')
-      navigate("/signup");
+      navigate("/landing");
     }
     },[]);
   
-    
   return (
       
       <>

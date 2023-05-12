@@ -40,7 +40,7 @@ export const mainPageSlice = createSlice({
       state.page = action.payload
     },
     setFilters: (state, action) => {
-      state.page = action.payload
+      state.filters = action.payload
     },
 
   },

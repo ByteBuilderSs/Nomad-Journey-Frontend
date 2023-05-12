@@ -29,7 +29,9 @@ const tabNametoIndex = {
 function App() {
 
   let location = useLocation();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
+
   const allPagesStyle = {
     display: "flex",
     "flex-direction": "column",
@@ -48,10 +50,15 @@ function App() {
         setLoading(false);
       }, 1500);
   }, []);
+
   useEffect(()=>{
     if(!localStorage.getItem('tokens')){
-      console.log('no user exists')
+      console.log('no user exists');
+      setIsLogin(false);
       navigate("/signup");
+    }
+    else {
+      setIsLogin(true);
     }
     },[]);
   
@@ -85,17 +92,27 @@ function App() {
 
                 <CounterProvider>
                   <Routes>
-                    <Route path="/landing" element={<LandingPageFunc/>}/>
-                    <Route path="/signup" element={<SignInForm />}/>
-                    <Route path="/login" element={< Login/>}/>
-                    <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
-                    <Route path="/home/Profile/:username/" element={<ProfilePage />} />
-                    <Route path="/home/Inbox/" element={<InboxPage />}/>
-                    <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
-                    <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
-                    <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
-                    <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
-                    <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
+                    {isLogin === false ?
+                      <>
+                        <Route path="/landing" element={<LandingPageFunc/>}/>
+                        <Route path="/signup" element={<SignInForm />}/>
+                        <Route path="/login" element={< Login/>}/>
+                      </>
+                      :
+                      <>
+                        <Route path="/landing" element={<LandingPageFunc/>}/>
+                        <Route path="/signup" element={<SignInForm />}/>
+                        <Route path="/login" element={< Login/>}/>
+                        <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                        <Route path="/home/Profile/:username/" element={<ProfilePage />} />
+                        <Route path="/home/Inbox/" element={<InboxPage />}/>
+                        <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
+                        <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
+                        <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
+                        <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
+                        <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
+                      </>
+                      }
                   </Routes>
                 </CounterProvider>
 

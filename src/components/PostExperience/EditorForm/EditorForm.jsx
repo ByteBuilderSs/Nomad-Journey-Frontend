@@ -96,14 +96,15 @@ const EditorForm = () => {
     }
     let announcement_id = useParams();
     console.log(announcement_id.announcement_id)
-    const {mentionPosts,mentions} =useMentionInPosts() ;
-   
+    const {mentionPosts, mentions} = useMentionInPosts() ;
+
     useEffect(()=>{mentionPosts(announcement_id.announcement_id)},[])
 
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [disabled, setDisabled] = useState(false);
     const [title, setTitle] = useState('');
+    /* TODO => useState for main image and summary */
     // this value is for editor
     const [editorValue, setEditorValue] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
@@ -200,6 +201,7 @@ const EditorForm = () => {
 
     console.log("++++++++ The selected tags are: ++++++++", selectedTags);
 
+    /* TODO => handleChange for main image */
 
     return (
         <ThemeProvider theme={theme}>
@@ -243,6 +245,7 @@ const EditorForm = () => {
                                         type="file"
                                     /> 
                                 </Button>
+                                {/* TODO => button for removing the photo */}
                             </Grid>
                             <div style={{ paddingLeft: "2rem" }}>
                                 {/* Title */}

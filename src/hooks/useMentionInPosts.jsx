@@ -5,8 +5,7 @@ export const useMentionInPosts=()=>{
     const [mentions,setMenstions]=useState([])
 
     const mentionPosts = async(anc_id) => {
-       
-        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTS+'user-announcements-more-details/'+anc_id,{ 
+        const respone= await fetch(process.env.REACT_APP_API_ANNONCMENTS+'user-announcements-more-details/'+ anc_id,{ 
             method :'GET',
             headers :{'Content-Type':'application/json'},
         }).catch((error)=>console.log(error));
@@ -19,8 +18,7 @@ export const useMentionInPosts=()=>{
         }
         if (respone.ok)
         {
-           
-           setMenstions(json)
+            setMenstions(json)
         }
     }
     return{mentionPosts,mentions}

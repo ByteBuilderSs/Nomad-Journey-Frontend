@@ -13,8 +13,16 @@ import './Home.css';
 import axios from 'axios';
 import { toast } from "react-toastify";
 
-const allData = JSON.parse(localStorage.getItem('tokens'));
-const access_token = allData.access;
+
+let username = "";
+let access_token = "";
+
+if (localStorage.getItem('tokens'))
+{
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    username = allData.username;
+    access_token = allData.access;
+}
 
 const RecenterAutomatically = ({lat, lng}) => {
     const map = useMap();

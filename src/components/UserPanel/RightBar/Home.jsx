@@ -13,8 +13,16 @@ import './Home.css';
 import axios from 'axios';
 import { toast } from "react-toastify";
 
-const allData = JSON.parse(localStorage.getItem('tokens'));
-const access_token = allData.access;
+
+let username = "";
+let access_token = "";
+
+if (localStorage.getItem('tokens'))
+{
+    const allData = JSON.parse(localStorage.getItem('tokens'));
+    username = allData.username;
+    access_token = allData.access;
+}
 
 const RecenterAutomatically = ({lat, lng}) => {
     const map = useMap();
@@ -154,6 +162,7 @@ const Home = (props) => {
     };
 
     const GenderCheck = (gender) => {
+        console.log("THE GENDER IS: ", gender);
         if (gender == 1) {
             return (
                 <>
@@ -176,9 +185,11 @@ const Home = (props) => {
             )
         }
         else {
-            <>
-                <span>No preferred gender is declared yet.</span>
-            </>
+            return(
+                <>
+                    <span>No preferred gender is declared yet.</span>
+                </>
+            )
         }
     }
     /*
@@ -188,6 +199,7 @@ const Home = (props) => {
         PUBLIC_ROOM = 4
      */
     const SleepCheck = (sleep) => {
+        console.log("THE SLEEP IS: ", sleep);
         if (sleep === 1) {
             return (
                 <>
@@ -265,7 +277,8 @@ const Home = (props) => {
                 {/* Maximum Number of Guests */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     <h3 style={{ display: "flex" }}>
-                        Max Number of Guests: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{guestsCount}</span>
+                        Max Number of Guests: <span style={{ fontSize: 15, color: "#0F3E86"}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{guestsCount ? guestsCount 
+                                                                                                                                        : <span>Preferred maximum guest count is not declared yet.</span>}</span>
                     </h3>
                 </Grid>
                 {/* Preferred Gender to Host */}

@@ -32,9 +32,16 @@ import { toast } from "react-toastify";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Data = JSON.parse(localStorage.getItem('tokens'));
-const username = Data.username;
-const access_token = Data.access;
+
+let username = "";
+let access_token = "";
+
+if (localStorage.getItem('tokens')) {
+    const Data = JSON.parse(localStorage.getItem('tokens'));
+    username = Data.username;
+    access_token = Data.access;
+}
+
 
 const RecenterAutomatically = ({lat, lng}) => {
     const map = useMap();

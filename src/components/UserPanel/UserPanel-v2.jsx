@@ -39,7 +39,16 @@ import Overview from './Overview';
 import MyOffers from './RightBar/myOffers/MyOffers';
 import {useUserData} from '../../hooks/useSetUserData';
 import Notif from '../Badge/Bedge';
+import axios from 'axios';
+import { toast } from "react-toastify";
 
+let local_storage_username = "";
+let user_id = "";
+if (localStorage.getItem('tokens')) {
+    const allData = JSON.parse(localStorage.getItem('tokens'))
+    local_storage_username = allData.username;
+    user_id = allData.user_id;
+}
 
 const UserPanelNew = () => {
     const user_params = useParams();
@@ -50,8 +59,27 @@ const UserPanelNew = () => {
     const [requestData, setRequestData] = useState({});
     const [active, setActive] = useState("About Me");
     const {userdata, userInfo} = useUserData(user_params.username);
-    const allData = JSON.parse(localStorage.getItem('tokens'))
-    const local_storage_username = allData.username
+    const [profileImageURL, setProfileImageURL] = useState("");
+
+
+    useEffect(() => {
+        axios({
+            method: "get",
+            url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${user_id}`,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((result) => {
+            console.log("+++++++++ THE RESULT IS ++++++++ ", result);
+            /* TODO => HOW CAN I CONVERT THE URL TO FILE */
+            if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
+                setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+            } 
+
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching user profile photo.")
+        })
+    }, []);
 
     console.log("++++++++++++++++ THE USER PARAM IS ++++++++++++++++ ", user_params.username);
 
@@ -114,8 +142,16 @@ const UserPanelNew = () => {
                                         <Stack alignItems={`center`} spacing={1}>
                                             <Item>
                                                 {/* <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }}>{userInfo.username}</Avatar> */}
-                                                <Box sx={{marginTop:'4px'}}>
-                                                    <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4'  size={100}/>
+                                                <Box sx={{marginTop:'2rem'}}>
+                                                    {
+                                                        profileImageURL && profileImageURL !== "" ? 
+                                                        (
+                                                            <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
+                                                                <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
+                                                            </div>
+                                                        ) :
+                                                        <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4'/>
+                                                    }
                                                 </Box>
                                             </Item>
                                             <Divider variant={`middle`} flexItem/>

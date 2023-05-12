@@ -24,18 +24,42 @@ import LetteredAvatar from 'react-lettered-avatar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { useCounter, useCounterActions } from "../../../Context/CounterProvider";
+
+let username = "";
+let access_token = "";
+let user_id = "";
+if (localStorage.getItem('tokens')) {
+    const Data = JSON.parse(localStorage.getItem('tokens'));
+    username = Data.username;
+    access_token = Data.access;
+    user_id = Data.user_id;
+}
 
 const SideBarCard = () => {
-    const Data = JSON.parse(localStorage.getItem('tokens'));
-    const username = Data.username;
-    const access_token = Data.access;
-    const user_id = Data.user_id;
     const [profileImage, setProfileImage] = useState(null);
     const [imageSizeError, setImageSizeError] = useState(false);
     const [profileImageURL, setProfileImageURL] = useState("");
+    const counter = useCounter();
+    const setCounter = useCounterActions();
 
-    const handleInputFile = (event) => {
-        setProfileImage(event.target.files);
+    const handleInputFile = async (e) => {
+        console.log("++++++++++++++++++++++++++++++++++", e.target.files[0]);
+        const file = e.target.files[0];
+        
+        const size_mb = file.size / 1024 ** 2;
+        const size_kb = size_mb * 1000;
+        if (size_kb <= 500) {
+            setImageSizeError(false);
+            setProfileImage((prevState) => ({
+                ...prevState,
+                profileImage:  file ?  file : null,
+            }));
+            setProfileImageURL(URL.createObjectURL(file));
+        } else {
+            setImageSizeError(true);
+            toast.warning("Image size can not be more than 300kb.");
+        }
     }
 
     const loadUserProfilePhoto = async () => {
@@ -49,7 +73,7 @@ const SideBarCard = () => {
             console.log("+++++++++ THE RESULT IS ++++++++ ", result);
             /* TODO => HOW CAN I CONVERT THE URL TO FILE */
             if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                setProfileImageURL(result.data.profile_photo_URL);
+                setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
             } 
 
         }).catch((error) => {
@@ -67,17 +91,23 @@ const SideBarCard = () => {
         let isDataValid = true;
         let formData = new FormData();
         
-        formData.append('profile_photo', profileImage[0]);
+        if (profileImage.profileImage) {
+            formData.append('profile_photo', profileImage.profileImage);
+            const size_mb = profileImage.profileImage.size / 1024 ** 2;
+            const size_kb = size_mb * 1000;
+    
+            if (size_kb > 300) {
+                setImageSizeError(true);
+                isDataValid = false;
+                toast.warning("Image size can not be more than 300kb.");
+            }
+        }
+        else {
+            let empty_file = new File([], "empty");
+            formData.append('profile_photo', null);
+        }
         console.log("************* THE FORM DATA IS ************* ", formData);
 
-        const size_mb = profileImage[0].size / 1024 ** 2;
-        const size_kb = size_mb * 1000;
-
-        if (size_kb > 300) {
-            setImageSizeError(true);
-            isDataValid = false;
-            toast.error("The image size can not be more than 300kb.")
-        }
         
         if (isDataValid) {
             axios({
@@ -90,6 +120,7 @@ const SideBarCard = () => {
             }).then((res) => {
                 console.log(res);
                 toast.success("Changes updated successfully.");
+                setCounter(counter + 1);
             }).catch((error) => {
                 toast.error("Something went wrong while updating information.");
                 console.log(error);
@@ -107,9 +138,9 @@ const SideBarCard = () => {
                         <Item>
                             <Stack alignItems={`center`} spacing={1}>
                                 <Item>
-                                    <IconButton component="label">
+                                    <IconButton component="label" sx={{ mt: "2rem"}}>
                                         <input
-                                            onChange={handleInputFile}
+                                            onChange={(e) => handleInputFile(e)}
                                             hidden
                                             accept="image/*"
                                             multiple
@@ -117,7 +148,10 @@ const SideBarCard = () => {
                                             max={20}
                                         />
                                         {
-                                            profileImageURL ? <Avatar sx={{ width:'9rem', height:'9rem' }} src={profileImageURL}/> : 
+                                            profileImageURL && profileImageURL !== "" ? (
+                                                                <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
+                                                                    <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/>
+                                                                </div>) : 
                                                             <LetteredAvatar name={username} backgroundColor='#FFE5B4' size={100} />
                                         }
                                     </IconButton>
@@ -133,7 +167,7 @@ const SideBarCard = () => {
                                             >
                                             Upload a photo
                                             <input
-                                                onChange={handleInputFile}
+                                                onChange={(e) => handleInputFile(e)}
                                                 hidden
                                                 accept="image/*"
                                                 multiple

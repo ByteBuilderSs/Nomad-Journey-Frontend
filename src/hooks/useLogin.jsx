@@ -55,9 +55,9 @@ export const useLogin=()=>{
             dispatch(setLastName(userInfo.last_name))
             dispatch(setMail(userInfo.email))
 
-            
+            console.log("+++++++++++++++++ THE RESULT AFTER LOGIN IS +++++++++++++++++++ ", result)
 
-            localStorage.setItem('tokens', result)
+            localStorage.setItem('tokens', result);
             navigate("/home/Dashboard/", { replace: true });
             toast.success("You logged in successfully")
         }

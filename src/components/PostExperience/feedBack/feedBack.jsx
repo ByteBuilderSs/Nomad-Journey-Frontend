@@ -15,15 +15,15 @@ import {List,
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import FeedbackIcon from '@mui/icons-material/Feedback';
-const data=
-    {"questions":[
-      {"name":"host's treatment","rate":3.5},
-      {"name":"level of your well-being on this trip","rate":5},
-      {"name":"access to public transportation","rate":1},
-      {"name":"cleanness","rate":2},
-      {"name":"extra facilities (Guest parking lot)","rate":0},
+const data = [
+    {"name":"host's treatment", "rate": 3.5},
+    {"name":"level of your well-being on this trip", "rate": 5},
+    {"name":"access to public transportation", "rate": 1},
+    {"name":"cleanness", "rate": 2},
+    {"name":"extra facilities (Guest parking lot)", "rate": 0}
+  
+]
 
-    ]}
 export default function FeedbackQs() {
   const [open, setOpen] = React.useState(true);
 
@@ -56,9 +56,9 @@ export default function FeedbackQs() {
           {data.map((item)=>
           
             <ListItemButton sx={{ pl: 4 }}>
-            <ListItemText primary={item.questions.name}/>
+            <ListItemText primary={item.name}/>
             <Stack spacing={1}>
-                <Rating name="half-rating" defaultValue={0} precision={0.5} value={item.questions.rate}/>
+                <Rating name="half-rating" defaultValue={0} precision={0.5} value={item.rate}/>
             </Stack>
           </ListItemButton>
           )}

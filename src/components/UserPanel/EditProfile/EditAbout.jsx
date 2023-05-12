@@ -46,12 +46,20 @@ const theme = createTheme({
         }
 });
 
+let username = "";
+let access_token = "";
+
+if (localStorage.getItem('tokens')) {
+    const Data = JSON.parse(localStorage.getItem('tokens'));
+    username = Data.username;
+    access_token = Data.access;
+}
 
 const EditAbout = () => {
     const navigate = useNavigate();
-    const allData = JSON.parse(localStorage.getItem('tokens'));
-    const access_token = allData.access;
-    const username = allData.username;
+    // const allData = JSON.parse(localStorage.getItem('tokens'));
+    // const access_token = allData.access;
+    // const username = allData.username;
     console.log("The username is: ", username);
 
     const [hostAvailability, setHostAvailability] = useState("");

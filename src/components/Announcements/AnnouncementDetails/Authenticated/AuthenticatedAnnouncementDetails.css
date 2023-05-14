@@ -51,6 +51,24 @@
 
 .slide.active {
     opacity: 1;
-    transition-duration: 1s;
+    transition-duration: 1.2s;
     transform: scale(1.08);
+}
+
+.marker{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(3.5);
+    color: #e45505;
+
+
+}
+.volunbox{
+    transition-duration: 10s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }

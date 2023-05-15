@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Loader.css';
 import PostExperience from "./pages/PostExperience";
 import CounterProvider from "./Context/CounterProvider";
+import GeneralPostPage from "./pages/GeneralPosts";
 
 
 const tabNametoIndex = {
@@ -100,6 +101,7 @@ function App() {
                       :
                       <>
                         <Route path="/landing" element={<LandingPageFunc/>}/>
+                        <Route path="/posts" element={<GeneralPostPage/>}/>
                         <Route path="/signup" element={<SignInForm />}/>
                         <Route path="/login" element={< Login/>}/>
                         <Route path="/home/Dashboard/" element={<MainPageFunc />}/>

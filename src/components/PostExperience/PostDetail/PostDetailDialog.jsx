@@ -104,7 +104,7 @@ const PostDetailDialog = (props) => {
                 {/* Main Image */}
                 <img
                     variant="square"
-                    src={SamplePostMainImage} 
+                    src={postData.main_image_64 && postData.main_image_64 !== '' ? postData.main_image_64 : SamplePostMainImage} 
                     style={{
                         width: "60rem",
                         height: "20rem",
@@ -128,7 +128,7 @@ const PostDetailDialog = (props) => {
                                         Summary
                                     </Typography>
                                     <Typography sx={{ paddingLeft: "0.8rem" }}>
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni at labore hic doloremque repudiandae nobis optio iusto recusandae enim rem accusantium aliquid eaque vero architecto commodi, ea ducimus. Quasi, quibusdam!
+                                        {postData.description}
                                     </Typography>
                                 </Grid>
                                 {/* Body */}

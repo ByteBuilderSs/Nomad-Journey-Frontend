@@ -91,7 +91,7 @@ const SideBarCard = () => {
         let isDataValid = true;
         let formData = new FormData();
         
-        if (profileImage.profileImage) {
+        if (profileImage && profileImage.profileImage) {
             formData.append('profile_photo', profileImage.profileImage);
             const size_mb = profileImage.profileImage.size / 1024 ** 2;
             const size_kb = size_mb * 1000;
@@ -128,7 +128,23 @@ const SideBarCard = () => {
         }
     }
 
-    
+    const handleDeleteClick = async (event) => {
+        event.preventDefault();
+        axios({
+            method: "delete",
+            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit4/${username}`,
+            headers: {
+                'Authorization': `Bearer ${access_token}`
+            },
+        }).then((res) => {
+            console.log(res);
+            toast.success("Profile photo removed successfully.");
+            setCounter(counter + 1);
+        }).catch((error) => {
+            toast.error("Something went wrong while updating information.");
+            console.log(error);
+        })
+    }
 
     return (
         <div>
@@ -182,13 +198,14 @@ const SideBarCard = () => {
                                             color="error"
                                             startIcon={<DeleteIcon />}
                                             size='small'
-                                            onClick={() => {
+                                            onClick={(e) => {
                                                 setProfileImage(null);
                                                 setProfileImageURL("");
                                                 setImageSizeError(false);
+                                                handleDeleteClick(e);
                                             }}
                                             >
-                                            Remove photo
+                                            
                                         </Button>
                                     </Item>
                                 </Stack>

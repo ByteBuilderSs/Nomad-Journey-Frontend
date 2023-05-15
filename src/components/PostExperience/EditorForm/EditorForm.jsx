@@ -32,9 +32,11 @@ import {useMentionInPosts} from '../../../hooks/useMentionInPosts';
 import SamplePostMainImage from '../../../Assets/images/post-default-main-image.jpg';
 import EditIcon from '@mui/icons-material/Edit';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
 import FeedbackQs from '../../UserPanel/RightBar/feedBack/feedBack'
+import { convertFileToBase64 } from '../../../utils/utils';
 
 const theme = createTheme({
     palette: {
@@ -84,26 +86,30 @@ const modules = {
     }
 
 }
+let allData;
+let access_token;
+let username;
+if (localStorage.getItem('tokens'))
+{
+    allData = JSON.parse(localStorage.getItem('tokens'));
+    access_token = allData.access;
+    username = allData.username;
+}
 const EditorForm = () => {
-    let allData;
-    let access_token;
-    let username;
-    if (localStorage.getItem('tokens'))
-    {
-        allData = JSON.parse(localStorage.getItem('tokens'));
-        access_token = allData.access;
-        username = allData.username;
-    }
     let announcement_id = useParams();
     console.log(announcement_id.announcement_id)
-    const {mentionPosts,mentions} =useMentionInPosts() ;
-   
+    const {mentionPosts, mentions} = useMentionInPosts() ;
+
     useEffect(()=>{mentionPosts(announcement_id.announcement_id)},[])
 
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [disabled, setDisabled] = useState(false);
     const [title, setTitle] = useState('');
+    /* TODO => useState for main image and summary */
+    const [mainImage, setMainImage] = useState('');
+    const [summary, setSummary] = useState('');
+    const [imageSizeErr, setImageSizeErr] = useState(false);
     // this value is for editor
     const [editorValue, setEditorValue] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
@@ -154,10 +160,14 @@ const EditorForm = () => {
             toast.error("No content!?");
             isDataValid = false;
         }
+        if (imageSizeErr) {
+            isDataValid = false;
+        }
+        
         if (isDataValid) {
             axios({
                 method: "post",
-                url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+                url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -166,7 +176,9 @@ const EditorForm = () => {
                     blog_title: title,
                     json_data: editorValue,
                     tags: tagIDs,
-                    annoncement:announcement_id.announcement_id
+                    annoncement:announcement_id.announcement_id,
+                    main_image_64: mainImage,
+                    description: summary
                 },
                 }).then((res) => {
                     console.log("+++++ THE RESULT AFTER CREATING THE POST IS +++++ ", res.data);
@@ -177,6 +189,9 @@ const EditorForm = () => {
                     toast.success("A new post created successfully.");
                     setTitle('');
                     setEditorValue('');
+                    setImageSizeErr(false);
+                    setSummary('');
+                    setMainImage('');
                     setSelectedTags([]);
                     navigate(`/home/Profile/${username}/`)
                 }).catch((error) => {
@@ -198,6 +213,25 @@ const EditorForm = () => {
         setSelectedTags(values);
     }
 
+    /* TODO => handleChange for main image */
+    const handleMainImage = async (e) => {
+        const file = e.target.files[0];
+        const size_mb = file.size / 1024 ** 2;
+        const size_kb = size_mb * 1000;
+        if (size_kb <= 500) {
+            const base64Image = await convertFileToBase64(file);
+            setImageSizeErr(false);
+            setMainImage(base64Image ? base64Image : "");
+        } else {
+            setImageSizeErr(true);
+            toast.warning("Image size can not be more than 500kb.");
+        }
+    }
+
+    const handleChangeSummary = (event) => {
+        setSummary(event.target.value);
+    }
+
     console.log("++++++++ The selected tags are: ++++++++", selectedTags);
 
 
@@ -209,23 +243,34 @@ const EditorForm = () => {
                     <CardContent>
                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                             {/* Main Image */}
-                            <Grid item xs={12} style={{ paddingLeft: "2rem" }}>
+                            <Grid item xs={12} style={{ paddingLeft: "1.25rem" }}>
                                 <div >
-                                    <img
-                                        variant="square"
-                                        src={SamplePostMainImage} 
-                                        style={{
-                                            width: "58.5rem",
-                                            height: 240,
-                                            borderRadius: '0.25rem',
-                                            objectFit: 'fill'
-                                        }}
-                                    />
+                                    <IconButton component="label">
+                                        <input
+                                            onChange={(e) => handleMainImage(e)}
+                                            hidden
+                                            accept="image/*"
+                                            multiple
+                                            type="file"
+                                            max={20}
+                                        />
+                                        <img
+                                            variant="square"
+                                            src={mainImage && mainImage !== '' ? mainImage : SamplePostMainImage} 
+                                            style={{
+                                                width: "58.5rem",
+                                                height: 340,
+                                                borderRadius: '0.25rem',
+                                                objectFit: 'fill',
+                                                objectPosition: "center"
+                                            }}
+                                        />
+                                    </IconButton>
                                 </div>
                                 <Button
                                     style={{
-                                        bottom: "30px",
-                                        marginLeft: "0.5rem",
+                                        bottom: "35px",
+                                        marginLeft: "1.25rem",
                                         marginTop: "-0.65rem",
                                         textTransform: 'none'
                                     }}
@@ -233,15 +278,34 @@ const EditorForm = () => {
                                     component="label"
                                     startIcon={<CameraAltIcon />}
                                     color='secondary'
-                                    onClick={(event) => console.log("The change buttom is clicked", event)}
                                     >
-                                    Change
+                                    Upload a photo
                                     <input
                                         hidden
                                         accept="image/*"
                                         multiple
                                         type="file"
+                                        onChange={(e) => handleMainImage(e)}
                                     /> 
+                                </Button>
+                                {/* TODO => button for removing the photo */}
+                                <Button
+                                    style={{
+                                        bottom: "35px",
+                                        marginLeft: "0.5rem",
+                                        marginTop: "-0.65rem",
+                                        textTransform: 'none'
+                                    }}
+                                    variant="contained"
+                                    component="label"
+                                    startIcon={<RemoveCircleIcon />}
+                                    color='error'
+                                    onClick={() => {
+                                        setMainImage('');
+                                        setImageSizeErr(false);
+                                    }}
+                                    >
+                                    Remove photo
                                 </Button>
                             </Grid>
                             <div style={{ paddingLeft: "2rem" }}>
@@ -313,6 +377,8 @@ const EditorForm = () => {
                                                     size="medium"
                                                     rows={2}
                                                     maxRows={10}
+                                                    value={summary}
+                                                    onChange={handleChangeSummary}
                                                 />
                                             </FormControl>
                                         </Item>

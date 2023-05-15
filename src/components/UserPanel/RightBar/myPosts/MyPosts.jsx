@@ -324,7 +324,7 @@ const AllPosts = (props) =>
                       {/* Blog Description */}
                       <Typography
                         sx={{ mt: "1rem", display: "flex", alignItems: "center" }}  color="text.secondary">
-                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> { blog.description }
+                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> { checkSummary(blog.description) }
                       </Typography>
                     </CardContent>
 

@@ -35,7 +35,6 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
-import FeedbackQs from '../../UserPanel/RightBar/feedBack/feedBack'
 import { convertFileToBase64 } from '../../../utils/utils';
 
 const theme = createTheme({

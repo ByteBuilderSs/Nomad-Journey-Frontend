@@ -2,7 +2,7 @@ import "./MyAnnouncement.css";
 import { TiLocation } from "react-icons/ti";
 import { BsCalendarDateFill } from "react-icons/bs";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid, Box } from "@mui/material";
+import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid, Box,Tooltip } from "@mui/material";
 import { Item } from "semantic-ui-react";
 import { FaHome, FaLongArrowAltRight } from "react-icons/fa";
 import { AiOutlineFieldTime } from "react-icons/ai";
@@ -10,14 +10,14 @@ import { IoIosPerson } from "react-icons/io";
 import { MdDescription } from "react-icons/md";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { makeStyles } from '@mui/styles';
-import AddIcon from '@mui/icons-material/Add';
+import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import React, {useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useCounter } from "../../../Context/CounterProvider";
-
+import FeedbackQs from './feedBack/feedBack'
 const theme = createTheme({
     palette: {
         primary: blue,
@@ -123,6 +123,12 @@ function MyAnnouncements(props) {
             </>
         );
     }
+    const showFeedback=()=>{
+        return(
+        <FeedbackQs/>
+        );
+        
+    }
     const numberOftravelers = (travler_count) => {
         if(travler_count === 1)
             return`${travler_count} Traveler`;
@@ -198,7 +204,7 @@ function MyAnnouncements(props) {
                                         </Item>
                                     </Stack>
                                 </Item>
-                                <Item className={classes.eachAnnouncement}>
+                                <Item>
                                     <Skeleton variant="rectangular" width={675} height={20} />
                                 </Item>
                             </Stack>
@@ -278,12 +284,18 @@ function MyAnnouncements(props) {
                                                             <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
                                                         </Typography>
                                                     </Item>
-                                                    
                                                 </Stack>
                                             </Item>
                                             <Item className={classes.eachAnnouncement}>
                                                 {checkDescription(anc.anc_description)}
                                             </Item>
+                                            {anc.anc_status=="D"? 
+                                            <>
+                                            <Item className={classes.announcements}>
+                                                <Button onClick={showFeedback}>click</Button>
+                                            </Item>
+                                            </>:null}
+                                           
                                         </Stack>
                                         <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
                                     </Item>

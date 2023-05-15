@@ -163,8 +163,8 @@ export default function UnAuthAnnouncement(props)
     const [openAccept, setOpenAccept] = useState(false);
     const [closeAccept, setCloseAccept] = useState(true);
 
-    const [showFeed,setShowFeed]=useState(false);
-    const [closeFeed,setCloseFeed]=useState(true);
+    const [showFeed, setShowFeed]=useState(false);
+    const [closeFeed, setCloseFeed]=useState(true);
 
 
     const [announcement, setAnnouncement] = useState('');

@@ -53,18 +53,16 @@ export default function FeedbackModal(props)
   } 
 
   const handelCancel=()=>{
-    
-    myFeedback=data
-    props.show(false);
+    setFeedbacks(data);
+    props.setOpen(false);
     props.setClose(true);
   }
   
   const {feedBack} = useFeedback()
   const handleSubmit = async (event) => {
       event.preventDefault();
-     
       await feedBack(myFeedback[0].rate,myFeedback[1].rate,myFeedback[2].rate,myFeedback[3].rate,myFeedback[4].rate,props.anc_id)
-      props.show(false);
+      props.setOpen(false);
       props.setClose(true);
   };
 
@@ -79,7 +77,6 @@ export default function FeedbackModal(props)
       >
       <DialogTitle >
       <Stack direction={'column'}>
-       
         <Grid item>
         
           
@@ -88,7 +85,7 @@ export default function FeedbackModal(props)
             Rate Your Trip</Typography>
         
         </Grid>
-       </Stack>
+      </Stack>
       </DialogTitle>
       <DialogContent sx={{width:'75vh'}}>
         <DialogContentText>
@@ -118,7 +115,7 @@ export default function FeedbackModal(props)
               Post
             </Button>
           
-         
+
             <Button variant="text"
               type='submit'
               onClick={handelCancel}>

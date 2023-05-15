@@ -55,14 +55,13 @@ function App() {
     if(!localStorage.getItem('tokens')){
       console.log('no user exists');
       setIsLogin(false);
-      navigate("/signup");
+      navigate("/landing");
     }
     else {
       setIsLogin(true);
     }
     },[]);
   
-    
   return (
       
       <>

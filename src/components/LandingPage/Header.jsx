@@ -57,8 +57,11 @@ function Header(){
                                 alignItems: "center",
                                 justifyContent: "center",
                             }}>
+                            <div class="main-button" style={{cursor : "pointer", marginRight: "5px"}} onClick={() => {navigate("/login")}}>
+                                <div className='login-signup' style={{color : "#fff"}}> Login </div>
+                            </div>
                             <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                                <div className='login-signup' style={{color : "#fff"}}> Login/SignUp </div>
+                                <div className='login-signup' style={{color : "#fff"}}> SignUp </div>
                             </div>
                         </Box>
                         

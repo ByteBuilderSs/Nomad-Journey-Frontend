@@ -60,7 +60,7 @@ const tutorialSteps = [
       'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
     desc:"this is a TV of 32 inch not for you",
     rate:1,
-    username:"ali"
+    username:"ali",
   },
   {
     label: 'Post title',

@@ -36,10 +36,18 @@ const theme = createTheme({
     },
 });
 
+function sleep(delay = 0) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, delay);
+    });
+}
+
 export default function Filters() {
 
 
   const [countries, setCountries] = React.useState([]);
+  const [cities, setCities] = React.useState([]);
+  const [languages, setLanguages] = React.useState([]);
   const fetchAnnc = FetchAnnc()
   const dispatch = useDispatch()
   const sort = useSelector((state) => state.mainpage.sort)
@@ -48,6 +56,10 @@ export default function Filters() {
   const [countryTags, setCountryTags] = useState([]);
   const [languageTags, setLanguageTags] = useState([]);
   const filters = useSelector((state) => state.mainpage.filters)
+
+  const loading = countries.length === 0;
+  const [openC, setOpenC] = React.useState(false);
+  const loadingC = openC && cities.length === 0;
 
   const loadCountries = async () => {
     await axios({
@@ -62,11 +74,100 @@ export default function Filters() {
           cntrs.push(cnt.country)
         }
         setCountries(cntrs);
-        console.log(cntrs);
     }).catch((error) => {
         toast.error("Something went wrong while fetching countries.")
     })
   }
+
+  const loadCities = async () => {
+
+    axios({
+        method: "get",
+        url: "http://188.121.102.52:8000/api/v1/utils/get-all-cities/",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        setCities(result.data);
+    }).catch((error) => {
+        toast.error("Something went wrong while fetching cities.")
+    })
+  }
+  const loadLanguages = async () => {
+
+    axios({
+        method: "get",
+        url: "http://188.121.102.52:8000/api/v1/accounts/GetLanguages",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        let lang = []
+        for (const lan of result.data.data) {
+          lang.push(lan.language_name)
+        }
+        setLanguages(lang);
+    }).catch((error) => {
+      console.log("errorrr :")
+      console.log(error)
+        toast.error("Something went wrong while fetching Languages.")
+    })
+  }
+
+
+  React.useEffect(() => {
+      let active = true;
+
+      (async () => {
+          await sleep(1e3); // For demo purposes.
+          if (active) 
+          {
+            loadCountries();
+          }
+      })();
+      return () => {
+          active = false;
+      };
+  }, []);
+  React.useEffect(() => {
+      let active = true;
+
+      (async () => {
+          await sleep(1e3); // For demo purposes.
+          if (active) 
+          {
+            loadLanguages();
+          }
+      })();
+      return () => {
+          active = false;
+      };
+  }, []);
+
+
+  React.useEffect(() => {
+    let active = true;
+    if (!loadingC) {
+        return undefined;
+    } 
+    (async () => {
+        await sleep(1e3); // For demo purposes.
+        if (active) 
+        {
+          loadCities();
+        }
+    })();
+    return () => {
+        active = false;
+    };
+  }, [loadingC]);
+  
+
+  React.useEffect(() => {
+    if (!openC) {
+        setCities([]);
+    }
+  }, [openC]);
       
   const fetchFilter = (cityTags, countryTags, dateTags, languageTags) => {
     let dictFilter = {}
@@ -103,7 +204,7 @@ export default function Filters() {
                 setInputValue(newInputValue);
               }}
               id="controllable-states-demo"
-              options={options}
+              options={languages}
               sx={{ width: 150,
                     marginLeft : 4
                 }}
@@ -125,6 +226,7 @@ export default function Filters() {
             {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
             <div>{`inputValue: '${inputValue}'`}</div> */}
             <Autocomplete
+              disabled
               // value={value}
               onChange={(event, newValue) => {
                 setValue(newValue);
@@ -133,16 +235,39 @@ export default function Filters() {
                   fetchFilter([...cityTags, newValue], countryTags, dateTags, languageTags)
                 }
               }}
+              open={openC}
+              onOpen={() => {
+                  setOpenC(true);
+              }}
+              onClose={() => {
+                  setOpenC(false);
+              }}
               inputValue={inputValue}
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
-              id="controllable-states-demo"
-              options={options}
+              id="asynchronous-demo-city"
+              options={cities}
               sx={{ width: 150,
                     marginLeft : 4,
-                }}
-              renderInput={(params) => <TextField {...params} label="City" />}
+              }}
+              // renderInput={(params) => <TextField {...params} label="City" />}
+              renderInput={(params) => (
+                <TextField 
+                  {...params} 
+                  label="City"
+                  placeholder="City"
+                  InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                      <React.Fragment>
+                          {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
+                          {params.InputProps.endAdornment}
+                      </React.Fragment>
+                      ),
+                  }} 
+                />
+              )}
             />
       
           
@@ -175,7 +300,9 @@ export default function Filters() {
                 setInputValue(newInputValue);
               }}
               id="asynchronous-demo-country"
-              options={countries}
+              options={countries ?? []}
+              
+            
               // open={open}
               // onOpen={() => {
               //     setOpen(true);
@@ -186,7 +313,23 @@ export default function Filters() {
               sx={{ width: 150,
                     marginLeft : 4,
                 }}
-              renderInput={(params) => <TextField {...params} label="Country" />}
+              // renderInput={(params) => <TextField {...params} label="Country" />}
+              renderInput={(params) => (
+                <TextField 
+                  {...params} 
+                  label="Country"
+                  placeholder="Country"
+                  InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                      <React.Fragment>
+                          {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                          {params.InputProps.endAdornment}
+                      </React.Fragment>
+                      ),
+                  }}
+                />
+              )}
             />
       
           
@@ -237,10 +380,10 @@ export default function Filters() {
 
       const handleDateRangeChange = (newDateRange) => {
         setDateRange(newDateRange);
-        console.log(`${newDateRange[0].toLocaleDateString()} - ${newDateRange[1].toLocaleDateString()}`);
         const stdFormat = `${newDateRange[0].toLocaleDateString()} - ${newDateRange[1].toLocaleDateString()}`
-        if(stdFormat.length > 0 && (!dateTags.includes(stdFormat))){
+        if(stdFormat.length > 0 && (dateTags.length != 1)){
           setDateTags([...dateTags, stdFormat]);
+          fetchFilter(cityTags, countryTags, [...dateTags, stdFormat], languageTags)
         }
         
       };
@@ -291,6 +434,7 @@ export default function Filters() {
           updatedTags = dateTags
           updatedTags = updatedTags.filter((t) => t !== tag);
           setDateTags(updatedTags);
+          fetchFilter(cityTags, countryTags, updatedTags, languageTags)
         }
 
         
@@ -298,9 +442,6 @@ export default function Filters() {
         
     };
 
-    useEffect(() => {
-      loadCountries()
-    }, []);
 
     return(
         <div className="innerFilter">

@@ -65,10 +65,12 @@ const AllPosts = (props) =>
 {
   let allData;
   let access_token;
+  let username;
   if (localStorage.getItem('tokens'))
   {
       allData = JSON.parse(localStorage.getItem('tokens'));
       access_token = allData.access;
+      username = allData.username;
   }
 
   const [deletePostDialog, setDeletePostDialog] = useState(false);
@@ -129,7 +131,7 @@ const AllPosts = (props) =>
   const confirmDeletePost = (post) => {
     axios({
       method: "delete",
-      url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+      url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -453,11 +455,11 @@ const AllPosts = (props) =>
   </ThemeProvider>
   );
 }
-export default function MyPosts()
+export default function MyPosts(props)
 {
   return(
     <Grid container>
-      <AllPosts />
+      <AllPosts url_username={props.url_username} local_storage_username={props.local_storage_username}/>
     </Grid>
   );
 }

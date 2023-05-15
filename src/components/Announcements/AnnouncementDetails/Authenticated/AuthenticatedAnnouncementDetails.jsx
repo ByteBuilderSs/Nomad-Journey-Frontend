@@ -674,7 +674,8 @@ export default function UnAuthAnnouncement(props)
                                                 color:"rgba(234,187,170,0.8)",
                                                 backgroundColor:"rgba(201,153,127,0.27)"
                                             } ,width:'20vh'
-                                            }} startIcon={<AddIcon />}>
+                                            }} startIcon={<AddIcon />}
+                                            onClick={handelClickPost}>
                                                 Add Post
                                             </Button>
                                             </Grid>

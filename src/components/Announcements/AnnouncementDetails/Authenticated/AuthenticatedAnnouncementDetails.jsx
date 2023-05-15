@@ -47,6 +47,9 @@ import {renderToStaticMarkup} from "react-dom/server";
 import {divIcon} from "leaflet/dist/leaflet-src.esm";
 import Control from "react-leaflet-custom-control";
 import {BsHouseFill} from "react-icons/bs";
+import UserProfile from "./UserProfileAnnouncement";
+import AddIcon from "@mui/icons-material/Add";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles(theme => (
     {
@@ -101,7 +104,33 @@ const useStyles = makeStyles(theme => (
             justifyContent:"center",
             borderRadius:"5%",
             backgroundColor:"#EDE7E6FF",
+        },
+        sidebarDetails:{
+            backgroundImage:"url('https://www.moon.com/wp-content/uploads/2019/01/Chicago_RiverNight_JoshuaWanyama-Dreamstime.jpg?fit=1080%2C1080')",
+            height:"100vh",
+            filter:"grayscale(80%) brightness(20%) blur(1px)",
+            opacity:"0.9"
+        },
+        mapButton:{
+            color:"#e45505",
+            backgroundColor:"rgba(237,231,230,0.7)",
+            "&:hover":{
+                backgroundColor:"rgba(218,193,180,0.78)",
+            }
+        },
+        mapButtonActive:{
+
+            color:"#e45505",
+            backgroundColor:"rgba(237,231,230,0.8)",
+            borderBottom:"solid",
+            borderColor:"#e45505",
+            borderBottomWidth:"medium",
+            "&:hover":{
+                backgroundColor:"rgba(236,217,204,0.8)",
+            }
+
         }
+
     }
 ));
 const style = {
@@ -142,6 +171,7 @@ export default function UnAuthAnnouncement(props)
 
     const counter = useCounter();
     const setCounter = useCounterActions();
+    const navigate = useNavigate();
 
 
     const evalAge = (birthdate) => {
@@ -324,7 +354,7 @@ export default function UnAuthAnnouncement(props)
                                         <>
                                             <Stack spacing={2} alignItems={`center`}>
                                                 <Item>
-                                                    <LetteredAvatar name={item.first_name} backgroundColor='#FFE5B4'  size={100}/>
+                                                    <UserProfile user_id={item.id} first_name={item.first_name} imageSize={100} profileSize={`8rem`}/>
                                                 </Item>
                                                 <Item>
                                                     <Stack>
@@ -464,7 +494,7 @@ export default function UnAuthAnnouncement(props)
                 {volnteers.map((items,key) =>
                     (
                         <>
-                            <Circle color={'#e55405'} center={[items.host_lat, items.host_long]} radius={1500}
+                            <Circle color={'#e55405'} center={[items.host_lat, items.host_long]} radius={1000}
                                     eventHandlers={{
                                         mouseover: (event) => event.target.openPopup(),
                                         mouseout: (event) => event.target.closePopup(),
@@ -474,7 +504,7 @@ export default function UnAuthAnnouncement(props)
                                 <Popup>
                                     <Stack spacing={2} alignItems={`center`}>
                                         <Item>
-                                            <LetteredAvatar name={items.first_name} backgroundColor='#FFE5B4'  size={50}/>
+                                            <UserProfile user_id={items.id} first_name={items.first_name} imageSize={60} profileSize={`4rem`}/>
                                         </Item>
                                         <Item>
                                             <Stack>
@@ -528,7 +558,9 @@ export default function UnAuthAnnouncement(props)
                             <div style={{marginTop:"10%"}}>
                                 <Stack spacing={2} alignItems="center" justifyContent="flex-start">
                                     <Item>
-                                        <LetteredAvatar name={announcement.host_firstName} backgroundColor='#FFE5B4'  size={100}/>
+                                        <UserProfile user_id={announcement.host_id}
+                                                     first_name={announcement.host_firstName} imageSize={100}
+                                                     profileSize={`8rem`}/>
                                     </Item>
                                     <Item>
                                         <Stack>
@@ -551,6 +583,9 @@ export default function UnAuthAnnouncement(props)
                 )
         }
     }
+    const handelClickPost=(announcement_id)=>{
+        navigate(`/home/PostExperience/announcement/${announcement_id}`)
+    }
     const handleClose = () => {
         props.setOpen(false);
         props.set_anc_id(null);
@@ -563,7 +598,9 @@ export default function UnAuthAnnouncement(props)
                 <Row>
                     <Col md={4}>
                         <div style={{height:"100%", width:"100%"}}>
-                            <div className={classes.sidebarDetails}></div>
+                            <div style={{backgroundColor:"rgba(228,85,5,0.5)"}}>
+                                <div className={classes.sidebarDetails}></div>
+                            </div>
                             <div style={{position:"absolute", top:"0.5em",
                                 zIndex:"100",left:"0.5em", color:"#EDE7E6FF"}}>
                                 <h1 style={{marginLeft: "1.5rem"}}>Announcement</h1>
@@ -619,6 +656,23 @@ export default function UnAuthAnnouncement(props)
                                                         </span>
                                         </Typography>
                                     </Item>
+                                    {announcement.anc_status === "D" && <Item>
+                                            <Box textAlign={`center`}
+                                                 sx={{position:"fixed", bottom:"0",
+                                                marginBottom:"5rem",
+                                                width:"30%", height:"32vh",
+                                            }}><Button sx={{width:"70%",
+                                                color:"rgba(237,231,230,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                            "&:hover":{
+                                                color:"rgba(234,187,170,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                            }
+                                            }} startIcon={<AddIcon />}>
+                                                Add Post
+                                            </Button></Box>
+                                    </Item>
+                                    }
                                     <Item>
                                         <div style={{position:"fixed", bottom:"0",
                                             marginBottom:"1rem", marginLeft:"0.25rem",

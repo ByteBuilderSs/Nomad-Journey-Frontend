@@ -234,18 +234,18 @@ function MyAnnouncements(props) {
                                                             <Item>
                                                                 <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                     <span>{anc.city_name}</span>
-                                                                    {anc.anc_status=="D"?<>
-                                                                    <Button
-                                                                        sx={{ ml: "40rem" }}
-                                                                        onClick={()=>{handelClickPost(anc.id)}}
-                                                                        variant="contained"
-                                                                        color="secondary"
-                                                                        size="medium"
-                                                                        startIcon={<AddIcon />}
-                                                                        >
-                                                                        Add Post
-                                                                    </Button>
-                                                                    </> :null}
+                                                                    {/*{anc.anc_status=="D"?<>*/}
+                                                                    {/*<Button*/}
+                                                                    {/*    sx={{ ml: "40rem" }}*/}
+                                                                    {/*    onClick={()=>{handelClickPost(anc.id)}}*/}
+                                                                    {/*    variant="contained"*/}
+                                                                    {/*    color="secondary"*/}
+                                                                    {/*    size="medium"*/}
+                                                                    {/*    startIcon={<AddIcon />}*/}
+                                                                    {/*    >*/}
+                                                                    {/*    Add Post*/}
+                                                                    {/*</Button>*/}
+                                                                    {/*</> :null}*/}
                                                                 </h1>
                                                             </Item>
                                                             <Item>

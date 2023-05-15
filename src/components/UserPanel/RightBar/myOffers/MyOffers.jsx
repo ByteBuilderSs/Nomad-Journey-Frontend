@@ -13,6 +13,7 @@ import {useRejectReq} from '../../../../hooks/useRejectReq'
 const OfferLists=({Annoc})=>{
     const[id,setID]=useState(null)
     const [isOpen, setIsOpen] = useState(false);
+    
     const handleOpen = () => {
     setIsOpen(!isOpen)}
     const {AcceptReq}=useAcceptReq()

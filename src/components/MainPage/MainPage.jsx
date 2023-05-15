@@ -496,14 +496,20 @@ export default function MainPage(){
           </nav>
         </div>
       </section>
-      <div class="card-silder">
+      
+      <div class="cities-town">
         <div class="container">
           <div class="row">
-          {showGeneralost()}
+            <div class="slider-content-main-page">
+              <div class="row">
+                <div class="col-lg-12"> 
+                {showGeneralost()}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
 
       <div class="amazing-deals">
         <div class="container">

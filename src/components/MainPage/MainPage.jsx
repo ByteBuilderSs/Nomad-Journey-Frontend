@@ -9,7 +9,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Pagination from '@mui/material/Pagination';
 import "./MainPage.css"
 import "./fontawesome.css"
-import GeneralPosts from '../generalPosts/generalPosts'
 import Lottie from 'react-lottie';
 import notFoundGif from '../../lottieAssets/notfoundANC';
 import loaderGif from '../../lottieAssets/loaderANC';
@@ -324,11 +323,7 @@ export default function MainPage(){
     //   setSort(event.target.value)
     //   fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
     // }
-    const showGeneralost=()=>{
-      return(      
-      <GeneralPosts/>
-      );
-    }
+    
   return(
 
     <div className='mainpage'>
@@ -497,7 +492,7 @@ export default function MainPage(){
         </div>
       </section>
       
-      <div class="cities-town">
+      {/* <div class="cities-town">
         <div class="container">
           <div class="row">
             <div class="slider-content-main-page">
@@ -509,7 +504,7 @@ export default function MainPage(){
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div class="amazing-deals">
         <div class="container">

@@ -590,8 +590,8 @@ export default function UnAuthAnnouncement(props)
                 )
         }
     }
-    const handelClickPost=() =>{
-        navigate(`/home/PostExperience/announcement/${props.announcement_id}`)
+    const handelClickPost=(anc_id) =>{
+        navigate(`/home/PostExperience/announcement/${anc_id}`)
     }
     const handleClose = () => {
         props.setOpen(false);
@@ -667,7 +667,8 @@ export default function UnAuthAnnouncement(props)
                                     <>
                                     <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
                                             <Grid item >
-                                            <Button size='medium' sx={{
+                                            <Button onClick={()=>handelClickPost(announcement.id)}
+                                            size='medium' sx={{
                                                 color:"rgba(237,231,230,0.8)",
                                                 backgroundColor:"rgba(201,153,127,0.2)",
                                             "&:hover":{

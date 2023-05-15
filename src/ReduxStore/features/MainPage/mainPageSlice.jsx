@@ -10,7 +10,7 @@ export const mainPageSlice = createSlice({
     loader : false,
     // sort announcements
     sort : "sort_by=anc_timestamp_created&descending=True",
-    filters : {"language" : [], "city" : [], "country" : [], "dates" : []},
+    filters : {"language" : [], "city" : [], "country" : [], "date" : []},
     showPagination : false,
     // number of page shown in pagination
     paginCount : 1,
@@ -40,7 +40,7 @@ export const mainPageSlice = createSlice({
       state.page = action.payload
     },
     setFilters: (state, action) => {
-      state.page = action.payload
+      state.filters = action.payload
     },
 
   },

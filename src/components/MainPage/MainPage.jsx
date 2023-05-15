@@ -148,7 +148,9 @@ const Announce = (props) => {
             <div class="col-lg-6 align-self-center">
               <div class="content">
                 <span class="info">*{props.anc.travelers_count} Travelers</span>
+                
                 <h4>{props.anc.announcer_username}</h4>
+
                 <div class="row">
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
@@ -156,8 +158,13 @@ const Announce = (props) => {
                   </div>
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
-                    <span class="list">{props.anc.departure_date}</span>
+                    <span class="list">{props.anc.arrival_date}</span>
                   </div>
+                  
+                </div>
+                <div style={{justifyContent : "left", padding : "7px 0px " }}>
+                    <i class="fa fa-city"></i>
+                    <span class="list">{props.anc.city_country} - {props.anc.city_name}</span>
                 </div>
                 <p onClick = {() => {if(props.anc.anc_description.length != 0){handleOpenDiscDialog()}}}>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>

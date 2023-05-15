@@ -98,22 +98,24 @@ const Navbar = (props) => {
     const counter = useCounter();
 
     useEffect(() => {
-        axios({
-            method: "get",
-            url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${user_id}`,
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((result) => {
-            console.log("+++++++++ THE RESULT IS ++++++++ ", result);
-            /* TODO => HOW CAN I CONVERT THE URL TO FILE */
-            if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
-            } 
-
-        }).catch((error) => {
-            toast.error("Something went wrong while fetching user profile photo.")
-        })
+        if (user_id !== "" && user_id) {
+            axios({
+                method: "get",
+                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${user_id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((result) => {
+                console.log("+++++++++ THE RESULT IS ++++++++ ", result);
+                /* TODO => HOW CAN I CONVERT THE URL TO FILE */
+                if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
+                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                } 
+    
+            }).catch((error) => {
+                toast.error("Something went wrong while fetching user profile photo.")
+            })
+        }
     }, [counter]);
 
     useEffect(() => {

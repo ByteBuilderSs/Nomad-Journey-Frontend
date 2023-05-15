@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Box, Divider, IconButton, Rating, Stack, Typography} from "@mui/material";
+import {Box, Divider, IconButton, Rating, Stack, Typography,Grid} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import LetteredAvatar from "react-lettered-avatar";
 import "../UserPanel/RightBar/MyAnnouncement.css";
@@ -7,7 +7,8 @@ import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import { makeStyles } from '@mui/styles';
 import axios from "axios";
 import UserProfile from "../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement";
-
+import notfound from '../../lottieAssets/9341-not-found.json';
+import Lottie from 'react-lottie';
 const useStyles = makeStyles(theme => (
     {
         likeButton:{
@@ -30,6 +31,27 @@ const useStyles = makeStyles(theme => (
 
 export default function UsersPosts()
 {
+    const NotFound = () => {
+
+        const defaultOptions = {
+          loop: true,
+          autoplay: true,
+          animationData: notfound,
+          rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice"
+          }
+        };
+      
+        return(
+          <div class="col-lg-12">
+            <Lottie 
+              options={defaultOptions}
+              height={300}
+              width={420}
+            />
+          </div>
+        )
+    }
     const [blogs, setBlogs] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -156,15 +178,26 @@ export default function UsersPosts()
                                                         </Typography>
                                                     </Box>
                                                 </Item>
-                                                <Item>
-                                                    <img src={`https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/54/cd/c1/caption.jpg?w=500&h=300&s=1`}
+                                                <Grid item sx={{marginRight:'50px'}}>
+                                                    {blog.main_image_64!=null ?
+                                                    <>
+                                                    <img src={blog.main_image_64}
                                                         style={{borderRadius:"5%",
                                                         border:"solid",
                                                             borderWidth:"thin",
                                                             borderColor:"#b2b2b2"
                                                         }}
                                                         width="92%" />
-                                                </Item>
+                                                    </>
+                                                    :
+                                                    <Grid  container alignItems='center' direction='column' justifyContent="center">
+                                                        <Item>
+                                                            <NotFound/> 
+                                                        </Item>
+                                                    </Grid>
+                                                    }
+                                                    
+                                                </Grid>
                                             </Stack>
                                         </Item>
                                         <Item>

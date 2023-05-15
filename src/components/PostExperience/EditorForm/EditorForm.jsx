@@ -34,7 +34,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
-import FeedbackQs from '../feedBack/feedBack'
+import FeedbackQs from '../../UserPanel/RightBar/feedBack/feedBack'
 
 const theme = createTheme({
     palette: {
@@ -402,19 +402,7 @@ const EditorForm = () => {
                                         </Grid>                        
                                     </Stack>
                                 </Grid>
-                                {/*feedback */}
-                            <Grid item xs={12} direction='row'>
-                                <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
-                                    <Item>
-                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
-                                            Your host name in this trip was:
-                                        </h6>
-                                    </Item>
-                                    <Item>
-                                        <FeedbackQs/>
-                                    </Item>
-                                </Stack>
-                            </Grid>
+                               
                             {/* Buttons */}
                                 <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
                                     <Stack direction="row" spacing={2} sx={{ mt: "5rem", mb: "1rem" }}>

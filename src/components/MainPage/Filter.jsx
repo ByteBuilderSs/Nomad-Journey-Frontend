@@ -446,7 +446,7 @@ export default function Filters() {
     return(
         <div className="innerFilter">
             
-            <div style={{display : "flex", justifyContent : "center"}}>
+          <div style={{display : "flex", justifyContent : "center"}}>
 
             <ThemeProvider theme={theme}>
                 <Sort/>
@@ -456,68 +456,73 @@ export default function Filters() {
                 <DateRangePickerButton/>
             </ThemeProvider>
 
-            </div>
+          </div>
+            {(dateTags.length + languageTags.length + cityTags.length + countryTags.length > 0) &&(
+              <div>
+                <p style={{marginTop : "5px",marginRight : 0}}><b>Filters : </b></p>
+              </div>
+            )}
             
-            <div style={{display : "flex", paddingTop : "20px"}}>
-                <div>
-                    <p style={{marginTop : "5px",marginRight : 0, marginBottom : "15px"}}><b>Filters : </b></p>
-                </div>
-                <div>
-                    {dateTags.length > 0 && (
-                        <div style={{display : "flex"}}>
-                        {dateTags.map((tag) => (
-                            <div>
-                              <div className="filterTag" onClick={() => handleTagDelete(tag,"date")}>
-                                  {tag}
-                                  <div className="deletebutton" >X</div>
+            <div  style={{display : "flex", paddingTop : "5px", flexWrap : "wrap"}}>
+                
+                
+                  <div>
+                      {dateTags.length > 0 && (
+                          <div style={{display : "flex", flexWrap : "wrap"}}>
+                          {dateTags.map((tag) => (
+                              <div style={{marginTop : "5px"}}>
+                                <div className="filterTag" onClick={() => handleTagDelete(tag,"date")}>
+                                    {tag}
+                                    <div className="deletebutton" >X</div>
+                                </div>
                               </div>
-                            </div>
-                        ))}
-                        </div>
-                    )}
-                </div>
-                <div>
-                    {languageTags.length > 0 && (
-                        <div style={{display : "flex"}}>
-                        {languageTags.map((tag) => (
-                            <div>
-                              <div className="filterTag" onClick={() => handleTagDelete(tag, "language")}>
-                                  {tag}
-                                  <div className="deletebutton" >X</div>
+                          ))}
+                          </div>
+                      )}
+                  </div>
+                  <div>
+                      {languageTags.length > 0 && (
+                          <div style={{display : "flex", flexWrap : "wrap"}}>
+                          {languageTags.map((tag) => (
+                              <div style={{marginTop : "5px"}}>
+                                <div className="filterTag" onClick={() => handleTagDelete(tag, "language")}>
+                                    {tag}
+                                    <div className="deletebutton" >X</div>
+                                </div>
                               </div>
-                            </div>
-                        ))}
-                        </div>
-                    )}
-                </div>
-                <div>
-                    {countryTags.length > 0 && (
-                        <div style={{display : "flex"}}>
-                        {countryTags.map((tag) => (
-                            <div>
-                              <div className="filterTag" onClick={() => handleTagDelete(tag, "country")}>
-                                  {tag}
-                                  <div className="deletebutton" >X</div>
+                          ))}
+                          </div>
+                      )}
+                  </div>
+                  <div>
+                      {countryTags.length > 0 && (
+                          <div style={{display : "flex", flexWrap : "wrap"}}>
+                          {countryTags.map((tag) => (
+                              <div style={{marginTop : "5px"}}>
+                                <div className="filterTag" onClick={() => handleTagDelete(tag, "country")}>
+                                    {tag}
+                                    <div className="deletebutton" >X</div>
+                                </div>
                               </div>
-                            </div>
-                        ))}
-                        </div>
-                    )}
-                </div>
-                <div>
-                    {cityTags.length > 0 && (
-                        <div style={{display : "flex"}}>
-                        {cityTags.map((tag) => (
-                            <div>
-                              <div className="filterTag" onClick={() => handleTagDelete(tag, "city")}>
-                                  {tag}
-                                  <div className="deletebutton" >X</div>
+                          ))}
+                          </div>
+                      )}
+                  </div>
+                  <div>
+                      {cityTags.length > 0 && (
+                          <div style={{display : "flex", flexWrap : "wrap"}}>
+                          {cityTags.map((tag) => (
+                              <div style={{marginTop : "5px"}}>
+                                <div className="filterTag" onClick={() => handleTagDelete(tag, "city")}>
+                                    {tag}
+                                    <div className="deletebutton" >X</div>
+                                </div>
                               </div>
-                            </div>
-                        ))}
-                        </div>
-                    )}
-                </div>
+                          ))}
+                          </div>
+                      )}
+                  </div>
+                
                 
             </div>
 

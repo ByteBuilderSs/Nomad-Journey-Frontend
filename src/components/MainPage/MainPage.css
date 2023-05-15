@@ -561,7 +561,10 @@ Pre-loader Style
     border-top-left-radius: 23px;
     padding: 20px 40px;
     margin-bottom: 20px;
+    
   }
+
+  
 
   .search-form .filterTag{
     background-color: #E55405;
@@ -697,7 +700,7 @@ Pre-loader Style
   .amazing-deals .item h4 {
     font-size: 20px;
     font-weight: 700;
-    padding-bottom: 25px;
+    padding-bottom: 5px;
     margin-bottom: 10px;
     border-bottom: 1px solid #ddd;
   }
@@ -714,7 +717,7 @@ Pre-loader Style
   }
   
   .amazing-deals .item .content {
-    padding: 30px 0px;
+    padding: 20px 0px;
   }
   
   .amazing-deals .item p {

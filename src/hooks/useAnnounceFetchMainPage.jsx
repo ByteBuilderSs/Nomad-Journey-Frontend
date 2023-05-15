@@ -73,7 +73,7 @@ export const FetchAnnc = () => {
         
         await axios.get(`http://188.121.102.52:8000/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}${cities}${countries}${languages}${startTime}${endTime}`, config).then(
             (response) => {
-            
+            console.log(response.data.results)
             dispatch(setAnncData(response.data.results))
             // console.log(response.data)
             // console.log(sort)

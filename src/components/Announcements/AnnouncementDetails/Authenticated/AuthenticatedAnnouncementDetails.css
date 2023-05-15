@@ -21,28 +21,28 @@
     top: 50%;
     right: 32px;
     font-size: 3rem;
-    color: #8d8d8d;
+    color: rgba(201,153,127,0.55);
     z-index: 10;
     cursor: pointer;
     user-select: none;
     transition: 0.2s ease;
 }
 .right-arrow:hover{
-    color: #afafaf;
+    color: rgba(201,153,127,0.8);
 }
 .left-arrow {
     position: absolute;
     top: 50%;
     left: 32px;
     font-size: 3rem;
-    color: #8d8d8d;
+    color: rgba(201,153,127,0.55);
     z-index: 10;
     cursor: pointer;
     user-select: none;
     transition: 0.2s ease;
 }
 .left-arrow:hover{
-    color: #afafaf;
+    color: rgba(201,153,127,0.8);
 }
 .slide {
     opacity: 0;

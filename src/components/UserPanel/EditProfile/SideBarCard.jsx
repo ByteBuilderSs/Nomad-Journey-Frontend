@@ -205,7 +205,7 @@ const SideBarCard = () => {
                                                 handleDeleteClick(e);
                                             }}
                                             >
-                                            
+                                            Remove photo
                                         </Button>
                                     </Item>
                                 </Stack>

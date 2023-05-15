@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {List,
       ListItem,
       ListItemButton,
@@ -28,25 +28,34 @@ if (localStorage.getItem('tokens'))
 
 const CheckboxListSecondary=({mentions})=>{
   /* TODO => FOR HOST AVATAR */
-  /*
-    useEffect(() => {
-      axios({
-          method: "get",
-          url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${user_id}`,
-          headers: {
-              'Content-Type': 'application/json',
-          }
-      }).then((result) => {
-          console.log("+++++++++ THE RESULT IS ++++++++ ", result);
-          if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-              setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
-          } 
+  const [profileImageURL, setProfileImageURL] = useState("");
+  // const [hostID, setHostID] = useState("");
+  // console.log("DATA PASSED BY MENTIONS: ", mentions);
+  // console.log("HOST ID", mentions.host_id);
+  
 
-      }).catch((error) => {
-          toast.error("Something went wrong while fetching user profile photo.")
-      })
-    }, [counter]);
-  */
+  useEffect(() => {
+    if (mentions.host_id) {
+      console.log("THE OUTPUT PASSED BY MENTIONS IN USEEFFECT: ", mentions.host_id);
+      axios({
+                method: "get",
+                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${mentions.host_id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((result) => {
+                console.log("+++++++++ THE RESULT IS ++++++++ ", result);
+                if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
+                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                } 
+      
+            }).catch((error) => {
+                toast.error("Something went wrong while fetching user profile photo.")
+            })
+    }
+      
+  }, [mentions.host_id]);
+  
 
   return(
       <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -56,7 +65,15 @@ const CheckboxListSecondary=({mentions})=>{
           hideChevron={true}
           disablePadding>
             <ListItemAvatar>
-              <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.host_username}/>
+              {
+                profileImageURL && profileImageURL !== "" ? 
+                (
+                    <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
+                        <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
+                    </div>
+                ) :
+                <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.host_username}/>
+              }
             </ListItemAvatar>
             <ListItemText primary={mentions.host_firstName + " " + mentions.host_lastName} secondary={" was your host in "+mentions.city_name} />
           </ListItem>

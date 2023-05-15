@@ -26,7 +26,8 @@ function DeletePostDialog(props)
     const setCounter = useCounterActions();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
-
+    const username = allData.username;
+    
     const handleClose = () =>
     {
         props.setOpen(false);
@@ -37,7 +38,7 @@ function DeletePostDialog(props)
     {
         axios({
             method: "delete",
-            url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+            url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}`,

@@ -150,7 +150,7 @@ const UserPanelNew = () => {
                                                                 <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
                                                             </div>
                                                         ) :
-                                                        <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4'/>
+                                                        <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4' size={100}/>
                                                     }
                                                 </Box>
                                             </Item>

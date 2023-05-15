@@ -22,6 +22,7 @@ import {
     MdAccountCircle,
     MdKeyboardArrowDown,
     MdNoteAdd,
+    MdLinkedCamera
 } from "react-icons/md";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -60,12 +61,19 @@ const tabs = [
         mobileIcon: <MdAccountCircle style={{  fontSize: "small" }}/>,
         route: `/home/Profile/${username}/`,
     },
+    // {
+    //     label: "Inbox",
+    //     value: 3,
+    //     desktopIcon: <MdInbox style={{ color: "white", fontSize: "1.2rem" }}/>,
+    //     mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
+    //     route: "/home/Inbox/",
+    // },
     {
-        label: "Inbox",
+        label: "Posts",
         value: 3,
-        desktopIcon: <MdInbox style={{ color: "white", fontSize: "1.2rem" }}/>,
-        mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
-        route: "/home/Inbox/",
+        desktopIcon: <MdLinkedCamera style={{ color: "white", fontSize: "1.2rem " }}/>,
+        mobileIcon: <MdLinkedCamera style={{  fontSize: "small" }}/>,
+        route: `/posts`,
     },
     // {
     //     label: "Post Experience",

@@ -1,9 +1,8 @@
 import React from "react"
 import {makeStyles,useTheme} from "@material-ui/styles";
-import {MobileStepper,
-  Paper,
+import {
+
   Typography,
-  Button,
   Grid,
   Card,
   CardActionArea,
@@ -16,6 +15,66 @@ import {MobileStepper,
 import LetteredAvatar from 'react-lettered-avatar';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import styled from "@emotion/styled/macro";
+const Hover = styled.div({
+  opacity: 0,
+  transition: "opacity 350ms ease",
+});
+
+const DisplayOver = styled.div({
+  height: "100%",
+  left: "0",
+  position: "absolute",
+  top: "0",
+  width: "100%",
+  zIndex: 2,
+  transition: "background-color 350ms ease",
+  backgroundColor: "transparent",
+  padding: "20px 20px 0 20px",
+  boxSizing: "border-box",
+});
+
+const BigTitle = styled.h2({
+  textTransform: "uppercase",
+  fontFamily: "Helvetica",
+});
+
+const SubTitle = styled.h4({
+  fontFamily: "Helvetica",
+  transform: "translate3d(0,50px,0)",
+  transition: "transform 350ms ease",
+});
+
+const Paragraph = styled.p({
+  transform: "translate3d(0,50px,0)",
+  transition: "transform 350ms ease",
+});
+
+const Background = styled.div({
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat",
+  color: "#FFF",
+  position: "relative",
+  width: "500px",
+  height: "350px",
+  cursor: "pointer",
+  backgroundImage: "url(/bg.jpg)",
+  [`:hover ${DisplayOver}`]: {
+    backgroundColor: "rgba(0,0,0,.5)",
+  },
+  [`:hover ${SubTitle}, :hover ${Paragraph}`]: {
+    transform: "translate3d(0,0,0)",
+  },
+  [`:hover ${Hover}`]: {
+    opacity: 1,
+  },
+});
+
+const CTA = styled.a({
+  position: "absolute",
+  bottom: "20px",
+  left: "20px",
+});
 
 const responsive = {
   desktop: {
@@ -57,7 +116,7 @@ const tutorialSteps = [
   {
     label: 'Post title',
     imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://media-cdn.tripadvisor.com/media/photo-s/19/8c/47/0e/tehran-the-capital-of.jpg',
     desc:"this is a TV of 32 inch not for you",
     rate:1,
     username:"ali",
@@ -65,7 +124,7 @@ const tutorialSteps = [
   {
     label: 'Post title',
     imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://media.tehrantimes.com/d/t/2021/11/22/4/3965214.jpg',
     desc:"this is a TV of 32 inch not for you",
     rate:2,
     username:"kami"
@@ -73,7 +132,7 @@ const tutorialSteps = [
   {
     label: 'Post title',
     imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
+      'https://irandoostan.com/dostcont/uploads/2020/04/rsz_iran_mosque.jpg',
     desc:"this is a TV of 32 inch not for you",
     rate:3,
     username:"homan"
@@ -82,7 +141,7 @@ const tutorialSteps = [
   {
     label: 'Post title',
     imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+      'https://ui.ac.ir/Dorsapax/userfiles/Sub0/Aui7.jpg',
     desc:"this is a TV of 32 inch not for you",
     rate:4.4,
     username:"mir"

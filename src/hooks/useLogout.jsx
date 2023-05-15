@@ -24,7 +24,7 @@ export const useLogout=()=>{
         {
             localStorage.removeItem('tokens')
             localStorage.removeItem('user')
-            navigate("/login", { replace: true })
+            navigate("/landing", { replace: true })
             toast.success("Logged out successfully");
         }
     }

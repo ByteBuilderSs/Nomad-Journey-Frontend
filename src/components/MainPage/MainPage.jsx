@@ -158,7 +158,7 @@ const Announce = (props) => {
                   </div>
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
-                    <span class="list">{props.anc.arrival_date}</span>
+                    <span class="list">{props.anc.departure_date}</span>
                   </div>
                   
                 </div>

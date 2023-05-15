@@ -22,7 +22,51 @@ import axios from 'axios';
 import {CircularProgress} from "@mui/material"
 import { setCity } from "../../ReduxStore/features/User/useSlice";
 
-const options = ['Option 1', 'Option 2'];
+const cities_static = [
+  // Iran
+  "Tehran",
+  "Mashhad",
+  "Isfahan",
+  "Tabriz",
+  "Shiraz",
+  // USA
+  "New York City",
+  "Los Angeles",
+  "Chicago",
+  "Houston",
+  "Miami",
+  // Canada
+  "Toronto",
+  "Montreal",
+  "Vancouver",
+  "Calgary",
+  "Ottawa",
+  // Afghanistan
+  "Kabul",
+  "Herat",
+  "Mazar-i-Sharif",
+  "Kandahar",
+  "Jalalabad",
+  // Japan
+  "Tokyo",
+  "Osaka",
+  "Kyoto",
+  "Yokohama",
+  "Nagoya",
+  // Turkey
+  "Istanbul",
+  "Ankara",
+  "Izmir",
+  "Bursa",
+  "Antalya",
+  // Europe
+  "Paris",
+  "London",
+  "Rome",
+  "Berlin",
+  "Madrid"
+  // Add more cities as needed
+];
 
 const theme = createTheme({
     palette: {
@@ -58,8 +102,8 @@ export default function Filters() {
   const filters = useSelector((state) => state.mainpage.filters)
 
   const loading = countries.length === 0;
-  const [openC, setOpenC] = React.useState(false);
-  const loadingC = openC && cities.length === 0;
+  // const [openC, setOpenC] = React.useState(false);
+  // const loadingC = openC && cities.length === 0;
 
   const loadCountries = async () => {
     await axios({
@@ -88,9 +132,15 @@ export default function Filters() {
             'Content-Type': 'application/json',
         }
     }).then((result) => {
-        setCities(result.data);
+      let cits = []
+      for (const cit of result.data) {
+        cits.push(cit.city_name)
+      }
+      setCities(cits)
+      console.log(cities)
     }).catch((error) => {
         toast.error("Something went wrong while fetching cities.")
+        console.log(error)
     })
   }
   const loadLanguages = async () => {
@@ -143,13 +193,9 @@ export default function Filters() {
           active = false;
       };
   }, []);
-
-
   React.useEffect(() => {
     let active = true;
-    if (!loadingC) {
-        return undefined;
-    } 
+
     (async () => {
         await sleep(1e3); // For demo purposes.
         if (active) 
@@ -160,14 +206,32 @@ export default function Filters() {
     return () => {
         active = false;
     };
-  }, [loadingC]);
+  }, []);
+
+
+  // React.useEffect(() => {
+  //   let active = true;
+  //   if (!loadingC) {
+  //       return undefined;
+  //   } 
+  //   (async () => {
+  //       await sleep(1e3); // For demo purposes.
+  //       if (active) 
+  //       {
+  //         loadCities();
+  //       }
+  //   })();
+  //   return () => {
+  //       active = false;
+  //   };
+  // }, [loadingC]);
   
 
-  React.useEffect(() => {
-    if (!openC) {
-        setCities([]);
-    }
-  }, [openC]);
+  // React.useEffect(() => {
+  //   if (!openC) {
+  //       setCities([]);
+  //   }
+  // }, [openC]);
       
   const fetchFilter = (cityTags, countryTags, dateTags, languageTags) => {
     let dictFilter = {}
@@ -203,7 +267,7 @@ export default function Filters() {
               onInputChange={(event, newInputValue) => {
                 setInputValue(newInputValue);
               }}
-              id="controllable-states-demo"
+              id="controllable-languages-demo"
               options={languages}
               sx={{ width: 150,
                     marginLeft : 4
@@ -218,61 +282,63 @@ export default function Filters() {
 
     const City = () => {
     
-        const [value, setValue] = React.useState('');
-        const [inputValue, setInputValue] = React.useState('');
-        
-        return (
-          <div>
-            {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-            <div>{`inputValue: '${inputValue}'`}</div> */}
-            <Autocomplete
-              disabled
-              // value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-                if(newValue.length > 0 && (!cityTags.includes(newValue))){
-                  setCityTags([...cityTags, newValue]);
-                  fetchFilter([...cityTags, newValue], countryTags, dateTags, languageTags)
-                }
-              }}
-              open={openC}
-              onOpen={() => {
-                  setOpenC(true);
-              }}
-              onClose={() => {
-                  setOpenC(false);
-              }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              id="asynchronous-demo-city"
-              options={cities}
-              sx={{ width: 150,
-                    marginLeft : 4,
-              }}
-              // renderInput={(params) => <TextField {...params} label="City" />}
-              renderInput={(params) => (
-                <TextField 
-                  {...params} 
-                  label="City"
-                  placeholder="City"
-                  InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                      <React.Fragment>
-                          {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
-                          {params.InputProps.endAdornment}
-                      </React.Fragment>
-                      ),
-                  }} 
-                />
-              )}
-            />
-      
+      const [value, setValue] = React.useState('');
+      const [inputValue, setInputValue] = React.useState('');
+      return (
+        <div>
+          {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
+          <div>{`inputValue: '${inputValue}'`}</div> */}
+          <Autocomplete
+            // value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+              if(newValue.length > 0 && (!cityTags.includes(newValue))){
+                setCountryTags([...cityTags, newValue]);
+
+                fetchFilter([...cityTags, newValue],countryTags , dateTags, languageTags)
+              }
+                
+            }}
+            inputValue={inputValue}
+            onInputChange={(event, newInputValue) => {
+              setInputValue(newInputValue);
+            }}
+            id="asynchronous-demo-city"
+            options={cities ?? []}
+            
           
-          </div>
-        );
+            // open={open}
+            // onOpen={() => {
+            //     setOpen(true);
+            // }}
+            // onClose={() => {
+            //     setOpen(false);
+            // }}
+            sx={{ width: 150,
+                  marginLeft : 4,
+              }}
+            renderInput={(params) => <TextField {...params} label="City" />}
+            // renderInput={(params) => (
+            //   <TextField 
+            //     {...params} 
+            //     label="Country"
+            //     placeholder="Country"
+            //     InputProps={{
+            //         ...params.InputProps,
+            //         endAdornment: (
+            //         <React.Fragment>
+            //             {loading ? <CircularProgress color="inherit" size={20} /> : null}
+            //             {params.InputProps.endAdornment}
+            //         </React.Fragment>
+            //         ),
+            //     }}
+            //   />
+            // )}
+          />
+    
+        
+        </div>
+      );
     }
 
 
@@ -313,23 +379,23 @@ export default function Filters() {
               sx={{ width: 150,
                     marginLeft : 4,
                 }}
-              // renderInput={(params) => <TextField {...params} label="Country" />}
-              renderInput={(params) => (
-                <TextField 
-                  {...params} 
-                  label="Country"
-                  placeholder="Country"
-                  InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                      <React.Fragment>
-                          {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                          {params.InputProps.endAdornment}
-                      </React.Fragment>
-                      ),
-                  }}
-                />
-              )}
+              renderInput={(params) => <TextField {...params} label="Country" />}
+              // renderInput={(params) => (
+              //   <TextField 
+              //     {...params} 
+              //     label="Country"
+              //     placeholder="Country"
+              //     InputProps={{
+              //         ...params.InputProps,
+              //         endAdornment: (
+              //         <React.Fragment>
+              //             {loading ? <CircularProgress color="inherit" size={20} /> : null}
+              //             {params.InputProps.endAdornment}
+              //         </React.Fragment>
+              //         ),
+              //     }}
+              //   />
+              // )}
             />
       
           

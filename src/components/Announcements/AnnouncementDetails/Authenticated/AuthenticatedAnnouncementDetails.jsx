@@ -50,6 +50,8 @@ import {BsHouseFill} from "react-icons/bs";
 import UserProfile from "./UserProfileAnnouncement";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
+import FeedbackModal from '../../../feedBack/feedBack';
+import FeedbackIcon from '@mui/icons-material/Feedback';
 
 const useStyles = makeStyles(theme => (
     {
@@ -146,6 +148,7 @@ const style = {
 };
 export default function UnAuthAnnouncement(props)
 {
+    
     const [openDelete, setOpenDelete] = useState(false);
     const [closeDelete, setCloseDelete] = useState(true);
     const [current, setCurrent] = useState(0);
@@ -159,6 +162,10 @@ export default function UnAuthAnnouncement(props)
 
     const [openAccept, setOpenAccept] = useState(false);
     const [closeAccept, setCloseAccept] = useState(true);
+
+    const [showFeed,setShowFeed]=useState(false);
+    const [closeFeed,setCloseFeed]=useState(true);
+
 
     const [announcement, setAnnouncement] = useState('');
     const [location, setLocation] = useState({lat:'', lng:''});
@@ -427,7 +434,7 @@ export default function UnAuthAnnouncement(props)
             </>
         )
     }
-
+    
     const SetViewCenter = () => {
         const map = useMap();
         map.setView([announcement.city_lat, announcement.city_long], 13);
@@ -583,14 +590,14 @@ export default function UnAuthAnnouncement(props)
                 )
         }
     }
-    const handelClickPost=(announcement_id)=>{
-        navigate(`/home/PostExperience/announcement/${announcement_id}`)
+    const handelClickPost=() =>{
+        navigate(`/home/PostExperience/announcement/${props.announcement_id}`)
     }
     const handleClose = () => {
         props.setOpen(false);
         props.set_anc_id(null);
     }
-
+    
     console.log(props.announcement_id)
     return(
         <Modal open={props.open} onClose={handleClose} >
@@ -656,23 +663,47 @@ export default function UnAuthAnnouncement(props)
                                                         </span>
                                         </Typography>
                                     </Item>
-                                    {announcement.anc_status === "D" && <Item>
-                                            <Box textAlign={`center`}
-                                                 sx={{position:"fixed", bottom:"0",
-                                                marginBottom:"5rem",
-                                                width:"30%", height:"32vh",
-                                            }}><Button sx={{width:"70%",
+                                    {announcement.anc_status === "D" && 
+                                    <>
+                                    <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
+                                            <Grid item >
+                                            <Button size='medium' sx={{
                                                 color:"rgba(237,231,230,0.8)",
                                                 backgroundColor:"rgba(201,153,127,0.2)",
                                             "&:hover":{
                                                 color:"rgba(234,187,170,0.8)",
                                                 backgroundColor:"rgba(201,153,127,0.27)"
-                                            }
+                                            } ,width:'20vh'
                                             }} startIcon={<AddIcon />}>
                                                 Add Post
-                                            </Button></Box>
-                                    </Item>
-                                    }
+                                            </Button>
+                                            </Grid>
+                                            <Grid item >
+                                            <Button size='medium'
+                                            onClick={()=>{
+                                                setShowFeed(true);
+                                                setCloseFeed(false);}}
+                                            sx={{
+                                                color:"rgba(237,231,230,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                            "&:hover":{
+                                                color:"rgba(234,187,170,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                            },width:'20vh'
+                                            }} startIcon={<FeedbackIcon />}>
+                                                Send Feedback
+                                            </Button>
+                                            </Grid>
+                                    </Grid>
+                                    <FeedbackModal
+                                        open={showFeed}
+                                        setOpen={setShowFeed}
+                                        close={closeFeed}
+                                        setClose={setCloseFeed}
+                                        anc_id={announcement.id}
+                                        />
+                                    </>}
+                                  
                                     <Item>
                                         <div style={{position:"fixed", bottom:"0",
                                             marginBottom:"1rem", marginLeft:"0.25rem",

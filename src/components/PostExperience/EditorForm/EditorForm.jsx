@@ -34,7 +34,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
-import FeedbackQs from '../../UserPanel/RightBar/feedBack/feedBack'
 
 const theme = createTheme({
     palette: {

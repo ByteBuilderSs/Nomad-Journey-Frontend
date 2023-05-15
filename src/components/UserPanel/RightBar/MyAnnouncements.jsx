@@ -10,14 +10,11 @@ import { IoIosPerson } from "react-icons/io";
 import { MdDescription } from "react-icons/md";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { makeStyles } from '@mui/styles';
-import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import React, {useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useCounter } from "../../../Context/CounterProvider";
-import FeedbackQs from './feedBack/feedBack'
 const theme = createTheme({
     palette: {
         primary: blue,
@@ -45,7 +42,6 @@ const useStyles = makeStyles(theme => (
 ));
 
 function MyAnnouncements(props) {
-    const navigate = useNavigate();
     const counter = useCounter();
     const classes = useStyles();
     const [error, setError] = useState(null);
@@ -71,9 +67,7 @@ function MyAnnouncements(props) {
             })
     }, [counter])
     
-    const handelClickPost=(announcement_id)=>{
-        navigate(`/home/PostExperience/announcement/${announcement_id}`)
-    }
+   
     const getDayOfDate = (date) => {
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const months = ["January", "February", "March", "April", "May", "June",
@@ -123,12 +117,7 @@ function MyAnnouncements(props) {
             </>
         );
     }
-    const showFeedback=()=>{
-        return(
-        <FeedbackQs/>
-        );
-        
-    }
+   
     const numberOftravelers = (travler_count) => {
         if(travler_count === 1)
             return`${travler_count} Traveler`;
@@ -289,12 +278,7 @@ function MyAnnouncements(props) {
                                             <Item className={classes.eachAnnouncement}>
                                                 {checkDescription(anc.anc_description)}
                                             </Item>
-                                            {anc.anc_status=="D"? 
-                                            <>
-                                            <Item className={classes.announcements}>
-                                                <Button onClick={showFeedback}>click</Button>
-                                            </Item>
-                                            </>:null}
+                                           
                                            
                                         </Stack>
                                         <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />

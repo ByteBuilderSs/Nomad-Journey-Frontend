@@ -619,6 +619,77 @@ Pre-loader Style
     background-color: #fff;
     color: #E55405;
   } */
+  
+  .cities-town .slider-content-main-page
+  {
+    min-height: 100%;
+    max-height: 100%;
+    position: relative;
+    margin-top: 23px;
+    background-color: #fff;
+    border-radius: 23px;
+    padding: 60px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
+  }
+  .cities-town .slider-content-main-page h2 {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .cities-town .slider-content-main-page h2 em {
+    font-style: normal;
+    color: #E55405;
+  }
+  
+  .cities-town .slider-content-main-page .item .thumb {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .cities-town .slider-content-main-page .item .thumb h4 {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .cities-town .owl-nav {
+    position: absolute;
+    top: -60px;
+    right: 0;
+  }
+  
+  .cities-town .owl-nav .owl-next span {
+    display: none;
+  }
+  
+  .cities-town .owl-nav .owl-next::after {
+    font-family: "FontAwesome";
+    content: '\f061'; 
+    color: #cdcdcd;
+    font-size: 20px;
+    transition: all .3s;
+  }
+  
+  .cities-town .owl-nav .owl-prev span {
+    display: none;
+  }
+  
+  .cities-town .owl-nav .owl-prev::after {
+    font-family: "FontAwesome";
+    content: '\f060'; 
+    color: #cdcdcd;
+    margin-right: 15px;
+    font-size: 20px;
+    transition: all .3s;
+  }
+  
+  .cities-town .owl-nav .owl-prev:hover::after,
+  .cities-town .owl-nav .owl-next:hover::after {
+    color: #E55405;
+  }
   .card-silder {
     margin-top: 120px;
   }

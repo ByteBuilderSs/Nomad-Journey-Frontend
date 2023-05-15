@@ -37,6 +37,7 @@ import SamplePostMainImage from '../../../Assets/images/post-default-main-image.
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { cyan, teal } from '@mui/material/colors';
 
 const theme = createTheme({
     palette: {
@@ -281,7 +282,7 @@ const EditPost = () => {
                                 <form>
                                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                         {/* Main Image */}
-                                        <Grid item xs={12} style={{ paddingLeft: "1.25rem" }}>
+                                        <Grid item xs={12} style={{ paddingLeft: "10rem", marginTop: "4rem" }}>
                                             <div >
                                                 <IconButton component="label">
                                                     <input
@@ -296,7 +297,7 @@ const EditPost = () => {
                                                         variant="square"
                                                         src={mainImage && mainImage !== '' ? mainImage : SamplePostMainImage} 
                                                         style={{
-                                                            width: "58.5rem",
+                                                            width: "60rem",
                                                             height: 340,
                                                             borderRadius: '0.25rem',
                                                             objectFit: 'fill',

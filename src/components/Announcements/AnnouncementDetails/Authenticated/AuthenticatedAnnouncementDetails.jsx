@@ -665,6 +665,10 @@ export default function UnAuthAnnouncement(props)
                                     </Item>
                                     {announcement.anc_status === "D" && 
                                     <>
+                                        <div style={{position:"fixed", bottom:"0",
+                                            marginBottom:"25rem", marginLeft:"0.25rem",
+                                            width:"30%",
+                                        }}>
                                     <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
                                             <Grid item >
                                             <Button onClick={()=>handelClickPost(announcement.id)}
@@ -697,6 +701,7 @@ export default function UnAuthAnnouncement(props)
                                             </Button>
                                             </Grid>
                                     </Grid>
+                                        </div>
                                     <FeedbackModal
                                         open={showFeed}
                                         setOpen={setShowFeed}

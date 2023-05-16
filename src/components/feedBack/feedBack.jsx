@@ -87,7 +87,7 @@ export default function FeedbackModal(props)
         </Grid>
       </Stack>
       </DialogTitle>
-      <DialogContent sx={{width:'75vh'}}>
+      <DialogContent sx={{width:'25vw'}}>
         <DialogContentText>
           <Grid item>
             {myFeedback.map((item,index)=>

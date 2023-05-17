@@ -139,7 +139,10 @@ const SideBarCard = () => {
         }).then((res) => {
             console.log(res);
             toast.success("Profile photo removed successfully.");
-            setCounter(counter + 1);
+            setProfileImage(null);
+            setProfileImageURL(prevURL => "");
+            setImageSizeError(false);
+            setCounter(counter + 5);
         }).catch((error) => {
             toast.error("Something went wrong while updating information.");
             console.log(error);
@@ -201,9 +204,6 @@ const SideBarCard = () => {
                                                 startIcon={<DeleteIcon />}
                                                 size='small'
                                                 onClick={(e) => {
-                                                    setProfileImage(null);
-                                                    setProfileImageURL("");
-                                                    setImageSizeError(false);
                                                     handleDeleteClick(e);
                                                 }}
                                                 >

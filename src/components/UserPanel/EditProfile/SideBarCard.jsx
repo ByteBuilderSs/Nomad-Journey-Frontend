@@ -192,21 +192,25 @@ const SideBarCard = () => {
                                         </Button>
                                     </Item>
                                     <Item>
-                                        <Button
-                                            sx={{  width: "100%", textTransform: "none" }}
-                                            variant="outlined"
-                                            color="error"
-                                            startIcon={<DeleteIcon />}
-                                            size='small'
-                                            onClick={(e) => {
-                                                setProfileImage(null);
-                                                setProfileImageURL("");
-                                                setImageSizeError(false);
-                                                handleDeleteClick(e);
-                                            }}
-                                            >
-                                            Remove photo
-                                        </Button>
+                                        {
+                                            profileImageURL && profileImageURL !== "" ? (
+                                            <Button
+                                                sx={{  width: "100%", textTransform: "none" }}
+                                                variant="outlined"
+                                                color="error"
+                                                startIcon={<DeleteIcon />}
+                                                size='small'
+                                                onClick={(e) => {
+                                                    setProfileImage(null);
+                                                    setProfileImageURL("");
+                                                    setImageSizeError(false);
+                                                    handleDeleteClick(e);
+                                                }}
+                                                >
+                                                Remove photo
+                                            </Button>
+                                            ) : null
+                                        }
                                     </Item>
                                 </Stack>
                                 <Item>

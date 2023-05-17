@@ -25,12 +25,13 @@ import { Link, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
 import { AiFillNotification } from "react-icons/ai";
-import { MdFeedback } from "react-icons/md";
+import { MdFeedback, MdHome } from "react-icons/md";
 import { HiCamera } from "react-icons/hi";
 import { GiTwoCoins } from "react-icons/gi";
 import { BsStarHalf } from "react-icons/bs";
 import MyAnnouncements from './RightBar/MyAnnouncements';
 import AboutMe from './RightBar/About';
+import Home from './RightBar/Home';
 import MyPosts from './RightBar/myPosts/MyPosts';
 import MyFeedbacks from './RightBar/Feedback';
 import NewAnnouncementForm from '../Announcements/AddAnnouncement/NewAnnouncementForm';
@@ -38,56 +39,97 @@ import Overview from './Overview';
 import MyOffers from './RightBar/myOffers/MyOffers';
 import {useUserData} from '../../hooks/useSetUserData';
 import Notif from '../Badge/Bedge';
+import axios from 'axios';
+import { toast } from "react-toastify";
 
+let local_storage_username = "";
+let user_id = "";
+if (localStorage.getItem('tokens')) {
+    const allData = JSON.parse(localStorage.getItem('tokens'))
+    local_storage_username = allData.username;
+    user_id = allData.user_id;
+}
 
 const UserPanelNew = () => {
+    const user_params = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const handleOpen = () => {setIsOpen(!isOpen)};
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [requestData, setRequestData] = useState({});
-    const [active, setActive] = useState("My Profile");
-    const {userdata, userInfo} = useUserData()
-    useEffect(() => {userdata()}, [])
-    
+    const [active, setActive] = useState("About Me");
+    const {userdata, userInfo} = useUserData(user_params.username);
+    const [profileImageURL, setProfileImageURL] = useState("");
 
-    const user_params = useParams();
+
+    useEffect(() => {
+        if (userInfo.id) {
+            axios({
+                method: "get",
+                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userInfo.id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((result) => {
+                console.log("+++++++++ THE RESULT IS ++++++++ ", result);
+                /* TODO => HOW CAN I CONVERT THE URL TO FILE */
+                if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
+                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                } 
+    
+            }).catch((error) => {
+                toast.error("Something went wrong while fetching user profile photo.")
+            })
+        }
+    }, [userInfo.id]);
+
+    console.log("++++++++++++++++ THE USER PARAM IS ++++++++++++++++ ", user_params.username);
+
     const menuItem = [
         {
-            name : "My Profile",
-            component : <AboutMe />,
-            icon : <TiUser />,
+            id: 0,
+            name : "About Me",
+            component : <AboutMe 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />,
+            icon : <TiUser style={{ marginTop : "-0.2rem" }}/>,
         },
         {
+            id: 1,
+            name : "My Home",
+            component : <Home 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                            first_name={userInfo.first_name}
+                        />,
+            icon : <MdHome style={{ marginTop : "-0.2rem" }}/>,
+        },
+        {
+            id: 2,
             name : "Announcements",
-            component : <MyAnnouncements username={user_params.username} />,
-            icon : <AiFillNotification />,
+            component : <MyAnnouncements 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />,
+            icon : <AiFillNotification style={{ marginTop : "-0.2rem" }}/>,
         },
         {
+            id: 3,
             name : "Posts",
-            component : <MyPosts />,
-            icon : <HiCamera />,
-        },
-        {
-            name : "Hosts Offers",
-            component : <MyOffers/>,
-            icon : <Notif />,
-        },
-        
-        {
-            name : "feedback",
-            component : <MyFeedbacks />,
-            icon : <MdFeedback />,
-        },
-        
+            component : <MyPosts 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />,
+            icon : <HiCamera style={{ marginTop : "-0.2rem" }}/>,
+        }
     ]
     const openCreateRequest = (event) => {
         setOpen(true);
         setDisabled(false);
     }
-
+    useEffect(() => {userdata()}, [])
     
-
 
     return (
         <div className='userpanel'>
@@ -102,8 +144,16 @@ const UserPanelNew = () => {
                                         <Stack alignItems={`center`} spacing={1}>
                                             <Item>
                                                 {/* <Avatar sx={{ width:'15vw', height:'15vw', marginTop: "3rem" }}>{userInfo.username}</Avatar> */}
-                                                <Box sx={{marginTop:'4px'}}>
-                                                    <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4'  size={100}/>
+                                                <Box sx={{marginTop:'2rem'}}>
+                                                    {
+                                                        profileImageURL && profileImageURL !== "" ? 
+                                                        (
+                                                            <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
+                                                                <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
+                                                            </div>
+                                                        ) :
+                                                        <LetteredAvatar name={userInfo.username} backgroundColor='#FFE5B4' size={100}/>
+                                                    }
                                                 </Box>
                                             </Item>
                                             <Divider variant={`middle`} flexItem/>
@@ -136,13 +186,14 @@ const UserPanelNew = () => {
                                 </Stack>
                             </Card>
                         </Grid>
-      
+
                     {/* Right Bar */}
                     <Grid item xs={12} sm={12} md={9}>
                         <Card  sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
                             <h1 style={{ display: "flex", alignItems: "ceter", color: "#9B1818", marginTop: "1rem", marginLeft: "1rem", marginBottom: "1rem", justifyContent: "space-between" }} >
                                 {userInfo.hosting_availability ? <span>{userInfo.hosting_availability}</span> : <span>Not Accepting Guests</span>}
-                                <Button
+                                {userInfo.username === local_storage_username ? 
+                                    <Button
                                     sx={{ mr: "1rem" }}
                                     variant="contained"
                                     size="medium"
@@ -150,11 +201,15 @@ const UserPanelNew = () => {
                                     style={{ minWidth: 150 }}
                                     onClick={(e) => openCreateRequest()}>
                                         Add Announcement
-                                </Button>
+                                    </Button> : null}
+                                
                             </h1>
                             {/* <p style={{ color: "#BABABA",  marginLeft: "1rem", marginBottom: "0.5rem" }}>Last login HH:MM:SS</p> */}
                         </Card>
-                        <Overview />
+                        <Overview 
+                            url_username={user_params.username}
+                            local_storage_username={local_storage_username}
+                        />
                         <Card sx={{ bgcolor: "white", marginBottom: "0.5rem" }} dir="ltr">
                             {menuItem.map((item, key) => (
                                     <div id={`${item.name}`}>
@@ -165,14 +220,16 @@ const UserPanelNew = () => {
                     </Grid>
                 </Grid>
             </Container>
-            <NewAnnouncementForm 
-                open={open}
-                setOpen={setOpen}
-                disabled={disabled}
-                setDisabled={setDisabled}
-                setRequestData={setRequestData}
-                requestData={requestData}
-            />
+            {userInfo.username === local_storage_username ? 
+                <NewAnnouncementForm 
+                    open={open}
+                    setOpen={setOpen}
+                    disabled={disabled}
+                    setDisabled={setDisabled}
+                    setRequestData={setRequestData}
+                    requestData={requestData}
+                /> : null
+            }
         </div>
     )
 }

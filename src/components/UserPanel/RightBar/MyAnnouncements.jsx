@@ -1,38 +1,29 @@
-import { Col, Row} from "react-bootstrap";
 import "./MyAnnouncement.css";
-import {TiLocation} from "react-icons/ti";
-import {BsCalendarDateFill} from "react-icons/bs";
-import DeleteAnnouncement, {delAnnouncement} from "../../Announcements/DeleteAnnouncement";
-import EditAnnouncement, {editAnnouncement} from "../../Announcements/EditAnnouncement";
-import ShowAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import UnAuthAnnouncement from "../../Announcements/AnnouncementDetails/UnAuthenticated/UnAuthenticatedAnnouncementDetails";
+import { TiLocation } from "react-icons/ti";
+import { BsCalendarDateFill } from "react-icons/bs";
 import AuthAnnouncement from "../../Announcements/AnnouncementDetails/Authenticated/AuthenticatedAnnouncementDetails";
-import {Button, Divider, IconButton, Skeleton, Stack, Typography,Grid} from "@mui/material";
-import {Item} from "semantic-ui-react";
-import {FaHome, FaLongArrowAltRight} from "react-icons/fa";
-import {AiOutlineFieldTime} from "react-icons/ai";
-import {IoIosPerson} from "react-icons/io";
-import {MdDescription} from "react-icons/md";
-import {FiMoreHorizontal} from "react-icons/fi";
+import { Button, Divider, IconButton, Skeleton, Stack, Typography, Grid, Box,Tooltip } from "@mui/material";
+import { Item } from "semantic-ui-react";
+import { FaHome, FaLongArrowAltRight } from "react-icons/fa";
+import { AiOutlineFieldTime } from "react-icons/ai";
+import { IoIosPerson } from "react-icons/io";
+import { MdDescription } from "react-icons/md";
+import { FiMoreHorizontal } from "react-icons/fi";
 import { makeStyles } from '@mui/styles';
-import AddIcon from '@mui/icons-material/Add';
-import React, {useEffect, useState} from "react";
-import {Link, useParams,useNavigate} from "react-router-dom";
+import React, {useEffect, useState } from "react";
 import axios from "axios";
-import {addAnnouncement} from "../../Announcements/AddAnnouncement/NewAnnouncementForm";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {acceptOffer} from "./myOffers/AcceptOffers";
-
+import { useCounter } from "../../../Context/CounterProvider";
 const theme = createTheme({
     palette: {
-      primary: blue,
-      secondary: 
-      {
-        main: '#ffd180'
-      }
-    }
-  });
+        primary: blue,
+        secondary: 
+        {
+            main: '#ffd180'
+        }
+        }
+});
 
 const useStyles = makeStyles(theme => (
     {
@@ -49,19 +40,20 @@ const useStyles = makeStyles(theme => (
             }
     }
 ));
-function MyAnnouncements({username}) {
-    const navigate=useNavigate()
-    const local_storage = JSON.parse(localStorage.tokens);
+
+function MyAnnouncements(props) {
+    const counter = useCounter();
     const classes = useStyles();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [announcement, setAnnouncement] = useState([]);
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
-    const [anc_id,setAnc_id] = useState(null);
+    const [anc_id, setAnc_id] = useState(null);
+
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${username}`)
+        axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${props.url_username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -70,14 +62,12 @@ function MyAnnouncements({username}) {
                 setError(error);
             })
             .finally( () => {
-            console.log(announcement);
-            setLoading(false);
+                console.log(announcement);
+                setLoading(false);
             })
-    }, [addAnnouncement, delAnnouncement, editAnnouncement, acceptOffer])
+    }, [counter])
     
-    const handelClickPost=(announcement_id)=>{
-        navigate(`/home/PostExperience/announcement/${announcement_id}`)
-    }
+   
     const getDayOfDate = (date) => {
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const months = ["January", "February", "March", "April", "May", "June",
@@ -127,17 +117,18 @@ function MyAnnouncements({username}) {
             </>
         );
     }
+   
     const numberOftravelers = (travler_count) => {
         if(travler_count === 1)
             return`${travler_count} Traveler`;
         return `${travler_count} Travelers`;
     }
-    const allData = JSON.parse(localStorage.getItem('tokens'));
-    const local_username = allData.username;
+    // const allData = JSON.parse(localStorage.getItem('tokens'));
+    // const local_username = allData.username;
     const checkNotNull = (ancId) => {
         if (ancId != null)
         {
-            if(local_username === username)
+            // if(local_username === username)
                 return (
                     <>
                         <AuthAnnouncement
@@ -151,25 +142,26 @@ function MyAnnouncements({username}) {
                             checkStatus={statusMode}
                             numOfTravelers={numberOftravelers}
                             numOfNights={diffDays}
+                            url_username={props.url_username}
+                            local_storage_username={props.local_storage_username}
                         />
                     </>
                 )
-            return(
-                <>
-                    <UnAuthAnnouncement
-                        announcement_id={ancId}
-                        open={open}
-                        setOpen={setOpen}
-                        disabled={disabled}
-                        setDisabled={setDisabled}
-                        dayOfdate={getDayOfDate}
-                        checkStatus={statusMode}
-                        numOfTravelers={numberOftravelers}
-                        numOfNights={diffDays}
-                    />
-                </>
-                )
-
+            // return(
+            //     <>
+            //         <UnAuthAnnouncement
+            //             announcement_id={ancId}
+            //             open={open}
+            //             setOpen={setOpen}
+            //             disabled={disabled}
+            //             setDisabled={setDisabled}
+            //             dayOfdate={getDayOfDate}
+            //             checkStatus={statusMode}
+            //             numOfTravelers={numberOftravelers}
+            //             numOfNights={diffDays}
+            //         />
+            //     </>
+            //     )
         }
     }
     const checkLoading = (isLoading) => {
@@ -201,7 +193,7 @@ function MyAnnouncements({username}) {
                                         </Item>
                                     </Stack>
                                 </Item>
-                                <Item className={classes.eachAnnouncement}>
+                                <Item>
                                     <Skeleton variant="rectangular" width={675} height={20} />
                                 </Item>
                             </Stack>
@@ -216,7 +208,8 @@ function MyAnnouncements({username}) {
             <ThemeProvider theme={theme}>
                 <h5>
                 <Stack>
-                    {announcement.map((anc, key) =>
+                    {
+                        announcement.length > 0 ? announcement.map((anc, key) =>
                         (
                                 <div
                                     className="announcement-hovering"
@@ -236,18 +229,18 @@ function MyAnnouncements({username}) {
                                                             <Item>
                                                                 <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                     <span>{anc.city_name}</span>
-                                                                    {anc.anc_status=="D"?<>
-                                                                    <Button
-                                                                        sx={{ ml: "40rem" }}
-                                                                        onClick={()=>{handelClickPost(anc.id)}}
-                                                                        variant="contained"
-                                                                        color="secondary"
-                                                                        size="medium"
-                                                                        startIcon={<AddIcon />}
-                                                                        >
-                                                                        Add Post
-                                                                    </Button>
-                                                                    </> :null}
+                                                                    {/*{anc.anc_status=="D"?<>*/}
+                                                                    {/*<Button*/}
+                                                                    {/*    sx={{ ml: "40rem" }}*/}
+                                                                    {/*    onClick={()=>{handelClickPost(anc.id)}}*/}
+                                                                    {/*    variant="contained"*/}
+                                                                    {/*    color="secondary"*/}
+                                                                    {/*    size="medium"*/}
+                                                                    {/*    startIcon={<AddIcon />}*/}
+                                                                    {/*    >*/}
+                                                                    {/*    Add Post*/}
+                                                                    {/*</Button>*/}
+                                                                    {/*</> :null}*/}
                                                                 </h1>
                                                             </Item>
                                                             <Item>
@@ -280,18 +273,33 @@ function MyAnnouncements({username}) {
                                                             <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
                                                         </Typography>
                                                     </Item>
-                                                    
                                                 </Stack>
                                             </Item>
                                             <Item className={classes.eachAnnouncement}>
                                                 {checkDescription(anc.anc_description)}
                                             </Item>
+                                           
+                                           
                                         </Stack>
                                         <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
                                     </Item>
 
                                 </div>
-                        ))}
+                        )) : 
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                bgcolor: "background.paper",
+                                p: 2,
+                            }}
+                            >
+                            <div>
+                                <span style={{ marginLeft: "20rem" , fontWeight: "bold", fontSize: 20}}>
+                                    No Announcement Found!
+                                </span>
+                            </div>
+                        </Box>
+                    }
                 </Stack>
                     {checkNotNull(anc_id)}
                     {() => setAnc_id(null)}

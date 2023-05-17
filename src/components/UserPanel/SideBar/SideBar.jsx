@@ -53,15 +53,6 @@ const menuItem = [
     },
 ]
 const SideBarCmp = () => {
-    
-    const [userData, setUserData] = useState({
-        first_name : "Aylin",
-        last_name : "Naebzadeh",
-        email : "aylin@gmail.com",
-        username : "AylinNZ",
-    });
-
-    const [active, setActive] = useState("Edit My Profile");
 
     return (
         <React.Fragment>

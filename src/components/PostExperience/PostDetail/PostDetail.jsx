@@ -23,17 +23,19 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DatePicker, { DateObject } from "react-multi-date-picker";
+import SamplePostMainImage from "../../../Assets/images/post-default-main-image.jpg";
+
+let allData;
+let access_token;
+let username;
+if (localStorage.getItem('tokens'))
+{
+    allData = JSON.parse(localStorage.getItem('tokens'));
+    access_token = allData.access;
+    username = allData.username;
+}
 
 const PostDetail = (props) => {
-    let allData;
-    let access_token;
-    let username;
-    if (localStorage.getItem('tokens'))
-    {
-        allData = JSON.parse(localStorage.getItem('tokens'));
-        access_token = allData.access;
-        username = allData.username;
-    }
     let {slug } = useParams();
     console.log("************** The slug is **************** ", slug);
     const [postData, setPostData] = useState("");
@@ -82,7 +84,7 @@ const PostDetail = (props) => {
         event.preventDefault();
         axios({
             method: "delete",
-            url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+            url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}`,
@@ -103,7 +105,6 @@ const PostDetail = (props) => {
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Card dir='ltr'>
                             <form>
-                            
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <div style={{ paddingLeft: "5rem" }}>
                                         {/* Title */}
@@ -157,6 +158,32 @@ const PostDetail = (props) => {
                                         </Grid>
                                         <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }} />                                    
                                         {/* Body */}
+                                        {/* Main Image */}
+                                        <Grid item xs={12} style={{ paddingLeft: "1.25rem" }}>
+                                            <div >
+                                                <img
+                                                    variant="square"
+                                                    src={postData.main_image_64 && postData.main_image_64 !== '' ? postData.main_image_64 : SamplePostMainImage} 
+                                                    style={{
+                                                        width: "58.5rem",
+                                                        height: 340,
+                                                        borderRadius: '0.25rem',
+                                                        objectFit: 'fill',
+                                                        objectPosition: "center"
+                                                    }}
+                                                />
+                                            </div>
+                                        </Grid>
+                                        {/* Summary */}
+                                        <Grid item xs={12}>
+                                            <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                                <Item>
+                                                    <Typography sx={{ paddingLeft: "0.8rem" }}>
+                                                        {postData.description}
+                                                    </Typography>
+                                                </Item>
+                                            </Stack>
+                                        </Grid>
                                         <Grid item xs={12}>
                                             <Box sx={{ display: "flex", alignItems: "center", alignContent: "center", width: "50%"}}>
                                                 <FormControl>
@@ -166,9 +193,7 @@ const PostDetail = (props) => {
                                                                 // style={{ width: "65rem" }}
                                                     />
                                                 </FormControl>
-
                                             </Box>
-                                                
                                         </Grid>
                                         {/* Tags */}
                                         <Grid item xs={12}>

@@ -22,6 +22,7 @@ import {
     MdAccountCircle,
     MdKeyboardArrowDown,
     MdNoteAdd,
+    MdLinkedCamera
 } from "react-icons/md";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -32,14 +33,17 @@ import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlin
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import SideBarDrawer from "./sidebarDrawer/SideBarDrawer";
 import { useLogout } from "../../hooks/useLogout";
-
+import { useCounter } from "../../Context/CounterProvider";
+import axios from 'axios';
+import { toast } from "react-toastify";
 
 let username = "";
-
+let user_id = "";
 if (localStorage.getItem('tokens'))
 {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     username = allData.username;
+    user_id = allData.user_id;
 }
 
 const tabs = [
@@ -57,12 +61,19 @@ const tabs = [
         mobileIcon: <MdAccountCircle style={{  fontSize: "small" }}/>,
         route: `/home/Profile/${username}/`,
     },
+    // {
+    //     label: "Inbox",
+    //     value: 3,
+    //     desktopIcon: <MdInbox style={{ color: "white", fontSize: "1.2rem" }}/>,
+    //     mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
+    //     route: "/home/Inbox/",
+    // },
     {
-        label: "Inbox",
+        label: "Posts",
         value: 3,
-        desktopIcon: <MdInbox style={{ color: "white", fontSize: "1.2rem" }}/>,
-        mobileIcon: <MdInbox style={{  fontSize: "small" }}/>,
-        route: "/home/Inbox/",
+        desktopIcon: <MdLinkedCamera style={{ color: "white", fontSize: "1.2rem " }}/>,
+        mobileIcon: <MdLinkedCamera style={{  fontSize: "small" }}/>,
+        route: `/posts`,
     },
     // {
     //     label: "Post Experience",
@@ -83,6 +94,37 @@ const Navbar = (props) => {
         props.selectedTab ? props.selectedTab : 1
     );
     const [openSideBarDrawer, setOpenSideBarDrawer] = useState(false);
+    const [profileImageURL, setProfileImageURL] = useState("");
+    const counter = useCounter();
+
+    useEffect(() => {
+        console.log("profileImageURL:", profileImageURL);
+    }, [profileImageURL]);
+
+    useEffect(() => {
+        if (user_id !== "" && user_id) {
+            axios({
+                method: "get",
+                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${user_id}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((result) => {
+                console.log("+++++++++ THE RESULT OF USEEFFECT FOR RENDERING THE PHOTO IN NAVBAR IS ++++++++ ", result);
+                if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
+                    console.log(" &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ")
+                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL + `?${Date.now()}`);
+                } 
+                else {
+                    setProfileImageURL("");
+                }
+
+    
+            }).catch((error) => {
+                toast.error("Something went wrong while fetching user profile photo.")
+            })
+        }
+    }, [counter, user_id]);
 
     useEffect(() => {
         setSelectedTab(props.selectedTab);
@@ -116,33 +158,7 @@ const Navbar = (props) => {
         event.preventDefault();
         await logout()
     };
-    // const handleLogout = (e) => {
-    //     e.preventDefault();
-    //     let refresh = localStorage.getItem('refresh');
-    //     let access = localStorage.getItem('access');
-    //     axios({
-    //         method: "post",
-    //         url: "http://188.121.102.52:8000/api/v1/accounts/logout/",
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${access}`
-    //         },
-    //         data: {
-    //             refresh_token: refresh
-    //         }
-    //     })
-    //     .then((res) => {
-    //         localStorage.removeItem("refresh");
-    //         localStorage.removeItem("access");
-    //         localStorage.removeItem("username");
-
-    //         window.location="/authentication";
-    //         toast.success("Logged out successfully");
-    //     })
-    //     .catch((error) => {
-    //         toast.error("Unexpected error has occurred");
-    //     })
-    // };
+    
     return (
         <div dir={dir}>
             <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">
@@ -212,8 +228,15 @@ const Navbar = (props) => {
                                 }}>
                                     <Tooltip title="Settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                            {/* <Avatar alt="Settings" src={defaultAvatar}/> */}
-                                            <LetteredAvatar name={username} backgroundColor='#FFE5B4'/>
+                                            {
+                                                profileImageURL  && profileImageURL !== "" ? 
+                                                (
+                                                    <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
+                                                        <img style={{ width:'4rem', height:'4rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
+                                                    </div>
+                                                ) :
+                                                <LetteredAvatar name={username} backgroundColor='#FFE5B4'/>
+                                            }
                                         </IconButton>
                                     </Tooltip>
                                     <IconButton

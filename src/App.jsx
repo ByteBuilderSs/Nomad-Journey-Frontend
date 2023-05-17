@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/Navbar";
 import EditProfile from "./components/UserPanel/EditProfile/EditProfile";
 import React, { useEffect, useState } from "react";
 import MainPageFunc from "./pages/MainPage";
+import LandingPageFunc from "./pages/LandingPage";
 import Footer from "./components/Footer/Footer";
 import SignInForm from "./pages/signup";
 import Login from "./pages/login";
@@ -15,6 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './Loader.css';
 import PostExperience from "./pages/PostExperience";
+import CounterProvider from "./Context/CounterProvider";
+import GeneralPostPage from "./pages/GeneralPosts";
 
 
 const tabNametoIndex = {
@@ -27,7 +30,9 @@ const tabNametoIndex = {
 function App() {
 
   let location = useLocation();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
+
   const allPagesStyle = {
     display: "flex",
     "flex-direction": "column",
@@ -46,69 +51,86 @@ function App() {
         setLoading(false);
       }, 1500);
   }, []);
+
   useEffect(()=>{
     if(!localStorage.getItem('tokens')){
-      console.log('no user exists')
-      navigate("/signup");
+      console.log('no user exists');
+      setIsLogin(false);
+      navigate("/landing");
+    }
+    else {
+      setIsLogin(true);
     }
     },[]);
   
-    
   return (
       
       <>
-        <div>
-            
-              {loading ? (
+        <CounterProvider>
+          <div>
+              
+                {loading ? (
 
-          <div id="js-preloader" class="js-preloader">
-              <div class="preloader-inner">
-              <span class="dot"></span>
-              <div class="dots">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-              </div>
-              </div>
-          </div>
+                    <div id="js-preloader" class="js-preloader">
+                        <div class="preloader-inner">
+                        <span class="dot"></span>
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        </div>
+                    </div>
+                ) :<div>
+          {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
+
+              <body  style = {allPagesStyle}>
 
 
-          ) :<div>
-        {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
+                <div style = {content}>
 
-            <body  style = {allPagesStyle}>
-
-
-              <div style = {content}>
-
-                <Routes>
+                    <Routes>
+                      {isLogin === false ?
+                        <>
+                          <Route path="/landing" element={<LandingPageFunc/>}/>
+                          <Route path="/signup" element={<SignInForm />}/>
+                          <Route path="/login" element={< Login/>}/>
+                          <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                        </>
+                        :
+                        <>
+                          <Route path="/landing" element={<LandingPageFunc/>}/>
+                          <Route path="/posts" element={<GeneralPostPage/>}/>
+                          <Route path="/signup" element={<SignInForm />}/>
+                          <Route path="/login" element={< Login/>}/>
+                          <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                          <Route path="/home/Profile/:username/" element={<ProfilePage />} />
+                          <Route path="/home/Inbox/" element={<InboxPage />}/>
+                          <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
+                          <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
+                          <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
+                          <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
+                          <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
+                        </>
+                        }
+                    </Routes>
                   
-                  <Route path="/signup" element={<SignInForm />}/>
-                  <Route path="/login" element={< Login/>}/>
-                  <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
-                  <Route path="/home/Profile/:username/" element={<ProfilePage />} />
-                  <Route path="/home/Inbox/" element={<InboxPage />}/>
-                  <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
-                  <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
-                  <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
-                  <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
-                  <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
-                </Routes>
 
-              </div>
-          {!["/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
+                </div>
+            {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
 
-            </body>
-            <ToastContainer 
-                position="top-left"
-                newestOnTop={true}
-                pauseOnFocusLoss
-                draggable
-                autoClose={7000}
-                closeOnClick
-                pauseOnHover/>
-        </div>}</div>
-
+              </body>
+              <ToastContainer 
+                  position="top-left"
+                  newestOnTop={true}
+                  pauseOnFocusLoss
+                  draggable
+                  autoClose={7000}
+                  closeOnClick
+                  pauseOnHover/>
+          </div>}
+          </div>
+        </CounterProvider>
       </>            
         );
       

@@ -29,6 +29,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AiFillDelete, AiFillLike, AiFillEdit } from "react-icons/ai";
+import SummarizeIcon from '@mui/icons-material/Summarize';
 import { FcList, FcHighPriority } from "react-icons/fc";
 import {BsCalendarDateFill, BsFillEyeFill} from "react-icons/bs";
 import { toast } from 'react-toastify';
@@ -36,6 +37,8 @@ import { DateObject } from "react-multi-date-picker";
 import {Item} from "semantic-ui-react";
 import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
+import { useCounterActions, useCounter } from '../../../../Context/CounterProvider';
+import PostDetailDialog from '../../../PostExperience/PostDetail/PostDetailDialog';
 
 const theme = createTheme({
   palette: {
@@ -57,26 +60,37 @@ const emptyPost = {
   tags: null,
   tags_name: null
 }
-const AllPosts=()=> 
+
+const AllPosts = (props) => 
 {
   let allData;
   let access_token;
+  let username;
   if (localStorage.getItem('tokens'))
   {
       allData = JSON.parse(localStorage.getItem('tokens'));
       access_token = allData.access;
+      username = allData.username;
   }
 
   const [deletePostDialog, setDeletePostDialog] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(emptyPost);
+  /* For Opening the Dialog */
+  const [postSlug, setPostSlug] = useState("");
+  const [openPostDialog, setOpenPostDialog] = useState(false);
+  const [postDisabled, setPostDisabled] = useState(false);
+  console.log(" $$$$$$$$$$$$$$$$$$$$ ", postSlug);
 
+  const Counter = useCounter();
+  console.log("************* THE POST COUNTER BEFORE DELETE IS ************* ", Counter);
+  const setCounter = useCounterActions();
 
   const getPosts = () => {
     axios({
       method: "get",
-      url: 'http://188.121.102.52:8000/api/v1/blog/userpost/',
+      url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${props.url_username}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -100,7 +114,7 @@ const AllPosts=()=>
 
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [Counter]);
 
   console.log("########### THE POSTS ARE ############ ", posts);
 
@@ -117,7 +131,7 @@ const AllPosts=()=>
   const confirmDeletePost = (post) => {
     axios({
       method: "delete",
-      url: "http://188.121.102.52:8000/api/v1/blog/userpost/",
+      url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -127,6 +141,7 @@ const AllPosts=()=>
       }
     }).then((res) => {
       console.log("********* THE RESULT IN POST DELETE REQUEST **********", res);
+      setCounter(Counter - 1); //where I reduce the post counter by one
     });
   };
 
@@ -136,8 +151,10 @@ const AllPosts=()=>
     setDeletePostDialog(false);
     setPost(emptyPost);
     confirmDeletePost(post);
-    toast.success("Your post deleted successfully.")
+    toast.success("Your post deleted successfully.");
   };
+
+  console.log("************* THE POST COUNTER AFTER DELETE IS ************* ", Counter);
 
 
   
@@ -158,6 +175,52 @@ const AllPosts=()=>
     navigate("/home/PostExperience/");
   };
 
+  const checkSummary = (summary) => {
+    if (summary === null || summary === "") {
+      return;
+    }
+    if (summary. length >= 50) {
+      let counter = 0, uppercase = 0;
+      for (; counter < 50; counter++) {
+        if (summary[counter] === summary[counter].toUpperCase()) {
+          uppercase++;
+        }
+      }
+      return (
+        <>
+          <Typography>{summary.substring(0, 50 - (uppercase/3))}...</Typography>
+        </>
+      );
+    }
+
+    return (
+      <>
+          <Typography>{summary}</Typography>
+      </>
+    )
+  }
+
+  const checkNotNull = () => {
+    console.log("^^^^^^^^^^^^^ THE POST SLUG IN CHECK NOT NULL IS ^^^^^^^^^^^ ", postSlug);
+    if (postSlug && postSlug !== "")
+    {
+      return (
+        <>
+          <PostDetailDialog
+            post_slug={postSlug}
+            set_post_slug={setPostSlug}
+            open={openPostDialog}
+            setOpen={setOpenPostDialog}
+            disabled={postDisabled}
+            setDisabled={setPostDisabled}
+            access_token={access_token}
+            url_username={props.url_username}
+            local_storage_username={props.local_storage_username}
+            />
+        </>
+      )
+    }
+  }
 
   return (
   <ThemeProvider theme={theme}>
@@ -169,16 +232,6 @@ const AllPosts=()=>
       }}
     >
       <div>
-        {/* <Button
-          sx={{ marginLeft: "48.25rem" }}
-          variant="contained"
-          size="medium"
-          style={{ minWidth: 150 }}
-          color="secondary" 
-          onClick={handleNewPostRoute}
-          >
-          Add new post
-        </Button> */}
         <Box sx={{ marginTop: 1 }}>
           <Grid sx={{ marginTop: 1 }} container spacing={1}>
             {
@@ -203,6 +256,7 @@ const AllPosts=()=>
                           justifyContent: "space-between",
                         }}
                       >
+                        {/* Blog Title */}
                         <Box >
                           <Typography
                             sx={{ fontSize: 25, fontWeight: "bold", display: "flex", alignItems: "center" }}
@@ -214,6 +268,7 @@ const AllPosts=()=>
                           </Typography>
                         </Box>
                       </Box>
+                      {/* Blog Tags */}
                       <Box sx={{ mt: "0.75rem" }}>
                           <Typography
                             sx={{ marginTop: "1rem", fontSize: 20, display: "flex", alignItems: "center" }}
@@ -236,29 +291,40 @@ const AllPosts=()=>
                               </Stack>
                           </Typography>
                       </Box>
+                      <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                        {/* Likes */}
+                        <Typography
+                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
+                          variant="p"
+                          component="div"
+                          color="text.secondary"
+                        >
+                          <AiFillLike style={{ marginRight: "0.5rem" }} /> # Likes
+                        </Typography> 
+                        {/* Views */}
+                        <Typography
+                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center" , marginLeft: "2rem" }}
+                          variant="p"
+                          component="div"
+                          color="text.secondary"
+                        >
+                          <BsFillEyeFill style={{ marginRight: "0.5rem" }} /> # Views
+                        </Typography>
+                        {/* Created date */}
+                        <Typography
+                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center", ml: "2rem" }}
+                          variant="p"
+                          component="div"
+                          color="text.secondary"
+                        >
+                          <BsCalendarDateFill style={{ marginRight: "0.5rem" }}/>
+                          Created at: { blog.created_at }
+                        </Typography>
+                      </div>
+                      {/* Blog Description */}
                       <Typography
-                        sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
-                        variant="p"
-                        component="div"
-                      >
-                        <AiFillLike style={{ marginRight: "0.5rem" }} /> # Likes
-                      </Typography>
-
-                      <Typography
-                        sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
-                        variant="p"
-                        component="div"
-                      >
-                        <BsFillEyeFill style={{ marginRight: "0.5rem" }} /> # Views
-                      </Typography>
-
-                      <Typography
-                        sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center" }}
-                        variant="p"
-                        component="div"
-                      >
-                        <BsCalendarDateFill style={{ marginRight: "0.5rem" }}/>
-                        Created at: { blog.created_at }
+                        sx={{ mt: "1rem", display: "flex", alignItems: "center" }}  color="text.secondary">
+                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> { checkSummary(blog.description) }
                       </Typography>
                     </CardContent>
 
@@ -272,8 +338,12 @@ const AllPosts=()=>
                       <Tooltip title="Details" arrow>
                         <div>
                           <CgDetailsMore
-                            onClick={() =>
-                              handleDetailsClick(blog.slug)
+                            onClick={() => {
+                              // handleDetailsClick(blog.slug)
+                              setPostSlug(blog.slug);
+                              setOpenPostDialog(true);
+                              setPostDisabled(false);
+                              }
                             }
                             color="#b9b8b8"
                             style={{ cursor: "pointer" }}
@@ -281,30 +351,37 @@ const AllPosts=()=>
                           />
                         </div>
                       </Tooltip>
-                      <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
-                        <div>
-                          <AiFillEdit
-                            onClick={() =>
-                              handleEditClick(blog.uid, blog.slug)
-                            }
-                            color="#b9b8b8"
-                            style={{ cursor: "pointer" }}
-                            size='2rem'
-                          />
-                        </div>
-                      </Tooltip>
-                      <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
-                        <div>
-                          <AiFillDelete
-                            onClick={() =>
-                              openDeleteDialog(blog)
-                            }
-                            color="#b9b8b8"
-                            style={{ cursor: "pointer" }}
-                            size='2rem'
-                          />
-                        </div>
-                      </Tooltip>
+                      {/* Edit + Delete Post on Card */}
+                      {
+                        props.url_username === props.local_storage_username ?
+                        <>
+                          <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
+                              <div>
+                                <AiFillEdit
+                                  onClick={() =>
+                                    handleEditClick(blog.uid, blog.slug)
+                                  }
+                                  color="#b9b8b8"
+                                  style={{ cursor: "pointer" }}
+                                  size='2rem'
+                                />
+                              </div>
+                          </Tooltip>
+                          <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
+                            <div>
+                              <AiFillDelete
+                                onClick={() =>
+                                  openDeleteDialog(blog)
+                                }
+                                color="#b9b8b8"
+                                style={{ cursor: "pointer" }}
+                                size='2rem'
+                                />
+                            </div>
+                          </Tooltip>
+                        </>
+                          : null
+                        }
                     </CardActions>
                   </Card>
                 </Grid>
@@ -313,7 +390,7 @@ const AllPosts=()=>
               (
                 <div>
                   <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
-                    No Posts Found!
+                    No Post Found!
                   </span>
                   <p style={{ marginLeft: "9rem" , fontSize: 15, marginTop: "0.3rem", color: "#0F3E86" }}>
                     You would be able to create a post for your corresponding announcement, only when it is done.
@@ -323,6 +400,7 @@ const AllPosts=()=>
             }
           </Grid>
         </Box>
+
         <Dialog
             visible={deletePostDialog}
             onHide={hideDeletePostDialog}
@@ -369,18 +447,19 @@ const AllPosts=()=>
                   </Button>
                 </DialogActions>
             </DialogContent>
-          </Dialog>
+        </Dialog>
       </div>
-
     </Box>
+    {checkNotNull()}
+    {() => setPostSlug(null)}
   </ThemeProvider>
   );
 }
-export default function MyPosts()
+export default function MyPosts(props)
 {
   return(
     <Grid container>
-      <AllPosts />
+      <AllPosts url_username={props.url_username} local_storage_username={props.local_storage_username}/>
     </Grid>
   );
 }

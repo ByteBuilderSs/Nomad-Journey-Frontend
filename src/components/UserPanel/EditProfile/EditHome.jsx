@@ -78,10 +78,13 @@ const SetViewToCurrentLocation = ({location, setLocation}) => {
     }
 
     useEffect(() => {
-        console.log("LATITUDE IS: ", location.lat);
-        console.log("LONGTITUDE IS: ", location.lng);
-        getGeo();
-    }, []);
+        if (location) {
+            console.log("LATITUDE IS: ", location.lat);
+            console.log("LONGTITUDE IS: ", location.lng);
+            console.log("THE LOCATIONS IS ", location);
+            getGeo();
+        }
+    }, [location, location]);
 
     useEffect(() => {
         if (location.lat && location.lng) {

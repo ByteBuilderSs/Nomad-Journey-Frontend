@@ -66,72 +66,71 @@ function App() {
   return (
       
       <>
-        <div>
-            
-              {loading ? (
+        <CounterProvider>
+          <div>
+              
+                {loading ? (
 
-          <div id="js-preloader" class="js-preloader">
-              <div class="preloader-inner">
-              <span class="dot"></span>
-              <div class="dots">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-              </div>
-              </div>
+                    <div id="js-preloader" class="js-preloader">
+                        <div class="preloader-inner">
+                        <span class="dot"></span>
+                        <div class="dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        </div>
+                    </div>
+                ) :<div>
+          {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
+
+              <body  style = {allPagesStyle}>
+
+
+                <div style = {content}>
+
+                    <Routes>
+                      {isLogin === false ?
+                        <>
+                          <Route path="/landing" element={<LandingPageFunc/>}/>
+                          <Route path="/signup" element={<SignInForm />}/>
+                          <Route path="/login" element={< Login/>}/>
+                          <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                        </>
+                        :
+                        <>
+                          <Route path="/landing" element={<LandingPageFunc/>}/>
+                          <Route path="/posts" element={<GeneralPostPage/>}/>
+                          <Route path="/signup" element={<SignInForm />}/>
+                          <Route path="/login" element={< Login/>}/>
+                          <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                          <Route path="/home/Profile/:username/" element={<ProfilePage />} />
+                          <Route path="/home/Inbox/" element={<InboxPage />}/>
+                          <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
+                          <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
+                          <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
+                          <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
+                          <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
+                        </>
+                        }
+                    </Routes>
+                  
+
+                </div>
+            {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
+
+              </body>
+              <ToastContainer 
+                  position="top-left"
+                  newestOnTop={true}
+                  pauseOnFocusLoss
+                  draggable
+                  autoClose={7000}
+                  closeOnClick
+                  pauseOnHover/>
+          </div>}
           </div>
-
-
-          ) :<div>
-        {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
-
-            <body  style = {allPagesStyle}>
-
-
-              <div style = {content}>
-
-                <CounterProvider>
-                  <Routes>
-                    {isLogin === false ?
-                      <>
-                        <Route path="/landing" element={<LandingPageFunc/>}/>
-                        <Route path="/signup" element={<SignInForm />}/>
-                        <Route path="/login" element={< Login/>}/>
-                        <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
-                      </>
-                      :
-                      <>
-                        <Route path="/landing" element={<LandingPageFunc/>}/>
-                        <Route path="/posts" element={<GeneralPostPage/>}/>
-                        <Route path="/signup" element={<SignInForm />}/>
-                        <Route path="/login" element={< Login/>}/>
-                        <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
-                        <Route path="/home/Profile/:username/" element={<ProfilePage />} />
-                        <Route path="/home/Inbox/" element={<InboxPage />}/>
-                        <Route exact path="/home/Settings/Members/:username/" element={<SettingsPage />}/>
-                        <Route exact path="/home/Members/Edit/" element={<EditProfile />}/>
-                        <Route exact path="/home/PostExperience/announcement/:announcement_id" element={<PostExperience />}/>
-                        <Route exact path="/home/PostExperience/PostDetail/:slug" element={<PostDetailPage />}/>
-                        <Route exact path="/home/PostExperience/Edit/:uid/:slug" element={<PostEditPage />}/>
-                      </>
-                      }
-                  </Routes>
-                </CounterProvider>
-
-              </div>
-          {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
-
-            </body>
-            <ToastContainer 
-                position="top-left"
-                newestOnTop={true}
-                pauseOnFocusLoss
-                draggable
-                autoClose={7000}
-                closeOnClick
-                pauseOnHover/>
-        </div>}</div>
-
+        </CounterProvider>
       </>            
         );
       

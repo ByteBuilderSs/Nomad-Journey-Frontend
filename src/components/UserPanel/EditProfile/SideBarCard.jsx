@@ -139,7 +139,10 @@ const SideBarCard = () => {
         }).then((res) => {
             console.log(res);
             toast.success("Profile photo removed successfully.");
-            setCounter(counter + 1);
+            setProfileImage(null);
+            setProfileImageURL(prevURL => "");
+            setImageSizeError(false);
+            setCounter(counter + 5);
         }).catch((error) => {
             toast.error("Something went wrong while updating information.");
             console.log(error);
@@ -192,21 +195,22 @@ const SideBarCard = () => {
                                         </Button>
                                     </Item>
                                     <Item>
-                                        <Button
-                                            sx={{  width: "100%", textTransform: "none" }}
-                                            variant="outlined"
-                                            color="error"
-                                            startIcon={<DeleteIcon />}
-                                            size='small'
-                                            onClick={(e) => {
-                                                setProfileImage(null);
-                                                setProfileImageURL("");
-                                                setImageSizeError(false);
-                                                handleDeleteClick(e);
-                                            }}
-                                            >
-                                            Remove photo
-                                        </Button>
+                                        {
+                                            profileImageURL && profileImageURL !== "" ? (
+                                            <Button
+                                                sx={{  width: "100%", textTransform: "none" }}
+                                                variant="outlined"
+                                                color="error"
+                                                startIcon={<DeleteIcon />}
+                                                size='small'
+                                                onClick={(e) => {
+                                                    handleDeleteClick(e);
+                                                }}
+                                                >
+                                                Remove photo
+                                            </Button>
+                                            ) : null
+                                        }
                                     </Item>
                                 </Stack>
                                 <Item>

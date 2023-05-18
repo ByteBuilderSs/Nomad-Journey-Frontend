@@ -74,9 +74,9 @@ const theme = createTheme({
         // Purple and green play nicely together.
         main: "#E55405",
       },
-      secondary: {
-        main: '#fff',
-      },
+      // secondary: {
+      //   main: '#fff',
+      // },
     },
 });
 
@@ -130,26 +130,40 @@ export default function Filters() {
     })
   }
 
-  const loadCities = async () => {
-    if (selectedCountry) {
-      axios({
+  /*
+    const loadCities = async () => {
+      if (selectedCountry) {
+        axios({
           method: "get",
-          url: "http://188.121.102.52:8000/api/v1/utils/get-all-cities/",
+          url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
           headers: {
               'Content-Type': 'application/json',
           }
-      }).then((result) => {
-        let cits = []
-        for (const cit of result.data) {
-          cits.push(cit.city_name)
-        }
-        setCities(cits)
-      }).catch((error) => {
-          toast.error("Something went wrong while fetching cities.")
-          console.log(error)
-      })
-    } 
+        }).then((result) => {
+            setCities(result.data);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching cities.")
+        })
+      } 
+    }
+   */
+
+  const loadCities = async () => {
+      if (selectedCountry) {
+          axios({
+              method: "get",
+              url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
+              headers: {
+                  'Content-Type': 'application/json',
+              }
+          }).then((result) => {
+              setCities(result.data);
+          }).catch((error) => {
+              toast.error("Something went wrong while fetching cities.")
+          })
+      }
   }
+
   const loadLanguages = async () => {
 
     axios({
@@ -174,7 +188,7 @@ export default function Filters() {
 
   React.useEffect(() => {
       let active = true;
-      if (!loadCountries){
+      if (!loadingCountry){
         return undefined
       }
       (async () => {
@@ -210,7 +224,7 @@ export default function Filters() {
     return () => {
         active = false;
     };
-  }, [loadingCity]);
+  }, [loadingCity, selectedCountry]);
 
   React.useEffect(() => {
       if (!openCity) {
@@ -325,74 +339,74 @@ export default function Filters() {
       );
     }
 
+    const handleCountrySelection = (value) => {
+      setSelectedCountry(value);
+    }
 
+    const handleCitySelection = (value) => {
+      setSelectedCity(value);
+    }
     const State = () => {
     
         return (
           <div>
             
             <FormControl fullWidth variant="outlined">
-            <Autocomplete
-              
-              id="asynchronous-demo-country"
+              <Autocomplete
+                id="asynchronous-demo-country"
+                sx={{ 
+                  width: 150,
+                  marginLeft : 4,
+                }}
+                open={openCountry}
+                onOpen={() => {
+                  setOpenCountry(true);
+                }}
+                onClose={() => {
+                    setOpenCountry(false);
+                }}
+                options={countries ?? []}
+                value={selectedCountry}
+                onChange={(event, newValue) => {
+                    handleCountrySelection(newValue);
+                }}
 
-              sx={{ 
-                width: 150,
-                marginLeft : 4,
-              }}
-              open={openCountry}
+                inputValue={countryInput}
+                onInputChange={(event, newInputValue) => {
+                  setCountryInput(newInputValue);
+                }}
 
-
-              onOpen={() => {
-                setOpenCountry(true);
-              }}
-              onClose={() => {
-                  setOpenCountry(false);
-              }}
-              options={countries ?? []}
-              value={selectedCountry}
-              onChange={(event, newValue) => {
-                setSelectedCountry(newValue);
-              }}
-
-              inputValue={countryInput}
-              onInputChange={(event, newInputValue) => {
-                setCountryInput(newInputValue);
-              }}
-
-              isOptionEqualToValue={(option, value) => {
-                if (option && value) {
+                isOptionEqualToValue={(option, value) => {
+                  if (option && value) {
+                      return option.country === value.country;
+                  } else {
+                      return false;
+                  }
+                }}
+                getOptionLabel={(option) => {
+                    return (option ? option.country : "");
+                }}
+                getOptionSelected={(option, value) => {
                     return option.country === value.country;
-                } else {
-                    return false;
-                }
-              }}
-              getOptionLabel={(option) => {
-                  return (option ? option.country : "");
-              }}
-              getOptionSelected={(option, value) => {
-                  return option.country === value.country;
-              }}
-              
-              
-                            
-              renderInput={(params) => (
-                <TextField 
-                  {...params} 
-                  label="Country"
-                  placeholder="Country"
-                  InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                      <React.Fragment>
-                          {loadingCountry ? <CircularProgress color="inherit" size={20} /> : null}
-                          {params.InputProps.endAdornment}
-                      </React.Fragment>
-                      ),
-                  }}
-                />
-              )}
-            />
+                }}
+                
+                renderInput={(params) => (
+                  <TextField 
+                    {...params} 
+                    label="Country"
+                    placeholder="Country"
+                    InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                        <React.Fragment>
+                            {loadingCountry ? <CircularProgress color="inherit" size={20} /> : null}
+                            {params.InputProps.endAdornment}
+                        </React.Fragment>
+                        ),
+                    }}
+                  />
+                )}
+              />
             </FormControl>
           
           </div>
@@ -513,8 +527,110 @@ export default function Filters() {
             <ThemeProvider theme={theme}>
                 <Sort/>
                 <Language/>
-                <State/>
-                <City/>
+                {/* Country Filter */}
+                <FormControl fullWidth variant="outlined">
+                  <Autocomplete
+                    id="asynchronous-demo-country"
+                    sx={{ 
+                      width: 150,
+                      marginLeft : 4,
+                    }}
+                    open={openCountry}
+                    onOpen={() => {
+                      setOpenCountry(true);
+                    }}
+                    onClose={() => {
+                        setOpenCountry(false);
+                    }}
+                    options={countries ?? []}
+                    value={selectedCountry}
+                    onChange={(event, newValue) => {
+                        handleCountrySelection(newValue);
+                    }}
+
+                    inputValue={countryInput}
+                    onInputChange={(event, newInputValue) => {
+                      setCountryInput(newInputValue);
+                    }}
+
+                    isOptionEqualToValue={(option, value) => {
+                      if (option && value) {
+                          return option.country === value.country;
+                      } else {
+                          return false;
+                      }
+                    }}
+                    getOptionLabel={(option) => {
+                        return (option ? option.country : "");
+                    }}
+                    getOptionSelected={(option, value) => {
+                        return option.country === value.country;
+                    }}
+                    
+                    renderInput={(params) => (
+                      <TextField 
+                        {...params} 
+                        label="Country"
+                        placeholder="Country"
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                            <React.Fragment>
+                                {loadingCountry ? <CircularProgress color="inherit" size={20} /> : null}
+                                {params.InputProps.endAdornment}
+                            </React.Fragment>
+                            ),
+                        }}
+                      />
+                    )}
+                  />
+                </FormControl>
+                {/* City Filter */}
+                {/* <City/> */}
+                <FormControl fullWidth variant="outlined">
+                  <Autocomplete
+                      id="asynchronous-demo-city"
+                      sx={{ width: 248 }}
+                      open={openCity}
+                      onOpen={() => {
+                          setOpenCity(true);
+                      }}
+                      onClose={() => {
+                        setOpenCity(false);
+                      }}
+                      isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+                      getOptionLabel={(option) => option.city_name}
+                      getOptionSelected={(option, value) => {
+                          return option.city_name === value.city_name;
+                      }}
+                      options={cities}
+                      value={selectedCity}
+                      onChange={(e, newValue) => {
+                          handleCitySelection(newValue)
+                      }}
+                      inputValue={cityInput}
+                      onInputChange={(e, newInputValue) => {
+                          setCityInput(newInputValue);
+                      }}
+                      renderInput={(params) => (
+                          <TextField 
+                              {...params} 
+                              label="City"
+                              required
+                              placeholder="City(To view the cities, first select your country)"
+                              InputProps={{
+                                  ...params.InputProps,
+                                  endAdornment: (
+                                  <React.Fragment>
+                                      {loadingCity ? <CircularProgress color="inherit" size={20} /> : null}
+                                      {params.InputProps.endAdornment}
+                                  </React.Fragment>
+                                  ),
+                              }} 
+                          />
+                      )}
+                  />
+                </FormControl>
                 <DateRangePickerButton/>
             </ThemeProvider>
 

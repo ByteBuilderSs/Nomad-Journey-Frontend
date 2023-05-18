@@ -243,6 +243,7 @@ export default function Filters() {
     dispatch(setPage(1));
     dispatch(setFilters(dictFilter))
     fetchAnnc(1, sort, dictFilter)
+
   }
 
     const Language = () => {
@@ -293,8 +294,7 @@ export default function Filters() {
             onChange={(event, newValue) => {
               setValue(newValue);
               if(newValue.length > 0 && (!cityTags.includes(newValue))){
-                setCountryTags([...cityTags, newValue]);
-
+                setCityTags([...cityTags, newValue]);
                 fetchFilter([...cityTags, newValue],countryTags , dateTags, languageTags)
               }
                 

@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_orange.css";
 import { FetchAnnc } from "../../hooks/useAnnounceFetchMainPage";
+import Button from '@mui/material/Button';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -22,51 +23,7 @@ import axios from 'axios';
 import {CircularProgress} from "@mui/material"
 import { setCity } from "../../ReduxStore/features/User/useSlice";
 
-const cities_static = [
-  // Iran
-  "Tehran",
-  "Mashhad",
-  "Isfahan",
-  "Tabriz",
-  "Shiraz",
-  // USA
-  "New York City",
-  "Los Angeles",
-  "Chicago",
-  "Houston",
-  "Miami",
-  // Canada
-  "Toronto",
-  "Montreal",
-  "Vancouver",
-  "Calgary",
-  "Ottawa",
-  // Afghanistan
-  "Kabul",
-  "Herat",
-  "Mazar-i-Sharif",
-  "Kandahar",
-  "Jalalabad",
-  // Japan
-  "Tokyo",
-  "Osaka",
-  "Kyoto",
-  "Yokohama",
-  "Nagoya",
-  // Turkey
-  "Istanbul",
-  "Ankara",
-  "Izmir",
-  "Bursa",
-  "Antalya",
-  // Europe
-  "Paris",
-  "London",
-  "Rome",
-  "Berlin",
-  "Madrid"
-  // Add more cities as needed
-];
+
 
 const theme = createTheme({
     palette: {
@@ -89,28 +46,36 @@ function sleep(delay = 0) {
 export default function Filters() {
 
 
+  const [yourLocation, setYourLocation] = React.useState([]);
+
   const [countries, setCountries] = React.useState([]);
   const [cities, setCities] = React.useState([]);
   const [languages, setLanguages] = React.useState([]);
+
   const fetchAnnc = FetchAnnc()
   const dispatch = useDispatch()
   const sort = useSelector((state) => state.mainpage.sort)
-  const [dateTags, setDateTags] = useState([]);
-  const [cityTags, setCityTags] = useState([]);
-  const [countryTags, setCountryTags] = useState([]);
+
+
   const [languageTags, setLanguageTags] = useState([]);
   const filters = useSelector((state) => state.mainpage.filters)
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countryInput, setCountryInput] = useState('');
+
   const [selectedCity, setSelectedCity] = useState(null);
   const [cityInput, setCityInput] = useState('');
 
+  const [selectedDates, setSelectedDates] = useState("");
+  const [selectedDatesFormat, setSelectedDatesFormat] = useState("");
 
   const [openCountry, setOpenCountry] = React.useState(false);
   const [openCity, setOpenCity] = React.useState(false);
   const loadingCountry = openCountry && countries.length === 0;
   const loadingCity = openCity && cities.length === 0;
+
+
+  
 
   const loadCountries = async () => {
     await axios({
@@ -120,11 +85,7 @@ export default function Filters() {
             'Content-Type': 'application/json',
         }
     }).then((result) => {
-        let cntrs = []
-        for (const cnt of result.data) {
-          cntrs.push(cnt)
-        }
-        setCountries(cntrs);
+        setCountries(result.data);
     }).catch((error) => {
         toast.error("Something went wrong while fetching countries.")
     })
@@ -134,16 +95,12 @@ export default function Filters() {
     if (selectedCountry) {
       axios({
           method: "get",
-          url: "http://188.121.102.52:8000/api/v1/utils/get-all-cities/",
+          url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
           headers: {
               'Content-Type': 'application/json',
           }
       }).then((result) => {
-        let cits = []
-        for (const cit of result.data) {
-          cits.push(cit.city_name)
-        }
-        setCities(cits)
+        setCities(result.data)
       }).catch((error) => {
           toast.error("Something went wrong while fetching cities.")
           console.log(error)
@@ -159,24 +116,35 @@ export default function Filters() {
             'Content-Type': 'application/json',
         }
     }).then((result) => {
-        let lang = []
-        for (const lan of result.data.data) {
-          lang.push(lan.language_name)
-        }
-        setLanguages(lang);
+        setLanguages(result.data.data);
     }).catch((error) => {
-      console.log("errorrr :")
-      console.log(error)
         toast.error("Something went wrong while fetching Languages.")
     })
   }
 
+  const FetchUserLoc = async (userName) => {
+    try {
+          
+        await axios({
+          method: "get",
+          url: `http://188.121.102.52:8000/api/v1/accounts/user/${userName}`,
+        }).then(response => {
+            
+            setYourLocation([response.data.city_country, response.data.city_name])
+        })
+        
+        
+    } catch (error) {
+    console.error(error);
+    toast.error("Something went wrong while fetching Location.")
+    }
+  }
 
   React.useEffect(() => {
       let active = true;
-      if (!loadCountries){
-        return undefined
-      }
+      // if (!loadingCountry){
+      //   return undefined
+      // }
       (async () => {
           await sleep(1e3); // For demo purposes.
           if (active) 
@@ -189,14 +157,11 @@ export default function Filters() {
       };
   }, [loadingCountry]);
 
-  React.useEffect(() => {
-    if (!openCountry) {
-        setCountries([]);
-    }
-  }, [openCountry]);
 
   React.useEffect(() => {
     let active = true;
+    if(selectedCountry == null)
+      setSelectedCity(null)
     if (!loadingCity) {
         return undefined;
     }
@@ -204,26 +169,43 @@ export default function Filters() {
         await sleep(1e3); // For demo purposes.
         if (active) 
         {
-            loadCities();
+          loadCities();
         }
     })();
     return () => {
         active = false;
     };
-  }, [loadingCity]);
+  }, [loadingCity, selectedCountry]);
 
   React.useEffect(() => {
-      if (!openCity) {
-          setCities([]);
-      }
+    if (!openCity) {
+        setCities([]);
+    }
   }, [openCity]);
 
+
+  React.useEffect(() => {
+      loadLanguages()
+  }, []);
+
+  React.useEffect(() => {
+    const signedInUser = JSON.parse(localStorage.getItem("tokens"))
+    FetchUserLoc(signedInUser['username'])
+  }, []);
+
+ 
+
+  
+
+  
+
       
-  const fetchFilter = (cityTags, countryTags, dateTags, languageTags) => {
+  const fetchFilter = (selectedCity, selectedCountry, selectedDates, languageTags) => {
     let dictFilter = {}
-    dictFilter["city"] = cityTags
-    dictFilter["country"] = countryTags
-    dictFilter["date"] = dateTags
+
+    dictFilter["city"] = (selectedCity == null) ? "" : selectedCity.city_name
+    dictFilter["country"] = (selectedCountry == null) ? "" : selectedCountry.country
+    dictFilter["date"] = selectedDates
     dictFilter["language"] = languageTags
     dispatch(setLoader(true))
     dispatch(setPage(1));
@@ -232,172 +214,11 @@ export default function Filters() {
 
   }
 
-    const Language = () => {
+
+  React.useEffect(() => {
+    fetchFilter(selectedCity, selectedCountry, selectedDatesFormat, languageTags)
+  }, [selectedCity, selectedCountry, selectedDatesFormat, languageTags]);
     
-        const [value, setValue] = React.useState('');
-        const [inputValue, setInputValue] = React.useState('');
-        
-        return (
-          <div>
-            {/* <div>{`value: ${value !== null ? `'${value}'` : 'null'}`}</div>
-            <div>{`inputValue: '${inputValue}'`}</div> */}
-            <Autocomplete
-              // value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-                if(newValue.length > 0 && (!languageTags.includes(newValue))){
-                  setLanguageTags([...languageTags, newValue]);
-                  fetchFilter(cityTags, countryTags, dateTags, [...languageTags, newValue])
-                }
-              }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              id="controllable-languages-demo"
-              options={languages}
-              sx={{ width: 150,
-                    marginLeft : 4
-                }}
-              renderInput={(params) => <TextField {...params} label="Language" />}
-            />
-    
-          </div>
-        );
-    }
-
-    const City = () => {
-    
-      const [value, setValue] = React.useState('');
-      const [inputValue, setInputValue] = React.useState('');
-      return (
-        <div>
-          
-          <Autocomplete
-            
-            id="asynchronous-demo-city"
-            sx={{ 
-              width: 150,
-              marginLeft : 4,
-            }}
-            onOpen={() => {
-              setOpenCity(true);
-            }}
-            onClose={() => {
-              setOpenCity(false);
-            }}
-            options={cities}
-            value={selectedCity}
-            onChange={(event, newValue) => {
-              setSelectedCity(newValue);
-              if(newValue.length > 0 && (!cityTags.includes(newValue))){
-                setCityTags([...cityTags, newValue]);
-                fetchFilter([...cityTags, newValue],countryTags , dateTags, languageTags)
-              }
-                
-            }}
-            inputValue={cityInput}
-            onInputChange={(event, newInputValue) => {
-              setCityInput(newInputValue);
-            }}
-            
-            renderInput={(params) => (
-              <TextField 
-                  {...params} 
-                  label="City"
-                  placeholder="Select your country)"
-                  InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                      <React.Fragment>
-                          {loadingCity ? <CircularProgress color="inherit" size={20} /> : null}
-                          {params.InputProps.endAdornment}
-                      </React.Fragment>
-                      ),
-                  }} 
-              />
-            )}
-
-          />
-    
-        
-        </div>
-      );
-    }
-
-
-    const State = () => {
-    
-        return (
-          <div>
-            
-            <FormControl fullWidth variant="outlined">
-            <Autocomplete
-              
-              id="asynchronous-demo-country"
-
-              sx={{ 
-                width: 150,
-                marginLeft : 4,
-              }}
-              open={openCountry}
-
-
-              onOpen={() => {
-                setOpenCountry(true);
-              }}
-              onClose={() => {
-                  setOpenCountry(false);
-              }}
-              options={countries ?? []}
-              value={selectedCountry}
-              onChange={(event, newValue) => {
-                setSelectedCountry(newValue);
-              }}
-
-              inputValue={countryInput}
-              onInputChange={(event, newInputValue) => {
-                setCountryInput(newInputValue);
-              }}
-
-              isOptionEqualToValue={(option, value) => {
-                if (option && value) {
-                    return option.country === value.country;
-                } else {
-                    return false;
-                }
-              }}
-              getOptionLabel={(option) => {
-                  return (option ? option.country : "");
-              }}
-              getOptionSelected={(option, value) => {
-                  return option.country === value.country;
-              }}
-              
-              
-                            
-              renderInput={(params) => (
-                <TextField 
-                  {...params} 
-                  label="Country"
-                  placeholder="Country"
-                  InputProps={{
-                      ...params.InputProps,
-                      endAdornment: (
-                      <React.Fragment>
-                          {loadingCountry ? <CircularProgress color="inherit" size={20} /> : null}
-                          {params.InputProps.endAdornment}
-                      </React.Fragment>
-                      ),
-                  }}
-                />
-              )}
-            />
-            </FormControl>
-          
-          </div>
-        );
-    }
 
     const Sort = () => {
       
@@ -435,26 +256,58 @@ export default function Filters() {
     )
     }
 
+    const Language = () => {
+      const [LaguageValue, setLaguageValue] = React.useState('');
+      return(
+        <div>
+          <Autocomplete
+            // value={value}
+            onChange={(event, newValue) => {
+              if(newValue.language_name.length > 0 && (!languageTags.includes(newValue.language_name))){
+                setLanguageTags([...languageTags, newValue.language_name]);
+                //fetchFilter(selectedCity, selectedCountry, selectedDates, [...languageTags, newValue.language_name])
+              }
+            }}
+            inputValue={LaguageValue}
+            onInputChange={(event, newInputValue) => {
+              setLaguageValue(newInputValue);
+            }}
+            isOptionEqualToValue={(option, value) => option.language_name === value.language_name}
+            getOptionLabel={(option) => option.language_name}
+            getOptionSelected={(option, value) => {
+                return option.language_name === value.language_name;
+            }}
+            id="controllable-languages-demo"
+            options={languages ?? []}
+            sx={{ width: 150,
+                  marginLeft : 4
+              }}
+            renderInput={(params) => <TextField {...params} label="Language" />}
+          />
+        </div>
+      )
+    }
+
 
     const DateRangePickerButton = () => {
-      const [dateRange, setDateRange] = useState([null, null]);
-      const [showCalendar, setShowCalendar] = useState(false);
+      
 
       const handleDateRangeChange = (newDateRange) => {
-        setDateRange(newDateRange);
+        
         const stdFormat = `${newDateRange[0].toLocaleDateString()} - ${newDateRange[1].toLocaleDateString()}`
-        if(stdFormat.length > 0 && (dateTags.length != 1)){
-          setDateTags([...dateTags, stdFormat]);
-          fetchFilter(cityTags, countryTags, [...dateTags, stdFormat], languageTags)
-        }
+
+        //fetchFilter(selectedCity, selectedCountry, stdFormat, languageTags)
+
+        setSelectedDates(newDateRange);
+        setSelectedDatesFormat(stdFormat)
         
       };
       return (
         <div>
           
             <Flatpickr
-                data-enable-time
-                value={dateRange}
+                // data-enable-time
+                value={selectedDates}
                 onClose = {handleDateRangeChange}
                 options = {{
                     mode: "range",
@@ -472,37 +325,27 @@ export default function Filters() {
     }
 
 
-    const handleTagDelete = (tag, type) => {
+    const handleTagDelete = (tag) => {
         let updatedTags;
-        if (type == "country"){
-          updatedTags = countryTags
-          updatedTags = updatedTags.filter((t) => t !== tag);
-          setCountryTags(updatedTags);
-          fetchFilter(cityTags, updatedTags, dateTags, languageTags)
-        }
-        else if (type == "city"){
-          updatedTags = cityTags
-          updatedTags = updatedTags.filter((t) => t !== tag);
-          setCityTags(updatedTags);
-          fetchFilter(updatedTags, countryTags, dateTags, languageTags)
-        }
-        else if (type == "language"){
-          updatedTags = languageTags
-          updatedTags = updatedTags.filter((t) => t !== tag);
-          setLanguageTags(updatedTags);
-          fetchFilter(cityTags, countryTags, dateTags, updatedTags)
-        }
-        else if (type == "date"){
-          updatedTags = dateTags
-          updatedTags = updatedTags.filter((t) => t !== tag);
-          setDateTags(updatedTags);
-          fetchFilter(cityTags, countryTags, updatedTags, languageTags)
-        }
-
-        
-        
-        
+        updatedTags = languageTags
+        updatedTags = updatedTags.filter((t) => t !== tag);
+        setLanguageTags(updatedTags);
+        fetchFilter(selectedCity, selectedCountry, selectedDates, updatedTags)
     };
+
+    const handleYourLocation = () => {
+
+      for(const count of countries){
+        if (count.country == yourLocation[0]){
+          setSelectedCountry(count)
+          break
+        }
+      }
+      setSelectedCity({"country" : yourLocation[0], "city_name" : yourLocation[1]})
+      setSelectedDates("")
+      setSelectedDatesFormat("")
+      setLanguageTags([])
+    }
 
 
     return(
@@ -511,81 +354,166 @@ export default function Filters() {
           <div style={{display : "flex", justifyContent : "center"}}>
 
             <ThemeProvider theme={theme}>
+
+                <Button sx={{ marginRight : 4}} variant="outlined" onClick={handleYourLocation}>Your Location</Button>
+
                 <Sort/>
+
                 <Language/>
-                <State/>
-                <City/>
+                
+                {/* Country */}
+                <div>
+            
+                  <FormControl fullWidth variant="outlined">
+                    <Autocomplete
+                      
+                      id="asynchronous-demo-country"
+
+                      sx={{ 
+                        width: 150,
+                        marginLeft : 4,
+                      }}
+                      open={openCountry}
+
+
+                      onOpen={() => {
+                        setOpenCountry(true);
+                      }}
+                      onClose={() => {
+                          setOpenCountry(false);
+                      }}
+                      options={countries ?? []}
+                      value={selectedCountry}
+                      onChange={(event, newValue) => {
+                        setSelectedCountry(newValue);
+                        //fetchFilter(selectedCity, newValue, selectedDates, languageTags)
+                      }}
+
+                      inputValue={countryInput}
+                      onInputChange={(event, newInputValue) => {
+                        setCountryInput(newInputValue);
+                      }}
+
+                      isOptionEqualToValue={(option, value) => {
+                        if (option && value) {
+                            return option.country === value.country;
+                        } else {
+                            return false;
+                        }
+                      }}
+                      getOptionLabel={(option) => {
+                          return (option ? option.country : "");
+                      }}
+                      getOptionSelected={(option, value) => {
+                          return option.country === value.country;
+                      }}
+                      
+                      
+                                    
+                      renderInput={(params) => (
+                        <TextField 
+                          {...params} 
+                          label="Country"
+                          placeholder="Country"
+                          InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                              <React.Fragment>
+                                  {loadingCountry ? <CircularProgress color="inherit" size={20} /> : null}
+                                  {params.InputProps.endAdornment}
+                              </React.Fragment>
+                              ),
+                          }}
+                        />
+                      )}
+                    />
+                  </FormControl>
+                
+                </div>
+                
+                {/* City */}
+                <div>
+          
+                  <Autocomplete
+                    
+                    id="asynchronous-demo-city"
+                    disabled = {countryInput == ''}
+                    sx={{ 
+                      width: 165,
+                      marginLeft : 4,
+                    }}
+                    open = {openCity}
+                    onOpen={() => {
+                      setOpenCity(true);
+                    }}
+                    onClose={() => {
+                      setOpenCity(false);
+                    }}
+                    isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+                    getOptionLabel={(option) => option.city_name}
+                    getOptionSelected={(option, value) => {
+                        return option.city_name === value.city_name;
+                    }}
+                    options={cities ?? []}
+                    value={selectedCity}
+                    onChange={(event, newValue) => {
+                      setSelectedCity(newValue);
+                    }}
+                    inputValue={cityInput}
+                    onInputChange={(event, newInputValue) => {
+                      setCityInput(newInputValue);
+                    }}
+                    
+                    renderInput={(params) => (
+                      <TextField 
+                          {...params} 
+                          label= {selectedCountry ? "City" : "Select your country"}
+                          
+                          InputProps={{
+                              ...params.InputProps,
+                              endAdornment: (
+                              <React.Fragment>
+                                  {loadingCity ? <CircularProgress color="inherit" size={20} /> : null}
+                                  {params.InputProps.endAdornment}
+                              </React.Fragment>
+                              ),
+                          }} 
+                      />
+                    )}
+
+                  />
+            
+                
+                </div>
+
+
                 <DateRangePickerButton/>
             </ThemeProvider>
 
           </div>
-            {(dateTags.length + languageTags.length + cityTags.length + countryTags.length > 0) &&(
-              <div>
-                <p style={{marginTop : "5px",marginRight : 0}}><b>Filters : </b></p>
-              </div>
-            )}
             
-            <div  style={{display : "flex", paddingTop : "5px", flexWrap : "wrap"}}>
-                
-                
+            
+            <div  style={{display : "flex", paddingTop : "20px", flexWrap : "wrap"}}>
+
+                {(languageTags.length > 0) &&(
                   <div>
-                      {dateTags.length > 0 && (
-                          <div style={{display : "flex", flexWrap : "wrap"}}>
-                          {dateTags.map((tag) => (
-                              <div style={{marginTop : "5px"}}>
-                                <div className="filterTag" onClick={() => handleTagDelete(tag,"date")}>
-                                    {tag}
-                                    <div className="deletebutton" >X</div>
-                                </div>
-                              </div>
-                          ))}
-                          </div>
-                      )}
+                    <p style={{marginTop : "10px",marginRight : 0}}><b>Languages : </b></p>
                   </div>
-                  <div>
-                      {languageTags.length > 0 && (
-                          <div style={{display : "flex", flexWrap : "wrap"}}>
-                          {languageTags.map((tag) => (
-                              <div style={{marginTop : "5px"}}>
-                                <div className="filterTag" onClick={() => handleTagDelete(tag, "language")}>
-                                    {tag}
-                                    <div className="deletebutton" >X</div>
-                                </div>
+                )}
+                <div>
+                    {languageTags.length > 0 && (
+                      <div style={{display : "flex", flexWrap : "wrap"}}>
+                        {languageTags.map((tag) => (
+                            <div style={{marginTop : "5px"}}>
+                              <div className="filterTag" onClick={() => handleTagDelete(tag)}>
+                                  {tag}
+                                  <div className="deletebutton" >X</div>
                               </div>
-                          ))}
-                          </div>
-                      )}
-                  </div>
-                  <div>
-                      {countryTags.length > 0 && (
-                          <div style={{display : "flex", flexWrap : "wrap"}}>
-                          {countryTags.map((tag) => (
-                              <div style={{marginTop : "5px"}}>
-                                <div className="filterTag" onClick={() => handleTagDelete(tag, "country")}>
-                                    {tag}
-                                    <div className="deletebutton" >X</div>
-                                </div>
-                              </div>
-                          ))}
-                          </div>
-                      )}
-                  </div>
-                  <div>
-                      {cityTags.length > 0 && (
-                          <div style={{display : "flex", flexWrap : "wrap"}}>
-                          {cityTags.map((tag) => (
-                              <div style={{marginTop : "5px"}}>
-                                <div className="filterTag" onClick={() => handleTagDelete(tag, "city")}>
-                                    {tag}
-                                    <div className="deletebutton" >X</div>
-                                </div>
-                              </div>
-                          ))}
-                          </div>
-                      )}
-                  </div>
-                
-                
+                            </div>
+                        ))}
+                      </div>
+                    )}
+                </div>
             </div>
 
         </div>

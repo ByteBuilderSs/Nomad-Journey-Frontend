@@ -1,31 +1,42 @@
 import {useNavigate} from "react-router-dom";
+import { useState } from "react";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {setCountry, setCity, setUserName, setFirstName, setLastName, setMail} from "../ReduxStore/features/User/useSlice"
 
-const FetchUserInfo = async (userName) => {
-    try {
-          
-        await axios({
-          method: "get",
-          url: `http://188.121.102.52:8000/api/v1/accounts/user/${userName}`,
-        }).then(response => {
-        
-            return response.data;
-        })
-        
-        
-      } catch (error) {
-        console.error(error);
-      }
-}
+
 
 
 export const useLogin=()=>{
 
     const dispatch = useDispatch()
     const navigate=useNavigate()
+
+
+    const FetchUserInfo = async (userName) => {
+        try {
+              
+            await axios({
+              method: "get",
+              url: `http://188.121.102.52:8000/api/v1/accounts/user/${userName}`,
+            }).then(response => {
+                dispatch(setCity(response.data.city_name))
+                dispatch(setCountry(response.data.city_country))
+                dispatch(setUserName(response.data.username))
+                dispatch(setFirstName(response.data.first_name))
+                dispatch(setLastName(response.data.last_name))
+                dispatch(setMail(response.data.email))
+                
+            })
+            
+            
+        } catch (error) {
+        console.error(error);
+        }
+    }
+
+
     const login= async(email,password) => {
         const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'token/',{ 
             method :'POST',
@@ -43,17 +54,10 @@ export const useLogin=()=>{
             /*
                 TODO => break the token object into key, value pairs and then add them to Local Storage
             */
-            console.log(json);
 
             const result = JSON.stringify(json)
-            const userInfo = FetchUserInfo(result.username)
+            await FetchUserInfo(JSON.parse(result).username)
             
-            dispatch(setCity(userInfo.city_name))
-            dispatch(setCountry(userInfo.city_country))
-            dispatch(setUserName(userInfo.username))
-            dispatch(setFirstName(userInfo.first_name))
-            dispatch(setLastName(userInfo.last_name))
-            dispatch(setMail(userInfo.email))
 
             console.log("+++++++++++++++++ THE RESULT AFTER LOGIN IS +++++++++++++++++++ ", result)
 

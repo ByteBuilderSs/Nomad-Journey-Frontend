@@ -25,9 +25,9 @@ const Footer = () => {
         <div class="row">
           <div class="col-lg-12">
             <p>Copyright © 2023 <a href="#">Nomad Journey</a> All rights reserved. 
-            <br/>
-            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaInstagram size={24} /></a>
-            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaLinkedin size={24} /></a>
+            <br/><br/>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff", marginRight : "10px"}}><FaInstagram size={24} /></a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff", marginRight : "10px"}}><FaLinkedin size={24} /></a>
             <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" style={{color:"#fff"}}><FaTwitter size={24} /></a>
             </p>
           </div>

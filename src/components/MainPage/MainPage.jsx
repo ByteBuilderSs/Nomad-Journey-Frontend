@@ -158,12 +158,16 @@ const Announce = (props) => {
                   <div class="col-6">
                     <i class="fa fa-clock"></i>
                     <span class="list">{props.anc.departure_date}</span>
-                  </div>
+                  </div> 
                   
                 </div>
                 <div style={{justifyContent : "left", padding : "7px 0px " }}>
                     <i class="fa fa-city"></i>
                     <span class="list">{props.anc.city_country} - {props.anc.city_name}</span>
+                </div>
+                <div style={{justifyContent : "left", padding : "7px 0px " }}>
+                    <i class="fa fa-language"></i>
+                    <span class="list">None</span>
                 </div>
                 <p onClick = {() => {if(props.anc.anc_description.length != 0){handleOpenDiscDialog()}}}>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
@@ -250,10 +254,7 @@ export default function MainPage(){
       clickInputsInOrder(0);
     }, []);
       
-    useEffect(() => {
-      fetchAnnc()
-    }, []);
-
+    
   
 
     const anncData = [
@@ -511,7 +512,7 @@ export default function MainPage(){
 
           <div class="col-lg-6 offset-lg-3">
             <div class="section-heading text-center">
-              <h2>Announcements In Your City</h2>
+              <h2>Announcements</h2>
               {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p> */}
               {/* <h2>Results : {ancResultCount} </h2> */}
             </div>

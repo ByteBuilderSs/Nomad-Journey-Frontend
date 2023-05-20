@@ -788,14 +788,14 @@ Pre-loader Style
   }
   
   .amazing-deals .item .content {
-    padding: 20px 0px;
+    padding: 15px 0px;
   }
   
   .amazing-deals .item p {
-    padding-top: 25px;
+    padding-top: 15px;
     margin-top: 10px;
     border-top: 1px solid #ddd;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     word-wrap: break-word; /* Breaks long words to fit the container */
     white-space: pre-wrap; 
   }

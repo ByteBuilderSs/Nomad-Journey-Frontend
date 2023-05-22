@@ -3,34 +3,25 @@ import {Box, Divider, IconButton, Rating, Stack, Typography,Grid} from "@mui/mat
 import {Item} from "semantic-ui-react";
 import LetteredAvatar from "react-lettered-avatar";
 import "../UserPanel/RightBar/MyAnnouncement.css";
+import "./generalPostsTab.css";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
-import { makeStyles } from '@mui/styles';
 import axios from "axios";
 import UserProfile from "../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement";
 import notfound from '../../lottieAssets/9341-not-found.json';
 import Lottie from 'react-lottie';
-const useStyles = makeStyles(theme => (
-    {
-        likeButton:{
-            "&:hover":{
-                color:"#e45505",
-                backgroundColor:"rgba(228,85,5,0.1)"
-            }
-        },
-        likeButtonActive:{
-                color:"#e45505",
-            "&:hover":{
-                    backgroundColor:"rgba(228,85,5,0.1)"
+import {toast} from "react-toastify";
+import {useCounter, useCounterActions} from "../../Context/CounterProvider";
+import SetLikeOfBlog from "./LikePost/SetLike";
+import RemoveLikeOfBlog from "./LikePost/RemoveLike";
+import PostLikers from "./likerOfPost";
 
-            }
-
-        }
-
-    }
-));
 
 export default function UsersPosts()
 {
+    const [open_liker, setOpen_liker] = useState(false);
+    const [close_liker, setClose_liker] = useState(true);
+    const [blog_id, setBlog_id] = useState(null);
+
     const NotFound = () => {
 
         const defaultOptions = {
@@ -55,6 +46,10 @@ export default function UsersPosts()
     const [blogs, setBlogs] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const counter = useCounter();
+    const setCounter = useCounterActions();
+
     useEffect( () =>
     {
         axios(`http://188.121.102.52:8000/api/v1/blog/posts/`)
@@ -67,8 +62,14 @@ export default function UsersPosts()
                 setLoading(false);
                 console.log(blogs);
             })
-    }, []);
-    const classes = useStyles();
+    }, [counter]);
+    let user_id;
+
+    if (localStorage.getItem('tokens'))
+    {
+        const allData = JSON.parse(localStorage.getItem('tokens'));
+        user_id = allData.user_id;
+    }
     const post_createdAt = (time) => {
         const created_at = new Date(time);
         const diffDate = new Date() - created_at;
@@ -90,6 +91,21 @@ export default function UsersPosts()
                     {diffDays}d
                 </>)
 
+    }
+    const checkNotNull = () => {
+        if(blog_id != null)
+            return(
+                <>
+                    <PostLikers
+                        blog_id={blog_id}
+                        setBlog_id={setBlog_id}
+                        close={close_liker}
+                        setClose={setClose_liker}
+                        open={open_liker}
+                        setOpen={setOpen_liker}
+                    />
+                </>
+            )
     }
     if(!loading)
         return(
@@ -206,10 +222,21 @@ export default function UsersPosts()
                                                  alignItems="center"
                                                  sx={{ width: 1,
                                                     marginTop:"1rem"}}>
-                                                86 Likes
-                                                <IconButton className={classes.likeButtonActive}>
-                                                    <AiFillHeart />
-                                                </IconButton>
+                                                {!blog.is_liked.includes(user_id)
+                                                    && <SetLikeOfBlog blog_id={blog.uid} />}
+                                                {blog.is_liked.includes(user_id)
+                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />}
+
+                                                <div className="likes"
+                                                    onClick={()=>{
+                                                        setOpen_liker(true);
+                                                        setClose_liker(false);
+                                                        setBlog_id(blog.uid);
+                                                    }
+                                                    }>
+                                                    {blog.num_likes > 0 ? blog.num_likes : null}
+                                                </div>
+
                                             </Box>
                                         </Item>
                                     </Stack>
@@ -223,6 +250,9 @@ export default function UsersPosts()
                 </Box>
 
             </Box>
+
+            {checkNotNull()}
+            {() => setBlog_id(null)}
 
         </>
     )

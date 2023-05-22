@@ -31,6 +31,9 @@ import { useGeolocated } from "react-geolocated";
 import { toast } from "react-toastify";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {renderToStaticMarkup} from "react-dom/server";
+import {FaMapMarkerAlt} from "react-icons/fa";
+import {divIcon} from "leaflet/dist/leaflet-src.esm";
 
 
 let username = "";

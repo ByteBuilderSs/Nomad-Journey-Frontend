@@ -365,7 +365,7 @@ const Home = (props) => {
                     <h3 style={{ display: "flex" }}>
                         <span style={{ fontSize: 15, color: "#0F3E86"}}>{SleepCheck(sleepArg)}</span>
                     </h3>
-                    <Typography component="p" sx={{ width: "95%", color: "#0F3E86" }} >
+                    <Typography component="p" sx={{ width: "92%", color: "#0F3E86", overflowWrap: 'break-word' }} >
                         {descArg && descArg.length > 0 ? <p style={{ marginLeft: "0.04rem" }}>{descArg}</p> : <p style={{ marginLeft: "0.04rem" }}>No more description is declared yet...</p>}
                     </Typography>
                 </Grid>
@@ -378,7 +378,7 @@ const Home = (props) => {
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
                 </Grid>
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                    <Typography component="p" sx={{ width: "95%", color: "#0F3E86" }} >
+                    <Typography component="p" sx={{ width: "92%", color: "#0F3E86", overflowWrap: 'break-word' }} >
                         {roomateSituation && roomateSituation.length > 0 ? <p style={{ marginLeft: "0.04rem" }}>{roomateSituation}</p> : <p style={{ marginLeft: "0.04rem" }}>No description is declared yet...</p>}
                     </Typography>
                 </Grid>
@@ -392,7 +392,7 @@ const Home = (props) => {
                 </Grid>
                 {/* Description of more details */}
                 <Grid item xs={12} sx={{ marginLeft: "2rem", marginTop: "1rem", mb: "1rem" }}>
-                    <Typography component="p" sx={{ width: "95%", color: "#0F3E86" }} >
+                    <Typography component="p" sx={{ width: "92%", color: "#0F3E86", overflowWrap: 'break-word' }} >
                         {additionalInfo && additionalInfo.length > 0 ? <p style={{ marginLeft: "0.04rem" }}>{additionalInfo}</p> : <p style={{ marginLeft: "0.04rem" }}>No more information is declared yet...</p>}
                     </Typography>
                 </Grid>

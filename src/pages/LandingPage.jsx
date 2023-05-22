@@ -5,6 +5,7 @@ function LandingPageFunc() {
     return (
         <div>
             <LandingPage />
+            
         </div>
     );
 }

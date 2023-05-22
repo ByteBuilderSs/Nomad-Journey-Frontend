@@ -98,6 +98,10 @@ const Navbar = (props) => {
     const counter = useCounter();
 
     useEffect(() => {
+        console.log("profileImageURL:", profileImageURL);
+    }, [profileImageURL]);
+
+    useEffect(() => {
         if (user_id !== "" && user_id) {
             axios({
                 method: "get",
@@ -106,17 +110,21 @@ const Navbar = (props) => {
                     'Content-Type': 'application/json',
                 }
             }).then((result) => {
-                console.log("+++++++++ THE RESULT IS ++++++++ ", result);
-                /* TODO => HOW CAN I CONVERT THE URL TO FILE */
+                console.log("+++++++++ THE RESULT OF USEEFFECT FOR RENDERING THE PHOTO IN NAVBAR IS ++++++++ ", result);
                 if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                    console.log(" &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ")
+                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL + `?${Date.now()}`);
                 } 
+                else {
+                    setProfileImageURL("");
+                }
+
     
             }).catch((error) => {
                 toast.error("Something went wrong while fetching user profile photo.")
             })
         }
-    }, [counter]);
+    }, [counter, user_id]);
 
     useEffect(() => {
         setSelectedTab(props.selectedTab);
@@ -221,7 +229,7 @@ const Navbar = (props) => {
                                     <Tooltip title="Settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                             {
-                                                profileImageURL && profileImageURL !== "" ? 
+                                                profileImageURL  && profileImageURL !== "" ? 
                                                 (
                                                     <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
                                                         <img style={{ width:'4rem', height:'4rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 

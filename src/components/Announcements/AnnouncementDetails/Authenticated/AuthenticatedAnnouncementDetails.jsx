@@ -52,6 +52,7 @@ import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import FeedbackModal from '../../../feedBack/feedBack';
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import EditorFormDialog from "../../../PostExperience/EditorForm/EditorFormDialog";
 
 const useStyles = makeStyles(theme => (
     {
@@ -166,6 +167,9 @@ export default function UnAuthAnnouncement(props)
     const [showFeed, setShowFeed]=useState(false);
     const [closeFeed, setCloseFeed]=useState(true);
 
+    // for add post dialog
+    const [openPost, setOpenPost] = useState(false);
+    const [closePost, setClosePost] = useState(true);
 
     const [announcement, setAnnouncement] = useState('');
     const [location, setLocation] = useState({lat:'', lng:''});
@@ -663,54 +667,62 @@ export default function UnAuthAnnouncement(props)
                                                         </span>
                                         </Typography>
                                     </Item>
-                                    {announcement.anc_status === "D" && 
-                                    <>
-                                        <div style={{position:"fixed", bottom:"0",
-                                            marginBottom:"25rem", marginLeft:"0.25rem",
-                                            width:"30%",
-                                        }}>
-                                    <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
-                                            <Grid item >
-                                            <Button onClick={()=>handelClickPost(announcement.id)}
-                                            size='medium' sx={{
-                                                color:"rgba(237,231,230,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                            "&:hover":{
-                                                color:"rgba(234,187,170,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                            } ,width:'20vh'
-                                            }} startIcon={<AddIcon />}
-                                            >
-                                                Add Post
-                                            </Button>
+                                    {
+                                        announcement.anc_status === "D" && 
+                                        <>
+                                            <div style={{position:"fixed", bottom:"0",
+                                                marginBottom:"25rem", marginLeft:"0.25rem",
+                                                width:"30%",
+                                            }}>
+                                            <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
+                                                    <Grid item >
+                                                        <Button onClick={()=>handelClickPost(announcement.id)}
+                                                            size='medium' sx={{
+                                                                color:"rgba(237,231,230,0.8)",
+                                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                                            "&:hover":{
+                                                                color:"rgba(234,187,170,0.8)",
+                                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                                            } ,width:'20vh'
+                                                            }} startIcon={<AddIcon />}
+                                                        >
+                                                            Add Post
+                                                        </Button>
+                                                    </Grid>
+                                                    <Grid item >
+                                                        <Button size='medium'
+                                                            onClick={()=>{
+                                                                setShowFeed(true);
+                                                                setCloseFeed(false);}}
+                                                            sx={{
+                                                                color:"rgba(237,231,230,0.8)",
+                                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                                            "&:hover":{
+                                                                color:"rgba(234,187,170,0.8)",
+                                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                                            },width:'20vh'
+                                                            }} startIcon={<FeedbackIcon />}>
+                                                            Send Feedback
+                                                        </Button>
+                                                    </Grid>
                                             </Grid>
-                                            <Grid item >
-                                            <Button size='medium'
-                                            onClick={()=>{
-                                                setShowFeed(true);
-                                                setCloseFeed(false);}}
-                                            sx={{
-                                                color:"rgba(237,231,230,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                            "&:hover":{
-                                                color:"rgba(234,187,170,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                            },width:'20vh'
-                                            }} startIcon={<FeedbackIcon />}>
-                                                Send Feedback
-                                            </Button>
-                                            </Grid>
-                                    </Grid>
-                                        </div>
-                                    <FeedbackModal
-                                        open={showFeed}
-                                        setOpen={setShowFeed}
-                                        close={closeFeed}
-                                        setClose={setCloseFeed}
-                                        anc_id={announcement.id}
-                                        />
-                                    </>}
-                                  
+                                            </div>
+                                            <EditorFormDialog 
+                                                open={openPost}
+                                                setOpen={setOpenPost}
+                                                close={closePost}
+                                                setClose={setClosePost}
+                                                anc_id={announcement.id}
+                                                />
+                                            <FeedbackModal
+                                                open={showFeed}
+                                                setOpen={setShowFeed}
+                                                close={closeFeed}
+                                                setClose={setCloseFeed}
+                                                anc_id={announcement.id}
+                                                />
+                                        </>
+                                    }
                                     <Item>
                                         <div style={{position:"fixed", bottom:"0",
                                             marginBottom:"1rem", marginLeft:"0.25rem",

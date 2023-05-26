@@ -1,0 +1,130 @@
+.Dev-card body {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+
+
+.Dev-card .our-team {
+    padding: 30px 0 40px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    width: 280px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
+    
+}
+@media (max-width: 1400px) {
+
+  .Dev-card .our-team {
+      width: 250px;
+  }
+      
+}
+@media (max-width: 1200px) {
+
+  .Dev-card .our-team {
+      width: 200px;
+  }
+      
+}
+  
+.Dev-card  .our-team .picture {
+    display: inline-block;
+    height: 130px;
+    width: 130px;
+    margin-bottom: 50px;
+    z-index: 1;
+    position: relative;
+}
+  
+.Dev-card   .our-team .picture::before {
+    content: "";
+    width: 100%;
+    height: 0;
+    border-radius: 50%;
+    background-color: #E55405;
+    position: absolute;
+    bottom: 135%;
+    right: 0;
+    left: 0;
+    opacity: 0.9;
+    transform: scale(3);
+    transition: all 0.3s linear 0s;
+}
+  
+.Dev-card   .our-team:hover .picture::before {
+    height: 100%;
+  }
+  
+  .Dev-card   .our-team .picture::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #E55405;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  
+  .Dev-card   .our-team .picture img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    transform: scale(1);
+    transition: all 0.9s ease 0s;
+  }
+  
+  .Dev-card  .our-team:hover .picture img {
+    box-shadow: 0 0 0 14px #f7f5ec;
+    transform: scale(0.7);
+  }
+  
+  .Dev-card  .our-team .title {
+    display: block;
+    font-size: 15px;
+    color: #4e5052;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    margin-top: 5px;
+  }
+  
+  .Dev-card  .our-team .social {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #E55405;
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    transition: all 0.5s ease 0s;
+  }
+  
+  .Dev-card  .our-team:hover .social {
+    bottom: 0;
+  }
+  
+  .Dev-card  .our-team .social li {
+    display: inline-block;
+  }
+  
+  .Dev-card  .our-team .social li a {
+    display: block;
+    padding: 10px;
+    font-size: 17px;
+    color: white;
+    transition: all 0.3s ease 0s;
+    text-decoration: none;
+  }
+  
+  .Dev-card  .our-team .social li a:hover {
+    color: #E55405;
+    background-color: #f7f5ec;
+  }

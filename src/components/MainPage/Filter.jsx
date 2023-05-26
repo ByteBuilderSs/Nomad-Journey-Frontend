@@ -439,8 +439,9 @@ export default function Filters() {
                     id="asynchronous-demo-city"
                     disabled = {countryInput == ''}
                     sx={{ 
-                      width: 165,
+                      width: 150,
                       marginLeft : 4,
+                      textAlign : "center"
                     }}
                     open = {openCity}
                     onOpen={() => {
@@ -467,7 +468,7 @@ export default function Filters() {
                     renderInput={(params) => (
                       <TextField 
                           {...params} 
-                          label= {selectedCountry ? "City" : "Select your country"}
+                          label= "City"
                           
                           InputProps={{
                               ...params.InputProps,

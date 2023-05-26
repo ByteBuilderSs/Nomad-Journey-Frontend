@@ -242,7 +242,7 @@ const EditorForm = () => {
                     <CardContent>
                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                             {/* Main Image */}
-                            <Grid item xs={12} style={{ paddingLeft: "1.25rem" }}>
+                            <Grid item xs={12} style={{ paddingLeft: "5rem" }}>
                                 <div >
                                     <IconButton component="label">
                                         <input
@@ -257,7 +257,7 @@ const EditorForm = () => {
                                             variant="square"
                                             src={mainImage && mainImage !== '' ? mainImage : SamplePostMainImage} 
                                             style={{
-                                                width: "58.5rem",
+                                                width: "70.5rem",
                                                 height: 340,
                                                 borderRadius: '0.25rem',
                                                 objectFit: 'fill',
@@ -307,7 +307,7 @@ const EditorForm = () => {
                                     Remove photo
                                 </Button>
                             </Grid>
-                            <div style={{ paddingLeft: "2rem" }}>
+                            <div style={{ paddingLeft: "5rem" }}>
                                 {/* Title */}
                                 <Grid item xs={12}>
                                     <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
@@ -324,7 +324,7 @@ const EditorForm = () => {
                                         <Item>
                                             <FormControl>
                                                 <TextField
-                                                    sx={{ width: "58.5rem" }}
+                                                    sx={{ width: "70rem" }}
                                                     id="outlined-adornment-title"
                                                     type={"text"}
                                                     placeholder='e.g. My memories of a trip to the southern parts of Italy'
@@ -368,7 +368,7 @@ const EditorForm = () => {
                                         <Item>
                                             <FormControl>
                                                 <TextField
-                                                    sx={{ width: "58.5rem" }}
+                                                    sx={{ width: "70rem" }}
                                                     id="outlined-adornment-summary"
                                                     type={"text"}
                                                     multiline
@@ -404,7 +404,7 @@ const EditorForm = () => {
                                                     value={editorValue} 
                                                     placeholder="Content goes here ..." 
                                                     onChange={handleChangeEditorContent} 
-                                                    style={{ width: "58.5rem", height: "30rem" }}/>
+                                                    style={{ width: "70rem", height: "30rem" }}/>
                                             </FormControl>
                                         </Item>
                                     </Stack>

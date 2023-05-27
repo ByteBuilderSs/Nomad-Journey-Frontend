@@ -37,6 +37,8 @@ import { useCounter } from "../../Context/CounterProvider";
 import axios from 'axios';
 import { toast } from "react-toastify";
 
+import Notif from "../Notification/Notif";
+
 let username = "";
 let user_id = "";
 if (localStorage.getItem('tokens'))
@@ -218,6 +220,8 @@ const Navbar = (props) => {
                                 })}
                             </Tabs>
                         </Box>
+
+                        <Notif/>
                         
                         <Box sx={{ flexGrow: 0 }}>
                             <Box

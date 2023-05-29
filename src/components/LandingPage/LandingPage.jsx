@@ -1,5 +1,6 @@
 import {React, useState, useRef, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
+
 import Header from "./Header";
 import walkGif from '../../lottieAssets/walk.json';
 import Lottie from 'react-lottie';
@@ -15,9 +16,76 @@ import aylinImg from "../../Assets/images/aylin.jpg"
 import hannaImg from "../../Assets/images/hanna.jpg"
 import amirImg from "../../Assets/images/amir.jpg"
 
+import AnncSlider from "./AnncSlider";
 
 
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar } from 'swiper';
 
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+const ancData = [
+    {
+        "username" : "Baktash",
+        "rate" : "Rate",
+        "arrivalDate" : "10/05/2023",
+        "departureDate" : "10/05/2023",
+        "city" : "Tehran",
+        "travelersCount" : "12"
+    },
+    {
+        "username" : "Baktash",
+        "rate" : "Rate",
+        "arrivalDate" : "10/05/2023",
+        "departureDate" : "10/05/2023",
+        "city" : "Tehran",
+        "travelersCount" : "12"
+    },
+    {
+        "username" : "Sina",
+        "rate" : "Rate",
+        "arrivalDate" : "10/05/2023",
+        "departureDate" : "10/05/2023",
+        "city" : "Kabul",
+        "travelersCount" : "5"
+    },
+    {
+        "username" : "Sina",
+        "rate" : "Rate",
+        "arrivalDate" : "10/05/2023",
+        "departureDate" : "10/05/2023",
+        "city" : "Kabul",
+        "travelersCount" : "5"
+    },
+]
+
+const Annc = (props) => {
+    const navigate = useNavigate()
+    return(
+             
+            <div class="item">
+            <div class="thumb">
+                <img src={require("../../Assets/images/offers-01.jpg")} alt=""/>
+                <div class="text">
+                <h4>{props.data.username}<br/><span><i class="fa fa-users"></i> {props.data.travelersCount} Travelers Count</span></h4>
+                <h6>{props.data.rate}<br/></h6>
+                <div class="line-dec"></div>
+                <ul>
+                    <li>Includes:</li>
+                    <li><i class="fa fa-clock"></i>{props.data.arrivalDate}</li>
+                    <li><i class="fa fa-clock"></i>{props.data.departureDate}</li>
+                    <li><i class="fa fa-building"></i> {props.data.city}</li>
+                </ul>
+                <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                    <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
+                </div>
+                </div>
+            </div>
+            </div>
+    )
+}
 
 export default function LandingPage(){
 
@@ -48,7 +116,7 @@ export default function LandingPage(){
     }
 
 
-
+      
 
 
 
@@ -65,7 +133,6 @@ export default function LandingPage(){
                             <h4>EXPLORE OUR PROJECT</h4>
                             <div class="line-dec"></div>
                             <h2>Welcome To Nomad Journey</h2>
-                            {/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt uttersi labore et dolore magna aliqua is ipsum suspendisse ultrices gravida</p> */}
                             <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
                                 <div className='landing1' style={{color : "#fff"}}> Discover More </div>
                             </div>
@@ -77,8 +144,10 @@ export default function LandingPage(){
 
             <div class="cities-town">
                 <div class="container">
+                
                 <div class="row">
                     <div class="slider-content">
+                    
                     <div class="row">
                         <div class="col-lg-12">
                         <h2> <em>Popular Cities</em></h2>
@@ -111,63 +180,29 @@ export default function LandingPage(){
                 <div class="row">
                     <div class="col-lg-12">
                     <div class="landing-slider2">
-                        <div class="item">
-                        <div class="thumb">
-                            <img src={require("../../Assets/images/offers-01.jpg")} alt=""/>
-                            <div class="text">
-                            <h4>Sina<br/><span><i class="fa fa-users"></i> 12 Travelers Count</span></h4>
-                            <h6>Rate<br/></h6>
-                            <div class="line-dec"></div>
-                            <ul>
-                                <li>Includes:</li>
-                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
-                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
-                                <li><i class="fa fa-building"></i> City</li>
-                            </ul>
-                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                                <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="item">
-                        <div class="thumb">
-                            <img src={require("../../Assets/images/offers-02.jpg")} alt=""/>
-                            <div class="text">
-                            <h4>Baktash<br/><span><i class="fa fa-users"></i> 12 Travelers Count</span></h4>
-                            <h6>Rate<br/></h6>
-                            <div class="line-dec"></div>
-                            <ul>
-                                <li>Includes:</li>
-                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
-                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
-                                <li><i class="fa fa-building"></i> City</li>
-                            </ul>
-                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                                <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="item">
-                        <div class="thumb">
-                            <img src={require("../../Assets/images/offers-01.jpg")} alt=""/>
-                            <div class="text">
-                            <h4>Sina<br/><span><i class="fa fa-users"></i> 12 Travelers Count</span></h4>
-                            <h6>Rate<br/></h6>
-                            <div class="line-dec"></div>
-                            <ul>
-                                <li>Includes:</li>
-                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
-                                <li><i class="fa fa-clock"></i> 10/05/2023 </li>
-                                <li><i class="fa fa-building"></i> City</li>
-                            </ul>
-                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                                <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
+                    <Swiper
+                        // install Swiper modules
+                        modules={[Navigation, Pagination, Scrollbar]}
+                        spaceBetween={50}
+                        slidesPerView={3}
+                        navigation = {{
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        }}                        
+
+                    >
+
+                    {ancData.map(data => <SwiperSlide>  <Annc data = {data}/> </SwiperSlide>)}
+                        
+                        
+                        <div className = "swiper-button-next" style={{paddingLeft : "50px", color : "#E55405"}}></div>
+                        <div className = "swiper-button-prev" style={{paddingRight : "50px", color : "#E55405"}}></div>
+                        <div className="swiper-pagination" style={{paddingBottom : "10px"}}></div>
+                    </Swiper>
+                    
+
+                        
+                        
                         
                     </div>
                     </div>
@@ -251,6 +286,16 @@ export default function LandingPage(){
                     </div>
                 </div>
             </div>
+
+                {/* <div className="dev-team" style={{marginTop : "200px"}}>
+                    <div class="container">
+                        <div class="row">
+                            <div class="slider-content">
+                            <AnncSlider></AnncSlider>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
 
             <div class="call-to-action">
                 <div class="container">

@@ -25,6 +25,7 @@ import { Navigation, Pagination, Scrollbar } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import RoadAnimation from "./RoadAnimation";
 
 const ancData = [
     {
@@ -121,18 +122,18 @@ export default function LandingPage(){
 
 
     return(
-        <div className="landing-page">
+        <div className="landing-page" >
             <Header/>
             <div class="about-main-content">
-                
-                <div class="container">
+                <div ><RoadAnimation/></div>
+                <div class="container" style={{transform : "translateY(-300%)",width : "50%",borderRadius : "50px", "backdrop-filter": "blur(10px)"}}>
                     <div class="row">
                         <div class="col-lg-12">
                         <div class="content">
                             <div class="blur-bg"></div>
-                            <h4>EXPLORE OUR PROJECT</h4>
+                            <h4 style={{color : "black"}}>EXPLORE OUR PROJECT</h4>
                             <div class="line-dec"></div>
-                            <h2>Welcome To Nomad Journey</h2>
+                            <h2 style={{color : "black"}}>Welcome To Nomad Journey</h2>
                             <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
                                 <div className='landing1' style={{color : "#fff"}}> Discover More </div>
                             </div>

@@ -196,7 +196,6 @@ const GeneralPosts = ()=>{
         <Carousel sx={{margin:'10vh',display:'flex',flexDirection:'column'}}
         swipeable={false}
         draggable={false}
-        showDots={true}
         responsive={responsive}
         ssr={true} // means to render carousel on server-side.
         infinite={true}

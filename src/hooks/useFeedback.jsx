@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import { useState } from "react";
 
 
 
@@ -29,3 +30,30 @@ export const useFeedback=()=>{
     }
     return{feedBack}
 }
+export const useRate=()=>{
+    const [rates,setRates]=useState([])
+    const navigate=useNavigate()
+     const rating= async() => {
+         const username=JSON.parse(localStorage.getItem('tokens')).username
+         const access=JSON.parse(localStorage.getItem('tokens')).access
+         const respone= await fetch(process.env.REACT_APP_API_FEEDBACK+'feedback-user/'+username,{ 
+             method :'GET',
+             headers :{'Authorization': `Bearer ${access}`}
+            
+         })
+         const json = await respone.json()
+         if(!respone.ok)
+         {
+             console.log("error");
+             
+         }
+         if(respone.ok)
+         {
+            
+            console.log(json); 
+            setRates(respone.data);
+         }
+     }
+     return{rating,rates}
+ }
+ 

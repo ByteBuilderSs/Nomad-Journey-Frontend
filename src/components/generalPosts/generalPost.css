@@ -1,0 +1,39 @@
+.textWithBlurredBg{
+  width:300px;
+  height:auto;
+  display:inline-block;
+  position:relative;
+  transition:.3s;
+  margin:4px;
+}
+
+.textWithBlurredBg img{
+  width:100%;
+  height:100%;
+  transition:.3s;
+  border-radius:4px;
+}
+
+.textWithBlurredBg:hover img{
+  filter:blur(2px) brightness(60%);
+  box-shadow:0 0 16px cyan;
+}
+ 
+.textWithBlurredBg :not(img){
+  position:absolute;
+  z-index:1;
+  top:30%;
+  width:100%;
+  text-align:center;
+  color:#fff;
+  opacity:0;
+  transition:.3s;
+}
+
+.textWithBlurredBg h3{
+  top:50%
+}
+
+.textWithBlurredBg:hover :not(img){
+  opacity:1;
+}

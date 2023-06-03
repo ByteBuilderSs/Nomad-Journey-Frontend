@@ -175,7 +175,7 @@ export default function UsersPosts()
                                                             marginRight:"5rem"
                                                         }}>
                                                                 <Rating sx={{
-                                                                    color:"#e45505"
+                                                                    color:"#E55405"
                                                                 }} name="read-only" value={3} readOnly precision={0.1} />
                                                             </span>
                                                     </Typography>

@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Pagination from '@mui/material/Pagination';
+import Skeleton from '@mui/material/Skeleton';
 import "./MainPage.css"
 import "./fontawesome.css"
 import Lottie from 'react-lottie';
@@ -19,7 +20,10 @@ import FilterLanguage from "./Filter";
 import {FetchAnnc} from "../../hooks/useAnnounceFetchMainPage";
 import {Make_Offer} from "../../hooks/useOfferAnnc"
 
-
+import tehranImg from "../../Assets/images/tehran.jpg"
+import parisImg from "../../Assets/images/paris.jpg"
+import londonImg from "../../Assets/images/London.jpg"
+import newyorkImg from "../../Assets/images/newyork.jpg"
 
 // slider function :
 function clickInputsInOrder(currentIndex = 0) {
@@ -236,6 +240,191 @@ const Announce = (props) => {
   )
 }
 
+
+
+
+const Slider = () => {
+
+const [randomData, setRandomData] = useState(null);
+
+  const fetchRandom = async () => {
+    try {
+  
+    await axios.get(`http://188.121.102.52:8000/api/v1/landing-page/random-shit`).then(
+        (response) => {
+
+          setRandomData(response.data)
+        }
+    )
+    
+    } catch (error) {
+    console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchRandom()
+  }, [randomData]);
+
+  if (randomData === null){
+    return(
+      <div>
+        <Skeleton animation="wave" />
+      </div>
+    )
+  }
+  else{
+  return(
+    <div class="slider">
+      <div id="top-banner-1" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[0].city_big_image64})`}}>
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Take a Glimpse Into The Beautiful City Of:</h2>
+            <h1>{randomData[0]['city_name']}</h1>
+            {/* <div class="border-button"><a href="about.html">Go There</a></div> */}
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Population:</span><br/>{randomData[0]['population']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Territory:</span><br/>{randomData[0]['area']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-money-bill"></i>
+                      <h4><span>Currency:</span><br/>{randomData[0]['currency']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href={randomData[0]['explore_more']}>Explore More</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="top-banner-2" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[1].city_big_image64})`}}>
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Take a Glimpse Into The Beautiful City Of:</h2>
+            <h1>{randomData[1]['city_name']}</h1>
+            {/* <div class="border-button"><a href="about.html">Go There</a></div> */}
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Population:</span><br/>{randomData[1]['population']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Territory:</span><br/>{randomData[1]['area']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-money-bill"></i>
+                      <h4><span>Currency:</span><br/>{randomData[1]['currency']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href={randomData[1]['explore_more']}>Explore More</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="top-banner-3" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[2].city_big_image64})`}}>
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Take a Glimpse Into The Beautiful City Of:</h2>
+            <h1>{randomData[2]['city_name']}</h1>
+            {/* <div class="border-button"><a href="about.html">Go There</a></div> */}
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Population:</span><br/>{randomData[2]['population']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Territory:</span><br/>{randomData[2]['area']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-money-bill"></i>
+                      <h4><span>Currency:</span><br/>{randomData[2]['currency']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href={randomData[2]['explore_more']}>Explore More</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="top-banner-4" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[3].city_big_image64})`}}>
+        <div class="banner-inner-wrapper header-text">
+          <div class="main-caption">
+            <h2>Take a Glimpse Into The Beautiful City Of:</h2>
+            <h1>{randomData[3]['city_name']}</h1>
+            {/* <div class="border-button"><a href="about.html">Go There</a></div> */}
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="more-info">
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-user"></i>
+                      <h4><span>Population:</span><br/>{randomData[3]['population']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-globe"></i>
+                      <h4><span>Territory:</span><br/>{randomData[3]['area']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <i class="fa fa-money-bill"></i>
+                      <h4><span>Currency:</span><br/>{randomData[3]['currency']}</h4>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-6">
+                      <div class="main-button">
+                        <a href={randomData[3]['explore_more']}>Explore More</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+  }
+}
+
 export default function MainPage(){
 
     const fetchAnnc = FetchAnnc()
@@ -249,10 +438,24 @@ export default function MainPage(){
     const paginCount = useSelector((state) => state.mainpage.paginCount)
     const page = useSelector((state) => state.mainpage.page)
 
+    const [randomData, setRandomData] = useState(null);
+
+    
 
     useEffect(() => {
       clickInputsInOrder(0);
     }, []);
+
+
+    // useEffect(() => {
+
+    //   (async () => {
+    //     await fetchRandom(setRandomData)
+    //   })();
+    //   console.log("fuck U : ")
+    //   console.log(randomData)
+
+    // }, []);
       
     
   
@@ -324,7 +527,7 @@ export default function MainPage(){
     //   setSort(event.target.value)
     //   fetchAnnc(setAnncData, setPagination, setPaginCount, setLoader, setAncResultCount, event.target.value, 1)
     // }
-    
+  
   return(
 
     <div className='mainpage'>
@@ -336,152 +539,9 @@ export default function MainPage(){
           <input type="radio" id="banner2" class="sec-1-input" name="banner" />
           <input type="radio" id="banner3" class="sec-1-input" name="banner" />
           <input type="radio" id="banner4" class="sec-1-input" name="banner" />
-          <div class="slider">
-            <div id="top-banner-1" class="banner">
-              <div class="banner-inner-wrapper header-text">
-                <div class="main-caption">
-                  <h2>Take a Glimpse Into The Beautiful Country Of:</h2>
-                  <h1>Caribbean</h1>
-                  <div class="border-button"><a href="about.html">Go There</a></div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="more-info">
-                        <div class="row">
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-user"></i>
-                            <h4><span>Population:</span><br/>44.48 M</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-globe"></i>
-                            <h4><span>Territory:</span><br/>275.400 KM<em>2</em></h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-home"></i>
-                            <h4><span>AVG Price:</span><br/>$946.000</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <div class="main-button">
-                              <a href="about.html">Explore More</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="top-banner-2" class="banner">
-              <div class="banner-inner-wrapper header-text">
-                <div class="main-caption">
-                  <h2>Take a Glimpse Into The Beautiful Country Of:</h2>
-                  <h1>Switzerland</h1>
-                  <div class="border-button"><a href="about.html">Go There</a></div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="more-info">
-                        <div class="row">
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-user"></i>
-                            <h4><span>Population:</span><br/>8.66 M</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-globe"></i>
-                            <h4><span>Territory:</span><br/>41.290 KM<em>2</em></h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-home"></i>
-                            <h4><span>AVG Price:</span><br/>$1.100.200</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <div class="main-button">
-                              <a href="about.html">Explore More</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="top-banner-3" class="banner">
-              <div class="banner-inner-wrapper header-text">
-                <div class="main-caption">
-                  <h2>Take a Glimpse Into The Beautiful Country Of:</h2>
-                  <h1>France</h1>
-                  <div class="border-button"><a href="about.html">Go There</a></div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="more-info">
-                        <div class="row">
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-user"></i>
-                            <h4><span>Population:</span><br/>67.41 M</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-globe"></i>
-                            <h4><span>Territory:</span><br/>551.500 KM<em>2</em></h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-home"></i>
-                            <h4><span>AVG Price:</span><br/>$425.600</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <div class="main-button">
-                              <a href="about.html">Explore More</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="top-banner-4" class="banner">
-              <div class="banner-inner-wrapper header-text">
-                <div class="main-caption">
-                  <h2>Take a Glimpse Into The Beautiful Country Of:</h2>
-                  <h1>Thailand</h1>
-                  <div class="border-button"><a href="about.html">Go There</a></div>
-                </div>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="more-info">
-                        <div class="row">
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-user"></i>
-                            <h4><span>Population:</span><br/>69.86 M</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-globe"></i>
-                            <h4><span>Territory:</span><br/>513.120 KM<em>2</em></h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <i class="fa fa-home"></i>
-                            <h4><span>AVG Price:</span><br/>$165.450</h4>
-                          </div>
-                          <div class="col-lg-3 col-sm-6 col-6">
-                            <div class="main-button">
-                              <a href="about.html">Explore More</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
+          <Slider setRandomData = {setRandomData}/>
+
           <nav>
             <div class="controls">
               <label for="banner1"><span class="progressbar"><span class="progressbar-fill"></span></span><span class="text">1</span></label>

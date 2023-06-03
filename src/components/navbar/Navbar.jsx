@@ -38,6 +38,8 @@ import axios from 'axios';
 import { toast } from "react-toastify";
 import {IoNotificationsSharp} from "react-icons/io5";
 
+import Notif from "../Notification/Notif";
+
 let username = "";
 let user_id = "";
 if (localStorage.getItem('tokens'))
@@ -225,6 +227,8 @@ const Navbar = (props) => {
                                 })}
                             </Tabs>
                         </Box>
+
+                        <Notif/>
                         
                         <Box sx={{ flexGrow: 0 }}>
                             <Box

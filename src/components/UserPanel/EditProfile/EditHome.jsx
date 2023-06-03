@@ -31,7 +31,9 @@ import { useGeolocated } from "react-geolocated";
 import { toast } from "react-toastify";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import "leaflet-easybutton/src/easy-button.js";
+import "leaflet-easybutton/src/easy-button.css";
+import "font-awesome/css/font-awesome.min.css";
 
 let username = "";
 let access_token = "";
@@ -42,14 +44,6 @@ if (localStorage.getItem('tokens')) {
     access_token = Data.access;
 }
 
-
-const RecenterAutomatically = ({lat, lng}) => {
-    const map = useMap();
-    useEffect(() => {
-        map.setView([lat, lng]);
-    }, [lat, lng]);
-    return null;
-}
 
 const SetViewToCurrentLocation = ({location, setLocation}) => {
     console.log("&&&&&&&&&&&&&&&&&&&&&& THE LOCATION IN SetViewToCurrentLocation &&&&&&&&&&&&&&&&&&&&&&&&&&&&", location.lat);
@@ -622,7 +616,6 @@ const EditHome = () => {
                                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
                                         <GeoSearchField />
-                                        {/* TODO => اگر فقط یک کاربر موقعیتش رو قبلا وارد نکرده بود بریم از مرورگر موقعیتش رو دربیاریم */}
                                         <SetViewToCurrentLocation location={location} setLocation={setLocation}/> 
                                         {location.lat && location.lng && (<CustomizeMarker location={location} setLocation={setLocation} />)}
                                     </MapContainer>

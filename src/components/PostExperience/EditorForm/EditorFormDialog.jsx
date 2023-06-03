@@ -22,6 +22,10 @@ import {
     CircularProgress,
     Fab,
     Box,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
 } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -40,6 +44,9 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
 import { convertFileToBase64 } from '../../../utils/utils';
+import { styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import CloseIcon from '@mui/icons-material/Close';
 
 const theme = createTheme({
     palette: {

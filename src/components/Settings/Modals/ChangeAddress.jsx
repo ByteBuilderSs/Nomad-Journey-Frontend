@@ -31,7 +31,7 @@ function sleep(delay = 0) {
 }
 
 
-const ChangeAddressDialog = (props) => {
+const SetAddress = (props) => {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const { username } = useParams();
@@ -453,4 +453,4 @@ const ChangeAddressDialog = (props) => {
     )
 }
 
-export default ChangeAddressDialog;
+export default SetAddress;

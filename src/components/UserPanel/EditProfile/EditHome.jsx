@@ -34,8 +34,30 @@ import { useNavigate } from 'react-router-dom';
 import {renderToStaticMarkup} from "react-dom/server";
 import {FaMapMarkerAlt} from "react-icons/fa";
 import {divIcon} from "leaflet/dist/leaflet-src.esm";
+import {makeStyles} from "@mui/styles";
 
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"15em",
+        background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#F7C59F",
+        border:"solid 2px #F7C59F",
+        borderRadius:"15px",
+        transition:"all 0.3s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
 
+}))
 let username = "";
 let access_token = "";
 
@@ -159,6 +181,7 @@ const CustomizeMarker = ({location, setLocation}) => {
 }
 
 const EditHome = () => {
+    const classes = styles();
     // User_address_lat, User_address_long
     const navigate = useNavigate();
     const [location, setLocation] = useState({});
@@ -373,30 +396,68 @@ const EditHome = () => {
                 component="form"
                 sx={{
                 "& .MuiTextField-root": { m: 1, maxWidth: "100%"},
-                }}
+                justifyContent:"center",
+                    alignItems:"center", display:"flex"}}
                 noValidate
                 autoComplete="off"
                 dir="ltr"
             >
-                <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={12}>
-                        <h6 style={{ textAlign: "left", paddingLeft: "1rem", paddingTop: "0.5rem", paddingBottom: "0.4rem", color: "#E55405", fontWeight: "bold" }}>MY PREFERENCES</h6>
-                    </Grid>
+                <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} >
                     <form>
                         <div style={{ paddingLeft: "2.5rem" }}>
-                            {/* Available nights */}
                             <Grid item xs={12}>
+                                <h4 style={{ textAlign: "left", paddingLeft: "1rem", paddingTop: "0.5rem", paddingBottom: "0.4rem", color: "#F7C59F", fontWeight: "bold" }}>MY PREFERENCES</h4>
+                            </Grid>
+                            {/* Available nights */}
+                            <div style={{
+                                paddingTop:"5rem",
+                                paddingBottom:"5rem",
+                                paddingRight:"5rem",
+                                borderRadius:"15px",
+                                backgroundColor:"#1A659E",
+                                color:"#EFEFD0"
+                            }}>
+                            <Grid item xs={12} >
                                 <Box sx={{ display: 'flex', flexDirection:'row',alignItems:'center',justifyContent:'center' }}>
-                                        <h6 style={{  fontWeight: "bold", marginTop: "2rem", paddingRight: "3rem", marginLeft: "-7rem" }}>
+                                        <h6 style={{  fontWeight: "bold", marginTop: "2rem", paddingRight: "3rem", marginLeft: "-3.3rem" }}>
                                             Available Nights to Host 
                                         </h6>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={sun} onChange={handleChangeSun}/>} label="Sun" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={mon} onChange={handleChangeMon}/>} label="Mon" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={tue} onChange={handleChangeTue}/>} label="Tue" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={wed} onChange={handleChangeWed}/>} label="Wed" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={thu} onChange={handleChangeThu}/>} label="Thu" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={fri} onChange={handleChangeFri}/>} label="Fri" labelPlacement='top'/>
-                                        <FormControlLabel control={<Checkbox  variant="solid" checked={sat} onChange={handleChangeSat}/>} label="Sat" labelPlacement='top'/>
+                                        <FormControlLabel
+                                            sx={{color: sun ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={sun} onChange={handleChangeSun}/>} label="Sun" labelPlacement='top'/>
+                                        <FormControlLabel sx={{color: mon ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={mon} onChange={handleChangeMon}/>} label="Mon" labelPlacement='top'/>
+                                        <FormControlLabel sx={{color: tue ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={tue} onChange={handleChangeTue}/>} label="Tue" labelPlacement='top'/>
+                                        <FormControlLabel sx={{color: wed ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={wed} onChange={handleChangeWed}/>} label="Wed" labelPlacement='top'/>
+                                        <FormControlLabel sx={{color: thu ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={thu} onChange={handleChangeThu}/>} label="Thu" labelPlacement='top'/>
+                                        <FormControlLabel sx={{color: fri ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={fri} onChange={handleChangeFri}/>} label="Fri" labelPlacement='top'/>
+                                        <FormControlLabel sx={{color: sat ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                            color: "#EFEFD0",
+                                            '&.Mui-checked': {
+                                                color: "#F7C59F",
+                                            }}} variant="solid" checked={sat} onChange={handleChangeSat}/>} label="Sat" labelPlacement='top'/>
                                 </Box>
                             </Grid>
                             {/* Maximum Number of Guests */}
@@ -407,7 +468,7 @@ const EditHome = () => {
                                             flexWrap: "wrap",
                                             mt: "1.25rem"
                                         }}>
-                                        <h6 style={{ fontWeight: "bold", paddingRight: "2.5rem" }}>
+                                        <h6 style={{ fontWeight: "bold", paddingRight: "2.5rem", marginLeft: "3rem" }}>
                                             Maximum Number of Guests
                                         </h6>
                                         <FormControl sx={{ width: "5rem" }}>
@@ -450,7 +511,7 @@ const EditHome = () => {
                                             mt: "1.25rem"
                                         }}
                                         >
-                                        <h6 style={{ fontWeight: "bold", paddingRight: "4rem" }}>
+                                        <h6 style={{ fontWeight: "bold", paddingRight: "4rem", marginLeft: "3rem" }}>
                                             Preferred Gender to Host
                                         </h6>
                                         <FormControl sx={{ width: "15rem" }}>
@@ -476,24 +537,46 @@ const EditHome = () => {
                                             mt: "1.25rem"
                                         }}
                                         >
-                                        <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.69rem" }}>
+                                        <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.69rem", marginLeft: "3rem" }}>
                                             Children, Pets, Smoking
                                         </h6>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={isKidFriendly} onChange={handleChangeKF}/>} label="Kid Friendly" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={isPetFriendly} onChange={handleChangePF}/>} label="Pet Friendly" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={isSmokingAllowed} onChange={handleChangSA}/>} label="Smoking is Allowed" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: isKidFriendly ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={isKidFriendly} onChange={handleChangeKF}/>} label="Kid Friendly" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: isPetFriendly ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={isPetFriendly} onChange={handleChangePF}/>} label="Pet Friendly" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: isSmokingAllowed ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={isSmokingAllowed} onChange={handleChangSA}/>} label="Smoking is Allowed" labelPlacement='right'/>
                                         </Box>
                                 </Box>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Divider sx={{ width: "57rem", borderBottomWidth: 3, mt: "1rem" }}/>
-                            </Grid>
+                            </div>
+                            {/*<Grid item xs={12}>*/}
+                            {/*    <Divider sx={{ width: "57rem", borderBottomWidth: 3, mt: "1rem" }}/>*/}
+                            {/*</Grid>*/}
                             {/* ---------------------------- My Home ----------------------------------*/}
                             <Grid item xs={12}>
-                                <h6 style={{ textAlign: "left", paddingTop: "0.5rem",  color: "#E55405", fontWeight: "bold", marginTop: "1.25rem" }}>MY HOME</h6>
+                                {/*<h4 style={{ textAlign: "left", paddingTop: "0.5rem", paddingBottom: "0.4rem" ,  color: "#F7C59F", fontWeight: "bold", marginTop: "1.25rem" }}>MY HOME</h4>*/}
+                                <h4 style={{ textAlign: "left", paddingLeft: "1rem", paddingTop: "1.5rem", paddingBottom: "0.4rem", color: "#F7C59F", fontWeight: "bold" }}>MY HOME</h4>
                             </Grid>
                             {/* Sleeping Arrangements */}
+                            <div style={{
+                                paddingTop:"5rem",
+                                paddingBottom:"5rem",
+                                paddingRight:"5rem",
+                                borderRadius:"15px",
+                                backgroundColor:"#1A659E",
+                                color:"#EFEFD0"
+                            }}>
                             <Grid item xs={12}>
                                 <Box sx={{ display: "flex",
                                             alignContent: "center",
@@ -502,7 +585,7 @@ const EditHome = () => {
                                             mt: "1.25rem"
                                         }}
                                         >
-                                        <h6 style={{ fontWeight: "bold", paddingRight: "4.5rem" }}>
+                                        <h6 style={{ fontWeight: "bold", paddingRight: "4.5rem", marginLeft: "3rem"  }}>
                                             Sleeping Arrangements
                                         </h6>
                                         <FormControl sx={{ width: "15rem" }}>
@@ -528,13 +611,19 @@ const EditHome = () => {
                                     <Stack spacing={3}>
                                         {/* Description of Sleeping Arrangement */}
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
+                                            <h6 style={{ fontWeight: "bold", paddingRight: "8rem" , marginLeft: "3rem"}}>
                                                 Description of Sleeping Arrangement
                                             </h6>
-                                            <FormControl sx={{ width: "56rem" }}>
-                                                <TextField 
+                                            <FormControl sx={{ width: "56rem", marginLeft: "3rem" }}>
+                                                <TextField
+                                                    className={classes.text_field}
                                                     id="edit-profile-aboutme"
                                                     name="aboutme"
+                                                    InputProps={{
+                                                        style: { color: '#EFEFD0',
+                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                            border:"none"},
+                                                        disableUnderline: true}}
                                                     type="text"
                                                     multiline 
                                                     fullWidth="true"
@@ -548,13 +637,19 @@ const EditHome = () => {
                                         </Item>
                                         {/* Roommate Situation */}
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
+                                            <h6 style={{ fontWeight: "bold", paddingRight: "8rem", marginLeft: "3rem" }}>
                                                 Roommate Situation
                                             </h6>
-                                            <FormControl sx={{ width: "56rem" }}>
-                                                <TextField 
+                                            <FormControl sx={{ width: "56rem", marginLeft: "3rem" }}>
+                                                <TextField
+                                                    className={classes.text_field}
                                                     id="edit-profile-aboutme"
                                                     name="aboutme"
+                                                    InputProps={{
+                                                        style: { color: '#EFEFD0',
+                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                            border:"none"},
+                                                        disableUnderline: true}}
                                                     type="text"
                                                     multiline 
                                                     fullWidth="true"
@@ -576,14 +671,30 @@ const EditHome = () => {
                                             mt: "1.25rem"
                                         }}
                                         >
-                                        <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.69rem" }}>
+                                        <h6 style={{ fontWeight: "bold", marginLeft: "3rem", paddingRight: "4.9rem", marginTop: "0.69rem" }}>
                                             Miscellaneous
                                         </h6>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={havePet} onChange={handleChangeHP}/>} label=" I Have a Pet" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={haveKid} onChange={handleChangeHK}/>} label="Kids at Home" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={doesSmoke} onChange={handleChangeDS}/>} label="Smoking at Home" labelPlacement='right'/>
-                                            <FormControlLabel control={<Checkbox  variant="solid" checked={wheelchair} onChange={handleWheel}/>} label="Wheelchair Accessible" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: havePet ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={havePet} onChange={handleChangeHP}/>} label=" I Have a Pet" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: haveKid ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={haveKid} onChange={handleChangeHK}/>} label="Kids at Home" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: doesSmoke ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={doesSmoke} onChange={handleChangeDS}/>} label="Smoking at Home" labelPlacement='right'/>
+                                            <FormControlLabel sx={{color: wheelchair ? `#F7C59F` : `#EFEFD0`}} control={<Checkbox sx={{
+                                                color: "#EFEFD0",
+                                                '&.Mui-checked': {
+                                                    color: "#F7C59F",
+                                                }}} variant="solid" checked={wheelchair} onChange={handleWheel}/>} label="Wheelchair Accessible" labelPlacement='right'/>
                                         </Box>
                                 </Box>
                             </Grid>
@@ -592,13 +703,19 @@ const EditHome = () => {
                                 <Box sx={{ width: '100%', mt: "2rem" }}>
                                     <Stack spacing={3}>
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "8rem" }}>
+                                            <h6 style={{ fontWeight: "bold", marginLeft: "3rem", paddingRight: "8rem" }}>
                                                 Additional Information
                                             </h6>
-                                            <FormControl sx={{ width: "56rem" }}>
+                                            <FormControl sx={{ width: "56rem", marginLeft: "3rem" }}>
                                                 <TextField 
                                                     id="edit-profile-aboutme"
+                                                    className={classes.text_field}
                                                     name="aboutme"
+                                                    InputProps={{
+                                                        style: { color: '#EFEFD0',
+                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                            border:"none"},
+                                                        disableUnderline: true}}
                                                     type="text"
                                                     multiline 
                                                     fullWidth="true"
@@ -615,7 +732,7 @@ const EditHome = () => {
                             </Grid>
                             {/* MAP🥳 */}
                             <Grid item xs={12}>
-                                <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginTop: "0.8rem" }}>
+                                <h6 style={{ fontWeight: "bold", paddingRight: "4.9rem", marginLeft: "3rem", marginTop: "0.8rem" }}>
                                     Specify The Location of Your Home on The Map
                                 </h6>
                                 <div className='map-container'>
@@ -637,7 +754,7 @@ const EditHome = () => {
                                     <Item>
                                         <Button
                                             variant="contained"
-                                            sx={{ width: "100%" }}
+                                            sx={{ width: "100%", marginLeft: "3rem" }}
                                             type="submit"
                                             // disabled={disabled}
                                             color='success'
@@ -650,7 +767,7 @@ const EditHome = () => {
                                         <Button
                                             variant="outlined"
                                             sx={{
-                                            width: "100%",
+                                            width: "100%", marginLeft: "3rem"
                                             }}
                                             type="submit"
                                             // disabled={disabled}
@@ -661,6 +778,7 @@ const EditHome = () => {
                                     </Item>
                                 </Stack>
                             </Grid>
+                            </div>
                         </div>
                     </form>
                 </Grid>

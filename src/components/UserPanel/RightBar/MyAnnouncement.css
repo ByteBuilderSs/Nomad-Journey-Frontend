@@ -51,12 +51,28 @@
     background-color: rgba(255, 255, 255, 0.9);
 }
 .announcement-hovering{
+    background-color: #F7C59F;
     transition: 0.08s;
     cursor: pointer;
-    color: black;
-
+    color: #004E89;
+    transition: 0.3s ease;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.announcement-hovering img{
+    width: 100%;
+    filter: grayscale(100%);
+    border-radius: 10px 10px 0px 0px;
+    transition: 0.5s ease;
 }
 .announcement-hovering:hover{
-    background-color: #f7f7f7;
+    /*background-color: #f7f7f7;*/
+    /*color: #FF6B35;*/
+    box-shadow: 3px 3px 3px rgba(26, 101, 158, 0.34);
+    transition: 0.5s ease;
+}
 
+.announcement-hovering:hover img{
+    filter: grayscale(0%);
+    scale: 1.1;
 }

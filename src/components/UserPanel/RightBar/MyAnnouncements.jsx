@@ -15,6 +15,8 @@ import axios from "axios";
 import { blue, deepOrange } from '@mui/material/colors';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useCounter } from "../../../Context/CounterProvider";
+import Lottie from "react-lottie";
+import myAnnouncement from "../../../lottieAssets/19469-travelling.json";
 const theme = createTheme({
     palette: {
         primary: blue,
@@ -50,7 +52,29 @@ function MyAnnouncements(props) {
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [anc_id, setAnc_id] = useState(null);
+    const AnnouncementAnimation = () => {
 
+        const defaultOptions = {
+            loop: true,
+            autoplay: true,
+            animationData: myAnnouncement,
+            rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice"
+            }
+        };
+
+        return(
+            <div style={{
+                zIndex:"-1"
+            }}>
+                <Lottie
+                    options={defaultOptions}
+                    height={300}
+                    width={400}
+                />
+            </div>
+        )
+    }
     useEffect( () =>
     {
         axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${props.url_username}`)
@@ -167,57 +191,94 @@ function MyAnnouncements(props) {
     const checkLoading = (isLoading) => {
         if(isLoading)
         {
-            const n = 4;
+            const n = 8;
             return(
-                <Stack>
+                <div>
+                <Grid container rowSpacing={3} columnSpacing={2}
+                      sx={{
+                          paddingLeft:"2rem",
+                          paddingRight:"3rem",
+                          marginTop:"5rem",
+                          marginBottom:"2rem"
+                      }}>
                     {[...Array(n)].map((e, key) => (
-                        <div>
-                        <Item>
-                            <Stack className={classes.announcements} spacing={1}>
-                                <Item>
-                                    <Skeleton variant="rectangular" width={200} height={35} />
-                                </Item>
-                                <Item className={classes.eachAnnouncement}>
-                                    <Stack direction={`row`} spacing={4} divider={<Divider orientation={`vertical`} flexItem />}>
+                        <Grid item md={6} xs={12} sm={6} lg={4} xl={3}>
+                        <div style={{
+                                    borderRadius:"20px",
+                                    backgroundColor:"white"
+                                }}>
+                                <Skeleton variant="rectangular" width="100%" height={150}
+                                    sx={{
+                                        borderRadius:"20px 20px 0px 0px"
+                                    }}
+                                />
+                                <Stack className={classes.announcements}>
                                         <Item>
-                                            <Skeleton variant="rectangular" width={180} height={20} />
+                                            <Skeleton variant="rectangular" width={120} height={30} />
                                         </Item>
-                                        <Item>
-                                            <Skeleton variant="rectangular" width={100} height={20} />
+                                        <Item className={classes.eachAnnouncement}>
+                                            <div style={{
+                                                paddingTop:"1rem"
+                                            }}>
+                                                <Skeleton variant="rectangular" width={150} height={15} />
+                                            </div>
                                         </Item>
-                                        <Item>
-                                            <Skeleton variant="rectangular" width={100} height={20} />
+                                        <Item className={classes.eachAnnouncement}>
+                                                <Skeleton variant="rectangular" width={150} height={15} />
+
                                         </Item>
-                                        <Item>
-                                            <Skeleton variant="rectangular" width={100}  height={20} />
+                                        <Item className={classes.eachAnnouncement}>
+                                            <Stack sx={{
+                                                paddingTop:"0.5rem"
+                                            }}
+                                                direction={`row`} spacing={1} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
+                                                <Item>
+                                                    <Skeleton variant="rectangular" width={60} height={15} />
+                                                </Item>
+                                                <Item>
+                                                    <Skeleton variant="rectangular" width={60} height={15} />
+                                                </Item>
+                                                <Item>
+                                                    <Skeleton variant="rectangular" width={60} height={15} />
+                                                </Item>
+                                            </Stack>
                                         </Item>
-                                    </Stack>
-                                </Item>
-                                <Item>
-                                    <Skeleton variant="rectangular" width={675} height={20} />
-                                </Item>
-                            </Stack>
-                            <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
-                        </Item>
-                        </div>
-                    ))}
-                </Stack>
-            );
+                                    </Stack></div>
+                            </Grid>))}
+        </Grid>
+                </div>
+        );
         }
         return (
             <ThemeProvider theme={theme}>
+                <h1 style={{paddingTop:"2rem"}}>
+                    Announcements</h1>
                 <h5>
-                <Stack>
+                    <Grid container rowSpacing={5} columnSpacing={2}
+                    sx={{
+                        paddingLeft:"2rem",
+                        paddingRight:"3rem",
+                        marginTop:"1rem",
+                        marginBottom:"2rem",
+                    }}>
                     {
                         announcement.length > 0 ? announcement.map((anc, key) =>
                         (
+
+                            <Grid item md={6} xs={12} sm={6} lg={4} xl={3}>
                                 <div
                                     className="announcement-hovering"
                                     onClick={() => {
                                             setOpen(true);
                                             setDisabled(false);
                                             setAnc_id(anc.id);}}>
-                                    <Item>
+                                    <div style={{
+                                        overflow: "hidden",
+                                    }}>
+                                        <img
+                                             src="https://www.outofoffice.com/wp-content/uploads/santorini-1578440_1920.jpg"
+                                        />
+                                    </div>
                                         <Stack className={classes.announcements}>
                                             <Item>
                                                 <Stack direction={`row`}>
@@ -229,18 +290,6 @@ function MyAnnouncements(props) {
                                                             <Item>
                                                                 <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                     <span>{anc.city_name}</span>
-                                                                    {/*{anc.anc_status=="D"?<>*/}
-                                                                    {/*<Button*/}
-                                                                    {/*    sx={{ ml: "40rem" }}*/}
-                                                                    {/*    onClick={()=>{handelClickPost(anc.id)}}*/}
-                                                                    {/*    variant="contained"*/}
-                                                                    {/*    color="secondary"*/}
-                                                                    {/*    size="medium"*/}
-                                                                    {/*    startIcon={<AddIcon />}*/}
-                                                                    {/*    >*/}
-                                                                    {/*    Add Post*/}
-                                                                    {/*</Button>*/}
-                                                                    {/*</> :null}*/}
                                                                 </h1>
                                                             </Item>
                                                             <Item>
@@ -252,12 +301,17 @@ function MyAnnouncements(props) {
                                             
                                             </Item>
                                             <Item className={classes.eachAnnouncement}>
-                                                <Stack direction={`row`} spacing={3} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
-                                                    <Item>
-                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                                                            <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} <FaLongArrowAltRight /> {getDayOfDate(anc.departure_date)}
-                                                        </Typography>
-                                                    </Item>
+                                                <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                    <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} (Start)
+                                                </Typography>
+                                            </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                            <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.departure_date)} (End)
+                                            </Typography>
+                                        </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                                <Stack direction={`row`} spacing={1} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
                                                     <Item>
                                                         <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
                                                             <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
@@ -275,32 +329,28 @@ function MyAnnouncements(props) {
                                                     </Item>
                                                 </Stack>
                                             </Item>
-                                            <Item className={classes.eachAnnouncement}>
-                                                {checkDescription(anc.anc_description)}
-                                            </Item>
-                                           
-                                           
                                         </Stack>
-                                        <Divider sx={{ borderBottomWidth: 1, width: "150rem"}} />
-                                    </Item>
-
                                 </div>
+                            </Grid>
+
                         )) : 
                         <Box
                             sx={{
                                 flexGrow: 1,
-                                bgcolor: "background.paper",
                                 p: 2,
+                                width: "100%"
                             }}
                             >
                             <div>
-                                <span style={{ marginLeft: "20rem" , fontWeight: "bold", fontSize: 20}}>
+                                    <AnnouncementAnimation />
+                                <h2 style={{color:"#004E89"}}>
                                     No Announcement Found!
-                                </span>
+                                </h2>
+
                             </div>
                         </Box>
                     }
-                </Stack>
+                </Grid>
                     {checkNotNull(anc_id)}
                     {() => setAnc_id(null)}
                 </h5>

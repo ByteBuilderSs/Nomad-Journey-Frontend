@@ -1,0 +1,21 @@
+.sidebar-v2{
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    padding-bottom:1rem;
+    padding-top:1rem;
+    transition: 0.2s ease;
+
+}
+.sidebar-v2:hover{
+    background: rgba(255, 255, 255, 0.15);
+    border-right: solid;
+    border-right-color: white;
+    border-right-width: thick;
+}
+.list-items{
+    width: 100%;
+    height: 100%;
+    color: white;
+    margin-left: 1.5rem;
+}

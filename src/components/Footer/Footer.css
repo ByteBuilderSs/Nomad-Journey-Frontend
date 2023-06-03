@@ -29,7 +29,7 @@
 } */
 
 footer {
-    background-color: #E55405;
+    background: radial-gradient(circle, rgba(26,101,158,1) 0%, rgba(0,78,137,1) 54%);
     text-align: center;
     padding: 25px 0px;
   }

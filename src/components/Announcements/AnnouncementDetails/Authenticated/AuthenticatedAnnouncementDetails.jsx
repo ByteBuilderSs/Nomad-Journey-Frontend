@@ -114,7 +114,7 @@ const useStyles = makeStyles(theme => (
             opacity:"0.9"
         },
         mapButton:{
-            color:"#e45505",
+            color:"#E55405",
             backgroundColor:"rgba(237,231,230,0.7)",
             "&:hover":{
                 backgroundColor:"rgba(218,193,180,0.78)",
@@ -122,10 +122,10 @@ const useStyles = makeStyles(theme => (
         },
         mapButtonActive:{
 
-            color:"#e45505",
+            color:"#E55405",
             backgroundColor:"rgba(237,231,230,0.8)",
             borderBottom:"solid",
-            borderColor:"#e45505",
+            borderColor:"#E55405",
             borderBottomWidth:"medium",
             "&:hover":{
                 backgroundColor:"rgba(236,217,204,0.8)",
@@ -484,7 +484,7 @@ export default function UnAuthAnnouncement(props)
                             <div key={key}>
                                 {key === current && (
                                     <>
-                                        <Circle color={'#e55405'} center={[items.host_lat, items.host_long]} radius={800} />
+                                        <Circle color={'#E55405'} center={[items.host_lat, items.host_long]} radius={800} />
                                         <SetViewCenterHost lat={items.host_lat} lng={items.host_long} />
                                     </>
                                 )}
@@ -501,7 +501,7 @@ export default function UnAuthAnnouncement(props)
                 {volnteers.map((items,key) =>
                     (
                         <>
-                            <Circle color={'#e55405'} center={[items.host_lat, items.host_long]} radius={1000}
+                            <Circle color={'#E55405'} center={[items.host_lat, items.host_long]} radius={1000}
                                     eventHandlers={{
                                         mouseover: (event) => event.target.openPopup(),
                                         mouseout: (event) => event.target.closePopup(),

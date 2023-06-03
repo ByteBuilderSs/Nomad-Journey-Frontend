@@ -1,138 +1,151 @@
 import React from 'react';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Divider,
-    FormControl,
-    TextField,
-    InputAdornment,
-    IconButton,
-    Box,
-    Typography,
-} from '@mui/material';
-
+import {FormControl, IconButton, TextField, InputAdornment, Button} from "@mui/material";
+import { makeStyles } from '@mui/styles';
 import {
     Visibility,
     VisibilityOff,
 } from "@mui/icons-material";
 
-const ChangePasswordDialog = (props) => {
-    const handleClose = () => {
-        props.setOpen(false);
-    };
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"15em",
+        background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#F7C59F",
+        border:"solid 2px #F7C59F",
+        borderRadius:"15px",
+        transition:"all 0.3s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
+
+}))
+const ResetPassword = (props) => {
+    const classes = styles();
+    const [showCurrPassword, setShowCurrPassword] = React.useState(false);
+    const [showNewPassword, setShowNewPassword] = React.useState(false);
+    const [showConfPassword, setShowConfPassword] = React.useState(false);
 
     return (
-        <div>
-        <Dialog
-            open={props.open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-        >
-            <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#DBF1F4"}}>
-                {"Change My Password"}
-            </DialogTitle>
-            <Divider />
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    We need your current password to verify the update request.
-                </DialogContentText>
-                <Box
-                    component="form"
-                    sx={{
-                    "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-                <form
-                    id={"Change-Password-Form"}
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                    }} style={{ marginTop: "2rem" }}
-                    >
-                    <FormControl fullWidth variant="outlined">
-                        <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "0.8rem" }}>
-                            Current Password <span style={{ color: "red"}}>*</span>
-                        </Typography>
-                        <TextField
-                            id="outlined-adornment-current-password"
-                            InputProps={{
-                                endAdornment: (
+        <div style={
+            {borderRadius:"15px",
+            width:"25em",height:"22em",
+            backgroundColor:"#1A659E",
+            color:"#EFEFD0"}
+        }>
+            <h2
+            style={{paddingTop:"0.5em", color: "#EFEFD0"}}>Reset Password</h2>
+            <div style={{paddingTop:"1em",display:"flex",justifyContent:"center", alignItems:"center"}}>
+                <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
+                    <TextField
+                        size={`small`}
+                        className={classes.text_field}
+                        InputLabelProps={{
+                            style: { color: '#EFEFD0', fontWeight: "bold" }
+                        }}
+                        InputProps={{
+                            style: { color: '#EFEFD0',
+                                backgroundColor:"rgba(239,239,208,0.11)",
+                            border:"none"},
+                            disableUnderline: true,
+                            endAdornment: (
                                 <InputAdornment>
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         edge="end"
+                                        onClick={() => setShowCurrPassword(!showCurrPassword)}
+                                        sx={{color:'#EFEFD0'}}
                                     >
+                                        {!showCurrPassword ? (<Visibility/>) : (<VisibilityOff />)}
                                     </IconButton>
                                 </InputAdornment>
-                                ),
-                            }}
-                            label="Current Password"
-                        />
-                    </FormControl>
-                    <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "0.8rem" }}>
-                        New Password
-                    </Typography>
-                    <FormControl fullWidth variant="outlined">
-                        <TextField
-                            id="outlined-adornment-password"
-                            InputProps={{
-                                endAdornment: (
+                            ),
+                        }}
+                        type={showCurrPassword ? "text" :"password"}
+                        label="Current Password"
+                        variant='outlined'/>
+                </FormControl>
+                </div>
+                <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+                    <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
+                    <TextField
+                        size={`small`}
+                        className={classes.text_field}
+                        InputLabelProps={{
+                            style: { color: '#EFEFD0',fontWeight: "bold" }
+                        }}
+                        InputProps={{
+                            style: { color: '#EFEFD0',
+                                backgroundColor:"rgba(239,239,208,0.11)",
+                                border:"none"},
+                            disableUnderline: true,
+                            endAdornment: (
                                 <InputAdornment>
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         edge="end"
+                                        onClick={() => setShowNewPassword(!showNewPassword)}
+                                        sx={{color:'#EFEFD0'}}
                                     >
+                                        {!showNewPassword ? (<Visibility/>) : (<VisibilityOff />)}
                                     </IconButton>
                                 </InputAdornment>
-                                ),
-                            }}
-                            label="New Password"
-                        />
+                            ),
+                        }}
+                        type={showNewPassword ? "text" :"password"}
+                        label="New Password"
+                        variant='outlined' />
                     </FormControl>
-                    <Typography component="h6" sx={{ fontWeight: "bold", paddingLeft: "0.8rem" }}>
-                        Confirm Password
-                    </Typography>
-                    <FormControl fullWidth variant="outlined">
-                        <TextField
-                            id="outlined-adornment-confirm-password"
-                            InputProps={{
-                                endAdornment: (
+                </div>
+                <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+                    <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
+                    <TextField
+                        size={`small`}
+                        className={classes.text_field}
+                        InputLabelProps={{
+                            style: { color: '#EFEFD0',fontWeight: "bold" }
+                        }}
+                        InputProps={{
+                            style: { color: '#EFEFD0',
+                                backgroundColor:"rgba(239,239,208,0.11)",
+                                border:"none"},
+                            disableUnderline: true,
+                            endAdornment: (
                                 <InputAdornment>
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         edge="end"
+                                        onClick={() => setShowConfPassword(!showConfPassword)}
+                                        sx={{color:'#EFEFD0'}}
                                     >
+                                        {!showConfPassword ? (<Visibility/>) : (<VisibilityOff />)}
                                     </IconButton>
                                 </InputAdornment>
-                                ),
-                            }}
-                            label="Confirm Password"
-                        />
+                            ),
+                        }}
+                        type={showConfPassword ? "text" :"password"}
+                        label="Confirm Password"
+                        variant='outlined'/>
                     </FormControl>
-                    <DialogActions>
-                        <Button
-                            sx={{ m: 1 }}
-                            variant="outlined"
-                            size="large"
-                            type="submit"
-                        >
-                            Update
-                        </Button>
-                    </DialogActions>
-                </form>
-                </Box>
-                
-            </DialogContent>
-            
-        </Dialog>
+
+            </div>
+                <div style={{paddingTop:"1em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+                    <Button className={classes.button}>
+                        reset password
+                    </Button>
+                </div>
+
+
         </div>
     );
 }
 
-export default ChangePasswordDialog;
+export default ResetPassword;

@@ -715,6 +715,7 @@ Pre-loader Style
     height: 360px;
     overflow: hidden;
     width: 260px;
+    display: flex;
   }
   /* for transition : */
 

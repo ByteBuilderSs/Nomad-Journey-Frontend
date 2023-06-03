@@ -99,6 +99,33 @@ const Announce = (props) => {
   // For offer dialog :
   const [openOfferDialog, setOpenOfferDialog] = useState(false);
   const [openDiscDialog, setOpenDiscDialog] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [userId, setUserId] = useState(props.anc.announcer);
+
+  const fetchPhoto = async () => {
+    try {
+  
+    await axios.get(`http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userId}`).then(
+        (response) => {
+          console.log(response.data)
+          console.log(response.status)
+          if (response.status == 200){
+            setProfilePhoto(response.data["profile_photo"])
+          }
+        }
+    )
+    
+    } catch (error) {
+    console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchPhoto()
+  }, [userId]);
+
+
+
   const fetchOffer = Make_Offer()
   
 
@@ -145,7 +172,7 @@ const Announce = (props) => {
           <div class="row">
             <div class="col-lg-6">
               <div class="image">
-                <img src= {require("../../Assets/images/deals-01.jpg")} alt=""/>
+                <img style={{maxWidth : "260px"}} src= { profilePhoto ? `http://188.121.102.52:8000${profilePhoto}` : require("../../Assets/images/deals-01.jpg")} alt=""/>
               </div>
             </div>
             <div class="col-lg-6 align-self-center">
@@ -264,12 +291,12 @@ const [randomData, setRandomData] = useState(null);
 
   useEffect(() => {
     fetchRandom()
-  }, [randomData]);
+  }, []);
 
   if (randomData === null){
     return(
-      <div>
-        <Skeleton animation="wave" />
+      <div style={{marginLeft : "5%"}}>
+        <Skeleton animation="wave" height={"700px"} width={"1400px"}/>
       </div>
     )
   }

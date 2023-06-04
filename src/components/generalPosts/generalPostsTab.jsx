@@ -53,7 +53,7 @@ export default function UsersPosts()
 
     useEffect( () =>
     {
-        axios(`https://api.nomadjourney.ir/api/v1/blog/posts/`)
+        axios(`http://188.121.102.52:8000/api/v1/blog/posts/`)
             .then((data) => {
                 setBlogs(data.data)})
             .catch(error =>
@@ -182,7 +182,7 @@ export default function UsersPosts()
                                                         }}>
                                                                 <Rating sx={{
                                                                     color:"#e45505"
-                                                                }} name="read-only" value={blog.average_rate} readOnly precision={0.1} />
+                                                                }} name="read-only" value={3} readOnly precision={0.1} />
                                                             </span>
                                                     </Typography>
                                                 </Item>

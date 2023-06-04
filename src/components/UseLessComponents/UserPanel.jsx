@@ -24,15 +24,15 @@ const useStyles = makeStyles(theme => (
     {
         newReqBtn:{
             backgroundColor: "white",
-            color: "#e45505",
+            color: "rgba(0,78,137,1)",
             borderRadius:"18px 8px",
             transition:"0.2s ease",
             padding:"4%",
             border:"solid",
             borderWidth:"0em 0.45em",
-            borderColor:"#e45505",
+            borderColor:"rgba(0,78,137,1)",
             "&:hover":{
-                color: "#e45505",
+                color: "rgba(0,78,137,1)",
                 backgroundColor: "rgba(228,85,5,0.11)",
             }
         }
@@ -105,10 +105,10 @@ function UserPanelPage() {
                                                 {userData.username}
                                                 </Item>
                                             <Item>
-                                                coin: 3 <GiTwoCoins color="#e55405"/>
+                                                coin: 3 <GiTwoCoins color="rgba(0,78,137,1)"/>
                                             </Item>
                                             <Item>
-                                                rating: 3.5 <BsStarHalf color="#e55405"/>
+                                                rating: 3.5 <BsStarHalf color="rgba(0,78,137,1)"/>
                                             </Item>
                                         </Stack>
                                     </Item>

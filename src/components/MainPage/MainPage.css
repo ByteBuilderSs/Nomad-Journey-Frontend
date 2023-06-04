@@ -136,7 +136,7 @@ Pre-loader Style
     height: 16px;
     top: 12px;
     left: 15px;
-    background: #E55405;
+    background: rgba(0,78,137,1);
     border-radius: 50%;
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -159,7 +159,7 @@ Pre-loader Style
     width: 16px;
     height: 16px;
     margin-left: 16px;
-    background: #E55405;
+    background: rgba(0,78,137,1);
     border-radius: 50%;
   }
 
@@ -169,18 +169,18 @@ Pre-loader Style
 /* global styles */
 
   ::selection {
-    background: #E55405;
+    background: rgba(0,78,137,1);
     color: #fff;
   }
   
   ::-moz-selection {
-    background: #E55405;
+    background: rgba(0,78,137,1);
     color: #fff;
   }
   
   .text-button a {
     font-size: 14px;
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-weight: 500;
     transition: all .3s;
   }
@@ -196,9 +196,9 @@ Pre-loader Style
   
   .border-button a {
     font-size: 14px;
-    color: #E55405;
+    color: rgba(0,78,137,1);
     background-color: transparent;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     padding: 12px 30px;
     display: inline-block;
     border-radius: 25px;
@@ -211,15 +211,15 @@ Pre-loader Style
   }
   
   .border-button a:hover {
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
     color: #fff;
   }
   
   .main-button a {
     font-size: 14px;
     color: #fff;
-    background-color: #E55405;
-    border: 1px solid #E55405;
+    background-color: rgba(0,78,137,1);
+    border: 1px solid rgba(0,78,137,1);
     padding: 12px 30px;
     display: inline-block;
     border-radius: 25px;
@@ -233,8 +233,8 @@ Pre-loader Style
   .main-button .annc {
     font-size: 14px;
     color: #fff;
-    background-color: #E55405;
-    border: 1px solid #E55405;
+    background-color: rgba(0,78,137,1);
+    border: 1px solid rgba(0,78,137,1);
     padding: 12px 30px;
     display: inline-block;
     border-radius: 25px;
@@ -251,12 +251,12 @@ Pre-loader Style
   
   .main-button a:hover {
     background-color: #fff;
-    color: #E55405;
+    color: rgba(0,78,137,1);
     border: 1px solid #fff;
   }
   .main-button .annc:hover {
     background-color: #fff;
-    color: #E55405 !important ;
+    color: rgba(0,78,137,1) !important ;
     border: 1px solid rgb(175, 175, 175);
   }
   
@@ -336,14 +336,14 @@ Pre-loader Style
     display: inline-block;
   }
   #section-1 .more-info i {
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-size: 24px;
     width: 60px;
     height: 60px;
     display: inline-block;
     text-align: center;
     line-height: 58px;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     border-radius: 50%;
     float: left;
     margin-right: 20px;
@@ -351,7 +351,7 @@ Pre-loader Style
   #section-1 .more-info h4 {
     text-align: left;
     font-size: 20px;
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-weight: 700;
     line-height: 28px;
   }
@@ -365,8 +365,8 @@ Pre-loader Style
     text-align: right;
   }
   #section-1 .main-button a:hover {
-    background-color: #E55405;
-    border-color: #E55405;
+    background-color: rgba(0,78,137,1);
+    border-color: rgba(0,78,137,1);
     color: #fff;
     opacity: 0.8;
   }
@@ -398,8 +398,8 @@ Pre-loader Style
     margin-bottom: 30px;
   }
   #section-1 .content-slider .slider .banner .banner-inner-wrapper .learn-more-button a:hover {
-    color: #E55405;
-    border-color: #E55405;
+    color: rgba(0,78,137,1);
+    border-color: rgba(0,78,137,1);
     transition: 0.3s;
   }
   #section-1 .content-slider .slider #top-banner-1 {
@@ -466,7 +466,7 @@ Pre-loader Style
     width: inherit;
     height: inherit;
     margin-left: -100%;
-    background: #E55405;
+    background: rgba(0,78,137,1);
   }
   #section-1 .content-slider nav .controls label span.text {
     font-size: 20px;
@@ -476,7 +476,7 @@ Pre-loader Style
     width: 100%;
   }
   #section-1 .content-slider nav .controls label:hover {
-    color: #E55405;
+    color: rgba(0,78,137,1);
   }
   #section-1 .content-slider #banner1:checked ~ .slider #top-banner-1,
   #section-1 .content-slider #banner2:checked ~ .slider #top-banner-2,
@@ -521,7 +521,7 @@ Pre-loader Style
 
 
   .search-form #search-form {
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
     border-bottom-left-radius: 23px;
     border-bottom-right-radius: 23px;
     border-top-right-radius: 23px;
@@ -552,7 +552,7 @@ Pre-loader Style
   }
   
   .search-form #search-form option {
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
   }
 
   .search-form  .row{
@@ -575,14 +575,14 @@ Pre-loader Style
   
 
   .search-form .filterTag{
-    background-color: #E55405;
-    border: 1px solid #E55405;
+    background-color: rgba(0,78,137,1);
+    border: 1px solid rgba(0,78,137,1);
     cursor: pointer;
     color: #fff;
     display: flex;
     position: relative;
     overflow: hidden;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     border-radius: 25px;
     font-weight: 500;
     padding-top: 5px;
@@ -595,8 +595,8 @@ Pre-loader Style
   .search-form .filterTag:hover{
 
     background-color: #fff;
-    border-color: #E55405;
-    color: #E55405;
+    border-color: rgba(0,78,137,1);
+    color: rgba(0,78,137,1);
     opacity: 0.8;
   }
 
@@ -628,7 +628,7 @@ Pre-loader Style
   
   /* .search-form #search-form button:hover {
     background-color: #fff;
-    color: #E55405;
+    color: rgba(0,78,137,1);
   } */
   
   .cities-town .slider-content-main-page
@@ -649,7 +649,7 @@ Pre-loader Style
   
   .cities-town .slider-content-main-page h2 em {
     font-style: normal;
-    color: #E55405;
+    color: rgba(0,78,137,1);
   }
   
   .cities-town .slider-content-main-page .item .thumb {
@@ -699,7 +699,7 @@ Pre-loader Style
   
   .cities-town .owl-nav .owl-prev:hover::after,
   .cities-town .owl-nav .owl-next:hover::after {
-    color: #E55405;
+    color: rgba(0,78,137,1);
   }
   .card-silder {
     margin-top: 120px;
@@ -715,6 +715,7 @@ Pre-loader Style
     height: 360px;
     overflow: hidden;
     width: 260px;
+    display: flex;
   }
   /* for transition : */
 
@@ -743,7 +744,7 @@ Pre-loader Style
   }
 
   .item .content p:hover{
-    color : #E55405
+    color : rgba(0,78,137,1)
   }
 
   @keyframes fade-in {
@@ -770,7 +771,7 @@ Pre-loader Style
 
   
   .amazing-deals .item span.info {
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-size: 15px;
     margin-bottom: 20px;
     display: block;
@@ -845,9 +846,9 @@ Pre-loader Style
     display: inline-block;
     width: 46px;
     height: 46px;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     line-height: 44px;
-    color: #E55405;
+    color: rgba(0,78,137,1);
     text-align: center;
     font-size: 18px;
     font-weight: 500;
@@ -857,7 +858,7 @@ Pre-loader Style
   
   .amazing-deals ul.page-numbers li.active a,
   .amazing-deals ul.page-numbers li a:hover {
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
     color: #fff;
   }
   

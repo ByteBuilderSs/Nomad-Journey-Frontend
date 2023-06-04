@@ -36,6 +36,7 @@ import { useLogout } from "../../hooks/useLogout";
 import { useCounter } from "../../Context/CounterProvider";
 import axios from 'axios';
 import { toast } from "react-toastify";
+import {IoNotificationsSharp} from "react-icons/io5";
 
 import Notif from "../Notification/Notif";
 
@@ -50,7 +51,7 @@ if (localStorage.getItem('tokens'))
 
 const tabs = [
     {
-        label: "Dashboard",
+        label: "Home",
         value: 1,
         desktopIcon: <MdDashboard style={{ color: "white", fontSize: "1.2rem " }}/>,
         mobileIcon: <MdDashboard style={{  fontSize: "small" }}/>,
@@ -163,7 +164,7 @@ const Navbar = (props) => {
     
     return (
         <div dir={dir}>
-            <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">
+            <AppBar sx={{ background: "radial-gradient(circle, rgba(26,101,158,1) 0%, rgba(0,78,137,1) 54%)"}}  position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                     <Box sx={{ 
@@ -175,46 +176,52 @@ const Navbar = (props) => {
                         >
                             <SideBarDrawer />
                         </Box>
-                        <IconButton
-                            style={{ marginLeft: "10rem", width: "4.1rem" }}
-                            sx={{ display: {xs: "none", lg: "flex"} }}
+                        <Box
+                            style={{ marginLeft: "1rem", width: "12rem", marginBottom:"0.5rem"}}
+                            sx={{ display: {xs: "none", lg: "flex"},
+                                color:"#EFEFD0" }}
                         >
-                            <Avatar alt="LOGO" src={SiteLogo} style={{ width: "100%"}}/>
-                            
-                        </IconButton>
+                            NOMAD JOURNEY
+                        </Box>
 
                         <Typography
                             variant="h5"
                             component="div"
                             noWrap
                             sx={{  flexGrow: 1, display: { xs: 'flex', lg: 'none' } }}
-                            style={{ marginLeft: "1rem"}}
+                            style={{ marginLeft: "1rem",
+                                color:"#f7c59f"}}
                             className="website-name"
                         >
                             Nomad Journey
                         </Typography>
 
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', lg: 'flex' } }}>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', lg: 'flex' },
+                            marginLeft:"2rem",
+                            color:"#f7c59f" }}>
                             <Tabs
+                                sx={{
+                                    color:"#EFEFD0"
+                                }}
                                 value={selectedTab}
                                 onChange={handleChange}
                                 TabIndicatorProps={{
                                     style: {
-                                        backgroundColor: "#D97D54",
+                                        color: "#D97D54",
                                     },
                                 }}
                                 aria-label="secondary tabs example"
                                 >
                                 {tabs.map((tab) => {
                                     return (
-                                        <Tab 
+                                        <Tab
+                                            className="hover-underline-animation"
                                             component={Link}
                                             to={tab.route}
-                                            style={{ color: "white" }}
+                                            style={{ color: "#EFEFD0" }}
                                             key={tab.value}
                                             label={tab.label}
                                             value={tab.value}
-                                            icon={tab.desktopIcon}
                                         />
                                     );
                                 })}
@@ -230,26 +237,24 @@ const Navbar = (props) => {
                                     alignItems: "center",
                                     justifyContent: "center",
                                 }}>
+                                    {/* <Tooltip title="notification">
+                                        <IconButton >
+                                            <IoNotificationsSharp size={`1.25rem`} color={`#EFEFD0`} />
+                                        </IconButton>
+                                    </Tooltip> */}
                                     <Tooltip title="Settings">
-                                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, border:"2px solid", borderColor:"#EFEFD0" }}>
                                             {
                                                 profileImageURL  && profileImageURL !== "" ? 
                                                 (
                                                     <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
-                                                        <img style={{ width:'4rem', height:'4rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
+                                                        <img style={{ width:'2.5rem', height:'2.5rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/>
                                                     </div>
                                                 ) :
                                                 <LetteredAvatar name={username} backgroundColor='#FFE5B4'/>
                                             }
                                         </IconButton>
                                     </Tooltip>
-                                    <IconButton
-                                        style={{ marginRight: "1rem"}}
-                                        onClick={handleOpenUserMenu}
-                                        sx={{ p: 0 }}
-                                    >
-                                        <MdKeyboardArrowDown style={{ color: "white" }}/>
-                                    </IconButton>
                             </Box>
                             <Menu
                                 sx={{ mt: "1rem" }}

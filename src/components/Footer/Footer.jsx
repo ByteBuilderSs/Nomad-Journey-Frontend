@@ -5,7 +5,7 @@ import "./Footer.css"
 
 const Footer = () => {
   return (
-      // <footer className='footer' style={{ backgroundColor: '#E55405', color : '#fff', height: '100px', width: '100%'}}>
+      // <footer className='footer' style={{ backgroundColor: 'rgba(0,78,137,1)', color : '#fff', height: '100px', width: '100%'}}>
       //     <div className='container'>
       //       <div className="row">
       //         <div className='col-lg-12'>

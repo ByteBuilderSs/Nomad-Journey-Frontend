@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import '../BlogForm.css';
 import {
     Grid,
     FormControl,
@@ -18,6 +19,9 @@ import {
     CardContent,
     CardActions,
     IconButton,
+    CircularProgress,
+    Fab,
+    Box,
 } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -39,11 +43,15 @@ import { convertFileToBase64 } from '../../../utils/utils';
 
 const theme = createTheme({
     palette: {
-            secondary: 
-            {
-                main: teal[900]
-            }
+        primary: 
+        {
+            main: "#219EBC",
+        },
+        secondary: 
+        {
+            main: teal[900]
         }
+    }
 });
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -113,6 +121,16 @@ const EditorForm = () => {
     const [editorValue, setEditorValue] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
     const [tags, setTags] = useState([]);
+
+    // for image loader
+    const [loading, setLoading] = React.useState(false);
+    const timer = React.useRef();
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
     const loadTags = async () => {
         axios({
             method: "get",
@@ -219,6 +237,12 @@ const EditorForm = () => {
         const size_kb = size_mb * 1000;
         if (size_kb <= 500) {
             const base64Image = await convertFileToBase64(file);
+            if (!loading) {
+                setLoading(true);
+                timer.current = window.setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
+            }
             setImageSizeErr(false);
             setMainImage(base64Image ? base64Image : "");
         } else {
@@ -244,7 +268,7 @@ const EditorForm = () => {
                             {/* Main Image */}
                             <Grid item xs={12} style={{ paddingLeft: "5rem" }}>
                                 <div >
-                                    <IconButton component="label">
+                                    <IconButton component="label" disabled={loading}>
                                         <input
                                             onChange={(e) => handleMainImage(e)}
                                             hidden
@@ -264,57 +288,110 @@ const EditorForm = () => {
                                                 objectPosition: "center"
                                             }}
                                         />
+                                        {loading && (
+                                            <CircularProgress
+                                                size={50}
+                                                sx={{
+                                                position: 'absolute',
+                                                top: '50%',
+                                                left: '50%',
+                                                marginTop: '-12px',
+                                                marginLeft: '-12px',
+                                                }}
+                                            />
+                                            )}
                                     </IconButton>
                                 </div>
-                                <Button
-                                    style={{
-                                        bottom: "35px",
-                                        marginLeft: "1.25rem",
-                                        marginTop: "-0.65rem",
-                                        textTransform: 'none'
-                                    }}
-                                    variant="contained"
-                                    component="label"
-                                    startIcon={<CameraAltIcon />}
-                                    color='secondary'
-                                    >
-                                    Upload a photo
-                                    <input
-                                        hidden
-                                        accept="image/*"
-                                        multiple
-                                        type="file"
-                                        onChange={(e) => handleMainImage(e)}
-                                    /> 
-                                </Button>
+                                <Box sx={{ position: 'relative' }}>
+                                    <Button
+                                        style={{
+                                            bottom: "35px",
+                                            marginLeft: "1.25rem",
+                                            marginTop: "-0.65rem",
+                                            textTransform: 'none'
+                                        }}
+                                        variant="contained"
+                                        component="label"
+                                        startIcon={<CameraAltIcon />}
+                                        color='secondary'
+                                        disabled={loading}
+                                        >
+                                        Upload a photo
+                                        <input
+                                            hidden
+                                            accept="image/*"
+                                            multiple
+                                            type="file"
+                                            onChange={(e) => handleMainImage(e)}
+                                        /> 
+                                    </Button>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                            position: 'absolute',
+                                            top: -27,
+                                            left: 85,
+                                            marginTop: '-12px',
+                                            marginLeft: '-12px',
+                                            }}
+                                        />
+                                    )}
+                                </Box>
                                 {/* TODO => button for removing the photo */}
-                                <Button
-                                    style={{
-                                        bottom: "35px",
-                                        marginLeft: "0.5rem",
-                                        marginTop: "-0.65rem",
-                                        textTransform: 'none'
-                                    }}
-                                    variant="contained"
-                                    component="label"
-                                    startIcon={<RemoveCircleIcon />}
-                                    color='error'
-                                    onClick={() => {
-                                        setMainImage('');
-                                        setImageSizeErr(false);
-                                    }}
-                                    >
-                                    Remove photo
-                                </Button>
+                                <Box sx={{ position: 'relative', ml: "12rem", mt: '-1.7rem' }}>
+                                    {mainImage && mainImage !== ''  && !loading ? (
+                                        <>
+                                        <Button
+                                            style={{
+                                                bottom: "35px",
+                                                marginLeft: "0.5rem",
+                                                marginTop: "-0.65rem",
+                                                textTransform: 'none'
+                                            }}
+                                            variant="contained"
+                                            component="label"
+                                            startIcon={<RemoveCircleIcon />}
+                                            color='error'
+                                            disabled={loading}
+                                            onClick={() => {
+                                                if (!loading) {
+                                                    setLoading(true);
+                                                    timer.current = window.setTimeout(() => {
+                                                        setLoading(false);
+                                                    }, 2000);
+                                                }
+                                                setMainImage('');
+                                                setImageSizeErr(false);
+                                            }}
+                                            >
+                                            Remove photo
+                                        </Button>
+                                        {loading && (
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            marginTop: '-12px',
+                                            marginLeft: '-12px',
+                                            }}
+                                        />
+                                        )}
+                                        </>
+                                    ) : null}
+                                </Box>
                             </Grid>
                             <div style={{ paddingLeft: "5rem" }}>
                                 {/* Title */}
                                 <Grid item xs={12}>
                                     <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                            {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
                                                 Title
-                                            </h6>
+                                            </h6> */}
+                                            <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Title</b>
                                         </Item>
                                         <Item>
                                             <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -341,9 +418,10 @@ const EditorForm = () => {
                                 <Grid item xs={12} direction='row'>
                                     <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                            {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
                                                 Your host name in this trip was:
-                                            </h6>
+                                            </h6> */}
+                                            <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Your host in this trip was</b>
                                         </Item>
                                         <Item>
                                             <FormControl>
@@ -356,9 +434,10 @@ const EditorForm = () => {
                                 <Grid item xs={12}>
                                     <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                            {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
                                                 Summary
-                                            </h6>
+                                            </h6> */}
+                                            <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Summary</b>
                                         </Item>
                                         <Item>
                                             <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -385,11 +464,12 @@ const EditorForm = () => {
                                 </Grid>
                                 {/* Body */}
                                 <Grid item xs={12}>
-                                    <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                    <Stack direction="column" spacing={0.5} sx={{ mt: "2rem", mb: "2rem" }}>
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                            {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
                                                 Body
-                                            </h6>
+                                            </h6> */}
+                                            <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Body</b>
                                         </Item>
                                         <Item>
                                             <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -415,9 +495,10 @@ const EditorForm = () => {
                                         <Grid item xs={7}>
                                     
                                         <Item>
-                                            <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
+                                            <h6 className="fields" style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem", fontSize: 20 }}>
                                                 Tags
                                             </h6>
+                                            {/* <b className="fields" style={{ paddingRight: "10rem", fontSize: 20, paddingRight: "10rem", marginTop: "14rem" }}>Tags</b> */}
                                         </Item>
                                         <Item>
                                             <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -467,7 +548,6 @@ const EditorForm = () => {
                                         </Grid>                        
                                     </Stack>
                                 </Grid>
-                               
                             {/* Buttons */}
                                 <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
                                     <Stack direction="row" spacing={2} sx={{ mt: "5rem", mb: "1rem" }}>

@@ -148,7 +148,7 @@ export default function FormContainer(props) {
                             <Divider  sx={{ borderBottomWidth: 3, }} />
                         </Grid>
                         <Grid item xs={12}>
-                            <h6 style={{ textAlign: "left", paddingLeft: "1rem", paddingTop: "0.5rem", paddingBottom: "0.4rem", color: "#E55405", fontWeight: "bold" }}>MY PERSONAL DETAILS</h6>
+                            <h6 style={{ textAlign: "left", paddingLeft: "1rem", paddingTop: "0.5rem", paddingBottom: "0.4rem", color: "rgba(0,78,137,1)", fontWeight: "bold" }}>MY PERSONAL DETAILS</h6>
                         </Grid>
                         <form>
                             <div style={{ paddingLeft: "2.5rem" }}>
@@ -325,7 +325,7 @@ export default function FormContainer(props) {
 
                                 <Grid item xs={12}>
                                     <Divider  sx={{ borderBottomWidth: 3, }} />
-                                    <h6 style={{ textAlign: "left", paddingLeft: "0.15rem", paddingTop: "0.5rem", paddingBottom: "0.4rem", color: "#E55405", fontWeight: "bold" }}>MY CONTACT DETAILS</h6>
+                                    <h6 style={{ textAlign: "left", paddingLeft: "0.15rem", paddingTop: "0.5rem", paddingBottom: "0.4rem", color: "rgba(0,78,137,1)", fontWeight: "bold" }}>MY CONTACT DETAILS</h6>
                                 </Grid>
                                 {/* Phone */}
                                 <Grid item xs={12}>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,4 +9,10 @@
     width           : 100%;
     height          : 100%;
     background: #EDE7E6;
+}
+
+.fields {
+    font-family: 'Courgette',  sans-serif;
+    color    : #023047;
+    font-size: larger;
 }

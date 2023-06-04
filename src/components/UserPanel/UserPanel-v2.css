@@ -6,7 +6,7 @@
 .userpanel {
     width           : 100%;
     height          : 100%;
-    background: #EDE7E6;
+    background: #EFEFD0;
 }
 
 .user-panel-style{
@@ -27,11 +27,11 @@
 
 .section:hover
 {
-    color: #e55405;
+    color: rgba(0,78,137,1);
 }
 .selectedSection
 {
-    color: #e55405;
+    color: rgba(0,78,137,1);
 }
 .active
 {
@@ -46,4 +46,34 @@
 }
 .list-section-margin{
     margin-top: 0 !important;
+}
+.sidebar-v2{
+    color: #EFEFD0;
+    font-weight: bold;
+    font-size: large;
+    padding-bottom:1rem;
+    padding-top:1rem;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+.sidebar-v2:hover{
+    background-color: rgba(239, 239, 208, 0.15);
+}
+.list-items{
+    width: 100%;
+    height: 100%;
+    margin-left: 1.5rem;
+}
+.selected-item{
+    background: linear-gradient(103deg, rgba(247,197,159,0.01) 20%, rgba(247,197,159,0.2553396358543417) 100%);
+    color: #f7c59f;
+    border-right: solid;
+    border-right-color: #f7c59f;
+    border-right-width: 0.4rem;
+    font-weight: bold;
+    font-size: large;
+    padding-bottom:1rem;
+    padding-top:1rem;
+    transition: 0.2s ease;
+    cursor: pointer;
 }

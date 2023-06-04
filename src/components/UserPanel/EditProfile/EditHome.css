@@ -1,15 +1,15 @@
 .leaflet-container {
-    width: 57rem;
-    height: 40rem;
+    width: 25rem;
+    height: 25rem;
+    border-radius: 10px;
 }
 
 .map-container {
     position: relative;
+    margin-left: 3rem;
 }
 
 .edit-location-button {
     position: absolute;
-    top: 10px;
-    left: 45rem;
     z-index: 10000;
 }

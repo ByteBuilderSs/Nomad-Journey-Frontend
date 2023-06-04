@@ -26,7 +26,7 @@ const BlogForm = () => {
             <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12} md={8} lg={5} sx={{ ml: "3rem" }}>
-                        <h1 style={{ marginLeft: "-3.5rem", display: "flex", alignItems: "center" }}>
+                        <h1 style={{ marginLeft: "-3.5rem", display: "flex", alignItems: "center", fontSize: 35, color: "#023047" }} className="fields">
                             <FcNext size="2rem" style={{ marginRight: "0.5rem" }}/>
                                 Post Your Journey Experience
                         </h1>

@@ -9,7 +9,7 @@ import {makeStyles} from "@mui/styles";
 const useStyles = makeStyles(theme => (
     {
         likeButtonActive:{
-            color:"#e45505",
+            color:"rgba(0,78,137,1)",
             "&:hover":{
                 backgroundColor:"rgba(228,85,5,0.1)"
 

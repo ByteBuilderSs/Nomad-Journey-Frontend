@@ -55,6 +55,7 @@ import FeedbackIcon from '@mui/icons-material/Feedback';
 import SendIcon from '@mui/icons-material/Send';
 import Messenger from '../../../Messenger/Messenger'
 import {useAllposts} from '../../../../hooks/useAllposts'
+import EditorFormDialog from "../../../PostExperience/EditorForm/EditorFormDialog";
 
 const useStyles = makeStyles(theme => (
     {
@@ -169,6 +170,9 @@ export default function UnAuthAnnouncement(props)
     const [showFeed, setShowFeed]=useState(false);
     const [closeFeed, setCloseFeed]=useState(true);
 
+    // for add post dialog
+    const [openPost, setOpenPost] = useState(false);
+    const [closePost, setClosePost] = useState(true);
 
     const [announcement, setAnnouncement] = useState('');
     const [location, setLocation] = useState({lat:'', lng:''});

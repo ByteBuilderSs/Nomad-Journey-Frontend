@@ -22,7 +22,7 @@ import {
     Tooltip
 } from '@mui/material';
 
-import {Link, Route, Routes, useNavigate, useParams} from "react-router-dom";
+import {Link, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
 import {AiFillNotification, AiFillSetting} from "react-icons/ai";
@@ -150,23 +150,31 @@ const UserPanelNew = () => {
     {
         navigate('/chatbar/')
     }
+
+    const lastSegment=useLocation().pathname.split('/')[3]
+    
     return (
         
         <div className='userpanel'>
             <Grid item sx={{right:20,bottom:20,position:'fixed'}}>
                 <Tooltip title='send message'>
-                    <Button size='large' onClick={handelClickMsg} startIcon={<BiMessageRoundedDetail size={40}/>} />
+                    <Button size='large' onClick={handelClickMsg} 
+                    sx={{borderRadius:'30px 30px 30px 30px',borderColor:'#004E89',border:'solid',paddingLeft:'1.5rem'}}
+                    startIcon={<BiMessageRoundedDetail size={30}  />} />
                 </Tooltip>
             </Grid>
             {/*<AboutMe*/}
             {/*    url_username={user_params.username}*/}
             {/*    local_storage_username={local_storage_username}*/}
             {/*/>*/}
+            
             <Row>
                 <Col md={2}>
                     <div style={{background:"radial-gradient(circle, rgba(26,101,158,1) 0%, rgba(0,78,137,1) 54%)",
                         minHeight:"200vh", position:"relative"}}>
-                    {menuItem.map((item, key) => (
+                    {local_storage_username == lastSegment ? 
+                    menuItem.map((item, key) => (
+                        
                         <>
                             <div className={active !== item.name ? `sidebar-v2` : `selected-item`}
                                  onClick={() => setActive(item.name)}>
@@ -175,7 +183,23 @@ const UserPanelNew = () => {
                                 </div>
                             </div>
                         </>
-                    ))}
+                    ))
+                    :
+                    menuItem.map((item, key) => (
+                        item.name=="About Me" || item.name=="My Home" ?
+                        <>
+                            <div className={active !== item.name ? `sidebar-v2` : `selected-item`}
+                                 onClick={() => setActive(item.name)}>
+                                <div className={`list-items`}>
+                                    {item.icon} {item.name}
+                                </div>
+                            </div>
+                        </>
+                        :
+                        null
+                    ))
+                    }
+                    
                     </div>
                 </Col>
                 <Col md={10}>

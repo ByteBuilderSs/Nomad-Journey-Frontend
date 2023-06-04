@@ -4,7 +4,7 @@ import "./TopCities.scss"
 import Skeleton from '@mui/material/Skeleton';
 
 import londonImg from "../../Assets/images/london.avif"
-import tehranImg from "../../Assets/images/tehran.jpg"
+import tehranImg from "../../Assets/images/Tehran.jpg"
 import parisImg from "../../Assets/images/Paris.avif"
 import romeImg from "../../Assets/images/Rome.avif"
 import newYorkImg from "../../Assets/images/NewYork.avif"

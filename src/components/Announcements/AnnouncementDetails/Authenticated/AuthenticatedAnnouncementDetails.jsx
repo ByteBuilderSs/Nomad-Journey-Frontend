@@ -708,37 +708,49 @@ export default function UnAuthAnnouncement(props)
                                             width:"30%",
                                         }}>
                                     <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
-                                            <Grid item >
-                                            <Button onClick={()=>handelClickPost(announcement.id)}
-                                            size='medium' sx={{
-                                                color:"rgba(237,231,230,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                            "&:hover":{
-                                                color:"rgba(234,187,170,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                            } ,width:'20vh'
-                                            }} startIcon={<AddIcon />}
-                                            >
-                                                Add Post
-                                            </Button>
-                                            </Grid>
+                                        {announcement.existPost ==false ?
+                                         <Grid item >
+                                         <Button onClick={()=>handelClickPost(announcement.id)}
+                                         size='medium' sx={{
+                                             color:"rgba(237,231,230,0.8)",
+                                             backgroundColor:"rgba(201,153,127,0.2)",
+                                         "&:hover":{
+                                             color:"rgba(234,187,170,0.8)",
+                                             backgroundColor:"rgba(201,153,127,0.27)"
+                                         } ,width:'20vh',
+                                         borderRadius:'13px'
+                                         }} startIcon={<AddIcon />}
+                                         >
+                                             Add Post
+                                         </Button>
+                                         </Grid>
+                                         :
+                                         null
+                                        }
+                                           
+                                        {announcement.existFeedback ==false ?
+                                        <Grid item >
+                                        <Button size='medium'
+                                        onClick={()=>{
+                                            setShowFeed(true);
+                                            setCloseFeed(false);}}
+                                        sx={{
+                                            color:"rgba(237,231,230,0.8)",
+                                            backgroundColor:"rgba(201,153,127,0.2)",
+                                        "&:hover":{
+                                            color:"rgba(234,187,170,0.8)",
+                                            backgroundColor:"rgba(201,153,127,0.27)"
+                                        },width:'20vh',
+                                        borderRadius:'13px'
+
+                                        }} startIcon={<FeedbackIcon />}>
+                                            Send Feedback
+                                        </Button>
+                                        </Grid>
+                                        :
+                                        null
+                                        }   
                                             
-                                            <Grid item >
-                                            <Button size='medium'
-                                            onClick={()=>{
-                                                setShowFeed(true);
-                                                setCloseFeed(false);}}
-                                            sx={{
-                                                color:"rgba(237,231,230,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                            "&:hover":{
-                                                color:"rgba(234,187,170,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                            },width:'20vh'
-                                            }} startIcon={<FeedbackIcon />}>
-                                                Send Feedback
-                                            </Button>
-                                            </Grid>
                                             
                                     </Grid>
                                         </div>

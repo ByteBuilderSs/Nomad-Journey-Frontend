@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {Box, Divider, IconButton, Rating, Stack, Typography,Grid,Button} from "@mui/material";
+import {Box, Divider, IconButton, Rating, Stack, Typography,Grid,Button,Container, InputAdornment, TextField} from "@mui/material";
 import {Item} from "semantic-ui-react";
-import LetteredAvatar from "react-lettered-avatar";
+import Highlighter from "react-highlight-words";
 import "../UserPanel/RightBar/MyAnnouncement.css";
 import "./generalPostsTab.css";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
@@ -14,15 +14,13 @@ import {useCounter, useCounterActions} from "../../Context/CounterProvider";
 import SetLikeOfBlog from "./LikePost/SetLike";
 import RemoveLikeOfBlog from "./LikePost/RemoveLike";
 import PostLikers from "./likerOfPost";
-import SearchBar from './SearchBar'
 import { FcSearch } from "react-icons/fc";
+import SearchIcon from "@mui/icons-material/Search";
+import {useSearchBlog} from '../../hooks/useSearchBlog'
+import './generalPost.css'
 
 export default function UsersPosts()
 {
-    const [open_liker, setOpen_liker] = useState(false);
-    const [close_liker, setClose_liker] = useState(true);
-    const [blog_id, setBlog_id] = useState(null);
-
     const NotFound = () => {
 
         const defaultOptions = {
@@ -44,12 +42,22 @@ export default function UsersPosts()
           </div>
         )
     }
+
+    const [open_liker, setOpen_liker] = useState(false);
+    const [close_liker, setClose_liker] = useState(true);
+    const [blog_id, setBlog_id] = useState(null);
+
+    
     const [blogs, setBlogs] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const counter = useCounter();
     const setCounter = useCounterActions();
+
+    const [resault,setResault]=useState([])
+    const [searchTerm, setSearchTerm] = useState("");
+    const [active,setActive]=useState(true)
 
     useEffect( () =>
     {
@@ -64,6 +72,32 @@ export default function UsersPosts()
                 console.log(blogs);
             })
     }, [counter]);
+    useEffect(()=>{setResault(blogs.data)},[blogs])
+
+    const handleChange = (event) => {
+    setSearchTerm(event.target.value)
+        if(searchTerm.length>=3)
+        {
+        setActive(false)
+        }else{
+        setActive(true)
+    }};
+
+    const {searchBlogs,searchRes}=useSearchBlog()
+    const handelClick=(event)=>
+    {
+        event.preventDefault();
+
+        searchBlogs(searchTerm);
+        
+        setResault(searchRes)
+        
+      
+    }
+//-----------------------------------------------------------------
+   
+
+    
     let user_id;
 
     if (localStorage.getItem('tokens'))
@@ -126,14 +160,48 @@ export default function UsersPosts()
                         backgroundColor:"#ffffff",
                         position:'relative'
                     }}>
-
-                <SearchBar />
-                <Stack sx={{marginTop:'3rem'}}>
                 
-                {
-                    blogs.data.map((blog, key) => (
+               
+                <Container  sx={{ mt: 20 ,
+                    top:0,
+                    right:0,
+                    justifyContent:'center',
+                    position:'absolute',
+                    display:'flex',
+                    margin:'1.3rem',
+                    width:'100%',
+                                }}>
+                  <TextField
+
+                    id="search"
+                    type="search"
+                    label="Search"
+                    variant="standard"
+                    value={searchTerm}
+                    onChange={handleChange}
+                    autoFocus 
+                    autoComplete='off'
+                    sx={{ width:'70%' ,
+                    justifyContent:'center',
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start' >
+                          <IconButton disabled={active} onClick={handelClick} >
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Container>
+                
+                <Stack sx={{marginTop:'5rem'}}>
+                
+                {resault && 
+                    resault.map((blog, key) => (
                         <Item>
-                                <div className="announcement-hovering">
+                                <div className="blogs-hovering">
                                     <div style={{
                                         paddingTop:"2rem", paddingBottom:"1rem"}}>
                                     <Stack sx={{
@@ -171,6 +239,7 @@ export default function UsersPosts()
                                                 marginLeft:"3rem"
                                             }}>
                                                 <Item>
+
                                                     <Typography component="h5"
                                                                 style={{fontSize:"1.25vw" }}>
                                                             <span>
@@ -180,8 +249,7 @@ export default function UsersPosts()
                                                             float:"right",
                                                             marginRight:"5rem"
                                                         }}>
-                                                                <Rating sx={{
-                                                                    color:"#e45505"
+                                                    <Rating sx={{color:"#e45505"
                                                                 }} name="read-only" value={3} readOnly precision={0.1} />
                                                             </span>
                                                     </Typography>

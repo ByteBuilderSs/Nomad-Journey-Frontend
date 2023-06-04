@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const useSearchBlog = () => {
     
-    const[blogs, setblogs]=useState([])
+    const[searchRes, setblogs]=useState([])
     const searchBlogs = async(searchedTxt) => {
         
         const respone= await fetch(process.env.REACT_APP_API_BLOG+`search-blog?search=${searchedTxt}`,{ 
@@ -18,29 +18,10 @@ export const useSearchBlog = () => {
         if(respone.ok)
         {
             console.log(json)
-            setblogs(json.data)
+            setblogs(json)
         }
     }
-    return{searchBlogs,blogs}
+    return{searchBlogs,searchRes}
 }
 
-export const useSerachFor=()=>
-{
-    const searchedItem = async() => {
-        
-        const respone= await fetch(process.env.REACT_APP_API_BLOG+'search-blog/',{ 
-            method :'POST',
-            headers :{'Content-Type':'application/json'}})
 
-        const json =await respone.json()
-        if(!respone.ok)
-        {
-            console.log("error")
-        }
-        if(respone.ok)
-        {
-            console.log(json)
-        }
-    }
-    return{searchedItem}
-}

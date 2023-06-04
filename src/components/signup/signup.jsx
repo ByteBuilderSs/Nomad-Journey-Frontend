@@ -63,7 +63,7 @@ export default function SignInSide()
     const loadCountries = async () => {
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/utils/get-countries/",
+            url: "https://api.nomadjourney.ir/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -80,7 +80,7 @@ export default function SignInSide()
         if (selectedCountry) {
             axios({
                 method: "get",
-                url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
+                url: `https://api.nomadjourney.ir/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -232,7 +232,7 @@ export default function SignInSide()
                 minHeight: "69vh",
                 boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'
                 }}>
-                <AppBar sx={{ backgroundColor: "#E55405"}} position="static">
+                <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)"}} position="static">
                     <Tabs
                         value={'0'}
                         variant="fullWidth"

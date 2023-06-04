@@ -42,7 +42,7 @@ export default function PostLikers(props)
     }
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/like_post/get-likers/${props.blog_id}`)
+        axios(`https://api.nomadjourney.ir/api/v1/like_post/get-likers/${props.blog_id}`)
             .then((data) => {
                 setLikers(data.data)})
             .catch(error =>

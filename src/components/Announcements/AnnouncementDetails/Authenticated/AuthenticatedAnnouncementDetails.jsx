@@ -234,7 +234,7 @@ export default function UnAuthAnnouncement(props)
     }
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
+        axios(`https://api.nomadjourney.ir/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>

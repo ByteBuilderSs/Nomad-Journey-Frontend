@@ -116,7 +116,7 @@ const EditorForm = () => {
     const loadTags = async () => {
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/blog/tags/",
+            url: "https://api.nomadjourney.ir/api/v1/blog/tags/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -166,7 +166,7 @@ const EditorForm = () => {
         if (isDataValid) {
             axios({
                 method: "post",
-                url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
+                url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`

@@ -19,7 +19,7 @@
 
 .main-button .landing1 {
   font-size: 14px;
-  color: #E55405 !important;
+  color: rgba(0,78,137,1) !important;
   background-color: #fff;
   border: 1px solid #fff;
   padding: 12px 30px;
@@ -34,15 +34,15 @@
 }
 
 .main-button .landing1:hover {
-  background-color: #E55405;
+  background-color: rgba(0,78,137,1);
   color: #fff !important ;
-  border: 1px solid #E55405
+  border: 1px solid rgba(0,78,137,1)
 }
 .main-button .landing2 {
   font-size: 14px;
   color: #fff !important;
-  background-color: #E55405;
-  border: 1px solid #E55405;
+  background-color: rgba(0,78,137,1);
+  border: 1px solid rgba(0,78,137,1);
   padding: 12px 30px;
   display: inline-block;
   border-radius: 25px;
@@ -56,14 +56,14 @@
 
 .main-button .landing2:hover {
   background-color: #fff;
-  color: #E55405 !important ;
-  border: 1px solid #E55405
+  color: rgba(0,78,137,1) !important ;
+  border: 1px solid rgba(0,78,137,1)
 }
 
 
 .border-button .landing3 {
   font-size: 14px;
-  color: #E55405;
+  color: rgba(0,78,137,1);
   background-color: transparent;
   border: 1px solid #fff;
   padding: 12px 30px;
@@ -80,7 +80,7 @@
 
 .border-button .landing3:hover {
   background-color: #fff;
-  color: #E55405 !important;
+  color: rgba(0,78,137,1) !important;
 }
 
 
@@ -94,10 +94,10 @@ LandingPage Styles
 
 .main-button .login-signup  {
     font-size: 16px;
-    color: #E55405 !important;
+    color: rgba(0,78,137,1) !important;
     /* background-color: transparent; */
     background-color: #f7f7f7;;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     padding: 10px 15px;
     display: inline-block;
     border-radius: 25px;
@@ -111,7 +111,7 @@ LandingPage Styles
   }
   
   .main-button .login-signup:hover {
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
     border: 1px solid #f7f7f7;
     color: #f7f7f7 !important;
   }
@@ -188,7 +188,7 @@ LandingPage Styles
   
   .about-main-content .content .main-button a {
     background-color: #fff;
-    color: #E55405;
+    color: rgba(0,78,137,1);
     border-color: #fff;
   }
   
@@ -231,7 +231,7 @@ LandingPage Styles
   
   .cities-town .slider-content h2 em {
     font-style: normal;
-    color: #E55405;
+    color: rgba(0,78,137,1);
   }
 
   
@@ -282,13 +282,13 @@ LandingPage Styles
   
   .cities-town .owl-nav .owl-prev:hover::after,
   .cities-town .owl-nav .owl-next:hover::after {
-    color: #E55405;
+    color: rgba(0,78,137,1);
   }
   
   .weekly-offers {
     padding-bottom: 120px;
     margin-top: 120px;
-    /* border: 5px solid #E55405; */
+    /* border: 5px solid rgba(0,78,137,1); */
     border-radius: 20px;
     margin-left: 150px;
     margin-right: 150px;
@@ -332,7 +332,7 @@ LandingPage Styles
     float: right;
     text-align: right;
     font-size: 20px;
-    color: #E55405;
+    color: rgba(0,78,137,1);
   }
   
   .weekly-offers .item .thumb .text h4 span,
@@ -364,8 +364,8 @@ LandingPage Styles
   }
   
   .weekly-offers .item .thumb .text .main-button a:hover {
-    background-color: #E55405;
-    border-color: #E55405;
+    background-color: rgba(0,78,137,1);
+    border-color: rgba(0,78,137,1);
     color: #fff;
     opacity: 0.85;
   }
@@ -382,12 +382,12 @@ LandingPage Styles
   .weekly-offers .owl-nav .owl-next::after {
     font-family: "FontAwesome";
     content: '\f061'; 
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-size: 20px;
     width: 46px;
     height: 46px;
     text-align: center;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     display: inline-block;
     line-height: 44px;
     border-radius: 50%;
@@ -402,12 +402,12 @@ LandingPage Styles
   .weekly-offers .owl-nav .owl-prev::after {
     font-family: "FontAwesome";
     content: '\f060'; 
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-size: 20px;
     width: 46px;
     height: 46px;
     text-align: center;
-    border: 1px solid #E55405;
+    border: 1px solid rgba(0,78,137,1);
     display: inline-block;
     line-height: 44px;
     border-radius: 50%;
@@ -418,7 +418,7 @@ LandingPage Styles
   .weekly-offers .owl-nav .owl-prev:hover::after,
   .weekly-offers .owl-nav .owl-next:hover::after {
     color: #fff;
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
   }
   
   .more-about {
@@ -448,7 +448,7 @@ LandingPage Styles
   }
   
   .more-about .info-item span {
-    color: #E55405;
+    color: rgba(0,78,137,1);
     font-size: 15px;
   }
   
@@ -457,8 +457,8 @@ LandingPage Styles
   }
   
   .more-about .main-button a:hover {
-    background-color: #E55405;
-    border-color: #E55405;
+    background-color: rgba(0,78,137,1);
+    border-color: rgba(0,78,137,1);
     color: #fff;
     opacity: 0.85;
   }
@@ -737,7 +737,7 @@ LandingPage Styles
     transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
   }
   body .options .option {
-    --defaultBackground:#E55405;
+    --defaultBackground:rgba(0,78,137,1);
   }
   body .options .option.active {
     flex-grow: 10000;
@@ -831,9 +831,9 @@ LandingPage Styles
   }
   
   .best-locations .main-button a:hover {
-    background-color: #E55405;
+    background-color: rgba(0,78,137,1);
     color: #fff;
-    border-color: #E55405;
+    border-color: rgba(0,78,137,1);
     opacity: 0.85;
   }
   
@@ -880,5 +880,5 @@ Call To Action Style
 
 .call-to-action .border-button a:hover {
   background-color: #fff;
-  color: #E55405;
+  color: rgba(0,78,137,1);
 }

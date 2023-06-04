@@ -69,7 +69,7 @@ const UserPanelNew = () => {
         if (userInfo.id) {
             axios({
                 method: "get",
-                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userInfo.id}`,
+                url: `https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${userInfo.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -77,7 +77,7 @@ const UserPanelNew = () => {
                 console.log("+++++++++ THE RESULT IS ++++++++ ", result);
                 /* TODO => HOW CAN I CONVERT THE URL TO FILE */
                 if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                    setProfileImageURL("https://api.nomadjourney.ir" + result.data.profile_photo_URL);
                 }
 
             }).catch((error) => {
@@ -201,10 +201,10 @@ const UserPanelNew = () => {
             {/*                            </Item>*/}
             {/*                            <Stack direction="row" spacing={2}>*/}
             {/*                                <Item>*/}
-            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="#E55405" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>*/}
+            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="rgba(0,78,137,1)" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>*/}
             {/*                                </Item>*/}
             {/*                                <Item>*/}
-            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#E55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>*/}
+            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="rgba(0,78,137,1)" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>*/}
             {/*                                </Item>*/}
             {/*                            </Stack>*/}
             {/*                            <div className="list-section">*/}

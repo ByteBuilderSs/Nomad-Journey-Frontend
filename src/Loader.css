@@ -65,7 +65,7 @@
     height: 16px;
     top: 12px;
     left: 15px;
-    background: #E55405;
+    background: rgba(0,78,137,1);
     border-radius: 50%;
     -webkit-transform: translateX(0);
     transform: translateX(0);
@@ -88,6 +88,6 @@
     width: 16px;
     height: 16px;
     margin-left: 16px;
-    background: #E55405;
+    background: rgba(0,78,137,1);
     border-radius: 50%;
   }

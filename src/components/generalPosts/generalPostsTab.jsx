@@ -52,7 +52,7 @@ export default function UsersPosts()
 
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/blog/posts/`)
+        axios(`https://api.nomadjourney.ir/api/v1/blog/posts/`)
             .then((data) => {
                 setBlogs(data.data)})
             .catch(error =>
@@ -175,7 +175,7 @@ export default function UsersPosts()
                                                             marginRight:"5rem"
                                                         }}>
                                                                 <Rating sx={{
-                                                                    color:"#E55405"
+                                                                    color:"rgba(0,78,137,1)"
                                                                 }} name="read-only" value={3} readOnly precision={0.1} />
                                                             </span>
                                                     </Typography>

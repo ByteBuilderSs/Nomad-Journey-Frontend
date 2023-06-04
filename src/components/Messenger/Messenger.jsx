@@ -20,6 +20,7 @@ import {Paper,
 import LetteredAvatar from 'react-lettered-avatar';
 import SendIcon from '@mui/icons-material/Send';
 import Lottie from 'react-lottie';
+import UserProfile from '../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement'
 
 import {useAllMsgs} from '../../hooks/useHistoryMsg'
 import {useSendMsg} from '../../hooks/useSendMsg'
@@ -202,12 +203,12 @@ export default function Messenger(props)
     const [reciverU,setReciverU]=React.useState(null)
     const senderU=JSON.parse(localStorage.getItem('tokens')).username
 
+    
     //------------------------------------------
     const {allUsersReq,usersReq} =useAncUsers()
     useEffect(()=>{allUsersReq()},[])
     //-----------------------------------------
-    const {imageProfile,imagePro}=useImage()
-    useEffect(()=>{imageProfile(reciver)},[])
+    
 
     const navigate=useNavigate()
     const handelViewProf=(username)=>
@@ -230,7 +231,8 @@ export default function Messenger(props)
                     <ListItemButton key={item.first_name+item.last_name} onClick={()=>{handelChatBox();setReciver(item.id);setReciverU(item.username)}}>
                     <Tooltip title='view profile'>
                     <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
-                        {imagePro && imagePro!="" ?<Avatar src={imagePro} />:<LetteredAvatar name={item.username}/> }
+                    <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
+
                     </ListItemIcon>
                     </Tooltip>
                     <ListItemText primary={item.first_name +" "+ item.last_name}></ListItemText>

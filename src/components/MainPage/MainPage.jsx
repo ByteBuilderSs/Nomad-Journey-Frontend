@@ -20,7 +20,7 @@ import FilterLanguage from "./Filter";
 import {FetchAnnc} from "../../hooks/useAnnounceFetchMainPage";
 import {Make_Offer} from "../../hooks/useOfferAnnc"
 
-import tehranImg from "../../Assets/images/Tehran.jpg"
+import tehranImg from "../../Assets/images/tehran.jpg"
 import parisImg from "../../Assets/images/paris.jpg"
 import londonImg from "../../Assets/images/London.jpg"
 import newyorkImg from "../../Assets/images/newyork.jpg"

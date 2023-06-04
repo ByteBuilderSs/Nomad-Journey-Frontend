@@ -173,11 +173,11 @@ const MyAddress = (props) => {
 
     const first_location = {};
     const [location, setLocation] = useState({});
-    const [street, setStreet] = useState("")
-    const [apt, setApt] = useState("")
-    const [city, setCity] = useState(null)
-    const [country, setCountry] = useState(null)
-    const [postalCode, setPostalCode] = useState("")
+    const [street, setStreet] = useState("");
+    const [apt, setApt] = useState("");
+    const [city, setCity] = useState(null);
+    const [country, setCountry] = useState(null);
+    const [postalCode, setPostalCode] = useState("");
 
     /* ADDED */
     const [countries, setCountries] = React.useState([]);
@@ -314,8 +314,10 @@ const MyAddress = (props) => {
         }).then((result) => {
             if (result.data.User_address_lat && result.data.User_address_long) {
                 console.log("++++++++++++++++");
-                setCheck(true);
                 setLocation({lat: result.data.User_address_lat, lng: result.data.User_address_long});
+            }
+            else {
+                setLocation({lat: 1, lng: 1});
             }
             setStreet(result.data.User_address);
             setApt(result.data.User_apt);

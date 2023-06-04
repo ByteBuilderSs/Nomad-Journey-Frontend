@@ -19,6 +19,7 @@ import MyHome from "./Modals/MyHome";
 import MyAddress from "./Modals/MyAddress";
 import EditProfile from "../UserPanel/EditProfile/EditProfile";
 import PersonalDetails from "./Modals/PersonalDetails";
+import AboutMe from "./Modals/AboutMe";
 const tabsTheme = makeStyles(theme => ({
     selectedTab:{
         backgroundColor:"#F7C59F",
@@ -227,7 +228,7 @@ const Settings = () => {
             {
                 id: 1,
                 title: 'About Me',
-                component:<MyHome />
+                component:<AboutMe />
             },
         ]
         return(

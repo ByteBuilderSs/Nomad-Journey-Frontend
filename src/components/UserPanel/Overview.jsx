@@ -92,8 +92,7 @@ const Overview = (props) => {
                         OVERVIEW
                         {props.url_username === props.local_storage_username ? 
                             <Button
-                                sx={{ marginLeft: "41.5rem", backgroundColor: "#088AD1" }}
-                                variant="contained"
+                                sx={{ marginLeft: "41.5rem", backgroundColor: "#F7C59F" }}
                                 size="medium"
                                 style={{ minWidth: 150 }}
                                 /* TODO => ONCLICK => GO TO EDIT PAGE */

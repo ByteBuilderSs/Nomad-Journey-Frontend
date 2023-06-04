@@ -25,6 +25,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import { useCounter, useCounterActions } from "../../../Context/CounterProvider";
+import {MdOutlineDone} from "react-icons/md";
 
 let username = "";
 let access_token = "";
@@ -151,11 +152,19 @@ const UpdateProfileImage = () => {
 
     return (
         <div>
-            <Card>
                 <form enctype="multipart/form-data">
-                    <Stack spacing={6} sx={{ paddingBottom: "1rem" }}>
+                    <div style={{
+                        paddingTop: "2rem",
+                        paddingBottom: "2.5rem",
+                        borderRadius:"15px",
+                        border:"solid 3px #004E89",
+                        backgroundColor:"rgba(0,78,137,0.6)",
+                        height:"100%"
+                    }}>
+                    <Stack spacing={6} sx={{ paddingLeft:"1rem",
+                        paddingRight:"1rem",}}>
                         <Item>
-                            <Stack alignItems={`center`} spacing={1}>
+                            <Stack alignItems={`center`} spacing={3}>
                                 <Item>
                                     <IconButton component="label" sx={{ mt: "2rem"}}>
                                         <input
@@ -169,66 +178,78 @@ const UpdateProfileImage = () => {
                                         {
                                             profileImageURL && profileImageURL !== "" ? (
                                                     <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
-                                                        <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/>
+                                                        <img style={{ width:'8rem', height:'8rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/>
                                                     </div>) :
                                                 <LetteredAvatar name={username} backgroundColor='#FFE5B4' size={100} />
                                         }
                                     </IconButton>
                                 </Item>
-                                <Stack direction={'row'} spacing={1}>
-                                    <Item>
-                                        <Button
-                                            sx={{ width: "100%", textTransform: "none" }}
-                                            variant="outlined"
-                                            component="label"
-                                            startIcon={<EditIcon />}
-                                            size='small'
-                                        >
-                                            Upload a photo
-                                            <input
-                                                onChange={(e) => handleInputFile(e)}
-                                                hidden
-                                                accept="image/*"
-                                                multiple
-                                                type="file"
-                                            />
-                                        </Button>
-                                    </Item>
-                                    <Item>
-                                        {
-                                            profileImageURL && profileImageURL !== "" ? (
-                                                <Button
-                                                    sx={{  width: "100%", textTransform: "none" }}
-                                                    variant="outlined"
-                                                    color="error"
-                                                    startIcon={<DeleteIcon />}
-                                                    size='small'
-                                                    onClick={(e) => {
-                                                        handleDeleteClick(e);
-                                                    }}
-                                                >
-                                                    Remove photo
-                                                </Button>
-                                            ) : null
-                                        }
-                                    </Item>
-                                </Stack>
                                 <Item>
                                     <Button
-                                        sx={{ mt: 2, width: "100%", textTransform: "none" }}
-                                        variant="contained"
-                                        color="success"
-                                        startIcon={<CheckIcon />}
-                                        onClick={handleUploadClick}
+                                        sx={{ width: "100%", textTransform: "none",
+                                            color:"#F7C59F", borderRadius:"15px",
+                                            border:"solid 2px #F7C59F",
+                                            paddingLeft:"2rem",
+                                            paddingRight:"2rem",
+                                            "&:hover":{
+                                                border:"solid 2px #F7C59F",
+                                                backgroundColor:"rgba(247,197,159,0.1)"
+                                            }
+                                        }}
+                                        variant="outlined"
+                                        component="label"
+                                        startIcon={<EditIcon />}
                                     >
-                                        Save Changes
+                                        Upload a photo
+                                        <input
+                                            onChange={(e) => handleInputFile(e)}
+                                            hidden
+                                            accept="image/*"
+                                            multiple
+                                            type="file"
+                                        />
                                     </Button>
+                                </Item>
+                                <Item>
+                                    <Stack direction={'row'} spacing={1}>
+                                        <Item>
+                                        <IconButton
+                                            sx={{
+                                                color:"#20fc00",
+                                                "&:hover":{
+                                                    backgroundColor: "rgba(32,252,0,0.1)"
+                                                }
+                                            }}
+                                            onClick={handleUploadClick}>
+                                            <CheckIcon />
+                                        </IconButton>
+                                        </Item>
+                                        <Item>
+                                            {
+                                                profileImageURL && profileImageURL !== "" ? (
+                                                    <IconButton
+                                                        sx={{
+                                                            color:"#ff0000",
+                                                            "&:hover":{
+                                                                backgroundColor: "rgba(255,0,0,0.05)"
+                                                            }
+                                                        }}
+                                                        onClick={(e) => {
+                                                            handleDeleteClick(e);
+                                                        }}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                ) : null
+                                            }
+                                        </Item>
+                                    </Stack>
                                 </Item>
                             </Stack>
                         </Item>
                     </Stack>
+                    </div>
                 </form>
-            </Card>
         </div>
     )
 }

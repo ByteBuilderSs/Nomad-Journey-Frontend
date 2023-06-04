@@ -44,6 +44,7 @@ import { toast } from "react-toastify";
 import {Col, Row} from "react-bootstrap";
 import {AiTwotoneSetting} from "react-icons/ai";
 import Settings from "../Settings/Settings";
+import TabAboutMe from "./RightBar/AboutMe/Tab-AboutMe";
 
 let local_storage_username = "";
 let user_id = "";
@@ -92,7 +93,7 @@ const UserPanelNew = () => {
         {
             id: 0,
             name : "About Me",
-            component : <AboutMe
+            component : <TabAboutMe
                 url_username={user_params.username}
                 local_storage_username={local_storage_username}
             />,

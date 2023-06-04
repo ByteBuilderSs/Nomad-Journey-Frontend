@@ -31,7 +31,7 @@ function sleep(delay = 0) {
 }
 
 
-const ChangeAddressDialog = (props) => {
+const SetAddress = (props) => {
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const { username } = useParams();
@@ -57,7 +57,7 @@ const ChangeAddressDialog = (props) => {
         console.log("----------------------- IN LOAD COUNTRIES ------------------- ")
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/utils/get-countries/",
+            url: "https://api.nomadjourney.ir/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -74,7 +74,7 @@ const ChangeAddressDialog = (props) => {
         if (country) {
             axios({
                 method: "get",
-                url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${country.id}`,
+                url: `https://api.nomadjourney.ir/api/v1/utils/get-cities-of-country/${country.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -167,7 +167,7 @@ const ChangeAddressDialog = (props) => {
     const loadUserInfo = async () => {
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/accounts/user/${username}/`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/user/${username}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -202,7 +202,7 @@ const ChangeAddressDialog = (props) => {
         {
             axios({
                 method: "patch",
-                url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit2/${username}`,
+                url: `https://api.nomadjourney.ir/api/v1/accounts/UserProfileEdit2/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -453,4 +453,4 @@ const ChangeAddressDialog = (props) => {
     )
 }
 
-export default ChangeAddressDialog;
+export default SetAddress;

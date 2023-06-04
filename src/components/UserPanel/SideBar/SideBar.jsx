@@ -16,85 +16,67 @@ import {
 import { Item } from "semantic-ui-react";
 import { TiUser } from "react-icons/ti";
 import { AiFillNotification } from "react-icons/ai";
-import { MdFeedback } from "react-icons/md";
+import {MdFeedback, MdHome} from "react-icons/md";
 import { HiCamera } from "react-icons/hi";
 import { GiTwoCoins } from "react-icons/gi";
 import { BsStarHalf } from "react-icons/bs";
 import MyAnnouncements from '../RightBar/MyAnnouncements';
 import AboutMe from '../RightBar/About';
-import MyPosts from '../RightBar/Posts';
+import MyPosts from '../RightBar/myPosts/MyPosts';
 import MyFeedbacks from '../RightBar/Feedback';
-import UserPersonalInfo from '../RightBar/UserPersonalInfo';
 import NewAnnouncementForm from '../../Announcements/AddAnnouncement/NewAnnouncementForm';
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import Home from "../RightBar/Home";
+import "./SideBar.css"
 
 
 const menuItem = [
     {
-        name : "Edit My Profile",
+        id: 0,
+        name : "About Me",
         component : <AboutMe />,
-        icon : <TiUser />,
+        icon : <TiUser style={{ marginTop : "-0.2rem" }}/>,
+        route: 'about-me/'
     },
     {
+        id: 1,
+        name : "My Home",
+        component : <Home />,
+        icon : <MdHome style={{ marginTop : "-0.2rem" }}/>,
+        route: 'about-me/'
+    },
+    {
+        id: 2,
         name : "Announcements",
         component : <MyAnnouncements />,
-        icon : <AiFillNotification />,
+        icon : <AiFillNotification style={{ marginTop : "-0.2rem" }}/>,
+        route: 'about-me/'
     },
     {
+        id: 3,
         name : "Posts",
         component : <MyPosts />,
-        icon : <HiCamera />,
-    },
-    {
-        name : "feedback",
-        component : <MyFeedbacks />,
-        icon : <MdFeedback />,
-    },
+        icon : <HiCamera style={{ marginTop : "-0.2rem" }}/>,
+        route: 'about-me/'
+    }
 ]
 const SideBarCmp = () => {
 
     return (
-        <React.Fragment>
-            <Card  sx={{ bgcolor: "white" }}>
-                <Stack spacing={6}>
-                    <Item>
-                        <Stack alignItems={`center`} spacing={1}>
-                            <Item>
-                                <Avatar sx={{ width:"5px", height:"5px", marginTop: "3rem"}} />
-                            </Item>
-                            <Divider variant={`middle`} flexItem/>
-                            <Item>
-                                <h1 style={{ fontWeight: "bold", marginBottom: "-2rem" }}>{userData.first_name}</h1>
-                                <h1 style={{ fontWeight: "bold" }}>{userData.last_name}</h1>
-                            </Item>
-                            <Item>
-                                <Box>
-                                    <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#e55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>
-                                </Box>
-                            </Item>
-                            <Item>
-                                <Box>
-                                    <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="#e55405" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>
-                                </Box>
-                            </Item>
-                            <div className="list-section">
-                                {menuItem.map((item, key) => (
-                                    <Item className="sidebar_list">
-                                        {active === item.name && <Link className={`section selectedSection`} onClick={() => setActive(item.name)}>
-                                            {item.icon} {item.name}
-                                        </Link>}
-                                        {active !== item.name && <Link className={`section`} onClick={() => setActive(item.name)}>
-                                            {item.icon} {item.name}
-                                        </Link>}
-                                    </Item>
-                                ))}
-                            </div>
-                        </Stack>
-                    </Item>
-                </Stack>
-            </Card>
-        </React.Fragment>
+        <>
+            {menuItem.map((item, key) => (
+                <>
+                    <Link to={item.route} className={`sidebar-v2`}>
+                        <div className={`list-items`}>
+                            <span>
+                                {item.icon} {item.name}
+                            </span>
+                        </div>
+                    </Link>
+                </>
+            ))}
+        </>
 
     )
 }

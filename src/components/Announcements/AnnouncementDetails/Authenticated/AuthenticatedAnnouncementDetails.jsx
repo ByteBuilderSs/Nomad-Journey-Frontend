@@ -52,6 +52,9 @@ import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import FeedbackModal from '../../../feedBack/feedBack';
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import SendIcon from '@mui/icons-material/Send';
+import Messenger from '../../../Messenger/Messenger'
+import {useAllposts} from '../../../../hooks/useAllposts'
 import EditorFormDialog from "../../../PostExperience/EditorForm/EditorFormDialog";
 
 const useStyles = makeStyles(theme => (
@@ -235,7 +238,7 @@ export default function UnAuthAnnouncement(props)
     }
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
+        axios(`https://api.nomadjourney.ir/api/v1/announcement/user-announcements-more-details/${props.announcement_id}/`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>
@@ -249,6 +252,13 @@ export default function UnAuthAnnouncement(props)
                 setLoading(false);
             })
     }, [counter]);
+
+    const {posts,allposts}=useAllposts()
+    useEffect(()=>{
+        posts()
+    },[])
+    console.log("feed");
+    console.log(allposts);
 
     const classes = useStyles();
     const findBounds = (volunteers) => {
@@ -488,7 +498,7 @@ export default function UnAuthAnnouncement(props)
                             <div key={key}>
                                 {key === current && (
                                     <>
-                                        <Circle color={'#e55405'} center={[items.host_lat, items.host_long]} radius={800} />
+                                        <Circle color={'#3c6e71'} center={[items.host_lat, items.host_long]} radius={800} />
                                         <SetViewCenterHost lat={items.host_lat} lng={items.host_long} />
                                     </>
                                 )}
@@ -505,7 +515,7 @@ export default function UnAuthAnnouncement(props)
                 {volnteers.map((items,key) =>
                     (
                         <>
-                            <Circle color={'#e55405'} center={[items.host_lat, items.host_long]} radius={1000}
+                            <Circle color={'#3c6e71'} center={[items.host_lat, items.host_long]} radius={1000}
                                     eventHandlers={{
                                         mouseover: (event) => event.target.openPopup(),
                                         mouseout: (event) => event.target.closePopup(),
@@ -601,7 +611,17 @@ export default function UnAuthAnnouncement(props)
         props.setOpen(false);
         props.set_anc_id(null);
     }
-    
+    const handelSendM=(anc_id)=>
+    {
+        console.log(anc_id)
+        return
+        (  
+            <>
+            <Messenger anc_id={anc_id} />
+            </>
+        );
+        
+    }
     console.log(props.announcement_id)
     return(
         <Modal open={props.open} onClose={handleClose} >
@@ -667,62 +687,76 @@ export default function UnAuthAnnouncement(props)
                                                         </span>
                                         </Typography>
                                     </Item>
-                                    {
-                                        announcement.anc_status === "D" && 
-                                        <>
-                                            <div style={{position:"fixed", bottom:"0",
-                                                marginBottom:"25rem", marginLeft:"0.25rem",
-                                                width:"30%",
-                                            }}>
-                                            <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
-                                                    <Grid item >
-                                                        <Button onClick={()=>handelClickPost(announcement.id)}
-                                                            size='medium' sx={{
-                                                                color:"rgba(237,231,230,0.8)",
-                                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                                            "&:hover":{
-                                                                color:"rgba(234,187,170,0.8)",
-                                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                                            } ,width:'20vh'
-                                                            }} startIcon={<AddIcon />}
-                                                        >
-                                                            Add Post
-                                                        </Button>
-                                                    </Grid>
-                                                    <Grid item >
-                                                        <Button size='medium'
-                                                            onClick={()=>{
-                                                                setShowFeed(true);
-                                                                setCloseFeed(false);}}
-                                                            sx={{
-                                                                color:"rgba(237,231,230,0.8)",
-                                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                                            "&:hover":{
-                                                                color:"rgba(234,187,170,0.8)",
-                                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                                            },width:'20vh'
-                                                            }} startIcon={<FeedbackIcon />}>
-                                                            Send Feedback
-                                                        </Button>
-                                                    </Grid>
+                                    {announcement.anc_status ==="A" ?
+                                    <>
+                                    <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
+                                            <Grid item >
+                                            <Button size='medium'
+                                            onClick={handelSendM(announcement.id)}
+                                            sx={{
+                                                color:"rgba(237,231,230,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                            "&:hover":{
+                                                color:"rgba(234,187,170,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                            },width:'20vh'
+                                            }} startIcon={<SendIcon />}>
+                                                Send Messege
+                                            </Button>
                                             </Grid>
-                                            </div>
-                                            <EditorFormDialog 
-                                                open={openPost}
-                                                setOpen={setOpenPost}
-                                                close={closePost}
-                                                setClose={setClosePost}
-                                                anc_id={announcement.id}
-                                                />
-                                            <FeedbackModal
-                                                open={showFeed}
-                                                setOpen={setShowFeed}
-                                                close={closeFeed}
-                                                setClose={setCloseFeed}
-                                                anc_id={announcement.id}
-                                                />
-                                        </>
-                                    }
+                                    </Grid>
+                                    </>
+                                    :null}
+                                    {announcement.anc_status === "D" ? 
+                                    <>
+                                        <div style={{position:"fixed", bottom:"0",
+                                            marginBottom:"25rem", marginLeft:"0.25rem",
+                                            width:"30%",
+                                        }}>
+                                    <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
+                                            <Grid item >
+                                            <Button onClick={()=>handelClickPost(announcement.id)}
+                                            size='medium' sx={{
+                                                color:"rgba(237,231,230,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                            "&:hover":{
+                                                color:"rgba(234,187,170,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                            } ,width:'20vh'
+                                            }} startIcon={<AddIcon />}
+                                            >
+                                                Add Post
+                                            </Button>
+                                            </Grid>
+                                            
+                                            <Grid item >
+                                            <Button size='medium'
+                                            onClick={()=>{
+                                                setShowFeed(true);
+                                                setCloseFeed(false);}}
+                                            sx={{
+                                                color:"rgba(237,231,230,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.2)",
+                                            "&:hover":{
+                                                color:"rgba(234,187,170,0.8)",
+                                                backgroundColor:"rgba(201,153,127,0.27)"
+                                            },width:'20vh'
+                                            }} startIcon={<FeedbackIcon />}>
+                                                Send Feedback
+                                            </Button>
+                                            </Grid>
+                                            
+                                    </Grid>
+                                        </div>
+                                    <FeedbackModal
+                                        open={showFeed}
+                                        setOpen={setShowFeed}
+                                        close={closeFeed}
+                                        setClose={setCloseFeed}
+                                        anc_id={announcement.id}
+                                        />
+                                    </>:null}
+                                  
                                     <Item>
                                         <div style={{position:"fixed", bottom:"0",
                                             marginBottom:"1rem", marginLeft:"0.25rem",

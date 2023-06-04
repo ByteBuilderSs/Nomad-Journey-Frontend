@@ -1,4 +1,3 @@
-import usersPosts from "../components/generalPosts/generalPostsTab";
 import UsersPosts from "../components/generalPosts/generalPostsTab";
 
 function GeneralPostPage() {

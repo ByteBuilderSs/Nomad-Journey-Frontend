@@ -26,11 +26,11 @@
 
 .section:hover
 {
-    color: #e55405;
+    color: #E55405;
 }
 .selectedSection
 {
-    color: #e55405;
+    color: #E55405;
 }
 .active
 {

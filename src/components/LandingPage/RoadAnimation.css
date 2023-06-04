@@ -1,0 +1,21 @@
+.road-anime .st0{fill: hsl(299, 54%, 29%);} 
+.road-anime .st1{fill:	hsl(34, 89%, 53%); }
+
+.road-anime .st2{fill:	hsl(251, 100%, 88%);} 
+.road-anime .st3{fill:	hsl(300, 42%, 89%);} 
+.road-anime .st4{fill:  hsl(300, 100%, 99%);} 
+.road-anime .st5{fill:	hsl(232, 73%, 78%);} 
+.road-anime .st6{fill:hsl(259, 40%, 39%);} 
+.road-anime .st7{fill:	hsl(280, 27%, 11%);} .st8{opacity:0.2;fill:url(#SVGID_1_);} .st9{opacity:0.2;fill:url(#SVGID_2_);}
+.road-anime .st19{fill:	hsla(246, 10%, 90%, 0);}
+.road-anime .st20{fill:	hsl(246, 37%, 60%)}
+
+
+.road-anime .hidden, #window {
+/*   display: none; */
+}
+
+
+.road-anime .bird-body, .bird-wing {
+    fill:#2d113f;
+}

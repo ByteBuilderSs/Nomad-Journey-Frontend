@@ -16,6 +16,7 @@
 }
 
 
+
 .main-button .landing1 {
   font-size: 14px;
   color: #E55405 !important;
@@ -115,20 +116,21 @@ LandingPage Styles
     color: #f7f7f7 !important;
   }
 
-.about-main-content {
+  .about-main-content {
     /* margin-top: 70px; */
-    background-image: url(../../Assets/images/about-content-bg.jpg);
+    /* background-image: url(../../Assets/images/about-content-bg.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    padding: 130px 0px 200px 0px;
+    padding: 130px 0px 200px 0px; */
+    height: 1000px;
   }
   
   .blur-bg {
       width: 100%;
     height: 100%;
-    background: url(../../Assets/images/about-content-bg.jpg) no-repeat center center fixed;
+    /* background: url(../../Assets/images/about-content-bg.jpg) no-repeat center center fixed; */
     background-size: cover;
     filter: blur(8px) brightness(80%);
     position: absolute;
@@ -140,7 +142,7 @@ LandingPage Styles
   .about-main-content .content {
     border-radius: 23px;
     text-align: center;
-    padding: 120px 60px;
+    /* padding: 120px 60px; */
     position: relative;
     overflow: hidden;
     z-index: 2;
@@ -204,16 +206,34 @@ LandingPage Styles
     padding: 60px;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
   }
+  .dev-team{
+    margin-top: 20px;
+  }
+  .dev-team .slider-content {
+    min-height: 100%;
+    max-height: 100%;
+    position: relative;
+    margin-top: -70px;
+    background-color: #fff;
+    border-radius: 23px;
+    padding: 60px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
+  }
   
   .cities-town .slider-content h2 {
     font-size: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+  }
+  .dev-team .slider-content h2 {
+    font-size: 30px;
+    margin-bottom: 60px;
   }
   
   .cities-town .slider-content h2 em {
     font-style: normal;
     color: #E55405;
   }
+
   
   .cities-town .slider-content .item .thumb {
     position: relative;
@@ -287,7 +307,7 @@ LandingPage Styles
   }
   
   .weekly-offers .item .thumb img {
-    padding-right: 160px;
+    padding-right: 100px;
     border-radius: 23px;
   }
   
@@ -413,6 +433,7 @@ LandingPage Styles
   
   .more-about .section-heading {
     margin-bottom: 40px;
+    margin-top: 30px;
   }
   
   .more-about .info-item {
@@ -432,7 +453,7 @@ LandingPage Styles
   }
   
   .more-about .main-button {
-    margin-top: 30px;
+    margin-top: 10px;
   }
   
   .more-about .main-button a:hover {

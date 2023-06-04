@@ -24,15 +24,15 @@ const useStyles = makeStyles(theme => (
     {
         newReqBtn:{
             backgroundColor: "white",
-            color: "#e45505",
+            color: "#E55405",
             borderRadius:"18px 8px",
             transition:"0.2s ease",
             padding:"4%",
             border:"solid",
             borderWidth:"0em 0.45em",
-            borderColor:"#e45505",
+            borderColor:"#E55405",
             "&:hover":{
-                color: "#e45505",
+                color: "#E55405",
                 backgroundColor: "rgba(228,85,5,0.11)",
             }
         }
@@ -74,7 +74,7 @@ function UserPanelPage() {
     const [loading, setLoading] = useState(true);
     // useEffect(() =>
     // {
-    //     axios.get(`http://188.121.102.52:8000/NormandJourney/user/${profile_params.user_name}`)
+    //     axios.get(`https://api.nomadjourney.ir/ NormandJourney/user/${profile_params.user_name}`)
     //         .then(response => setUserData(response.data))
     //         .catch(error => {
     //             console.log("error: ",error);
@@ -105,10 +105,10 @@ function UserPanelPage() {
                                                 {userData.username}
                                                 </Item>
                                             <Item>
-                                                coin: 3 <GiTwoCoins color="#e55405"/>
+                                                coin: 3 <GiTwoCoins color="#E55405"/>
                                             </Item>
                                             <Item>
-                                                rating: 3.5 <BsStarHalf color="#e55405"/>
+                                                rating: 3.5 <BsStarHalf color="#E55405"/>
                                             </Item>
                                         </Stack>
                                     </Item>

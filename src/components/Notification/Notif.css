@@ -1,0 +1,21 @@
+
+.timestamp{
+    margin-right: 5px;
+    margin-left: auto;
+    font-size: 10px;
+    margin-top: 1px;
+}
+
+.message{
+    margin-right: 10px;
+}
+
+.menu-item{
+    transition: background-color 0.3s;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu-item:hover {
+    background-color: lightgray;
+}

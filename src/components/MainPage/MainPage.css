@@ -376,20 +376,25 @@ Pre-loader Style
   }
   #section-1 .content-slider .slider .banner .banner-inner-wrapper .main-caption {
     position: absolute;
-    width: 100%;
     top: 40%;
     transform: translateY(-50%);
+    backdrop-filter: blur(2px);
+    border-radius: 20px;
+    margin-left: 700px;
+    
   }
   #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
     font-weight: 500;
     font-size: 20px;
     color: #fff;
+    text-shadow : 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
   }
   #section-1 .content-slider .slider .banner .banner-inner-wrapper h1 {
     font-size: 50px;
     color: #fff;
     font-weight: 700;
+    text-shadow : 10px 10px 10px rgba(0, 0, 0, 0.5);
     margin-bottom: 30px;
   }
   #section-1 .content-slider .slider .banner .banner-inner-wrapper .learn-more-button a:hover {
@@ -398,16 +403,19 @@ Pre-loader Style
     transition: 0.3s;
   }
   #section-1 .content-slider .slider #top-banner-1 {
-    background: url('../../Assets/images/banner-01.jpg') no-repeat center center;
+    /* background: url('../../Assets/images/banner-01.jpg') no-repeat center center; */
     background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
   }
   #section-1 .content-slider .slider #top-banner-2 {
     background: url('../../Assets/images/banner-02.jpg') no-repeat center center;
     background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
   }
   #section-1 .content-slider .slider #top-banner-3 {
     background: url('../../Assets/images/banner-03.jpg') no-repeat center center;
     background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
   }
   #section-1 .content-slider .slider #top-banner-4 {
     background: url('../../Assets/images/banner-04.jpg') no-repeat center center;
@@ -707,6 +715,7 @@ Pre-loader Style
     height: 360px;
     overflow: hidden;
     width: 260px;
+    display: flex;
   }
   /* for transition : */
 

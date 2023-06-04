@@ -294,7 +294,13 @@ const AllPosts = (props) =>
                                                       </Item>
                                                       <Item>
                                                         <Typography style={{ display: "flex", marginTop: "0.5rem" }}>
-                                                          <SummarizeIcon sx={{ marginRight: "0.5rem" }}/>{ checkSummary(blog.description) }
+                                                          {
+                                                            blog.description !== "" && blog.description ? (
+                                                              <>
+                                                                <SummarizeIcon sx={{ marginRight: "0.5rem" }}/>{ checkSummary(blog.description) }
+                                                              </>
+                                                            ) : null
+                                                          }
                                                         </Typography>
 
                                                       </Item>

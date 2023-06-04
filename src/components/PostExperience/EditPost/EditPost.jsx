@@ -40,6 +40,7 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
 import { blue, deepOrange } from '@mui/material/colors';
+import {makeStyles} from "@mui/styles";
 
 const theme = createTheme({
     palette: {
@@ -50,6 +51,29 @@ const theme = createTheme({
         }
         }
 });
+
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"15em",
+        background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#F7C59F",
+        border:"solid 2px #F7C59F",
+        borderRadius:"15px",
+        transition:"all 0.3s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
+
+}))
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -96,6 +120,7 @@ if (localStorage.getItem('tokens'))
 }
 
 const EditPost = () => {
+    const classes = styles();
     let {uid, slug} = useParams();
     const navigate = useNavigate()
     const [disabled, setDisabled] = useState(false);
@@ -509,9 +534,11 @@ const EditPost = () => {
                                             <Grid item xs={12}>
                                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                                     <Item>
-                                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
+                                                        <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Tags</b>
+
+                                                        {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
                                                             Tags
-                                                        </h6>
+                                                        </h6> */}
                                                     </Item>
                                                     <Item>
                                                         <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -565,10 +592,7 @@ const EditPost = () => {
                                                 <Stack direction="row" spacing={2} sx={{ mt: "5rem", mb: "1rem" }}>
                                                     <Item>
                                                         <Button
-                                                            variant="contained"
-                                                            sx={{ width: "100%", backgroundColor: "#088AD1" }}
-                                                            type="submit"
-                                                            onClick={onSubmit}
+                                                            className={classes.button}
                                                             disabled={disabled}
                                                         >
                                                             Update
@@ -577,11 +601,7 @@ const EditPost = () => {
                                                     {/* TODO */}
                                                     <Item>
                                                         <Button
-                                                            variant="outlined"
-                                                            sx={{
-                                                                width: "100%",
-                                                            }}
-                                                            type="submit"
+                                                            className={classes.button}
                                                             onClick={onCancel}
                                                             disabled={disabled}
                                                         >

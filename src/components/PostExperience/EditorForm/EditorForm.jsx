@@ -41,6 +41,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
 import { convertFileToBase64 } from '../../../utils/utils';
 import { blue, deepOrange } from '@mui/material/colors';
+import {makeStyles} from "@mui/styles";
 
 const theme = createTheme({
     palette: {
@@ -51,6 +52,29 @@ const theme = createTheme({
         }
         }
 });
+
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"15em",
+        background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#F7C59F",
+        border:"solid 2px #F7C59F",
+        borderRadius:"15px",
+        transition:"all 0.3s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
+
+}))
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -101,6 +125,7 @@ if (localStorage.getItem('tokens'))
     username = allData.username;
 }
 const EditorForm = () => {
+    const classes = styles();
     let announcement_id = useParams();
     console.log(announcement_id.announcement_id)
     const {mentionPosts, mentions} = useMentionInPosts() ;
@@ -553,7 +578,7 @@ const EditorForm = () => {
                                             <Button
                                                 variant="contained"
                                                 sx={{ width: "100%", backgroundColor: "#088AD1" }}
-                                                type="submit"
+                                                className={classes.button}
                                                 onClick={onSubmit}
                                                 disabled={disabled}
                                             >

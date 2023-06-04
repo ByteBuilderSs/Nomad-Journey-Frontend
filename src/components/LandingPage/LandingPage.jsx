@@ -119,10 +119,10 @@ export default function LandingPage(){
 
     return(
         <div className="landing-page" >
-            <Header/>
-            <div class="about-main-content">
+            {/* <Header/> */}
+            <div className="about-main-content">
                 <div ><RoadAnimation/></div>
-                <div class="container" style={{transform : "translateY(-300%)",width : "50%",borderRadius : "50px", "backdrop-filter": "blur(10px)"}}>
+                <div class="container" >
                     <div class="row">
                         <div class="col-lg-12">
                         <div class="content">
@@ -130,8 +130,13 @@ export default function LandingPage(){
                             <h4 style={{color : "black"}}>EXPLORE OUR PROJECT</h4>
                             <div class="line-dec"></div>
                             <h2 style={{color : "black"}}>Welcome To Nomad Journey</h2>
-                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                                <div className='landing1' style={{color : "#fff"}}> Discover More </div>
+                            <div style={{display : "flex", gap :"5px"}}>
+                                <div class="main-button" style={{cursor : "pointer", marginLeft : "42%"}} onClick={() => {navigate("/signup")}}>
+                                    <div className='landing1' style={{color : "#fff"}}> Login </div>
+                                </div>
+                                <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                    <div className='landing1' style={{color : "#fff"}}> Signup </div>
+                                </div>
                             </div>
                         </div>
                         </div>

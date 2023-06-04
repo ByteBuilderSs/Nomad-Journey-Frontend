@@ -189,17 +189,19 @@ export default function Filters() {
   }, []);
 
   React.useEffect(() => {
-    const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-    FetchUserLoc(signedInUser['username'])
+    let username = "";
+    let user_id = "";
+    if (localStorage.getItem('tokens'))
+    {
+        const allData = JSON.parse(localStorage.getItem('tokens'));
+        username = allData.username;
+        user_id = allData.user_id;
+    }
+    FetchUserLoc(username)
   }, []);
 
- 
 
-  
 
-  
-
-      
   const fetchFilter = (selectedCity, selectedCountry, selectedDates, languageTags) => {
     let dictFilter = {}
 

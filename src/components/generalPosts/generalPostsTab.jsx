@@ -61,7 +61,7 @@ export default function UsersPosts()
 
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/blog/posts/`)
+        axios(`https://api.nomadjourney.ir/api/v1/blog/posts/`)
             .then((data) => {
                 setBlogs(data.data)})
             .catch(error =>

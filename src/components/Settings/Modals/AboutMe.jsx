@@ -110,7 +110,7 @@ const EditAbout = () => {
     const loadLanguages = async () => {
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/accounts/GetLanguages",
+            url: "https://api.nomadjourney.ir/api/v1/accounts/GetLanguages",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -145,7 +145,7 @@ const EditAbout = () => {
     const loadAboutMeInfo = async () => {
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/accounts/GetUserProfileForOverview/${username}`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/GetUserProfileForOverview/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -254,7 +254,7 @@ const EditAbout = () => {
 
         axios({
             method: "patch",
-            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit3/${username}`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/UserProfileEdit3/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

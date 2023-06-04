@@ -52,7 +52,7 @@ export default function UsersPosts()
 
     useEffect( () =>
     {
-        axios(`https://api.nomadjourney.ir/ api/v1/blog/posts/`)
+        axios(`https://api.nomadjourney.ir/api/v1/blog/posts/`)
             .then((data) => {
                 setBlogs(data.data)})
             .catch(error =>

@@ -44,7 +44,7 @@ const PostDetailDialog = (props) => {
         console.log("In load post request");
         axios({
             method: "get",
-            url: `https://api.nomadjourney.ir/ api/v1/blog/post/${slug}`,
+            url: `https://api.nomadjourney.ir/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${props.access_token}`

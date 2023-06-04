@@ -104,7 +104,7 @@ const Signup = () => {
                 if (isDataValid) {
                     axios({
                         method: "post",
-                        url: "https://api.nomadjourney.ir/ api/v1/accounts/register/",
+                        url: "https://api.nomadjourney.ir/api/v1/accounts/register/",
                         headers: {
                             'Content-Type': 'application/json',
                         },

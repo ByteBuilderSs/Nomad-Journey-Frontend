@@ -75,7 +75,7 @@ export default function NewAnnouncementForm(props) {
     const loadCountries = async () => {
         axios({
             method: "get",
-            url: "https://api.nomadjourney.ir/ api/v1/utils/get-countries/",
+            url: "https://api.nomadjourney.ir/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -92,7 +92,7 @@ export default function NewAnnouncementForm(props) {
         if (country) {
             axios({
                 method: "get",
-                url: `https://api.nomadjourney.ir/ api/v1/utils/get-cities-of-country/${country.id}`,
+                url: `https://api.nomadjourney.ir/api/v1/utils/get-cities-of-country/${country.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -226,7 +226,7 @@ export default function NewAnnouncementForm(props) {
             console.log(`********** the access token is: ${access_token}`);
             axios({
                     method: "post",
-                    url: "https://api.nomadjourney.ir/ api/v1/announcement/create/",
+                    url: "https://api.nomadjourney.ir/api/v1/announcement/create/",
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${access_token}`

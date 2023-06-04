@@ -18,7 +18,7 @@ const TopCities = () => {
   const fetchCities = async () => {
     try {
   
-    await axios.get(`https://api.nomadjourney.ir/ api/v1/landing-page/most-visited-cities`).then(
+    await axios.get(`https://api.nomadjourney.ir/api/v1/landing-page/most-visited-cities`).then(
         (response) => {
           console.log(response.data)
           setCityData(response.data)

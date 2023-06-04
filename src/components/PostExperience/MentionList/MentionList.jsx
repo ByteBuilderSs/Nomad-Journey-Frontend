@@ -39,7 +39,7 @@ const CheckboxListSecondary=({mentions})=>{
       console.log("THE OUTPUT PASSED BY MENTIONS IN USEEFFECT: ", mentions.host_id);
       axios({
                 method: "get",
-                url: `https://api.nomadjourney.ir/ api/v1/accounts/get-profile-photo/${mentions.host_id}`,
+                url: `https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${mentions.host_id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }

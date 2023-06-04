@@ -35,7 +35,7 @@ export default function RemoveLikeOfBlog({blog_id, user})
         event.preventDefault();
         axios({
             method: "delete",
-            url: `https://api.nomadjourney.ir/ api/v1/like_post/delete-like/${blog_id}/${user}`,
+            url: `https://api.nomadjourney.ir/api/v1/like_post/delete-like/${blog_id}/${user}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

@@ -108,7 +108,7 @@ const Navbar = (props) => {
         if (user_id !== "" && user_id) {
             axios({
                 method: "get",
-                url: `https://api.nomadjourney.ir/ api/v1/accounts/get-profile-photo/${user_id}`,
+                url: `https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${user_id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -116,7 +116,7 @@ const Navbar = (props) => {
                 console.log("+++++++++ THE RESULT OF USEEFFECT FOR RENDERING THE PHOTO IN NAVBAR IS ++++++++ ", result);
                 if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
                     console.log(" &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& ")
-                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL + `?${Date.now()}`);
+                    setProfileImageURL("https://api.nomadjourney.ir" + result.data.profile_photo_URL + `?${Date.now()}`);
                 } 
                 else {
                     setProfileImageURL("");

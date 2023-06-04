@@ -100,7 +100,7 @@ const Login = () => {
       if (isDataValid) {
         axios({
           method: "post",
-          url: "https://api.nomadjourney.ir/ api/v1/accounts/token/",
+          url: "https://api.nomadjourney.ir/api/v1/accounts/token/",
           headers: {
             'Content-Type': 'application/json',
           },

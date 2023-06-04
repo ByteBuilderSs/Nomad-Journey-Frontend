@@ -33,7 +33,7 @@ export default function SetLikeOfBlog({blog_id})
         event.preventDefault();
         axios({
             method: "post",
-            url: `https://api.nomadjourney.ir/ api/v1/like_post/create-like/${blog_id}`,
+            url: `https://api.nomadjourney.ir/api/v1/like_post/create-like/${blog_id}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

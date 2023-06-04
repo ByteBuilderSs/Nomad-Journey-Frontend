@@ -62,7 +62,7 @@ export const FetchAnnc = () => {
             }
         };
         
-        await axios.get(`https://api.nomadjourney.ir/ api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}${city}${country}${languages}${startTime}${endTime}`, config).then(
+        await axios.get(`https://api.nomadjourney.ir/api/v1/announcement/get-announcements-for-host/?page=${value}&${sort}${city}${country}${languages}${startTime}${endTime}`, config).then(
             (response) => {
             console.log(response.data.results)
             dispatch(setAnncData(response.data.results))

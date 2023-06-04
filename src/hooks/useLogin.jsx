@@ -19,7 +19,7 @@ export const useLogin=()=>{
               
             await axios({
               method: "get",
-              url: `https://api.nomadjourney.ir/ api/v1/accounts/user/${userName}`,
+              url: `https://api.nomadjourney.ir/api/v1/accounts/user/${userName}`,
             }).then(response => {
                 dispatch(setCity(response.data.city_name))
                 dispatch(setCountry(response.data.city_country))

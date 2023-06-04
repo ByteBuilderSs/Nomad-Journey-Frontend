@@ -38,7 +38,7 @@ function DeletePostDialog(props)
     {
         axios({
             method: "delete",
-            url: `https://api.nomadjourney.ir/ api/v1/blog/others-profile-post/${username}`,
+            url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${username}`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}`,

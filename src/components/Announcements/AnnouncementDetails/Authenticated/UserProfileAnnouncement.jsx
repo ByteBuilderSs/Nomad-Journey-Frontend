@@ -9,14 +9,14 @@ export default function UserProfile({user_id, first_name, imageSize, profileSize
     useEffect(() => {
         axios({
             method: "get",
-            url: `https://api.nomadjourney.ir/ api/v1/accounts/get-profile-photo/${user_id}`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${user_id}`,
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then((result) => {
             console.log("+++++++++ THE RESULT IS ++++++++ ", result);
             if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                setProfileImageURL("https://api.nomadjourney.ir" + result.data.profile_photo_URL);
             }
 
         })

@@ -38,7 +38,7 @@ function DeleteAnnouncement(props)
     {
         axios({
             method: "delete",
-            url: `https://api.nomadjourney.ir/ api/v1/announcement/delete/${props.anc_id}/`,
+            url: `https://api.nomadjourney.ir/api/v1/announcement/delete/${props.anc_id}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

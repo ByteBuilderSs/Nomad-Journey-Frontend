@@ -1,0 +1,25 @@
+.coin-box{
+    width: 5rem;
+    border-radius: 10px;
+    border: solid 2px #1A659E;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+.coin-box:hover{
+    background-color: rgba(26, 101, 158, 0.1);
+}
+.selected-coin-box{
+    width: 5rem;
+    border-radius: 10px;
+    border: solid 2px #1A659E;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: 0.3s ease;
+    cursor: pointer;
+    background-color: rgba(26, 101, 158, 0.1);
+
+}

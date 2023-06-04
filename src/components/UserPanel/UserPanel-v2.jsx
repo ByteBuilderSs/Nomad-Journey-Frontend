@@ -18,11 +18,10 @@ import {
     Container,
     CardHeader,
     Typography,
-    Badge,
-    Tooltip
+    Badge
 } from '@mui/material';
 
-import {Link, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Link, Route, Routes, useParams} from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
 import {AiFillNotification, AiFillSetting} from "react-icons/ai";
@@ -45,6 +44,7 @@ import { toast } from "react-toastify";
 import {Col, Row} from "react-bootstrap";
 import {AiTwotoneSetting} from "react-icons/ai";
 import Settings from "../Settings/Settings";
+import TabAboutMe from "./RightBar/AboutMe/Tab-AboutMe";
 import { BiMessageRoundedDetail } from "react-icons/bi";
 
 
@@ -75,7 +75,7 @@ const UserPanelNew = () => {
         if (userInfo.id) {
             axios({
                 method: "get",
-                url: `https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${userInfo.id}`,
+                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userInfo.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -83,7 +83,7 @@ const UserPanelNew = () => {
                 console.log("+++++++++ THE RESULT IS ++++++++ ", result);
                 /* TODO => HOW CAN I CONVERT THE URL TO FILE */
                 if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                    setProfileImageURL("https://api.nomadjourney.ir" + result.data.profile_photo_URL);
+                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
                 }
 
             }).catch((error) => {
@@ -145,36 +145,18 @@ const UserPanelNew = () => {
     }
     useEffect(() => {userdata()}, [])
 
-    const navigate=useNavigate()
-    const handelClickMsg=()=>
-    {
-        navigate('/chatbar/')
-    }
 
-    const lastSegment=useLocation().pathname.split('/')[3]
-    
     return (
-        
         <div className='userpanel'>
-            <Grid item sx={{right:20,bottom:20,position:'fixed'}}>
-                <Tooltip title='send message'>
-                    <Button size='large' onClick={handelClickMsg} 
-                    sx={{borderRadius:'30px 30px 30px 30px',borderColor:'#004E89',border:'solid',paddingLeft:'1.5rem'}}
-                    startIcon={<BiMessageRoundedDetail size={30}  />} />
-                </Tooltip>
-            </Grid>
             {/*<AboutMe*/}
             {/*    url_username={user_params.username}*/}
             {/*    local_storage_username={local_storage_username}*/}
             {/*/>*/}
-            
             <Row>
                 <Col md={2}>
                     <div style={{background:"radial-gradient(circle, rgba(26,101,158,1) 0%, rgba(0,78,137,1) 54%)",
                         minHeight:"200vh", position:"relative"}}>
-                    {local_storage_username == lastSegment ? 
-                    menuItem.map((item, key) => (
-                        
+                    {menuItem.map((item, key) => (
                         <>
                             <div className={active !== item.name ? `sidebar-v2` : `selected-item`}
                                  onClick={() => setActive(item.name)}>
@@ -183,23 +165,7 @@ const UserPanelNew = () => {
                                 </div>
                             </div>
                         </>
-                    ))
-                    :
-                    menuItem.map((item, key) => (
-                        item.name=="About Me" || item.name=="My Home" ?
-                        <>
-                            <div className={active !== item.name ? `sidebar-v2` : `selected-item`}
-                                 onClick={() => setActive(item.name)}>
-                                <div className={`list-items`}>
-                                    {item.icon} {item.name}
-                                </div>
-                            </div>
-                        </>
-                        :
-                        null
-                    ))
-                    }
-                    
+                    ))}
                     </div>
                 </Col>
                 <Col md={10}>
@@ -241,10 +207,10 @@ const UserPanelNew = () => {
             {/*                            </Item>*/}
             {/*                            <Stack direction="row" spacing={2}>*/}
             {/*                                <Item>*/}
-            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="rgba(0,78,137,1)" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>*/}
+            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><BsStarHalf color="#E55405" style={{ marginRight: "0.5rem"}}/> rating: 3.5</h4>*/}
             {/*                                </Item>*/}
             {/*                                <Item>*/}
-            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="rgba(0,78,137,1)" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>*/}
+            {/*                                    <h4 style={{ display: "flex", alignItems: "center" }}><GiTwoCoins color="#E55405" style={{ marginRight: "0.5rem"}}/>  coin: 3</h4>*/}
             {/*                                </Item>*/}
             {/*                            </Stack>*/}
             {/*                            <div className="list-section">*/}

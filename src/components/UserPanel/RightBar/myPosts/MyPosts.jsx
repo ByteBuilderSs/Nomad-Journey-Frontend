@@ -271,9 +271,12 @@ const AllPosts = (props) =>
                               //         setOpen(true);
                               //         setDisabled(false);
                               //         setAnc_id(anc.id);}}
+                              style={{ maxHeight: "45rem"}}
                               >
                               <div style={{
                                   overflow: "hidden",
+                                  maxHeight: "25rem",
+                                  objectFit: 'fill',
                               }}>
                                   <img
                                         src={blog.main_image_64 && blog.main_image_64 !== '' ? blog.main_image_64 : SamplePostMainImage}

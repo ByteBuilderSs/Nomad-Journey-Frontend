@@ -311,7 +311,7 @@ const EditorForm = () => {
                                         variant="contained"
                                         component="label"
                                         startIcon={<CameraAltIcon />}
-                                        color='primary'
+                                        color='secondary'
                                         disabled={loading}
                                         >
                                         Upload a photo

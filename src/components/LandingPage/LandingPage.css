@@ -91,13 +91,25 @@ LandingPage Styles
 --------------------------------------------- 
 */
 
+.landing-page .about-main-content .container {
+  transform : translateY(-250%);
+  border-radius : 50px;
+  backdrop-filter: blur(5px);
+}
+@media (max-width: 1500px) {
+  .landing-page .about-main-content .container {
+    transform : translateY(-230%);
+    width: "400px"!important;
+  }
+}
+
 
 .main-button .login-signup  {
-    font-size: 16px;
+    font-size: 20px;
     color: rgba(0,78,137,1) !important;
     /* background-color: transparent; */
     background-color: #f7f7f7;;
-    border: 1px solid rgba(0,78,137,1);
+    /* border: 1px solid rgba(0,78,137,1); */
     padding: 10px 15px;
     display: inline-block;
     border-radius: 25px;

@@ -380,7 +380,8 @@ Pre-loader Style
     transform: translateY(-50%);
     backdrop-filter: blur(2px);
     border-radius: 20px;
-    margin-left: 700px;
+    margin-left: 39%;
+    margin-right: 39%;
     
   }
   #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {

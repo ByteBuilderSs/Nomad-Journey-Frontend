@@ -11,12 +11,14 @@ import {
     DialogContentText,
     Stack,
     DialogTitle,
+    IconButton,
 } from "@mui/material";
 import { FcHighPriority } from "react-icons/fc";
 import { Item } from "semantic-ui-react";
 import axios from "axios";
 import {toast} from "react-toastify";
 import { useCounter, useCounterActions } from "../../Context/CounterProvider";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
 function DeletePostDialog(props)
@@ -60,16 +62,20 @@ function DeletePostDialog(props)
                 open={props.open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                PaperProps={{ sx: { borderRadius: "15px" } }}
             >
-                <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6"}}>
-                    <Stack direction={'column'}>
+                <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Stack direction={'column'} sx={{ flexGrow: 1 }}>
                         <Item>
                             <FcHighPriority size='4rem' />
                         </Item>
                         <Item>
-                        {`Delete`} <b style={{ color: "#e66969" }}>«{props.post_title}» </b>{`Post`}
+                            {`Delete`} <b style={{ color: "#e66969" }}>«{props.post_title}» </b>{`Post`}
                         </Item>
                     </Stack>
+                    <IconButton aria-label="close" onClick={handleClose} sx={{ position: 'absolute', top: 8, right: 8 }}>
+                        <HighlightOffIcon fontSize='large'/>
+                    </IconButton>
                 </DialogTitle>
 
                 <DialogContent>

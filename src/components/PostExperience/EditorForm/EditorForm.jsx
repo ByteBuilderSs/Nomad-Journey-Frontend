@@ -40,18 +40,16 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
 import { convertFileToBase64 } from '../../../utils/utils';
+import { blue, deepOrange } from '@mui/material/colors';
 
 const theme = createTheme({
     palette: {
-        primary: 
-        {
-            main: "#219EBC",
-        },
+        primary: blue,
         secondary: 
         {
-            main: teal[900]
+            main: '#ffd180'
         }
-    }
+        }
 });
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -261,7 +259,7 @@ const EditorForm = () => {
     return (
         <ThemeProvider theme={theme}>
             <div>
-                <Card dir='ltr'>
+                <Card dir='ltr' style={{ borderRadius: "15px" }}>
                     <form>
                     <CardContent>
                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
@@ -313,7 +311,7 @@ const EditorForm = () => {
                                         variant="contained"
                                         component="label"
                                         startIcon={<CameraAltIcon />}
-                                        color='secondary'
+                                        color='primary'
                                         disabled={loading}
                                         >
                                         Upload a photo

@@ -296,6 +296,7 @@ export default function EditAnnouncementForm(props) {
             open={props.open}
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
+            PaperProps={{ sx: { borderRadius: "15px" } }}
         >
             <Box className="add-request-center-element" sx={{ m: 2, maxWidth: "100%" }}>
                 <Box className="request-management-add-request">

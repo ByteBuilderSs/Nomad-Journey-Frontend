@@ -61,6 +61,7 @@ function DeleteAnnouncement(props)
                 open={props.open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                PaperProps={{ sx: { borderRadius: "15px" } }}
             >
                 <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6"}}>
                     <Stack direction={'column'}>

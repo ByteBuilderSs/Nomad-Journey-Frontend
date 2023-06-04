@@ -15,9 +15,11 @@ import {Paper,
     Fab,
     Button,
     Box,
-    Tooltip } from '@mui/material';
+    Tooltip, 
+    Stack} from '@mui/material';
 import LetteredAvatar from 'react-lettered-avatar';
 import SendIcon from '@mui/icons-material/Send';
+import Lottie from 'react-lottie';
 
 import {useAllMsgs} from '../../hooks/useHistoryMsg'
 import {useSendMsg} from '../../hooks/useSendMsg'
@@ -25,6 +27,7 @@ import {useVoluntier} from '../../hooks/useVoluntier'
 import {useAncUsers} from '../../hooks/useAncReqUsers'
 import {useImage} from '../../hooks/useFetchimage'
 import { useNavigate } from 'react-router-dom';
+import messagingL from '../../lottieAssets/messaging.json'
 
 const useStyles = makeStyles({
   table: {
@@ -45,26 +48,40 @@ const useStyles = makeStyles({
     overflowY: 'auto'
   }
 });
-const data=[
-    {'messege':'lcmdklmkvm','type':'sent','is_read':true},
-    {'messege':'khodeti','type':'receive','is_read':true},
-    {'messege':'nanate','type':'sent','is_read':true},
-    {'messege':'kishteh','type':'sent','is_read':true},
-    {'messege':'bro baba','type':'receive','is_read':false}
-];
+
+const Messaging = () => {
+
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: messagingL,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+      }
+    };
+  
+    return(
+      <div class="col-lg-12">
+        <Lottie 
+          options={defaultOptions}
+          height={400}
+          width={400}
+        />
+      </div>
+    )
+  }
 const MessageRoom=()=>
 {
     
 
     return(
         <Grid container xs={9} sx={{alignItems:'center',justifyContent:'center',height:'60vh'}} >
-            <Grid item sx={{marginBottom:'1rem'}}>
+            <Stack direction='column' >
                 <Avatar sx={{width:130,height:90}} src={require('../../Assets/images/messageIcon.jpg')}/>
                 <Typography primary="Start Messaging ..." variant='h1'/>
-                <Typography secondary="Message To Your Prefered Host!" variant='h2'/>
+                <Typography secondary="Message To Your Prefered Host!" variant='h1'/>
             
-            </Grid>
-            
+            </Stack>            
         </Grid>
         
 
@@ -169,7 +186,7 @@ const ChatBox=(props)=>
 
 export default function Messenger(props)
 {
-    const [profileImageURL, setProfileImageURL] = React.useState("");
+    
     const [active,setActive]=React.useState(false);
     const classes = useStyles();
     const handelChatBox=()=>
@@ -206,6 +223,8 @@ export default function Messenger(props)
               <Grid item xs={3} className={classes.borderRight500}>
                  
                   <List>
+                    <Typography sx={{justifyContent:'center',display:'flex',fontSize:'20px',color:'#1A659E'}}>.. Contacts ..</Typography>
+                    <Divider/>
                   {usersReq.map((item)=>
                     <>                    
                     <ListItemButton key={item.first_name+item.last_name} onClick={()=>{handelChatBox();setReciver(item.id);setReciverU(item.username)}}>

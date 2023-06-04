@@ -50,6 +50,7 @@
     "react-element-popper": "^2.1.6",
     "react-flatpickr": "^3.10.13",
     "react-geolocated": "^4.0.3",
+    "react-highlight-words": "^0.20.0",
     "react-hook-form": "^7.43.5",
     "react-icons": "^4.8.0",
     "react-image-crop": "^10.0.9",

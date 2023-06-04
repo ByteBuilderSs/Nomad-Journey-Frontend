@@ -77,7 +77,7 @@ function MyAnnouncements(props) {
     }
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/announcement/get-user-announcements/${props.url_username}`)
+        axios(`https://api.nomadjourney.ir/ api/v1/announcement/get-user-announcements/${props.url_username}`)
             .then((data) => {
                 setAnnouncement(data.data)})
             .catch(error =>

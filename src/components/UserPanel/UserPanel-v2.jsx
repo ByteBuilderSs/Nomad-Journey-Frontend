@@ -69,7 +69,7 @@ const UserPanelNew = () => {
         if (userInfo.id) {
             axios({
                 method: "get",
-                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userInfo.id}`,
+                url: `https://api.nomadjourney.ir/ api/v1/accounts/get-profile-photo/${userInfo.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }

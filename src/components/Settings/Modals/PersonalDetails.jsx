@@ -86,7 +86,7 @@ export default function PersonalDetails(props) {
     const loadUserInfo = async () => {
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/accounts/user/${username}/`,
+            url: `https://api.nomadjourney.ir/ api/v1/accounts/user/${username}/`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -129,7 +129,7 @@ export default function PersonalDetails(props) {
         if (validData) {
             axios({
                 method: "patch",
-                url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit1/${username}`,
+                url: `https://api.nomadjourney.ir/ api/v1/accounts/UserProfileEdit1/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`

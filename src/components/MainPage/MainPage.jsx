@@ -105,7 +105,7 @@ const Announce = (props) => {
   const fetchPhoto = async () => {
     try {
   
-    await axios.get(`http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userId}`).then(
+    await axios.get(`https://api.nomadjourney.ir/ api/v1/accounts/get-profile-photo/${userId}`).then(
         (response) => {
           console.log(response.data)
           console.log(response.status)
@@ -277,7 +277,7 @@ const [randomData, setRandomData] = useState(null);
   const fetchRandom = async () => {
     try {
   
-    await axios.get(`http://188.121.102.52:8000/api/v1/landing-page/random-shit`).then(
+    await axios.get(`https://api.nomadjourney.ir/ api/v1/landing-page/random-shit`).then(
         (response) => {
 
           setRandomData(response.data)

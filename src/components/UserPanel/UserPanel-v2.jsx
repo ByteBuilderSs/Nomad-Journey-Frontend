@@ -45,6 +45,11 @@ import {Col, Row} from "react-bootstrap";
 import {AiTwotoneSetting} from "react-icons/ai";
 import Settings from "../Settings/Settings";
 import TabAboutMe from "./RightBar/AboutMe/Tab-AboutMe";
+import { BiMessageRoundedDetail } from "react-icons/bi";
+
+
+
+
 
 let local_storage_username = "";
 let user_id = "";
@@ -93,7 +98,7 @@ const UserPanelNew = () => {
         {
             id: 0,
             name : "About Me",
-            component : <TabAboutMe
+            component : <AboutMe
                 url_username={user_params.username}
                 local_storage_username={local_storage_username}
             />,

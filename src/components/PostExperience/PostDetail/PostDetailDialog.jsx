@@ -23,12 +23,14 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
+    IconButton,
 } from '@mui/material';
 import SamplePostMainImage from '../../../Assets/images/post-default-main-image.jpg'
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeletePostDialog from '../DeletePostDialog';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const PostDetailDialog = (props) => {
     let slug = props.post_slug;
@@ -44,7 +46,7 @@ const PostDetailDialog = (props) => {
         console.log("In load post request");
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/blog/post/${slug}`,
+            url: `https://api.nomadjourney.ir/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${props.access_token}`
@@ -99,24 +101,36 @@ const PostDetailDialog = (props) => {
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
                 maxWidth={'md'}
+                PaperProps={{ sx: { borderRadius: "15px" } }}
             >
-            <DialogTitle id="scroll-dialog-title">
-                {/* Main Image */}
-                <img
-                    variant="square"
-                    src={postData.main_image_64 && postData.main_image_64 !== '' ? postData.main_image_64 : SamplePostMainImage} 
-                    style={{
-                        width: "60rem",
-                        height: "20rem",
-                        borderRadius: '0.25rem',
-                        objectFit: 'fill'
-                    }}
-                />
-                {/* Title */}
-                <Typography sx={{ fontSize: "2rem", mt: "0.25rem" }}>
-                    {postData.blog_title}
-                </Typography>
+            <DialogTitle id="scroll-dialog-title" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Stack direction={'column'} sx={{ flexGrow: 1 }}>
+                    {/* Main Image */}
+                    <Item>
+                        <img
+                            variant="square"
+                            src={postData.main_image_64 && postData.main_image_64 !== '' ? postData.main_image_64 : SamplePostMainImage} 
+                            style={{
+                                width: "60rem",
+                                height: "20rem",
+                                borderRadius: '0.25rem',
+                                objectFit: 'fill',
+                                marginTop: "2rem"
+                            }}
+                        />
+                    </Item>
+                    {/* Title */}
+                    <Item>
+                        <Typography sx={{ fontSize: "2rem", mt: "0.25rem" }}>
+                            {postData.blog_title}
+                        </Typography>
+                    </Item>
+                </Stack>
+                <IconButton aria-label="close" sx={{ position: 'absolute', top: -1, right: -1 }} onClick={handleClose}>
+                    <HighlightOffIcon fontSize='large' />
+                </IconButton>
             </DialogTitle>
+                
             <DialogContent dividers={scroll === 'paper'} dir='ltr'>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <form dir='ltr'>

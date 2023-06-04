@@ -11,13 +11,16 @@ import {
     DialogContentText,
     Stack,
     DialogTitle, Divider, IconButton,
+    ListItemIcon,
+    Tooltip,
 } from "@mui/material";
 import {Item} from "semantic-ui-react";
-import "../UserPanel/RightBar/MyAnnouncement.css";
+import './generalPost.css'
 import UserProfile from "../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement";
 import {useCounter} from "../../Context/CounterProvider";
 import {Col, Row} from "react-bootstrap";
 import {AiOutlineClose} from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -42,7 +45,7 @@ export default function PostLikers(props)
     }
     useEffect( () =>
     {
-        axios(`http://188.121.102.52:8000/api/v1/like_post/get-likers/${props.blog_id}`)
+        axios(`https://api.nomadjourney.ir/api/v1/like_post/get-likers/${props.blog_id}`)
             .then((data) => {
                 setLikers(data.data)})
             .catch(error =>
@@ -56,6 +59,11 @@ export default function PostLikers(props)
             })
     }, [counter]);
 
+    const navigate=useNavigate()
+    const handelViewProf=(username)=>
+    {
+        navigate(`/home/Profile/${username}/`)
+    }
     return(
         <>
             <Modal open={props.open} onClose={handleClose} >
@@ -74,7 +82,7 @@ export default function PostLikers(props)
                     <Stack>
                         {likers.map((item, key) => (
                             <>
-                                <div className="announcement-hovering">
+                                <div className="blogs-hovering">
                                     <div style={{
                                         marginLeft:"1rem", paddingTop:"1rem", paddingBottom:"1rem"}}>
                                 <Item>
@@ -83,7 +91,11 @@ export default function PostLikers(props)
                                         alignItems:"center"
                                     }} spacing={1}>
                                         <Item>
+                                        <Tooltip title='view profile'>
+                                        <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
                                             <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
+                                        </ListItemIcon>
+                                        </Tooltip>
                                         </Item>
                                         <Item>
                                             {item.first_name} {item.last_name}

@@ -37,3 +37,14 @@
 .textWithBlurredBg:hover :not(img){
   opacity:1;
 }
+
+.blogs-hovering{
+  transition: 0.08s;
+  cursor: pointer;
+  color: black;
+
+}
+.blogs-hovering:hover{
+  background-color: #f7f7f7;
+
+}

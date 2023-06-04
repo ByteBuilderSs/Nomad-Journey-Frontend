@@ -16,6 +16,8 @@ import {
   DialogContent,
   DialogTitle,
   DialogContentText,
+  Divider,
+  IconButton,
 } from '@mui/material';
 import 'react-quill/dist/quill.bubble.css';
 import './MyPosts.css';
@@ -39,13 +41,35 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import { useCounterActions, useCounter } from '../../../../Context/CounterProvider';
 import PostDetailDialog from '../../../PostExperience/PostDetail/PostDetailDialog';
+import SamplePostMainImage from '../../../../Assets/images/post-default-main-image.jpg';
+import { makeStyles } from '@mui/styles';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const theme = createTheme({
   palette: {
-    primary: blue,
-    secondary: deepOrange
-  }
+      primary: blue,
+      secondary: 
+      {
+          main: '#ffd180'
+      }
+      }
 });
+
+const useStyles = makeStyles(theme => (
+  {
+      announcements:
+          {
+              paddingTop: "2%",
+              paddingBottom: "2%",
+              paddingLeft: "2%"
+          },
+      eachAnnouncement:
+          {
+              paddingTop: "1%",
+              paddingLeft: "1%"
+          }
+  }
+));
 
 const emptyPost = {
   uid: "",
@@ -74,6 +98,7 @@ const AllPosts = (props) =>
   }
 
   const [deletePostDialog, setDeletePostDialog] = useState(false);
+  const classes = useStyles();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(emptyPost);
@@ -90,7 +115,7 @@ const AllPosts = (props) =>
   const getPosts = () => {
     axios({
       method: "get",
-      url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${props.url_username}`,
+      url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${props.url_username}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -131,7 +156,7 @@ const AllPosts = (props) =>
   const confirmDeletePost = (post) => {
     axios({
       method: "delete",
-      url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
+      url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${username}`,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${access_token}`,
@@ -223,236 +248,228 @@ const AllPosts = (props) =>
   }
 
   return (
+  
+  
   <ThemeProvider theme={theme}>
-    <Box
-      sx={{
-        flexGrow: 1,
-        bgcolor: "background.paper",
-        p: 2,
-      }}
-    >
-      <div>
-        <Box sx={{ marginTop: 1 }}>
-          <Grid sx={{ marginTop: 1 }} container spacing={1}>
-            {
-              posts.length > 0 ? (
-                posts.map((blog)=>( 
-                  <Grid
-                    key={blog.slug}
-                    item
-                    xl={12}
-                    lg={12}
-                    md={12}
-                    sm={12}
-                    xs={12}
-                    // sx={{ m: 1 }}
-                  >
-                  <Card className="posts-card">
-                    <CardContent>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {/* Blog Title */}
-                        <Box >
-                          <Typography
-                            sx={{ fontSize: 25, fontWeight: "bold", display: "flex", alignItems: "center" }}
-                            variant="h1"
-                            component="div"
-                          >
-                            <FcList size='2rem' style={{ marginRight: "0.5rem" }}/>
-                            {blog.blog_title}
-                          </Typography>
-                        </Box>
-                      </Box>
-                      {/* Blog Tags */}
-                      <Box sx={{ mt: "0.75rem" }}>
-                          <Typography
-                            sx={{ marginTop: "1rem", fontSize: 20, display: "flex", alignItems: "center" }}
-                            variant="p"
-                            component="div"
-                          >
-                            Tags:
-                              <Stack direction="row" 
-                                    useFlexGap 
-                                    flexWrap="wrap"
-                                    spacing={1} 
-                                    sx={{ ml: "1rem", '& > *': { flexGrow: 2 } }}>
-                                {
-                                  blog.tags_name.length > 0  ? (blog.tags_name.map((tag_name) => (
-                                    <Chip label={tag_name} color="primary" variant="outlined" />
-                                  ))) : (
-                                    <span> No related tag found </span>
-                                  )
-                                }
-                              </Stack>
-                          </Typography>
-                      </Box>
-                      <div style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
-                        {/* Likes */}
-                        <Typography
-                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center"  }}
-                          variant="p"
-                          component="div"
-                          color="text.secondary"
-                        >
-                          <AiFillLike style={{ marginRight: "0.5rem" }} /> # Likes
-                        </Typography> 
-                        {/* Views */}
-                        <Typography
-                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center" , marginLeft: "2rem" }}
-                          variant="p"
-                          component="div"
-                          color="text.secondary"
-                        >
-                          <BsFillEyeFill style={{ marginRight: "0.5rem" }} /> # Views
-                        </Typography>
-                        {/* Created date */}
-                        <Typography
-                          sx={{ marginTop: "1rem", fontSize: 16, display: "flex", alignItems: "center", ml: "2rem" }}
-                          variant="p"
-                          component="div"
-                          color="text.secondary"
-                        >
-                          <BsCalendarDateFill style={{ marginRight: "0.5rem" }}/>
-                          Created at: { blog.created_at }
-                        </Typography>
-                      </div>
-                      {/* Blog Description */}
-                      <Typography
-                        sx={{ mt: "1rem", display: "flex", alignItems: "center" }}  color="text.secondary">
-                        <SummarizeIcon sx={{ marginRight: "0.5rem" }}/> { checkSummary(blog.description) }
-                      </Typography>
-                    </CardContent>
-
-                    <CardActions
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Tooltip title="Details" arrow>
-                        <div>
-                          <CgDetailsMore
-                            onClick={() => {
-                              // handleDetailsClick(blog.slug)
-                              setPostSlug(blog.slug);
-                              setOpenPostDialog(true);
-                              setPostDisabled(false);
-                              }
-                            }
-                            color="#b9b8b8"
-                            style={{ cursor: "pointer" }}
-                            size='2rem'
-                          />
-                        </div>
-                      </Tooltip>
-                      {/* Edit + Delete Post on Card */}
-                      {
-                        props.url_username === props.local_storage_username ?
-                        <>
-                          <Tooltip title="Edit this post" arrow style={{ marginLeft: "46rem" }}>
-                              <div>
-                                <AiFillEdit
-                                  onClick={() =>
-                                    handleEditClick(blog.uid, blog.slug)
-                                  }
-                                  color="#b9b8b8"
-                                  style={{ cursor: "pointer" }}
-                                  size='2rem'
-                                />
+              <Grid container rowSpacing={5} columnSpacing={2}
+              sx={{
+                  paddingLeft:"2rem",
+                  paddingRight:"3rem",
+                  marginTop:"1rem",
+                  marginBottom:"2rem",
+              }}>
+                
+              {
+                
+                  posts.length > 0 ? posts.map((blog, key) =>
+                  (
+                    
+                      <Grid key={blog.slug} item md={6} xs={12} sm={6} lg={4} xl={6}>
+                          <div
+                              className="announcement-hovering"
+                              // onClick={() => {
+                              //         setOpen(true);
+                              //         setDisabled(false);
+                              //         setAnc_id(anc.id);}}
+                              style={{ maxHeight: "45rem"}}
+                              >
+                              <div style={{
+                                  overflow: "hidden",
+                                  maxHeight: "25rem",
+                                  objectFit: 'fill',
+                              }}>
+                                  <img
+                                        src={blog.main_image_64 && blog.main_image_64 !== '' ? blog.main_image_64 : SamplePostMainImage}
+                                  />
                               </div>
-                          </Tooltip>
-                          <Tooltip title="Delete this post" arrow style={{ marginRight: "0.5rem"}}>
-                            <div>
-                              <AiFillDelete
-                                onClick={() =>
-                                  openDeleteDialog(blog)
-                                }
-                                color="#b9b8b8"
-                                style={{ cursor: "pointer" }}
-                                size='2rem'
-                                />
-                            </div>
-                          </Tooltip>
-                        </>
-                          : null
-                        }
-                    </CardActions>
-                  </Card>
-                </Grid>
-                ))
-              ) :
-              (
-                <div>
-                  <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
-                    No Post Found!
-                  </span>
-                  <p style={{ marginLeft: "9rem" , fontSize: 15, marginTop: "0.3rem", color: "#0F3E86" }}>
-                    You would be able to create a post for your corresponding announcement, only when it is done.
-                  </p>
-                </div>
-              )
-            }
-          </Grid>
-        </Box>
+                                  <Stack className={classes.announcements}>
+                                      <Item>
+                                          <Stack direction={`row`}>
+                                              <Item>
+                                                  <Stack>
+                                                      <Item>
+                                                          <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                              <span>{blog.blog_title}</span>
+                                                          </h1>
+                                                      </Item>
+                                                      <Item>
+                                                        <Typography style={{ display: "flex", marginTop: "0.5rem" }}>
+                                                          {
+                                                            blog.description !== "" && blog.description ? (
+                                                              <>
+                                                                <SummarizeIcon sx={{ marginRight: "0.5rem" }}/>{ checkSummary(blog.description) }
+                                                              </>
+                                                            ) : null
+                                                          }
+                                                        </Typography>
 
-        <Dialog
-            visible={deletePostDialog}
-            onHide={hideDeletePostDialog}
-            open={deletePostDialog}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            
-            <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6"}}>
-              <Stack direction={'column'}>
-                <Item>
-                  <FcHighPriority size='4rem' />
-                </Item>
-                <Item>
-                  {`Delete`} <b style={{ color: "#e66969" }}>«{post.blog_title}» </b>{`Post`}
-                </Item>
-              </Stack>
-            </DialogTitle>
+                                                      </Item>
+                                                  </Stack>
+                                              </Item>
+                                          </Stack>
+                                      
+                                      </Item>
+                                      <Box sx={{ mt: "0.75rem" }}>
+                                        <Typography
+                                          sx={{ marginTop: "1.5rem", fontSize: 20, display: "flex", mb: "0.5rem" }}
+                                          variant="p"
+                                          component="div"
+                                        >
+                                            <Stack direction="row" 
+                                                  useFlexGap 
+                                                  flexWrap="wrap"
+                                                  spacing={1} 
+                                                  sx={{ ml: "1rem", '& > *': { flexGrow: 3 } }}>
+                                              {
+                                                blog.tags_name.length > 0  ? (blog.tags_name.map((tag_name) => (
+                                                  <Chip label={tag_name} color="primary" variant="outlined" />
+                                                ))) : (
+                                                  <span> No related tag found </span>
+                                                )
+                                              }
+                                            </Stack>
+                                        </Typography>
+                                    </Box>
+                                    <Item className={classes.eachAnnouncement}>
+                                        <Stack direction={`row`} spacing={1} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
+                                            <Item>
+                                                <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                  <CgDetailsMore
+                                                    onClick={() => {
+                                                      // handleDetailsClick(blog.slug)
+                                                      setPostSlug(blog.slug);
+                                                      setOpenPostDialog(true);
+                                                      setPostDisabled(false);
+                                                      }
+                                                    }
+                                                    color="#b9b8b8"
+                                                    style={{ cursor: "pointer" }}
+                                                    size='2rem'
+                                                  />
+                                                </Typography>
+                                            </Item>
+                                            <Item>
+                                                <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                {
+                                                  props.url_username === props.local_storage_username ?
+                                                  <>
+                                                    <Tooltip title="Edit this post" arrow>
+                                                        <div>
+                                                          <AiFillEdit
+                                                            onClick={() =>
+                                                              handleEditClick(blog.uid, blog.slug)
+                                                            }
+                                                            color="#b9b8b8"
+                                                            style={{ cursor: "pointer" }}
+                                                            size='2rem'
+                                                          />
+                                                        </div>
+                                                    </Tooltip>
+                                                  </>
+                                                    : null
+                                                }
+                                                </Typography>
+                                            </Item>
+                                            <Item>
+                                                <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                {
+                                                  props.url_username === props.local_storage_username ?
+                                                  <>
+                                                    <Tooltip title="Delete this post" arrow>
+                                                      <div>
+                                                        <AiFillDelete
+                                                          onClick={() =>
+                                                            openDeleteDialog(blog)
+                                                          }
+                                                          color="#b9b8b8"
+                                                          style={{ cursor: "pointer" }}
+                                                          size='2rem'
+                                                          />
+                                                      </div>
+                                                    </Tooltip>
+                                                  </>
+                                                    : null
+                                                }
+                                                </Typography>
+                                            </Item>
+                                        </Stack>
+                                    </Item>
+                                  </Stack>
+                          </div>
+                      </Grid>
 
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  {post && (
-                    <div style={{ fontWeight: 'bold' }}>
-                      Are you sure?
-                    </div>
-                  )}
-                </DialogContentText>
-                <DialogActions>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    className="p-button-text"
-                    onClick={deletePost}
+                  )) : 
+                  <Box
+                      sx={{
+                          flexGrow: 1,
+                          p: 2,
+                          width: "100%"
+                      }}
+                      >
+                      <div>
+                        <span style={{ marginLeft: "25rem" , fontWeight: "bold", fontSize: 20}}>
+                          No Post Found!
+                        </span>
+                        <p style={{ marginLeft: "9rem" , fontSize: 15, marginTop: "0.3rem", color: "#0F3E86" }}>
+                          You would be able to create a post for your corresponding announcement, only when it is done.
+                        </p>
+                      </div>
+                  </Box>
+              }
+              </Grid>
+                <Dialog
+                    visible={deletePostDialog}
+                    onHide={hideDeletePostDialog}
+                    open={deletePostDialog}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    PaperProps={{ sx: { borderRadius: "15px" } }}
                   >
-                    Delete
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    className="p-button-text"
-                    onClick={hideDeletePostDialog}
-                  >
-                    Cancel
-                  </Button>
-                </DialogActions>
-            </DialogContent>
-        </Dialog>
-      </div>
-    </Box>
-    {checkNotNull()}
-    {() => setPostSlug(null)}
-  </ThemeProvider>
+                  <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Stack direction={'column'} sx={{ flexGrow: 1 }}>
+                      <Item>
+                        <FcHighPriority size='4rem' />
+                      </Item>
+                      <Item>
+                        {`Delete`} <b style={{ color: "#e66969" }}>«{post.blog_title}» </b>{`Post`}
+                      </Item>
+                    </Stack>
+                    <IconButton aria-label="close" onClick={hideDeletePostDialog} sx={{ position: 'absolute', top: 8, right: 8 }}>
+                      <HighlightOffIcon fontSize='large'/>
+                    </IconButton>
+                  </DialogTitle>
+
+                  <DialogContent>
+                      <DialogContentText id="alert-dialog-description">
+                        {post && (
+                          <div style={{ fontWeight: 'bold' }}>
+                            Are you sure?
+                          </div>
+                        )}
+                      </DialogContentText>
+                      <DialogActions>
+                        <Button
+                          variant="outlined"
+                          color="error"
+                          className="p-button-text"
+                          onClick={deletePost}
+                        >
+                          Delete
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          className="p-button-text"
+                          onClick={hideDeletePostDialog}
+                        >
+                          Cancel
+                        </Button>
+                      </DialogActions>
+                  </DialogContent>
+                </Dialog>
+                {checkNotNull()}
+                {() => setPostSlug(null)}  
+      </ThemeProvider>
   );
 }
 export default function MyPosts(props)

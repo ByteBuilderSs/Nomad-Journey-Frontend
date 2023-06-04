@@ -9,7 +9,7 @@ import {makeStyles} from "@mui/styles";
 const useStyles = makeStyles(theme => (
     {
         likeButtonActive:{
-            color:"#E55405",
+            color:"rgba(0,78,137,1)",
             "&:hover":{
                 backgroundColor:"rgba(228,85,5,0.1)"
 
@@ -35,7 +35,7 @@ export default function RemoveLikeOfBlog({blog_id, user})
         event.preventDefault();
         axios({
             method: "delete",
-            url: `http://188.121.102.52:8000/api/v1/like_post/delete-like/${blog_id}/${user}`,
+            url: `https://api.nomadjourney.ir/api/v1/like_post/delete-like/${blog_id}/${user}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

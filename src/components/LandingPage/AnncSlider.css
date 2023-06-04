@@ -24,7 +24,7 @@
     flex-shrink: 0;
     height: 300px;
     /* background-image: linear-gradient(90deg, #fe8a39 0%, #fd3838 74%); */
-    color: "#E55405";
+    color: rgba(0,78,137,1);
     box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.2);
     border-radius: 20px;
     transform: translateX(+200px);

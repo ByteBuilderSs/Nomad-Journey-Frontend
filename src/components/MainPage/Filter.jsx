@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/material_orange.css";
+import "flatpickr/dist/themes/material_blue.css";
 import { FetchAnnc } from "../../hooks/useAnnounceFetchMainPage";
 import Button from '@mui/material/Button';
 
@@ -29,7 +29,7 @@ const theme = createTheme({
     palette: {
       primary: {
         // Purple and green play nicely together.
-        main: "#E55405",
+        main: "rgba(0,78,137,1)",
       },
       secondary: {
         main: '#fff',
@@ -80,7 +80,7 @@ export default function Filters() {
   const loadCountries = async () => {
     await axios({
         method: "get",
-        url: "http://188.121.102.52:8000/api/v1/utils/get-countries/",
+        url: "https://api.nomadjourney.ir/api/v1/utils/get-countries/",
         headers: {
             'Content-Type': 'application/json',
         }
@@ -95,7 +95,7 @@ export default function Filters() {
     if (selectedCountry) {
       axios({
           method: "get",
-          url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
+          url: `https://api.nomadjourney.ir/api/v1/utils/get-cities-of-country/${selectedCountry.id}`,
           headers: {
               'Content-Type': 'application/json',
           }
@@ -111,7 +111,7 @@ export default function Filters() {
 
     axios({
         method: "get",
-        url: "http://188.121.102.52:8000/api/v1/accounts/GetLanguages",
+        url: "https://api.nomadjourney.ir/api/v1/accounts/GetLanguages",
         headers: {
             'Content-Type': 'application/json',
         }
@@ -127,7 +127,7 @@ export default function Filters() {
           
         await axios({
           method: "get",
-          url: `http://188.121.102.52:8000/api/v1/accounts/user/${userName}`,
+          url: `https://api.nomadjourney.ir/api/v1/accounts/user/${userName}`,
         }).then(response => {
             
             setYourLocation([response.data.city_country, response.data.city_name])
@@ -189,17 +189,19 @@ export default function Filters() {
   }, []);
 
   React.useEffect(() => {
-    const signedInUser = JSON.parse(localStorage.getItem("tokens"))
-    FetchUserLoc(signedInUser['username'])
+    let username = "";
+    let user_id = "";
+    if (localStorage.getItem('tokens'))
+    {
+        const allData = JSON.parse(localStorage.getItem('tokens'));
+        username = allData.username;
+        user_id = allData.user_id;
+    }
+    FetchUserLoc(username)
   }, []);
 
- 
 
-  
 
-  
-
-      
   const fetchFilter = (selectedCity, selectedCountry, selectedDates, languageTags) => {
     let dictFilter = {}
 

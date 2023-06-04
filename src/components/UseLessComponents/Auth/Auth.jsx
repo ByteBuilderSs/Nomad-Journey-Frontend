@@ -63,7 +63,7 @@ export default function Authentication() {
             className="Mui-login-box"
             sx={{ bgcolor: "background.paper", width: 500 }}
         >
-            <AppBar sx={{ backgroundColor: "#E55405" }} position="static">
+            <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)" }} position="static">
             <Tabs
                 value={value}
                 onChange={handleChange}

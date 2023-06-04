@@ -62,7 +62,7 @@ const Home = (props) => {
     const loadUserHomeInfo = async () => {
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit5/${props.url_username}`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/UserProfileEdit5/${props.url_username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -263,7 +263,7 @@ const Home = (props) => {
                         : null
                     }
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem"}}/>
-                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "#E55405" }}>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "rgba(0,78,137,1)" }}>
                         {props.first_name}'S PREFERENCES
                     </h3>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
@@ -315,7 +315,7 @@ const Home = (props) => {
                 {/* --------------------------- Home Info -----------------------------*/}
                 <Grid item xs={12}>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }}/>
-                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "#E55405" }}>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "rgba(0,78,137,1)" }}>
                         {props.first_name}'s HOME
                     </h3>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
@@ -355,7 +355,7 @@ const Home = (props) => {
                 {/* --------------------------- Sleeping Arrangements -----------------------------*/}
                 <Grid item xs={12}>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }}/>
-                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "#E55405" }}>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "rgba(0,78,137,1)" }}>
                         Sleeping Arrangements
                     </h3>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
@@ -372,7 +372,7 @@ const Home = (props) => {
                 {/* ---------------------------------------------- Roomate Situation ---------------------------------*/}
                 <Grid item xs={12}>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }}/>
-                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "#E55405" }}>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "rgba(0,78,137,1)" }}>
                         Roomate Situation
                     </h3>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
@@ -385,7 +385,7 @@ const Home = (props) => {
                 {/* --------------------------- More Details -----------------------------*/}
                 <Grid item xs={12}>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem", mt: "1rem" }}/>
-                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "#E55405" }}>
+                    <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem", textTransform: 'uppercase', color: "rgba(0,78,137,1)" }}>
                         More Details
                     </h3>
                     <Divider sx={{ borderBottomWidth: 3, width: "150rem"}}/>
@@ -401,4 +401,4 @@ const Home = (props) => {
     )
 }
 
-export default Home
+export default Home;

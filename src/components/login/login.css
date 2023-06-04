@@ -20,6 +20,7 @@
     justify-content : center;
     align-items     : center;
     font-weight     : bold;
+    border-radius: 15px;
 }
 
 
@@ -30,11 +31,13 @@
     border-radius  : 4px;
     box-shadow     : 0px 2px 1px -1px rgb(0 0 0 / 20%),
         0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: 15px;
 }
 
 .Mui-login-box {
     min-height: 69vh;
     max-height: 100vh;
+    border-radius: 15px;
 }
 
 .authLogo {

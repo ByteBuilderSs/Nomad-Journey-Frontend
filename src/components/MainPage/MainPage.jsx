@@ -20,7 +20,7 @@ import FilterLanguage from "./Filter";
 import {FetchAnnc} from "../../hooks/useAnnounceFetchMainPage";
 import {Make_Offer} from "../../hooks/useOfferAnnc"
 
-import tehranImg from "../../Assets/images/tehran.jpg"
+import tehranImg from "../../Assets/images/Tehran.jpg"
 import parisImg from "../../Assets/images/paris.jpg"
 import londonImg from "../../Assets/images/London.jpg"
 import newyorkImg from "../../Assets/images/newyork.jpg"
@@ -99,6 +99,46 @@ const Announce = (props) => {
   // For offer dialog :
   const [openOfferDialog, setOpenOfferDialog] = useState(false);
   const [openDiscDialog, setOpenDiscDialog] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [userId, setUserId] = useState(props.anc.announcer);
+
+
+  const languageName = (languageId) => {
+    if (props.languages === null){
+      return null
+    }
+    for (const language of props.languages){
+      if(languageId === language.id){
+        return language.language_name;
+      }
+    }
+  }
+
+
+  const fetchPhoto = async () => {
+    try {
+  
+    await axios.get(`https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${userId}`).then(
+        (response) => {
+          console.log(response.data)
+          console.log(response.status)
+          if (response.status == 200){
+            setProfilePhoto(response.data["profile_photo"])
+          }
+        }
+    )
+    
+    } catch (error) {
+    console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchPhoto()
+  }, [userId]);
+
+
+
   const fetchOffer = Make_Offer()
   
 
@@ -145,7 +185,7 @@ const Announce = (props) => {
           <div class="row">
             <div class="col-lg-6">
               <div class="image">
-                <img src= {require("../../Assets/images/deals-01.jpg")} alt=""/>
+                <img style={{maxWidth : "260px"}} src= { profilePhoto ? `https://api.nomadjourney.ir${profilePhoto}` : require("../../Assets/images/deals-01.jpg")} alt=""/>
               </div>
             </div>
             <div class="col-lg-6 align-self-center">
@@ -169,9 +209,9 @@ const Announce = (props) => {
                     <i class="fa fa-city"></i>
                     <span class="list">{props.anc.city_country} - {props.anc.city_name}</span>
                 </div>
-                <div style={{justifyContent : "left", padding : "7px 0px " }}>
-                    <i class="fa fa-language"></i>
-                    <span class="list">None</span>
+                <div style={{justifyContent : "left", padding : "7px 0px ", display : "flex"}}>
+                    <i class="fa fa-language" style={{marginTop : "2px"}}></i>
+                    { props.anc.announcer_langs.length === 0 ? <span  class="list">None</span> : <span style={{display : "flex", gap : "5px"}} class="list">{props.anc.announcer_langs.map(data => <div style={{fontSize : "15px"}}> {languageName(data)} </div> )}</span>}
                 </div>
                 <p onClick = {() => {if(props.anc.anc_description.length != 0){handleOpenDiscDialog()}}}>{Description}</p>
                 <div class="main-button" style={{cursor : "pointer"}} onClick={handleOpenOfferDialog}>
@@ -250,7 +290,7 @@ const [randomData, setRandomData] = useState(null);
   const fetchRandom = async () => {
     try {
   
-    await axios.get(`http://188.121.102.52:8000/api/v1/landing-page/random-shit`).then(
+    await axios.get(`https://api.nomadjourney.ir/api/v1/landing-page/random-shit`).then(
         (response) => {
 
           setRandomData(response.data)
@@ -264,19 +304,19 @@ const [randomData, setRandomData] = useState(null);
 
   useEffect(() => {
     fetchRandom()
-  }, [randomData]);
+  }, []);
 
   if (randomData === null){
     return(
-      <div>
-        <Skeleton animation="wave" />
+      <div style={{marginLeft : "5%"}}>
+        <Skeleton animation="wave" height={"700px"} width={"1400px"}/>
       </div>
     )
   }
   else{
   return(
     <div class="slider">
-      <div id="top-banner-1" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[0].city_big_image64})`}}>
+      <div id="top-banner-1" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[0].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -312,7 +352,7 @@ const [randomData, setRandomData] = useState(null);
           </div>
         </div>
       </div>
-      <div id="top-banner-2" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[1].city_big_image64})`}}>
+      <div id="top-banner-2" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[1].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -348,7 +388,7 @@ const [randomData, setRandomData] = useState(null);
           </div>
         </div>
       </div>
-      <div id="top-banner-3" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[2].city_big_image64})`}}>
+      <div id="top-banner-3" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[2].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -384,7 +424,7 @@ const [randomData, setRandomData] = useState(null);
           </div>
         </div>
       </div>
-      <div id="top-banner-4" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[3].city_big_image64})`}}>
+      <div id="top-banner-4" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[3].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -439,6 +479,7 @@ export default function MainPage(){
     const page = useSelector((state) => state.mainpage.page)
 
     const [randomData, setRandomData] = useState(null);
+    const [languages, setLanguages] = useState(null);
 
     
 
@@ -447,16 +488,25 @@ export default function MainPage(){
     }, []);
 
 
-    // useEffect(() => {
+    const loadLanguages = async () => {
 
-    //   (async () => {
-    //     await fetchRandom(setRandomData)
-    //   })();
-    //   console.log("fuck U : ")
-    //   console.log(randomData)
-
-    // }, []);
-      
+      axios({
+          method: "get",
+          url: "https://api.nomadjourney.ir/api/v1/accounts/GetLanguages",
+          headers: {
+              'Content-Type': 'application/json',
+          }
+      }).then((result) => {
+          setLanguages(result.data.data);
+          console.log(result.data.data)
+      }).catch((error) => {
+          toast.error("Something went wrong while fetching Languages.")
+      })
+    }
+    
+    useEffect(() => {
+      loadLanguages()
+    }, []);
     
   
 
@@ -481,7 +531,7 @@ export default function MainPage(){
       }
       else{
         return(
-          announcdata.map(data => <Announce anc = {data} dispatch = {dispatch} sort = {sort}/>)
+          announcdata.map(data => <Announce languages = {languages} anc = {data} dispatch = {dispatch} sort = {sort}/>)
         )
       }
 

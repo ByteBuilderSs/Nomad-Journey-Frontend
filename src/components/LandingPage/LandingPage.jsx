@@ -1,6 +1,6 @@
 import {React, useState, useRef, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-
+import axios from 'axios';
 import Header from "./Header";
 import walkGif from '../../lottieAssets/walk.json';
 import Lottie from 'react-lottie';
@@ -26,73 +26,50 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import RoadAnimation from "./RoadAnimation";
+import { Skeleton } from "@mui/material";
 
-const ancData = [
-    {
-        "username" : "Baktash",
-        "rate" : "Rate",
-        "arrivalDate" : "10/05/2023",
-        "departureDate" : "10/05/2023",
-        "city" : "Tehran",
-        "travelersCount" : "12"
-    },
-    {
-        "username" : "Baktash",
-        "rate" : "Rate",
-        "arrivalDate" : "10/05/2023",
-        "departureDate" : "10/05/2023",
-        "city" : "Tehran",
-        "travelersCount" : "12"
-    },
-    {
-        "username" : "Sina",
-        "rate" : "Rate",
-        "arrivalDate" : "10/05/2023",
-        "departureDate" : "10/05/2023",
-        "city" : "Kabul",
-        "travelersCount" : "5"
-    },
-    {
-        "username" : "Sina",
-        "rate" : "Rate",
-        "arrivalDate" : "10/05/2023",
-        "departureDate" : "10/05/2023",
-        "city" : "Kabul",
-        "travelersCount" : "5"
-    },
-]
+
 
 const Annc = (props) => {
     const navigate = useNavigate()
     return(
-             
+            
             <div class="item">
-            <div class="thumb">
-                <img src={require("../../Assets/images/offers-01.jpg")} alt=""/>
-                <div class="text">
-                <h4>{props.data.username}<br/><span><i class="fa fa-users"></i> {props.data.travelersCount} Travelers Count</span></h4>
-                <h6>{props.data.rate}<br/></h6>
-                <div class="line-dec"></div>
-                <ul>
-                    <li>Includes:</li>
-                    <li><i class="fa fa-clock"></i>{props.data.arrivalDate}</li>
-                    <li><i class="fa fa-clock"></i>{props.data.departureDate}</li>
-                    <li><i class="fa fa-building"></i> {props.data.city}</li>
-                </ul>
-                <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                    <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
+                <div class="thumb">
+                    <img className="imgphoto" style={{maxHeight : "400px", maxWidth : "300px"}} src={false ? `https://api.nomadjourney.ir${props.data.profile_photo}` : require("../../Assets/images/offers-01.jpg")} alt=""/>
+                    <div class="text">
+                    <div >
+                        <div className="headers">
+                            <h4 style={{marginRight : "10px"}}>{props.data.announcer_username[0]}<br/></h4>
+                            <h6>{props.data.avg_feedback}<br/></h6>
+                        </div>
+                        <div><h4><span><i class="fa fa-users"></i> {props.data.travelers_count} Travelers Count</span></h4></div>
+                        
+                    </div>
+                    
+                    <div class="line-dec"></div>
+                    <ul>
+                        <li>Includes:</li>
+                        <li><i class="fa fa-clock" style={{marginRight : "10px"}}></i>{props.data.arrival_date}</li>
+                        <li><i class="fa fa-clock" style={{marginRight : "10px"}}></i>{props.data.departure_date}</li>
+                        <li><i class="fa fa-building" style={{marginRight : "10px"}}></i> {props.data.anc_city}</li>
+                    </ul>
+                    <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                        <div className='landing2' style={{color : "#fff"}}> Give An Offer </div>
+                    </div>
+                    </div>
                 </div>
-                </div>
-            </div>
             </div>
     )
 }
 
 export default function LandingPage(){
 
+
+
     const navigate = useNavigate()
 
-    const [isTransparent, setIsTransparent] = useState(true);
+    const [topUsers, setTopUsers] = useState(null);
 
     const Walk = () => {
 
@@ -117,16 +94,35 @@ export default function LandingPage(){
     }
 
 
+
+    const fetchTopUsers = async () => {
+
+        try {
       
+        await axios.get(`https://api.nomadjourney.ir/api/v1/landing-page/most-rated-hosts`).then(
+            (response) => {
+                setTopUsers(response.data)
+                console.log(response.data)
+            }
+        )
+        
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    
+    useEffect(() => {
+        fetchTopUsers()
+    }, []);
 
 
 
     return(
         <div className="landing-page" >
-            <Header/>
-            <div class="about-main-content">
+            {/* <Header/> */}
+            <div className="about-main-content">
                 <div ><RoadAnimation/></div>
-                <div class="container" style={{transform : "translateY(-300%)",width : "50%",borderRadius : "50px", "backdrop-filter": "blur(10px)"}}>
+                <div class="container" >
                     <div class="row">
                         <div class="col-lg-12">
                         <div class="content">
@@ -134,8 +130,13 @@ export default function LandingPage(){
                             <h4 style={{color : "black"}}>EXPLORE OUR PROJECT</h4>
                             <div class="line-dec"></div>
                             <h2 style={{color : "black"}}>Welcome To Nomad Journey</h2>
-                            <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
-                                <div className='landing1' style={{color : "#fff"}}> Discover More </div>
+                            <div style={{display : "flex", gap :"5px"}}>
+                                <div class="main-button" style={{cursor : "pointer", marginLeft : "42%"}} onClick={() => {navigate("/signup")}}>
+                                    <div className='landing1' style={{color : "#fff"}}> Login </div>
+                                </div>
+                                <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>
+                                    <div className='landing1' style={{color : "#fff"}}> Signup </div>
+                                </div>
                             </div>
                         </div>
                         </div>
@@ -193,11 +194,11 @@ export default function LandingPage(){
 
                     >
 
-                    {ancData.map(data => <SwiperSlide>  <Annc data = {data}/> </SwiperSlide>)}
+                    {topUsers === null ? <Skeleton width={"500px"} height={"500px"} style={{borderRadius : "20px", color : "black", zIndex : 1}}/> : topUsers.map(data => <SwiperSlide>  <Annc data = {data}/> </SwiperSlide>)}
                         
                         
-                        <div className = "swiper-button-next" style={{paddingLeft : "50px", color : "#E55405"}}></div>
-                        <div className = "swiper-button-prev" style={{paddingRight : "50px", color : "#E55405"}}></div>
+                        <div className = "swiper-button-next" style={{paddingLeft : "50px", color : "rgba(0,78,137,1)"}}></div>
+                        <div className = "swiper-button-prev" style={{paddingRight : "50px", color : "rgba(0,78,137,1)"}}></div>
                         <div className="swiper-pagination" style={{paddingBottom : "10px"}}></div>
                     </Swiper>
                     

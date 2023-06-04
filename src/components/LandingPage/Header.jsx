@@ -14,7 +14,7 @@ import SiteLogo from "../../Assets/images/nomad-journey-logo-3.jpg";
 function Header(){
     const navigate = useNavigate()
     return(
-        <AppBar sx={{ backgroundColor: "#E55405"}}  position="static">
+        <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)"}}  position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                 <Box sx={{ 

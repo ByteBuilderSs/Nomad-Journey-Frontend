@@ -17,7 +17,8 @@ import {
     Typography,
     Checkbox,
     Autocomplete,
-    Container
+    Container,
+    CircularProgress,
 } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -38,15 +39,41 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
+import { blue, deepOrange } from '@mui/material/colors';
+import {makeStyles} from "@mui/styles";
 
 const theme = createTheme({
     palette: {
-            secondary: 
-            {
-                main: teal[900]
-            }
+        primary: blue,
+        secondary: 
+        {
+            main: '#ffd180'
+        }
         }
 });
+
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"15em",
+        background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#F7C59F",
+        border:"solid 2px #F7C59F",
+        borderRadius:"15px",
+        transition:"all 0.3s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
+
+}))
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -93,6 +120,7 @@ if (localStorage.getItem('tokens'))
 }
 
 const EditPost = () => {
+    const classes = styles();
     let {uid, slug} = useParams();
     const navigate = useNavigate()
     const [disabled, setDisabled] = useState(false);
@@ -113,7 +141,7 @@ const EditPost = () => {
     const loadTags = async () => {
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/blog/tags/",
+            url: "https://api.nomadjourney.ir/api/v1/blog/tags/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -130,7 +158,7 @@ const EditPost = () => {
     const loadPostInfo = async () => {
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/blog/post/${slug}`,
+            url: `https://api.nomadjourney.ir/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -204,7 +232,7 @@ const EditPost = () => {
         if (isDataValid) {
             axios({
                 method: "patch",
-                url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
+                url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${username}`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -258,6 +286,12 @@ const EditPost = () => {
         const size_kb = size_mb * 1000;
         if (size_kb <= 500) {
             const base64Image = await convertFileToBase64(file);
+            if (!loading) {
+                setLoading(true);
+                timer.current = window.setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
+            }
             setImageSizeErr(false);
             setMainImage(base64Image ? base64Image : "");
         } else {
@@ -272,17 +306,26 @@ const EditPost = () => {
 
     console.log("++++++++ The selected tags are: ++++++++", selectedTags);
 
+    // for image loader
+    const [loading, setLoading] = React.useState(false);
+    const timer = React.useRef();
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
     return (
         <ThemeProvider theme={theme}>
             <>
                 <div className='post-detail'>
                     <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
                         <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <Card dir='ltr'>
+                            <Card dir='ltr' style={{ borderRadius: '15px'}}>
                                 <form>
                                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                         {/* Main Image */}
-                                        <Grid item xs={12} style={{ paddingLeft: "10rem", marginTop: "4rem" }}>
+                                        <Grid item xs={12} style={{ paddingLeft: "7rem", marginTop: "2rem" }}>
                                             <div >
                                                 <IconButton component="label">
                                                     <input
@@ -297,63 +340,112 @@ const EditPost = () => {
                                                         variant="square"
                                                         src={mainImage && mainImage !== '' ? mainImage : SamplePostMainImage} 
                                                         style={{
-                                                            width: "60rem",
+                                                            width: "70.5rem",
                                                             height: 340,
                                                             borderRadius: '0.25rem',
                                                             objectFit: 'fill',
                                                             objectPosition: "center"
                                                         }}
                                                     />
+                                                    {loading && (
+                                                        <CircularProgress
+                                                            size={50}
+                                                            sx={{
+                                                            position: 'absolute',
+                                                            top: '50%',
+                                                            left: '50%',
+                                                            marginTop: '-12px',
+                                                            marginLeft: '-12px',
+                                                            }}
+                                                        />
+                                                        )}
                                                 </IconButton>
                                             </div>
-                                            <Button
-                                                style={{
-                                                    bottom: "35px",
-                                                    marginLeft: "1.25rem",
-                                                    marginTop: "-0.65rem",
-                                                    textTransform: 'none'
-                                                }}
-                                                variant="contained"
-                                                component="label"
-                                                startIcon={<CameraAltIcon />}
-                                                color='secondary'
-                                                >
-                                                Upload a photo
-                                                <input
-                                                    hidden
-                                                    accept="image/*"
-                                                    multiple
-                                                    type="file"
-                                                    onChange={(e) => handleMainImage(e)}
-                                                /> 
-                                            </Button>
-                                            <Button
-                                                style={{
-                                                    bottom: "35px",
-                                                    marginLeft: "0.5rem",
-                                                    marginTop: "-0.65rem",
-                                                    textTransform: 'none'
-                                                }}
-                                                variant="contained"
-                                                component="label"
-                                                startIcon={<RemoveCircleIcon />}
-                                                color='error'
-                                                onClick={() => {
-                                                    setMainImage('');
-                                                    setImageSizeErr(false);
-                                                }}
-                                                >
-                                                Remove photo
-                                            </Button>
+                                            <Box sx={{ position: 'relative' }}>
+                                                <Button
+                                                    style={{
+                                                        bottom: "35px",
+                                                        marginLeft: "1.25rem",
+                                                        marginTop: "-0.65rem",
+                                                        textTransform: 'none'
+                                                    }}
+                                                    variant="contained"
+                                                    component="label"
+                                                    startIcon={<CameraAltIcon />}
+                                                    color='secondary'
+                                                    >
+                                                    Upload a photo
+                                                    <input
+                                                        hidden
+                                                        accept="image/*"
+                                                        multiple
+                                                        type="file"
+                                                        onChange={(e) => handleMainImage(e)}
+                                                    /> 
+                                                </Button>
+                                                {loading && (
+                                                    <CircularProgress
+                                                        size={24}
+                                                        sx={{
+                                                        position: 'absolute',
+                                                        top: -27,
+                                                        left: 85,
+                                                        marginTop: '-12px',
+                                                        marginLeft: '-12px',
+                                                        }}
+                                                    />
+                                                )}
+                                            </Box>
+                                            <Box sx={{ position: 'relative', ml: "12rem", mt: '-1.7rem' }}>
+                                            {mainImage && mainImage !== ''  && !loading ? (
+                                                <>
+                                                <Button
+                                                    style={{
+                                                        bottom: "35px",
+                                                        marginLeft: "0.5rem",
+                                                        marginTop: "-0.65rem",
+                                                        textTransform: 'none'
+                                                    }}
+                                                    variant="contained"
+                                                    component="label"
+                                                    startIcon={<RemoveCircleIcon />}
+                                                    color='error'
+                                                    disabled={loading}
+                                                    onClick={() => {
+                                                        if (!loading) {
+                                                            setLoading(true);
+                                                            timer.current = window.setTimeout(() => {
+                                                                setLoading(false);
+                                                            }, 2000);
+                                                        }
+                                                        setMainImage('');
+                                                        setImageSizeErr(false);
+                                                    }}
+                                                    >
+                                                    Remove photo
+                                                </Button>
+                                                {loading && (
+                                                <CircularProgress
+                                                    size={24}
+                                                    sx={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    marginTop: '-12px',
+                                                    marginLeft: '-12px',
+                                                    }}
+                                                />
+                                                )}
+                                                </>
+                                            ) : null}
+                                        </Box>
                                         </Grid>
-                                        <div style={{ paddingLeft: "10rem" }}>
+                                        <div style={{ paddingLeft: "7rem" }}>
                                             {/* Title */}
                                             <Grid item xs={12}>
                                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                                     <Item>
-                                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
-                                                            Title
-                                                        </h6>
+                                                        <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Title</b>
                                                     </Item>
                                                     <Item>
                                                         <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -363,7 +455,7 @@ const EditPost = () => {
                                                     <Item>
                                                         <FormControl>
                                                             <TextField
-                                                                sx={{ width: "65rem" }}
+                                                                sx={{ width: "70rem" }}
                                                                 id="outlined-adornment-title"
                                                                 type={"text"}
                                                                 placeholder='e.g. My memories of a trip to the southern parts of Italy'
@@ -395,9 +487,7 @@ const EditPost = () => {
                                             <Grid item xs={12}>
                                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                                     <Item>
-                                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
-                                                            Summary
-                                                        </h6>
+                                                        <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Summary</b>
                                                     </Item>
                                                     <Item>
                                                         <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -407,7 +497,7 @@ const EditPost = () => {
                                                     <Item>
                                                         <FormControl>
                                                             <TextField
-                                                                sx={{ width: "58.5rem" }}
+                                                                sx={{ width: "70rem" }}
                                                                 id="outlined-adornment-summary"
                                                                 type={"text"}
                                                                 multiline
@@ -426,9 +516,7 @@ const EditPost = () => {
                                             <Grid item xs={12}>
                                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                                     <Item>
-                                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
-                                                            Body
-                                                        </h6>
+                                                        <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Body</b>
                                                     </Item>
                                                     <Item>
                                                         <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -437,7 +525,7 @@ const EditPost = () => {
                                                     </Item>
                                                     <Item>
                                                         <FormControl>
-                                                            <ReactQuill modules={modules} theme="snow" value={editorValue} placeholder="Content goes here ..." onChange={handleChangeEditorContent} style={{ width: "65rem", height: "30rem" }}/>
+                                                            <ReactQuill modules={modules} theme="snow" value={editorValue} placeholder="Content goes here ..." onChange={handleChangeEditorContent} style={{ width: "70rem", height: "30rem" }}/>
                                                         </FormControl>
                                                     </Item>
                                                 </Stack>
@@ -446,9 +534,11 @@ const EditPost = () => {
                                             <Grid item xs={12}>
                                                 <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
                                                     <Item>
-                                                        <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
+                                                        <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Tags</b>
+
+                                                        {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
                                                             Tags
-                                                        </h6>
+                                                        </h6> */}
                                                     </Item>
                                                     <Item>
                                                         <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
@@ -502,10 +592,7 @@ const EditPost = () => {
                                                 <Stack direction="row" spacing={2} sx={{ mt: "5rem", mb: "1rem" }}>
                                                     <Item>
                                                         <Button
-                                                            variant="contained"
-                                                            sx={{ width: "100%", backgroundColor: "#088AD1" }}
-                                                            type="submit"
-                                                            onClick={onSubmit}
+                                                            className={classes.button}
                                                             disabled={disabled}
                                                         >
                                                             Update
@@ -514,11 +601,7 @@ const EditPost = () => {
                                                     {/* TODO */}
                                                     <Item>
                                                         <Button
-                                                            variant="outlined"
-                                                            sx={{
-                                                                width: "100%",
-                                                            }}
-                                                            type="submit"
+                                                            className={classes.button}
                                                             onClick={onCancel}
                                                             disabled={disabled}
                                                         >

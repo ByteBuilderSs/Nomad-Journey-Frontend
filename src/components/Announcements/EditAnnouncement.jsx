@@ -66,7 +66,7 @@ export default function EditAnnouncementForm(props) {
         console.log("----------------------- IN LOAD COUNTRIES ------------------- ")
         axios({
             method: "get",
-            url: "http://188.121.102.52:8000/api/v1/utils/get-countries/",
+            url: "https://api.nomadjourney.ir/api/v1/utils/get-countries/",
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -83,7 +83,7 @@ export default function EditAnnouncementForm(props) {
         if (country) {
             axios({
                 method: "get",
-                url: `http://188.121.102.52:8000/api/v1/utils/get-cities-of-country/${country.id}`,
+                url: `https://api.nomadjourney.ir/api/v1/utils/get-cities-of-country/${country.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -222,7 +222,7 @@ export default function EditAnnouncementForm(props) {
             console.log(`********** the access token is: ${access_token}`);
             axios({
                 method: "put",
-                url: `http://188.121.102.52:8000/api/v1/announcement/edit/${props.anc.id}/`,
+                url: `https://api.nomadjourney.ir/api/v1/announcement/edit/${props.anc.id}/`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${access_token}`
@@ -296,6 +296,7 @@ export default function EditAnnouncementForm(props) {
             open={props.open}
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
+            PaperProps={{ sx: { borderRadius: "15px" } }}
         >
             <Box className="add-request-center-element" sx={{ m: 2, maxWidth: "100%" }}>
                 <Box className="request-management-add-request">

@@ -13,7 +13,7 @@ export const Make_Offer = () => {
         
         axios({
             method: "post",
-            url: `http://188.121.102.52:8000/api/v1/anc_request/create-request/${id}`,
+            url: `https://api.nomadjourney.ir/api/v1/anc_request/create-request/${id}`,
             headers: {
             'Authorization': `Bearer ${signedInUser.access}`
             },

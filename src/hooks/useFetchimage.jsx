@@ -1,14 +1,14 @@
-
-import {useNavigate} from "react-router-dom";
+import { useState } from "react"
 
 export const useImage=()=>{
-    const [imagePro,setImagePro]=useState([])
-    const navigate=useNavigate()
-     const imageProfile= async() => {
-         const username=JSON.parse(localStorage.getItem('tokens')).username
-         const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'get-profile-photo/'+username,{ 
-             method :'GET',
-            
+
+     const [imagePro,setImagePro]=useState("")
+
+     const imageProfile= async(user_id) => {
+
+        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'get-profile-photo/'+user_id,{ 
+            method :'GET',
+            headers :{'Content-Type':'application/json'}
          })
          const json = await respone.json()
          if(!respone.ok)
@@ -18,10 +18,15 @@ export const useImage=()=>{
          }
          if(respone.ok)
          {
-            if (respone.data.profile_photo_URL && respone.data.profile_photo_URL != "" ) 
+            console.log(json)
+            if (json.profile_photo_URL && json.profile_photo_URL != "" ) 
             {
-                setImagePro(process.env.REACT_APP_API+ result.data.profile_photo_URL);
+                setImagePro(process.env.REACT_APP_API+ json.profile_photo_URL)
             } 
+            else
+            {
+                setImagePro("")
+            }
          }
      }
      return{imageProfile,imagePro}

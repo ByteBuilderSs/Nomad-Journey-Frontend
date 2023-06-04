@@ -250,7 +250,7 @@ const [randomData, setRandomData] = useState(null);
   const fetchRandom = async () => {
     try {
   
-    await axios.get(`http://188.121.102.52:8000/api/v1/landing-page/random-shit`).then(
+    await axios.get(`https://api.nomadjourney.ir/api/v1/landing-page/random-shit`).then(
         (response) => {
 
           setRandomData(response.data)
@@ -276,7 +276,7 @@ const [randomData, setRandomData] = useState(null);
   else{
   return(
     <div class="slider">
-      <div id="top-banner-1" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[0].city_big_image64})`}}>
+      <div id="top-banner-1" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[0].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -312,7 +312,7 @@ const [randomData, setRandomData] = useState(null);
           </div>
         </div>
       </div>
-      <div id="top-banner-2" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[1].city_big_image64})`}}>
+      <div id="top-banner-2" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[1].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -348,7 +348,7 @@ const [randomData, setRandomData] = useState(null);
           </div>
         </div>
       </div>
-      <div id="top-banner-3" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[2].city_big_image64})`}}>
+      <div id="top-banner-3" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[2].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>
@@ -384,7 +384,7 @@ const [randomData, setRandomData] = useState(null);
           </div>
         </div>
       </div>
-      <div id="top-banner-4" class="banner" style={{backgroundImage : `url(http://188.121.102.52:8000${randomData[3].city_big_image64})`}}>
+      <div id="top-banner-4" class="banner" style={{backgroundImage : `url(https://api.nomadjourney.ir${randomData[3].city_big_image64})`}}>
         <div class="banner-inner-wrapper header-text">
           <div class="main-caption">
             <h2>Take a Glimpse Into The Beautiful City Of:</h2>

@@ -18,10 +18,11 @@ import {
     Container,
     CardHeader,
     Typography,
-    Badge
+    Badge,
+    Tooltip
 } from '@mui/material';
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
 import { AiFillNotification } from "react-icons/ai";
@@ -41,6 +42,11 @@ import {useUserData} from '../../hooks/useSetUserData';
 import Notif from '../Badge/Bedge';
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { BiMessageRoundedDetail } from "react-icons/bi";
+
+
+
+
 
 let local_storage_username = "";
 let user_id = "";
@@ -66,7 +72,7 @@ const UserPanelNew = () => {
         if (userInfo.id) {
             axios({
                 method: "get",
-                url: `http://188.121.102.52:8000/api/v1/accounts/get-profile-photo/${userInfo.id}`,
+                url: `https://api.nomadjourney.ir/api/v1/accounts/get-profile-photo/${userInfo.id}`,
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -74,7 +80,7 @@ const UserPanelNew = () => {
                 console.log("+++++++++ THE RESULT IS ++++++++ ", result);
                 /* TODO => HOW CAN I CONVERT THE URL TO FILE */
                 if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                    setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                    setProfileImageURL("https://api.nomadjourney.ir" + result.data.profile_photo_URL);
                 }
 
             }).catch((error) => {
@@ -130,9 +136,19 @@ const UserPanelNew = () => {
     }
     useEffect(() => {userdata()}, [])
 
-
+    const navigate=useNavigate()
+    const handelClickMsg=()=>
+    {
+        navigate('/chatbar/')
+    }
     return (
+        
         <div className='userpanel'>
+            <Grid item sx={{right:20,bottom:20,position:'fixed'}}>
+                <Tooltip title='send message'>
+                    <Button size='large' onClick={handelClickMsg} startIcon={<BiMessageRoundedDetail size={40}/>} />
+                </Tooltip>
+            </Grid>
             <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
                 <Grid container spacing={3}>
                     {/* SideBar */}

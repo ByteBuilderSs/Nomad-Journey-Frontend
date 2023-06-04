@@ -44,7 +44,7 @@ const PostDetail = (props) => {
         console.log("In load post request");
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/blog/post/${slug}`,
+            url: `https://api.nomadjourney.ir/api/v1/blog/post/${slug}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -84,7 +84,7 @@ const PostDetail = (props) => {
         event.preventDefault();
         axios({
             method: "delete",
-            url: `http://188.121.102.52:8000/api/v1/blog/others-profile-post/${username}`,
+            url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${username}`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${access_token}`,

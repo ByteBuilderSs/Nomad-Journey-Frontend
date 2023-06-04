@@ -256,7 +256,7 @@ const EditHome = () => {
     const loadUserHomeInfo = async () => {
         axios({
             method: "get",
-            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit5/${username}`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/UserProfileEdit5/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
@@ -323,7 +323,7 @@ const EditHome = () => {
 
         axios({
             method: "patch",
-            url: `http://188.121.102.52:8000/api/v1/accounts/UserProfileEdit5/${username}`,
+            url: `https://api.nomadjourney.ir/api/v1/accounts/UserProfileEdit5/${username}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`

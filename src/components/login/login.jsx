@@ -76,17 +76,18 @@ export default function SignInSide()
                 maxHeight: "100vh",
                 minHeight: "50vh",
                 boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
-                <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)"}} position="static">
+                <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
                 <Tabs
                         variant="fullWidth"
                         TabIndicatorProps={{
                         style: {
                             backgroundColor: "#1A237D",
+                            borderRadius: "15px"
                         },
                         }}>
                         <Tab
                             tabIndex={0}
-                            style={{ color: "white", fontSize: 18 }}
+                            style={{ color: "white", fontSize: 18, borderRadius: "15px" }}
                             label="Login"
                         
                         />

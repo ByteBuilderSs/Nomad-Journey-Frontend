@@ -4,7 +4,8 @@ export const useSendMsg=()=>{
     
     const [msg,setMsg]=React.useState("")
     const sendMsg = async(message,sender,receiver,ans_id) => {
-
+        
+        ans_id=6
         const usernameS=JSON.parse(localStorage.getItem('tokens')).username
         const access=JSON.parse(localStorage.getItem('tokens')).access
 

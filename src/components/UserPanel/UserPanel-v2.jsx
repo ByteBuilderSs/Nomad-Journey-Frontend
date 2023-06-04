@@ -18,10 +18,11 @@ import {
     Container,
     CardHeader,
     Typography,
-    Badge
+    Badge,
+    Tooltip
 } from '@mui/material';
 
-import {Link, Route, Routes, useParams} from "react-router-dom";
+import {Link, Route, Routes, useNavigate, useParams} from "react-router-dom";
 import { Item } from "semantic-ui-react";
 import { TiUser,TiPin } from "react-icons/ti";
 import {AiFillNotification, AiFillSetting} from "react-icons/ai";
@@ -44,6 +45,11 @@ import { toast } from "react-toastify";
 import {Col, Row} from "react-bootstrap";
 import {AiTwotoneSetting} from "react-icons/ai";
 import Settings from "../Settings/Settings";
+import { BiMessageRoundedDetail } from "react-icons/bi";
+
+
+
+
 
 let local_storage_username = "";
 let user_id = "";
@@ -139,9 +145,19 @@ const UserPanelNew = () => {
     }
     useEffect(() => {userdata()}, [])
 
-
+    const navigate=useNavigate()
+    const handelClickMsg=()=>
+    {
+        navigate('/chatbar/')
+    }
     return (
+        
         <div className='userpanel'>
+            <Grid item sx={{right:20,bottom:20,position:'fixed'}}>
+                <Tooltip title='send message'>
+                    <Button size='large' onClick={handelClickMsg} startIcon={<BiMessageRoundedDetail size={40}/>} />
+                </Tooltip>
+            </Grid>
             {/*<AboutMe*/}
             {/*    url_username={user_params.username}*/}
             {/*    local_storage_username={local_storage_username}*/}

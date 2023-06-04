@@ -611,15 +611,9 @@ export default function UnAuthAnnouncement(props)
         props.setOpen(false);
         props.set_anc_id(null);
     }
-    const handelSendM=(anc_id)=>
+    const handelSendM=()=>
     {
-        console.log(anc_id)
-        return
-        (  
-            <>
-            <Messenger anc_id={anc_id} />
-            </>
-        );
+        navigate(`/chatbar/`)
         
     }
     console.log(props.announcement_id)
@@ -692,7 +686,7 @@ export default function UnAuthAnnouncement(props)
                                     <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
                                             <Grid item >
                                             <Button size='medium'
-                                            onClick={handelSendM(announcement.id)}
+                                            onClick={handelSendM}
                                             sx={{
                                                 color:"rgba(237,231,230,0.8)",
                                                 backgroundColor:"rgba(201,153,127,0.2)",

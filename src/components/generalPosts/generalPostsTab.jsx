@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Box, Divider, IconButton, Rating, Stack, Typography,Grid} from "@mui/material";
+import {Box, Divider, IconButton, Rating, Stack, Typography,Grid,Button} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import LetteredAvatar from "react-lettered-avatar";
 import "../UserPanel/RightBar/MyAnnouncement.css";
@@ -14,7 +14,8 @@ import {useCounter, useCounterActions} from "../../Context/CounterProvider";
 import SetLikeOfBlog from "./LikePost/SetLike";
 import RemoveLikeOfBlog from "./LikePost/RemoveLike";
 import PostLikers from "./likerOfPost";
-
+import SearchBar from './SearchBar'
+import { FcSearch } from "react-icons/fc";
 
 export default function UsersPosts()
 {
@@ -52,7 +53,7 @@ export default function UsersPosts()
 
     useEffect( () =>
     {
-        axios(`https://api.nomadjourney.ir/api/v1/blog/posts/`)
+        axios(`http://188.121.102.52:8000/api/v1/blog/posts/`)
             .then((data) => {
                 setBlogs(data.data)})
             .catch(error =>
@@ -118,12 +119,17 @@ export default function UsersPosts()
                 width: 1,
                      marginBottom:"1rem"
             }}>
+                
                 <Box
                     sx={{
-                        width: 1/3,
-                        backgroundColor:"#ffffff"
+                        width: 1/2,
+                        backgroundColor:"#ffffff",
+                        position:'relative'
                     }}>
-                <Stack>
+
+                <SearchBar />
+                <Stack sx={{marginTop:'3rem'}}>
+                
                 {
                     blogs.data.map((blog, key) => (
                         <Item>
@@ -175,7 +181,7 @@ export default function UsersPosts()
                                                             marginRight:"5rem"
                                                         }}>
                                                                 <Rating sx={{
-                                                                    color:"rgba(0,78,137,1)"
+                                                                    color:"#e45505"
                                                                 }} name="read-only" value={3} readOnly precision={0.1} />
                                                             </span>
                                                     </Typography>

@@ -13,12 +13,18 @@ import {Paper,
     ListItemIcon,
     Avatar,
     Fab,
-    Button} from '@mui/material';
-
+    Button,
+    Box,
+    Tooltip } from '@mui/material';
+import LetteredAvatar from 'react-lettered-avatar';
 import SendIcon from '@mui/icons-material/Send';
+
 import {useAllMsgs} from '../../hooks/useHistoryMsg'
 import {useSendMsg} from '../../hooks/useSendMsg'
 import {useVoluntier} from '../../hooks/useVoluntier'
+import {useAncUsers} from '../../hooks/useAncReqUsers'
+import {useImage} from '../../hooks/useFetchimage'
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles({
   table: {
@@ -51,108 +57,112 @@ const MessageRoom=()=>
     
 
     return(
-
-        <Grid container xs={9} sx={{alignItems:'center',justifyContent:'center'}} direction='column'>
-            <Grid item>
-            <Avatar sx={{width:130,height:90}} src={require('../../Assets/images/messageIcon.jpg')}/>
-            </Grid>
-            <Grid item>
-            <Typography primary="Start Messaging ..." variant='h3'/>
-            <Typography secondary="Message To Your Prefered Host!" variant='h2'/>
+        <Grid container xs={9} sx={{alignItems:'center',justifyContent:'center',height:'60vh'}} >
+            <Grid item sx={{marginBottom:'1rem'}}>
+                <Avatar sx={{width:130,height:90}} src={require('../../Assets/images/messageIcon.jpg')}/>
+                <Typography primary="Start Messaging ..." variant='h1'/>
+                <Typography secondary="Message To Your Prefered Host!" variant='h2'/>
+            
             </Grid>
             
         </Grid>
+        
+
     );
 }
 const ChatBox=(props)=>
 {
     const classes = useStyles();
 
+    const [list,setList]=React.useState([])
+
     const {allMsgs,allmsg} =useAllMsgs() 
-    useEffect(()=>{allMsgs()},[])
+    useEffect(()=>{allMsgs(props.senderU,props.reciverU)},[])
+    useEffect(()=>{setList(allmsg)},[allmsg])
 
-    const [textMsg,setTextMsg]=React.useState("")
-     
     
+    const [message,setTextMsg]=React.useState("")
+     
+    const {sendMsg}=useSendMsg()
     const handelSendM=async(event)=>
-    {
-        event.preventDefault();
-        // await sendMsg(textMsg,props.reciver)
 
+    {
+
+        await sendMsg(message,props.sender,props.reciver,props.anc_id)
+        
+        const newList=list.concat({message:message,type:"sent",created_at:null})
+       
+        setList(newList)
+        
     } 
+    const handelChangeTxt=(event)=>
+    {
+        setTextMsg(event.target.value)
+    }
     return(
 
         <Grid item xs={9}>
             
             <List className={classes.messageArea}>
-                {allmsg.map((item)=>
-                    <ListItem key="1">
+                {list && list.map((item,key)=>
                         <Grid container>
                             {
-                                item.type=="send" ?
+                                item.type=="sent" ?
                                 <>
-                                <Grid item xs={12} >
-                                <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
-                                </Grid>
-                                </> :
+                                <ListItem key={key} sx={{display:'grid',justifyContent:'right'}}>
+                                    <Grid item xs={12} sx={{backgroundColor:'#1A659E',borderRadius:'10px 10px 0px 10px'}} >
+                                    <ListItemText align="right" primary={item.message} sx={{color:'#EFEFD0',margin:'0.5rem',paddingRight:'0.4rem',paddingLeft:'0.3rem',padding:'0.1rem'}}></ListItemText>
+                                    </Grid>
+                                </ListItem>
+                                {item.created_at!=null ?<ListItemText 
+                                                        align="right" 
+                                                        secondary={item.created_at.split("T")[1].split(".")[0]} 
+                                                        sx={{paddingLeft:'0.3rem'}}></ListItemText>
+                                                        :
+
+                                                        <ListItemText align="right" 
+                                                        secondary={new Date().getHours() +":"+new Date().getMinutes()+":"+new Date().getSeconds()} 
+                                                        sx={{paddingLeft:'0.3rem'}}></ListItemText>}
+                                </> 
+                              
+                                :
                                 <>
-                                <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
-                                </Grid>
+                                <ListItem key={key} sx={{display:'grid',justifyContent:'left'}}>
+                                    <Grid item xs={12} sx={{borderRadius:'10px 10px 10px 0px',backgroundColor:'#F7C59F'}} >
+                                    <ListItemText align="left" primary={item.message} sx={{margin:'0.5rem',paddingRight:'0.4rem',paddingLeft:'0.3rem',padding:'0.1rem'}}></ListItemText>
+                                    </Grid>
+                                </ListItem>
+                                <ListItemText align="left" secondary={item.created_at.split("T")[1].split(".")[0]} sx={{paddingLeft:'0.3rem'}}></ListItemText>
+
                                 </>
                             
                             }
-                            
+
                             
                         </Grid>
-                    </ListItem>
-                )}
-                      <ListItem key="1">
-                          <Grid container>
-                              <Grid item xs={12} >
-                                  <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
-                              </Grid>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" secondary="09:30"></ListItemText>
-                              </Grid>
-                          </Grid>
-                      </ListItem>
-                      <ListItem key="2">
-                          <Grid container >
-                              <Grid item xs={12} >
-                                
-                                <Typography align='left'>hey there</Typography>
-                                  {/* <ListItemText  align="left" primary="Hey, Iam Good! What about you ?"></ListItemText> */}
-                              </Grid>
-                              <Grid item xs={12}>
-                                  <ListItemText align="left" secondary="09:31"></ListItemText>
-                              </Grid>
-                          </Grid>
-                      </ListItem>
-                      <ListItem key="3">
-                          <Grid container>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
-                              </Grid>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" secondary="10:30"></ListItemText>
-                              </Grid>
-                          </Grid>
-                      </ListItem>
-                  </List>
-                  <Divider />
-                  <Grid container style={{padding: '20px',display:'flex'}} direction='row'>
-                      <Grid item xs={11} >
-                          <TextField id="outlined-basic-email" label="Type Something" fullWidth onChange={(event)=>{setTextMsg(event.target.value)}} />
-                      </Grid>
-                      <Grid item xs={1} align="right" sx={{paddingTop:'0.8rem'}}>
+                    
+                    
+                )} 
+                
+            </List>
+                <Divider />
+                <Grid container style={{padding: '20px',display:'flex'}} direction='row'>
+                    <Grid item xs={11} >
+                        <TextField id="outlined-basic-email" 
+                        label="Send Massege ..." 
+                        fullWidth onChange={(event)=>{setTextMsg(event.target.value)}} 
+                        autoComplete='off'
+                        InputProps={{endAdornment:(
                         <Button size='medium' color='primary'
-                        onClick={handelSendM}
+                        onClick={()=>{handelSendM();setTextMsg(null)}}
+                        onChange={handelChangeTxt}
                         startIcon={<SendIcon />}>
-                            Send
+                          Send
                         </Button>
-                      </Grid>
-                  </Grid>
+                        )}} />
+                    </Grid>
+                    
+                </Grid>
         </Grid>
     );
 }
@@ -167,11 +177,26 @@ export default function Messenger(props)
       setActive(true)
     }
 
-    const {allvoluntiers,volun} =useVoluntier() 
-    useEffect(()=>{allvoluntiers()},[]) 
-    
+    // const {allvoluntiers,volun} =useVoluntier() 
+    // useEffect(()=>{allvoluntiers()},[]) 
     const [reciver,setReciver]=React.useState(null)
-    const sender=JSON.parse(localStorage.getItem('tokens')).username
+    const sender=JSON.parse(localStorage.getItem('tokens')).user_id
+
+    const [reciverU,setReciverU]=React.useState(null)
+    const senderU=JSON.parse(localStorage.getItem('tokens')).username
+
+    //------------------------------------------
+    const {allUsersReq,usersReq} =useAncUsers()
+    useEffect(()=>{allUsersReq()},[])
+    //-----------------------------------------
+    const {imageProfile,imagePro}=useImage()
+    useEffect(()=>{imageProfile(reciver)},[])
+
+    const navigate=useNavigate()
+    const handelViewProf=(username)=>
+    {
+        navigate(`/home/Profile/${username}/`)
+    }
 
     return (
         
@@ -181,12 +206,14 @@ export default function Messenger(props)
               <Grid item xs={3} className={classes.borderRight500}>
                  
                   <List>
-                  {volun.map((item)=>
+                  {usersReq.map((item)=>
                     <>                    
-                    <ListItemButton key={item.first_name+item.last_name} onClick={()=>{handelChatBox();setReciver(item.username)}}>
-                    <ListItemIcon>
-                        <Avatar alt={item.username} src="https://material-ui.com/static/images/avatar/3.jpg" />
+                    <ListItemButton key={item.first_name+item.last_name} onClick={()=>{handelChatBox();setReciver(item.id);setReciverU(item.username)}}>
+                    <Tooltip title='view profile'>
+                    <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
+                        {imagePro && imagePro!="" ?<Avatar src={imagePro} />:<LetteredAvatar name={item.username}/> }
                     </ListItemIcon>
+                    </Tooltip>
                     <ListItemText primary={item.first_name +" "+ item.last_name}></ListItemText>
                     </ListItemButton>
                     </>
@@ -197,50 +224,9 @@ export default function Messenger(props)
               </Grid>
   
               <Grid container xs={9} sx={{alignItems:'center',justifyContent:'center'}}>
-                  {active && <ChatBox reciver={reciver} sender={sender} anc_id={props.anc_id} />}
-                  {/* <List className={classes.messageArea}>
-                      <ListItem key="1">
-                          <Grid container>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
-                              </Grid>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" secondary="09:30"></ListItemText>
-                              </Grid>
-                          </Grid>
-                      </ListItem>
-                      <ListItem key="2">
-                          <Grid container>
-                              <Grid item xs={12}>
-                                  <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
-                              </Grid>
-                              <Grid item xs={12}>
-                                  <ListItemText align="left" secondary="09:31"></ListItemText>
-                              </Grid>
-                          </Grid>
-                      </ListItem>
-                      <ListItem key="3">
-                          <Grid container>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
-                              </Grid>
-                              <Grid item xs={12}>
-                                  <ListItemText align="right" secondary="10:30"></ListItemText>
-                              </Grid>
-                          </Grid>
-                      </ListItem>
-                  </List>
-                  <Divider />
-                  <Grid container style={{padding: '20px'}}>
-                      <Grid item xs={11}>
-                          <TextField id="outlined-basic-email" label="Type Something" fullWidth />
-                          
-                      </Grid>
-                      <Grid xs={1} align="right">
-                          <Fab color="primary" aria-label="add"><SendIcon/></Fab>
-                      </Grid>
-                  </Grid> */}
+                  {active && <ChatBox reciver={reciver} sender={sender} anc_id={props.anc_id} senderU={senderU} reciverU={reciverU} />}
                   {!active && <MessageRoom/>}
+
               </Grid>
           </Grid>
         </div>

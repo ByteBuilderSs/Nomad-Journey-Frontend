@@ -1,14 +1,14 @@
 import React from "react";
 
 
-export const useAllMsgs = () => {
+export const useAncUsers = () => {
     
-    const[allmsg, setAllmsg]=React.useState([])
-    const allMsgs = async(sender,reciver) => {
+    const[usersReq, setUsersReq]=React.useState([])
+    const allUsersReq = async() => {
         
         const username = JSON.parse(localStorage.getItem('tokens')).username
         
-        const respone= await fetch(process.env.REACT_APP_API_TICKET+'get-all-messages/'+sender+'/'+reciver+'/',{ 
+        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'get-users-requests-announcer/'+username,{ 
             method :'GET',
             headers :{'Content-Type':'application/json'}})
 
@@ -20,10 +20,9 @@ export const useAllMsgs = () => {
         if(respone.ok)
         {
             console.log(json)
-            setAllmsg(json)
-            
+            setUsersReq(json.data)
         }
     }
-    return{allMsgs,allmsg}
+    return{allUsersReq,usersReq}
 }
 

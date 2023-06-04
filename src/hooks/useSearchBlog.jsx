@@ -4,9 +4,9 @@ import { useState } from "react";
 export const useSearchBlog = () => {
     
     const[blogs, setblogs]=useState([])
-    const searchBlogs = async() => {
+    const searchBlogs = async(searchedTxt) => {
         
-        const respone= await fetch(process.env.REACT_APP_API_BLOG+'search-blog/',{ 
+        const respone= await fetch(process.env.REACT_APP_API_BLOG+`search-blog?search=${searchedTxt}`,{ 
             method :'GET',
             headers :{'Content-Type':'application/json'}})
 

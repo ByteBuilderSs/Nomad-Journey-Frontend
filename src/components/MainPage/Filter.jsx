@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/material_orange.css";
+import "flatpickr/dist/themes/material_blue.css";
 import { FetchAnnc } from "../../hooks/useAnnounceFetchMainPage";
 import Button from '@mui/material/Button';
 
@@ -29,7 +29,7 @@ const theme = createTheme({
     palette: {
       primary: {
         // Purple and green play nicely together.
-        main: "#E55405",
+        main: "rgba(0,78,137,1)",
       },
       secondary: {
         main: '#fff',

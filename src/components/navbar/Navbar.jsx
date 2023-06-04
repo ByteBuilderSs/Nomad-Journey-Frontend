@@ -237,11 +237,11 @@ const Navbar = (props) => {
                                     alignItems: "center",
                                     justifyContent: "center",
                                 }}>
-                                    <Tooltip title="notification">
+                                    {/* <Tooltip title="notification">
                                         <IconButton >
                                             <IoNotificationsSharp size={`1.25rem`} color={`#EFEFD0`} />
                                         </IconButton>
-                                    </Tooltip>
+                                    </Tooltip> */}
                                     <Tooltip title="Settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, border:"2px solid", borderColor:"#EFEFD0" }}>
                                             {

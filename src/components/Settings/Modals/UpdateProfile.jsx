@@ -73,7 +73,7 @@ const UpdateProfileImage = () => {
             console.log("+++++++++ THE RESULT IS ++++++++ ", result);
             /* TODO => HOW CAN I CONVERT THE URL TO FILE */
             if (result.data.profile_photo_URL && result.data.profile_photo_URL != "" ) {
-                setProfileImageURL("http://188.121.102.52:8000" + result.data.profile_photo_URL);
+                setProfileImageURL("https://api.nomadjourney.ir" + result.data.profile_photo_URL);
             }
 
         }).catch((error) => {

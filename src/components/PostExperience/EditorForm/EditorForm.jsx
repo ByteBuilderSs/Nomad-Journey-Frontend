@@ -340,6 +340,7 @@ const EditorForm = () => {
                                         disabled={loading}
                                         >
                                         Upload a photo
+                                        
                                         <input
                                             hidden
                                             accept="image/*"

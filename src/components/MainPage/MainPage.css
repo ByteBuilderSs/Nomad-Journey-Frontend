@@ -804,6 +804,7 @@ Pre-loader Style
   .amazing-deals .item p {
     padding-top: 15px;
     margin-top: 10px;
+    color: #afafaf;
     border-top: 1px solid #ddd;
     margin-bottom: 20px;
     word-wrap: break-word; /* Breaks long words to fit the container */
@@ -1032,3 +1033,66 @@ body {
     font-size: 12px;
   }
 }
+@media (max-width: 1400px) {
+  .my-date-picker{
+    width: 120px;
+  }
+  .amazing-deals .item .image {
+    border-top-left-radius: 23px;
+    border-bottom-left-radius: 23px;
+    overflow: hidden;
+
+  }
+  .amazing-deals .image {
+    height: 360px;
+    overflow: hidden;
+    width: 222px;
+    display: flex;
+  }
+
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
+    font-weight: 500;
+    font-size: 19px;
+    color: #fff;
+    text-shadow : 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+  
+}
+
+
+@media (max-width: 1646px) {
+
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
+    font-weight: 500;
+    font-size: 18px;
+    color: #fff;
+    text-shadow : 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+}
+
+@media (max-width: 1481px) {
+
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
+    font-weight: 500;
+    font-size: 17px;
+    color: #fff;
+    text-shadow : 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+}
+@media (max-width: 1400px) {
+
+  #section-1 .content-slider .slider .banner .banner-inner-wrapper h2 {
+    font-weight: 500;
+    font-size: 16px;
+    color: #fff;
+    text-shadow : 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+
+}
+

@@ -35,6 +35,15 @@ const theme = createTheme({
         main: '#fff',
       },
     },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1400,
+        xl: 1536,
+      },
+    },
 });
 
 function sleep(delay = 0) {
@@ -235,7 +244,7 @@ export default function Filters() {
       };
 
       return(
-        <Box sx={{ minWidth: 150 }}>
+        <Box sx={{ width : {md : "120px",lg : "150px", xl : "150px"}, }}>
           <FormControl fullWidth>
             <InputLabel id="sort-label">Sort</InputLabel>
             <Select
@@ -281,7 +290,8 @@ export default function Filters() {
             }}
             id="controllable-languages-demo"
             options={languages ?? []}
-            sx={{ width: 150,
+            sx={{ 
+                  width : {md : "120px",lg : "150px", xl : "150px"},
                   marginLeft : 4
               }}
             renderInput={(params) => <TextField {...params} label="Language" />}
@@ -357,7 +367,7 @@ export default function Filters() {
 
             <ThemeProvider theme={theme}>
 
-                <Button sx={{ marginRight : 4}} variant="outlined" onClick={handleYourLocation}>Your Location</Button>
+                <Button sx={{marginRight : 4, width : {md : "120px",lg : "150px"}}} variant="outlined" onClick={handleYourLocation}>Your Location</Button>
 
                 <Sort/>
 
@@ -372,7 +382,7 @@ export default function Filters() {
                       id="asynchronous-demo-country"
 
                       sx={{ 
-                        width: 150,
+                        width : {md : "120px",lg : "150px", xl : "150px"},
                         marginLeft : 4,
                       }}
                       open={openCountry}
@@ -441,7 +451,7 @@ export default function Filters() {
                     id="asynchronous-demo-city"
                     disabled = {countryInput == ''}
                     sx={{ 
-                      width: 150,
+                      width : {md : "120px",lg : "150px", xl : "150px"},
                       marginLeft : 4,
                       textAlign : "center"
                     }}

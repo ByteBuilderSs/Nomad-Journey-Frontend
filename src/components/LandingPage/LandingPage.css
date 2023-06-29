@@ -100,6 +100,14 @@ LandingPage Styles
   .landing-page .about-main-content .container {
     transform : translateY(-230%);
     width: "400px"!important;
+    margin-top: 5%;
+  }
+}
+@media (max-width: 1400px) {
+  .landing-page .about-main-content .container {
+    transform : translateY(-230%);
+    width: "400px"!important;
+    margin-top: 5%;
   }
 }
 

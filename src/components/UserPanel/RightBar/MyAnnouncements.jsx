@@ -267,7 +267,7 @@ function MyAnnouncements(props) {
 
                             <Grid item md={6} xs={12} sm={6} lg={4} xl={3}>
                                 <div
-                                    className="announcement-hovering"
+                                    className="announcements-hovering"
                                     onClick={() => {
                                             setOpen(true);
                                             setDisabled(false);

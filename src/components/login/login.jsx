@@ -158,8 +158,8 @@ export default function SignInSide()
                                 
                                 <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
                                     <Grid item xs>
-                                        <Link to="#" >
-                                            Forgot password?
+                                        <Link to="/forgotpass" >
+                                            {"Forgot password?"}
                                         </Link>
                                     </Grid>
                                     <Grid item xs>

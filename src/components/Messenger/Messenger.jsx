@@ -17,7 +17,6 @@ import {Paper,
     Box,
     Tooltip, 
     Stack} from '@mui/material';
-import LetteredAvatar from 'react-lettered-avatar';
 import SendIcon from '@mui/icons-material/Send';
 import Lottie from 'react-lottie';
 import UserProfile from '../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement'
@@ -189,6 +188,7 @@ export default function Messenger(props)
 {
     
     const [active,setActive]=React.useState(false);
+    const [hover,setHover]=React.useState("");
     const classes = useStyles();
     const handelChatBox=()=>
     {
@@ -230,13 +230,14 @@ export default function Messenger(props)
                     <>                    
                     <ListItemButton key={item.first_name+item.last_name} onClick={()=>{handelChatBox();setReciver(item.id);setReciverU(item.username)}}>
                     <Tooltip title='view profile'>
-                    <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
-                    <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
+                      <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
+                      <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
 
-                    </ListItemIcon>
+                      </ListItemIcon>
                     </Tooltip>
-                    <ListItemText primary={item.first_name +" "+ item.last_name}></ListItemText>
+                    {/* <ListItemText primary={item.first_name +" "+ item.last_name}></ListItemText> */}
                     </ListItemButton>
+                    <Divider/>
                     </>
                   )}
                       

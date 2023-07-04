@@ -19,7 +19,8 @@ import PostExperience from "./pages/PostExperience";
 import CounterProvider from "./Context/CounterProvider";
 import GeneralPostPage from "./pages/GeneralPosts";
 import MessengerBox from './pages/MessengerBox'
-
+import ForgotPassword from './pages/ForgotPass'
+import ResetPassWord from "./pages/ResetPass";
 const tabNametoIndex = {
   Dashboard: 1,
   Profile: 2,
@@ -56,7 +57,7 @@ function App() {
     if(!localStorage.getItem('tokens')){
       console.log('no user exists');
       setIsLogin(false);
-      navigate("/landing");
+      // navigate("/landing");
     }
     else {
       setIsLogin(true);
@@ -82,7 +83,7 @@ function App() {
                         </div>
                     </div>
                 ) :<div>
-          {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Navbar/>}
+          {!["/landing","/signup","/signup/", "/login/","/login","/resetpass","/forgotpass"].includes(location.pathname) && <Navbar/>}
 
               <body  style = {allPagesStyle}>
 
@@ -95,10 +96,14 @@ function App() {
                           <Route path="/landing" element={<LandingPageFunc/>}/>
                           <Route path="/signup" element={<SignInForm />}/>
                           <Route path="/login" element={< Login/>}/>
-                          <Route path="/home/Dashboard/" element={<MainPageFunc />}/>
+                          <Route path="/forgotpass" element={<ForgotPassword/>}/>
+                          <Route path="/resetpass" element={<ResetPassWord/>}/>
+
+                          {/* <Route path="/home/Dashboard/" element={<MainPageFunc />}/> */}
                         </>
                         :
                         <>
+                          <Route path="/resetpass" element={<ResetPassWord/>}/>
                           <Route path="/landing" element={<LandingPageFunc/>}/>
                           <Route path="/posts" element={<GeneralPostPage/>}/>
                           <Route path="/signup" element={<SignInForm />}/>
@@ -118,7 +123,7 @@ function App() {
                   
 
                 </div>
-            {!["/landing","/signup","/signup/", "/login/","/login"].includes(location.pathname) && <Footer/>}
+            {!["/landing","/signup","/signup/", "/login/","/login","/forgotpass","/resetpass"].includes(location.pathname) && <Footer/>}
 
               </body>
               <ToastContainer 

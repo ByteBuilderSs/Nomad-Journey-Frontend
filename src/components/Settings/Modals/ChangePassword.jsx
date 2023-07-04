@@ -88,12 +88,12 @@ const ResetPassword = (props) => {
     return (
         <div style={
             {borderRadius:"15px",
-            width:"25em",height:"22em",
-            backgroundColor:"#1A659E",
-            color:"#EFEFD0"}
+                width:"25em",height:"22em",
+                backgroundColor:"#1A659E",
+                color:"#EFEFD0"}
         }>
             <h2
-            style={{paddingTop:"0.5em", color: "#EFEFD0"}}>Reset Password</h2>
+                style={{paddingTop:"0.5em", color: "#EFEFD0"}}>Reset Password</h2>
             <div style={{paddingTop:"1em",display:"flex",justifyContent:"center", alignItems:"center"}}>
                 <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
                     <TextField
@@ -107,7 +107,7 @@ const ResetPassword = (props) => {
                         InputProps={{
                             style: { color: '#EFEFD0',
                                 backgroundColor:"rgba(239,239,208,0.11)",
-                            border:"none"},
+                                border:"none"},
                             disableUnderline: true,
                             endAdornment: (
                                 <InputAdornment>
@@ -126,9 +126,9 @@ const ResetPassword = (props) => {
                         label="Current Password"
                         variant='outlined'/>
                 </FormControl>
-                </div>
-                <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-                    <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
+            </div>
+            <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+                <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
                     <TextField
                         value={newPassword}
                         onChange={e=>{setNewPassword(e.target.value)}}
@@ -158,10 +158,10 @@ const ResetPassword = (props) => {
                         type={showNewPassword ? "text" :"password"}
                         label="New Password"
                         variant='outlined' />
-                    </FormControl>
-                </div>
-                <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-                    <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
+                </FormControl>
+            </div>
+            <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+                <FormControl sx={{display:"flex",justifyContent:"center", alignItems:"center"}} variant='standard'>
                     <TextField
                         value={confirmPassword}
                         onChange={e=>{setConfirmPassword(e.target.value)}}
@@ -191,7 +191,7 @@ const ResetPassword = (props) => {
                         type={showConfPassword ? "text" :"password"}
                         label="Confirm Password"
                         variant='outlined'/>
-                    </FormControl>
+                </FormControl>
 
             </div>
                 <div style={{paddingTop:"1em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>

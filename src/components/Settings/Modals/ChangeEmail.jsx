@@ -78,7 +78,6 @@ const ResetEmail = (props) => {
             })
         }
         }
-
     return (
         <div style={
             {borderRadius:"15px",

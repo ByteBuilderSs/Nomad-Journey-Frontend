@@ -200,6 +200,11 @@ export default function PersonalDetails(props) {
                                                         id="outlined-adornment-username"
                                                         className={classes.text_field}
                                                         size="small"
+                                                        sx={{
+                                                            "& .MuiInputBase-input.Mui-disabled": {
+                                                                WebkitTextFillColor: "#EFEFD0",
+                                                            },
+                                                        }}
                                                         InputProps={{
                                                             style: { color: '#EFEFD0',
                                                                 backgroundColor:"rgba(239,239,208,0.11)",

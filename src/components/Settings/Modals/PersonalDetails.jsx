@@ -28,7 +28,8 @@ import UpdateProfileImage from "./UpdateProfile";
 const styles = makeStyles(theme => ({
     text_field:{
         borderRadius:"15px",
-        "& fieldset": { border:"none"}
+        border:"solid 2px #1A659E",
+        "& fieldset": { border:"solid 2px #1A659E"}
     },
     button:{
         width:"15em",
@@ -203,7 +204,7 @@ export default function PersonalDetails(props) {
                                                         InputProps={{
                                                             style: { color: '#EFEFD0',
                                                                 backgroundColor:"rgba(239,239,208,0.11)",
-                                                                border:"none"},
+                                                                border:"solid 2px #1A659E"},
                                                             disableUnderline: true}}
                                                         type={"text"}
                                                         value={usernameState}

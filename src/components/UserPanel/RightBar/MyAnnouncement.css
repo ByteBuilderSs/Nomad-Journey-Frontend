@@ -51,7 +51,7 @@
     background-color: rgba(255, 255, 255, 0.9);
 }
 .announcements-hovering{
-    background-color: #004E89;
+    background-color: #1A659E;
     transition: 0.08s;
     cursor: pointer;
     color: #EFEFD0;
@@ -69,7 +69,7 @@
     /*background-color: #f7f7f7;*/
     /*color: #FF6B35;*/
     color: #F7C59F;
-    box-shadow: 3px 3px 3px rgba(26, 101, 158, 0.34);
+    background-color: #004E89;
     transition: 0.5s ease;
 }
 

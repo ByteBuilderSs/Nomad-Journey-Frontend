@@ -28,8 +28,7 @@ import UpdateProfileImage from "./UpdateProfile";
 const styles = makeStyles(theme => ({
     text_field:{
         borderRadius:"15px",
-        border:"solid 2px #1A659E",
-        "& fieldset": { border:"solid 2px #1A659E"}
+        "& fieldset": { border:"none"}
     },
     button:{
         width:"15em",
@@ -201,10 +200,15 @@ export default function PersonalDetails(props) {
                                                         id="outlined-adornment-username"
                                                         className={classes.text_field}
                                                         size="small"
+                                                        sx={{
+                                                            "& .MuiInputBase-input.Mui-disabled": {
+                                                                WebkitTextFillColor: "#EFEFD0",
+                                                            },
+                                                        }}
                                                         InputProps={{
                                                             style: { color: '#EFEFD0',
                                                                 backgroundColor:"rgba(239,239,208,0.11)",
-                                                                border:"solid 2px #1A659E"},
+                                                                border:"none"},
                                                             disableUnderline: true}}
                                                         type={"text"}
                                                         value={usernameState}

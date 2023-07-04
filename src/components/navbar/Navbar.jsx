@@ -11,6 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import Badge from '@mui/material/Badge';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LetteredAvatar from 'react-lettered-avatar';
 import {
     MdSettings,
@@ -39,6 +41,7 @@ import { toast } from "react-toastify";
 import {IoNotificationsSharp} from "react-icons/io5";
 
 import Notif from "../Notification/Notif";
+import ChatBadegt from '../Messenger/MsgBadget'
 
 let username = "";
 let user_id = "";
@@ -229,7 +232,7 @@ const Navbar = (props) => {
                         </Box>
 
                         <Notif/>
-                        
+                        <ChatBadegt/>
                         <Box sx={{ flexGrow: 0 }}>
                             <Box
                                 sx={{

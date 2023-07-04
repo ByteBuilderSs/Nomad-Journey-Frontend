@@ -131,7 +131,7 @@ export default function LandingPage(){
                             <div class="line-dec"></div>
                             <h2 style={{color : "black"}}>Welcome To Nomad Journey</h2>
                             <div style={{display : "flex", gap :"5px"}}>
-                                <div class="main-button" style={{cursor : "pointer", marginLeft : "42%"}} onClick={() => {navigate("/signup")}}>
+                                <div class="main-button" style={{cursor : "pointer", marginLeft : "42%"}} onClick={() => {navigate("/login")}}>
                                     <div className='landing1' style={{color : "#fff"}}> Login </div>
                                 </div>
                                 <div class="main-button" style={{cursor : "pointer"}} onClick={() => {navigate("/signup")}}>

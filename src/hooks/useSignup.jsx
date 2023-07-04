@@ -12,6 +12,7 @@ export const useSignup=()=>{
             headers :{'Content-Type':'application/json'},
             body :JSON.stringify({first_name,last_name,email,password,password_again,username,User_city})
         }).catch((error)=>console.log(error));
+        
         const json = await respone.json()
         if (!respone.ok)
         {

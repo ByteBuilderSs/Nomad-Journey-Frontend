@@ -153,13 +153,7 @@ const UserPanelNew = () => {
     const lastSegment=useLocation().pathname.split('/')[3]
     return (
         <div className='userpanel'>
-            <Grid item sx={{right:20,bottom:20,position:'fixed'}}>
-                <Tooltip title='send message'>
-                    <Button size='large' onClick={handelClickMsg} 
-                    sx={{borderRadius:'30px 30px 30px 30px',borderColor:'#004E89',border:'solid',paddingLeft:'1.5rem'}}
-                    startIcon={<BiMessageRoundedDetail size={30}  />} />
-                </Tooltip>
-            </Grid>
+            
             {/*<AboutMe*/}
             {/*    url_username={user_params.username}*/}
             {/*    local_storage_username={local_storage_username}*/}

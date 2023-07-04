@@ -72,17 +72,17 @@ const ResetPassword = (props) => {
                     new_password: newPassword
                 }
             })
-                .then((res) => {
-                    setCurrentPassword('');
-                    setNewPassword('');
-                    setConfirmPassword('');
-                    toast.success("Your password changed successfully")
-                })
-                .catch((error) => {
-                    toast.error("Unexpected error has occurred");
-                })
+            .then((res) => {
+                setCurrentPassword('');
+                setNewPassword('');
+                setConfirmPassword('');
+                toast.success("Your password changed successfully")
+            })
+            .catch((error) => {
+                toast.error("Unexpected error has occurred");
+            })
         }
-    }
+        }
 
 
     return (
@@ -194,13 +194,13 @@ const ResetPassword = (props) => {
                 </FormControl>
 
             </div>
-            <div style={{paddingTop:"1em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-                <FormControl>
-                    <Button className={classes.button} onClick={onResetPassword}>
-                        reset password
-                    </Button>
-                </FormControl>
-            </div>
+                <div style={{paddingTop:"1em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+                    <FormControl>
+                        <Button className={classes.button} onClick={onResetPassword}>
+                            reset password
+                        </Button>
+                    </FormControl>
+                </div>
         </div>
     );
 }

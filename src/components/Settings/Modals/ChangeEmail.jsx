@@ -68,17 +68,16 @@ const ResetEmail = (props) => {
                     new_email: email
                 }
             })
-                .then((res) => {
-                    setPassword('');
-                    setEmail('');
-                    toast.success("Your email changed successfully")
-                })
-                .catch((error) => {
-                    toast.error("Unexpected error has occurred");
-                })
+            .then((res) => {
+                setPassword('');
+                setEmail('');
+                toast.success("Your email changed successfully")
+            })
+            .catch((error) => {
+                toast.error("Unexpected error has occurred");
+            })
         }
-    }
-
+        }
     return (
         <div style={
             {borderRadius:"15px",

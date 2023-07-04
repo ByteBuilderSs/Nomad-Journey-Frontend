@@ -5,6 +5,8 @@ import {
     Visibility,
     VisibilityOff,
 } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const styles = makeStyles(theme => ({
     text_field:{
@@ -28,9 +30,54 @@ const styles = makeStyles(theme => ({
     }
 
 }))
+
+let allData;
+let access_token;
+let username;
+if (localStorage.getItem('tokens'))
+{
+    allData = JSON.parse(localStorage.getItem('tokens'));
+    access_token = allData.access;
+    username = allData.username;
+}
+
 const ResetEmail = (props) => {
     const classes = styles();
     const [showNewPassword, setShowNewPassword] = React.useState(false);
+    const [password, setPassword] = React.useState('');
+    const [email, setEmail] = React.useState('');
+
+    const onResetEmail = async (e) => {
+        let isDataValid = true;
+        e.preventDefault();
+        if (!password || !email) {
+            isDataValid = false;
+            toast.error("All the two fields are required");
+        }
+
+        if (isDataValid) {
+            axios({
+                method: "patch",
+                url: `https://api.nomadjourney.ir/api/v1/accounts/UserProfileEdit10/${username}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                data: {
+                    password: password,
+                    new_email: email
+                }
+            })
+                .then((res) => {
+                    setPassword('');
+                    setEmail('');
+                    toast.success("Your email changed successfully")
+                })
+                .catch((error) => {
+                    toast.error("Unexpected error has occurred");
+                })
+        }
+    }
 
     return (
         <div style={
@@ -45,6 +92,8 @@ const ResetEmail = (props) => {
                 <div style={{display:"flex",justifyContent:"center", alignItems:"center"}}>
 
                     <TextField
+                        value={email}
+                        onChange={e=>{setEmail(e.target.value)}}
                         size={`small`}
                         className={classes.text_field}
                         InputLabelProps={{
@@ -63,6 +112,8 @@ const ResetEmail = (props) => {
                 </div>
                 <div style={{paddingTop:"0.75em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
                     <TextField
+                        value={password}
+                        onChange={e=>{setPassword(e.target.value)}}
                         size={`small`}
                         className={classes.text_field}
                         InputLabelProps={{
@@ -91,7 +142,7 @@ const ResetEmail = (props) => {
                         variant='outlined' />
                 </div>
                 <div style={{paddingTop:"4.4em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-                    <Button className={classes.button}>
+                    <Button className={classes.button} onClick={onResetEmail}>
                         submit
                     </Button>
                 </div>

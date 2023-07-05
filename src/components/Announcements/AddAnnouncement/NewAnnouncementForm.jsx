@@ -22,7 +22,31 @@ import transition from "react-element-popper/animations/transition";
 import { toast } from "react-toastify";
 import {useUserData} from '../../../hooks/useSetUserData';
 import { useCounter, useCounterActions } from "../../../Context/CounterProvider";
+import {AiOutlineClose} from "react-icons/ai";
+import {makeStyles} from "@mui/styles";
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"15em",
+        background:"linear-gradient(to right, #F7C59F 50%, #004E89 50%)",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#F7C59F",
+        border:"solid 2px #F7C59F",
+        borderRadius:"15px",
+        transition:"all 0.2s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#004E89"
+        }
+    }
 
+}))
 export let addAnnouncement = 0;
 function sleep(delay = 0) {
     return new Promise((resolve) => {
@@ -46,6 +70,7 @@ const intialState = {
 
 
 export default function NewAnnouncementForm(props) {
+    const classes = styles();
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const [country, setCountry] = useState(null);
@@ -302,12 +327,25 @@ export default function NewAnnouncementForm(props) {
     };
 
     return (
-        <Dialog 
+        <Dialog
             open={props.open}
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
-            PaperProps={{ sx: { borderRadius: "15px" } }}
+            PaperProps={{ sx: {
+                borderRadius: "15px",
+                color:"#EFEFD0",
+                backgroundColor:"#004E89",
+                boxShadow:"inset 0px 0px 0px 8px #1A659E",
+                } }}
             >
+            <IconButton
+                edge="end"
+                onClick={handleClose}
+                size={"medium"}
+                sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#EFEFD0" }}
+            >
+                <AiOutlineClose />
+            </IconButton>
                 <Box className="add-request-center-element" sx={{ m: 2, maxWidth: "100%" }}>
                     <Box className="request-management-add-request">
                         <Grid container spacing={3}>
@@ -316,7 +354,7 @@ export default function NewAnnouncementForm(props) {
                                     <form className="add-request-form">
                                         <Box>
                                             <Box className="add-request-center-element form-title">
-                                                <h1 style={{ marginBottom: "3rem"}}>Enter The Trip Info</h1>
+                                                <h1 style={{paddingTop:"1rem" ,marginBottom: "3rem"}}>Enter The Trip Info</h1>
                                             </Box>
                                             <Grid container spacing={2}>
                                                 {/* TODO => country name */}
@@ -358,7 +396,16 @@ export default function NewAnnouncementForm(props) {
                                                                     {...params} 
                                                                     label="Country"
                                                                     required
+                                                                    className={classes.text_field}
+                                                                    InputLabelProps={{
+                                                                        style: { color: 'rgba(239,239,208,0.7)',fontWeight: "bold" }
+                                                                    }}
                                                                     InputProps={{
+                                                                        style: { color: '#EFEFD0',
+                                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                                            fontWeight:"bold",
+                                                                            border:"none"},
+                                                                        disableUnderline: true,
                                                                         ...params.InputProps,
                                                                         endAdornment: (
                                                                         <React.Fragment>
@@ -402,7 +449,16 @@ export default function NewAnnouncementForm(props) {
                                                                     {...params} 
                                                                     label="City"
                                                                     required
+                                                                    className={classes.text_field}
+                                                                    InputLabelProps={{
+                                                                        style: { color: 'rgba(239,239,208,0.7)',fontWeight: "bold" }
+                                                                    }}
                                                                     InputProps={{
+                                                                        style: { color: '#EFEFD0',
+                                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                                            fontWeight:"bold",
+                                                                            border:"none"},
+                                                                        disableUnderline: true,
                                                                         ...params.InputProps,
                                                                         endAdornment: (
                                                                         <React.Fragment>
@@ -428,7 +484,11 @@ export default function NewAnnouncementForm(props) {
                                                                     transition: "all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)",
                                                                 })
                                                             ]}
-                                                            style={{ width: "100%"}}
+                                                            style={{
+                                                                color: '#EFEFD0',
+                                                                backgroundColor:"rgba(239,239,208,0.11)",
+                                                                width: "100%",
+                                                                border:"none"}}
                                                             inputClass="new-request-date-picker-input"
                                                             className="date-picker"
                                                             format="YYYY/MM/DD"
@@ -448,6 +508,11 @@ export default function NewAnnouncementForm(props) {
                                                     <FormControlLabel
                                                         control={<Checkbox 
                                                                     value={arrival_date_is_flexible}
+                                                                    sx={{
+                                                                        color: "#EFEFD0",
+                                                                        '&.Mui-checked': {
+                                                                            color: "#F7C59F",
+                                                                        }}}
                                                                     color="primary" 
                                                                     onChange={handleChangeIsArrDateFlexible}
                                                                     />}
@@ -467,7 +532,11 @@ export default function NewAnnouncementForm(props) {
                                                                     transition: "all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)",
                                                                 })
                                                             ]}
-                                                            style={{ width: "100%"}}
+                                                            style={{
+                                                                color: '#EFEFD0',
+                                                                backgroundColor:"rgba(239,239,208,0.11)",
+                                                                width: "100%",
+                                                                border:"none"}}
                                                             inputClass="new-request-date-picker-input"
                                                             className="date-picker"
                                                             format="YYYY/MM/DD"
@@ -488,7 +557,12 @@ export default function NewAnnouncementForm(props) {
                                                     </FormControl>
                                                     {/* departure date is  flexible */}
                                                     <FormControlLabel
-                                                        control={<Checkbox 
+                                                        control={<Checkbox
+                                                            sx={{
+                                                                color: "#EFEFD0",
+                                                                '&.Mui-checked': {
+                                                                    color: "#F7C59F",
+                                                                }}}
                                                                     value={arrival_date_is_flexible}
                                                                     color="primary"
                                                                     onChange={handleChangeIsDptDateFlexible}
@@ -499,11 +573,30 @@ export default function NewAnnouncementForm(props) {
                                                 {/* Travelers count */}
                                                 <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
                                                     <FormControl sx={{ width: "100%", mb: "1rem" }}>
-                                                            <InputLabel id="travelers-count-label" required>
+                                                            <InputLabel sx={{
+                                                                fontWeight:"bold",
+                                                                color: 'rgba(239,239,208,0.7)',
+                                                                '&.Mui-focused': {
+                                                                    color: 'rgba(239,239,208,0.7)',
+                                                                },
+                                                            }} id="travelers-count-label" required>
                                                                 Number of Travelers
                                                             </InputLabel>
 
                                                                 <Select
+                                                                    sx={{
+                                                                        color: '#EFEFD0',
+                                                                        fontWeight:"bold",
+                                                                        backgroundColor:"rgba(239,239,208,0.11)",
+                                                                        '.MuiOutlinedInput-notchedOutline': {
+                                                                            borderColor: 'rgba(239,239,208,0.11)',
+                                                                        },
+                                                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                                            borderColor: 'rgba(239,239,208,0.11)',
+                                                                        },
+                                                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                                                            borderColor: 'rgba(239,239,208,0.11)',
+                                                                        }  }}
                                                                     labelId="travelers-count-labe"
                                                                     id="travelers-count"
                                                                     label="Number of Travelers"
@@ -538,6 +631,16 @@ export default function NewAnnouncementForm(props) {
                                                     <FormControl sx={{width: "100%"}}>
                                                         <TextField 
                                                             id="new-request-message"
+                                                            InputLabelProps={{
+                                                                style: { color: 'rgba(239,239,208,0.7)',fontWeight: "bold" }
+                                                            }}
+                                                            InputProps={{
+                                                                style: { color: '#EFEFD0',
+                                                                    backgroundColor:"rgba(239,239,208,0.11)",
+                                                                    fontWeight:"bold",
+                                                                    border:"none"},
+                                                                disableUnderline: true}}
+                                                            className={classes.text_field}
                                                             name="message"
                                                             type="text"
                                                             label="Message"
@@ -553,30 +656,34 @@ export default function NewAnnouncementForm(props) {
                                                     </FormControl>
                                                 </Grid>
                                                 {/* Confirm Button */}
-                                                <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                                                    <Button
-                                                        variant="contained"
-                                                        sx={{ width: "100%" }}
-                                                        type="submit"
-                                                        onClick={onSubmit}
-                                                        disabled={disabled}
-                                                    >
-                                                        Submit the information
-                                                    </Button>
+                                                <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                                                    <div style={{width:"100%", justifyContent:"center",
+                                                    alignItems:"center", display:"flex",
+                                                    paddingBottom:"2rem"}}>
+                                                        <Button
+                                                            variant="contained"
+                                                            type="submit"
+                                                            className={classes.button}
+                                                            onClick={onSubmit}
+                                                            disabled={disabled}
+                                                        >
+                                                            Submit
+                                                        </Button>
+                                                    </div>
                                                 </Grid>
                                                 {/* Quit */}
-                                                <Grid sx={{ display: "flex", justifyContent: "flex-end" }} item xl={6} lg={6} md={6} sm={12} xs={12}>
-                                                    <Button
-                                                        variant="outlined"
-                                                        sx={{
-                                                        width: "1000%",
-                                                        }}
-                                                        type="submit"
-                                                        onClick={onCancle}
-                                                    >
-                                                        Quit
-                                                    </Button>
-                                                </Grid>
+                                                {/*<Grid sx={{ display: "flex", justifyContent: "flex-end" }} item xl={6} lg={6} md={6} sm={12} xs={12}>*/}
+                                                {/*    <Button*/}
+                                                {/*        variant="outlined"*/}
+                                                {/*        sx={{*/}
+                                                {/*        width: "1000%",*/}
+                                                {/*        }}*/}
+                                                {/*        type="submit"*/}
+                                                {/*        onClick={onCancle}*/}
+                                                {/*    >*/}
+                                                {/*        Quit*/}
+                                                {/*    </Button>*/}
+                                                {/*</Grid>*/}
                                             </Grid>
                                         </Box>
                                     </form>

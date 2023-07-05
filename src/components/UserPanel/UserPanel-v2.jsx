@@ -46,7 +46,29 @@ import {AiTwotoneSetting} from "react-icons/ai";
 import Settings from "../Settings/Settings";
 import TabAboutMe from "./RightBar/AboutMe/Tab-AboutMe";
 import { BiMessageRoundedDetail } from "react-icons/bi";
+import {makeStyles} from "@mui/styles";
 
+const styles = makeStyles(theme => ({
+    button:{
+        width:"15em",
+        // background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#EFEFD0",
+        fontWeight:"bold",
+        border:"solid 2px #EFEFD0",
+        borderRadius:"15px",
+        transition:"all 0.2s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            border:"solid 2px #F7C59F",
+            backgroundColor : "#F7C59F",
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
+
+}))
 
 
 
@@ -69,6 +91,7 @@ const UserPanelNew = () => {
     const [active, setActive] = useState("About Me");
     const {userdata, userInfo} = useUserData(user_params.username);
     const [profileImageURL, setProfileImageURL] = useState("");
+    const classes = styles();
 
 
     useEffect(() => {
@@ -189,6 +212,14 @@ const UserPanelNew = () => {
                         null
                     ))
                     }
+                    {local_storage_username == lastSegment ?
+                        <div style={{justifyContent:"center", alignItems:"center", display:"flex", paddingTop:"2.5rem"}}>
+                            <Button
+                                className={classes.button}
+                                onClick={(e) => openCreateRequest()}>
+                                Add Announcement
+                            </Button>
+                        </div>: null}
                     </div>
                 </Col>
                 <Col md={10}>

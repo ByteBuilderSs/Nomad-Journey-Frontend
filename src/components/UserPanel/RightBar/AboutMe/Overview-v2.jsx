@@ -141,7 +141,7 @@ const OverviewV2 = (props) => {
                 {/*Profile Info*/}
                 <Grid item xs={12} sx={{ marginTop: "1rem"
                 ,justifyContent:"center", alignItems:"center", display:"flex"}}>
-                    {userInfo !== [] &&
+                    {userInfo  &&
                         <UserProfile user_id={userInfo.id} imageSize={175}
                          profileSize={"14rem"} first_name={userInfo.first_name} />}
                 </Grid>

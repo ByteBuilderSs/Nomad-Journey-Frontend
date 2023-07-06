@@ -11,7 +11,7 @@ import {
     TableRow,
     TableCell,
     IconButton, TablePagination,
-    Switch
+    Switch, TextField
 } from "@mui/material";
 import "../Authenticated/AuthenticatedAnnouncementDetails.css";
 import {Col, ModalFooter, ModalTitle, Row, ModalBody, ModalHeader} from "react-bootstrap";
@@ -20,12 +20,13 @@ import { makeStyles } from '@mui/styles';
 import { alpha, styled } from '@mui/material/styles';
 import {Item, ModalContent} from "semantic-ui-react";
 import React, {useEffect, useMemo, useState} from "react";
+import {AiFillCalendar} from "react-icons/ai";
 import {TiLocation} from "react-icons/ti";
 import {FaHome, FaMapMarkerAlt} from "react-icons/fa";
 import {IoIosPerson} from "react-icons/io";
-import {MdDescription, MdCancel} from "react-icons/md";
+import {MdDescription, MdOutlineDescription} from "react-icons/md";
 import {ImProfile} from "react-icons/im";
-import {AiFillCheckCircle} from "react-icons/ai";
+import {AiFillCheckCircle, AiOutlineClose} from "react-icons/ai";
 import PendingIcon from '@mui/icons-material/Pending';
 import DoneIcon from '@mui/icons-material/Done';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
@@ -118,23 +119,59 @@ const useStyles = makeStyles(theme => (
             opacity:"0.9"
         },
         mapButton:{
-            color:"#e45505",
-            backgroundColor:"rgba(237,231,230,0.7)",
+            color:"#1A659E",
+            backgroundColor:"rgba(239,239,208,0.7)",
             "&:hover":{
-                backgroundColor:"rgba(218,193,180,0.78)",
+                backgroundColor:"rgba(239,239,208,0.8)",
             }
         },
         mapButtonActive:{
 
-            color:"#e45505",
-            backgroundColor:"rgba(237,231,230,0.8)",
+            color:"#1A659E",
+            backgroundColor:"rgba(239,239,208,0.8)",
             borderBottom:"solid",
-            borderColor:"#e45505",
+            borderColor:"#1A659E",
             borderBottomWidth:"medium",
             "&:hover":{
-                backgroundColor:"rgba(236,217,204,0.8)",
+                backgroundColor:"rgba(239,239,208,0.8)",
             }
 
+        },
+        button:{
+            width:"13vw",
+            backgroundColor:"rgba(239,239,208,0)",
+            backgroundPosition:"right bottom",
+            fontWeight:"bold",
+            color:"#EFEFD0",
+            border:"solid 2px #EFEFD0",
+            borderRadius:"15px",
+            transition:"all 0.25s ease-out",
+            // display:"block",
+            backgroundSize:"200% 100%",
+            "&:hover":{
+                backgroundPosition:"left bottom",
+                backgroundColor:"#EFEFD0",
+                border:"solid 2px #EFEFD0",
+                color:"#004E89"
+            }
+        },
+        deleteButton:{
+            width:"13vw",
+            backgroundColor:"rgba(239,239,208,0)",
+            backgroundPosition:"right bottom",
+            fontWeight:"bold",
+            color:"#EFEFD0",
+            border:"solid 2px #EFEFD0",
+            borderRadius:"15px",
+            transition:"all 0.25s ease-out",
+            // display:"block",
+            backgroundSize:"200% 100%",
+            "&:hover":{
+                backgroundPosition:"left bottom",
+                backgroundColor:"#EFEFD0",
+                border:"solid 2px #EFEFD0",
+                color:"#b21313"
+            }
         }
 
     }
@@ -146,9 +183,11 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: "55%",
     height: "85%",
-    bgcolor: '#EDE7E6FF',
+    bgcolor: '#FFFFFF',
     boxShadow: 24,
-    overflow: "hidden"
+    border: "none",
+    overflow: "hidden",
+    borderRadius: "15px",
 };
 export default function UnAuthAnnouncement(props)
 {
@@ -199,12 +238,11 @@ export default function UnAuthAnnouncement(props)
     }
 
     const checkDescription = (description) => {
-        if(description == null || description.length === 0)
-            return
-        console.log(description.length)
         return(
             <>
-                <MdDescription style={{marginLeft:"1rem" , marginRight: "0.5rem"}} /> Description
+                <div style={{fontSize:"1.05vw", color:"#004E89"}}>
+                    <MdDescription style={{marginRight: "0.5rem"}} /> Description
+                </div>
             </>
         )
     }
@@ -293,53 +331,76 @@ export default function UnAuthAnnouncement(props)
         if(anc_status === "P" || anc_status === "A")
             return (
                 <>
-                    <Item className={classes.items}>
-                        <Stack sx={{width:"80%", right:"0", position:"fixed"}} direction={`row`}>
-                            <Item>
-                                <IconButton sx={{color:"rgba(237,231,230,0.7)"}} size={`large`} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
-                                    <BiEdit />
-                                </IconButton>
-                                <EditAnnouncement
-                                    anc={announcement}
-                                    open={openEdit}
-                                    setOpen={setOpenEdit}
-                                    close={closeEdit}
-                                    setClose={setCloseEdit}
-                                    requestData={requestData}
-                                    setRequestData={setRequestData}
-                                />
-                            </Item>
+                    <Grid container style={{marginLeft:"25%", marginBottom:"15%"}} alignItems='center' direction='column' justifyContent="center" spacing={1}>
+                        <Grid item >
+                            <Button className={classes.button} startIcon={<BiEdit />} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
+                                <div style={{marginLeft:"3.1rem"}}>
+                                    <div style={{marginLeft:"-4.3rem"}}>
+                                        Edit
+                                    </div>
+                                </div>
+                            </Button>
+                            <EditAnnouncement
+                                anc={announcement}
+                                open={openEdit}
+                                setOpen={setOpenEdit}
+                                close={closeEdit}
+                                setClose={setCloseEdit}
+                                requestData={requestData}
+                                setRequestData={setRequestData}
+                            />
+                        </Grid>
+                        <Grid item >
+                            <Button className={classes.deleteButton} startIcon={<BiTrash />} onClick={() => {setOpenDelete(true); setCloseDelete(false);}}>
+                                Delete
+                            </Button>
 
-                            <Item>
-                                <IconButton sx={{color:"rgba(237,231,230,0.7)"}} size={`large`} onClick={() => {setOpenDelete(true); setCloseDelete(false);}
-                                }>
-                                    <BiTrash />
-                                </IconButton>
-                                <DeleteAnnouncement
-                                    anc_id={announcement.id}
-                                    announcement={announcement}
-                                    open={openDelete}
-                                    setOpen={setOpenDelete}
-                                    closeAnnouncement={handleClose}
-                                    close={closeDelete}
-                                    setClose={setCloseDelete}/>
-                            </Item>
-                        </Stack>
-                    </Item>
+                            <DeleteAnnouncement
+                                anc_id={announcement.id}
+                                announcement={announcement}
+                                open={openDelete}
+                                setOpen={setOpenDelete}
+                                closeAnnouncement={handleClose}
+                                close={closeDelete}
+                                setClose={setCloseDelete}/>
+                        </Grid>
+                    </Grid>
                 </>
             )
+    }
+    const writeDescription = (description) => {
+        if(description == null || description.length === 0)
+            return(
+                <>
+                    <Stack alignItems="center" justifyContent="center" style={{marginTop:"10%"}}>
+                        <Item>
+                            <MdOutlineDescription color={`rgba(0,78,137,0.7)`} size={`35`}/>
+                        </Item>
+                        <Item>
+                            <div style={{color:"rgba(0,78,137,0.7)"}}>
+                                No Description
+                            </div>
+                        </Item>
+                    </Stack>
+                </>
+            );
+        return (
+            <>
+                {announcement.anc_description}
+            </>
+        )
     }
     const volunteer_hosts = (volunteer_host, anc_id) =>
     {
         if(volunteer_host.length === 0)
             return(
                 <>
-                    <Stack alignItems="center" justifyContent="center" style={{marginTop:"25%"}} >
+                    <Stack alignItems="center" justifyContent="center" style={{marginTop:"28%"}} >
                         <Item>
-                            <ImProfile color={`#EDE7E6FF`} size={`35`}/>
+                            <ImProfile color={`rgba(0,78,137,0.7)`} size={`35`}/>
                         </Item>
                         <Item>
-                            <div style={{color:"#EDE7E6FF"}}>
+                            <div style={{color:"rgba(0,78,137,0.7)"}}>
                                 No offers
                             </div>
                         </Item>
@@ -375,45 +436,45 @@ export default function UnAuthAnnouncement(props)
                                         <>
                                             <Stack spacing={2} alignItems={`center`}>
                                                 <Item>
-                                                    <UserProfile user_id={item.id} first_name={item.first_name} imageSize={100} profileSize={`8rem`}/>
+                                                    <UserProfile user_id={item.id} first_name={item.first_name} imageSize={75} profileSize={`6rem`}/>
                                                 </Item>
                                                 <Item>
-                                                    <Stack>
-                                                        <Item>
-                                                            <h3>
-                                                                {item.first_name}
-                                                            </h3>
-                                                        </Item>
-                                                        <Item>
-                                                            <h3>
-                                                                {item.last_name}
-                                                            </h3>
-                                                        </Item>
-                                                    </Stack>
+                                                    <h3>
+                                                        {item.first_name} {item.last_name}
+                                                    </h3>
                                                 </Item>
                                                 <Item>
-                                                    <Button sx={{color:"white",backgroundColor:"rgba(0,148,0,0.55)",
-                                                        marginRight:"0.5rem",
-                                                        "&:hover":{
-                                                            backgroundColor: "rgba(0,148,0,0.7)"
-                                                        }}}
-                                                            color={`success`} onClick={()=> {
-                                                        setOpenAccept(true);
-                                                        setCloseAccept(false);
-                                                        setHostId(item.id);}}>
-                                                        Accept
-                                                    </Button>
-                                                    <Button sx={{color:"white",backgroundColor:"rgba(255,0,0,0.55)",
-                                                        "&:hover":{
-                                                            backgroundColor: "rgba(255,0,0,0.7)"
-                                                        }}}
-                                                            color={`error`} onClick={()=> {
-                                                        setOpenReject(true);
-                                                        setCloseReject(false);
-                                                        setHostId(item.id);
-                                                    }} >
-                                                        Reject
-                                                    </Button>
+                                                    <div style={{bottom:"-40%", position:"fixed", right:"2.7vw",
+                                                        marginLeft:"2vw"}}>
+                                                        <Stack direction={`row`}>
+                                                            <Item>
+                                                                <Button sx={{color:"white",backgroundColor:"rgba(0,148,0,0.55)",
+                                                                    marginRight:"0.5rem",
+                                                                    "&:hover":{
+                                                                        backgroundColor: "rgba(0,148,0,0.7)"
+                                                                    }}}
+                                                                        color={`success`} onClick={()=> {
+                                                                    setOpenAccept(true);
+                                                                    setCloseAccept(false);
+                                                                    setHostId(item.id);}}>
+                                                                    Accept
+                                                                </Button>
+                                                            </Item>
+                                                            <Item>
+                                                                <Button sx={{color:"white",backgroundColor:"rgba(255,0,0,0.55)",
+                                                                    "&:hover":{
+                                                                        backgroundColor: "rgba(255,0,0,0.7)"
+                                                                    }}}
+                                                                        color={`error`} onClick={()=> {
+                                                                    setOpenReject(true);
+                                                                    setCloseReject(false);
+                                                                    setHostId(item.id);
+                                                                }} >
+                                                                    Reject
+                                                                </Button>
+                                                            </Item>
+                                                        </Stack>
+                                                    </div>
                                                 </Item>
                                             </Stack>
                                         </>
@@ -498,7 +559,7 @@ export default function UnAuthAnnouncement(props)
                             <div key={key}>
                                 {key === current && (
                                     <>
-                                        <Circle color={'#3c6e71'} center={[items.host_lat, items.host_long]} radius={800} />
+                                        <Circle color={'rgba(0,78,137,0.7)'} center={[items.host_lat, items.host_long]} radius={800} />
                                         <SetViewCenterHost lat={items.host_lat} lng={items.host_long} />
                                     </>
                                 )}
@@ -515,7 +576,8 @@ export default function UnAuthAnnouncement(props)
                 {volnteers.map((items,key) =>
                     (
                         <>
-                            <Circle color={'#3c6e71'} center={[items.host_lat, items.host_long]} radius={1000}
+                            <Circle color={key === current ? 'rgba(0,78,137,1)' : `rgba(26, 101, 158, 0.55)`}
+                                    center={[items.host_lat, items.host_long]} radius={1000}
                                     eventHandlers={{
                                         mouseover: (event) => event.target.openPopup(),
                                         mouseout: (event) => event.target.closePopup(),
@@ -558,12 +620,12 @@ export default function UnAuthAnnouncement(props)
                 return(<>
                     <h2>Host</h2>
                     <Card.Body>
-                        <Stack alignItems="center" justifyContent="center" style={{marginTop:"25%"}}>
+                        <Stack alignItems="center" justifyContent="center" style={{marginTop:"28%"}}>
                             <Item>
-                                <ImProfile color={`#EDE7E6FF`} size={`35`}/>
+                                <ImProfile color={`rgba(0,78,137,0.7)`} size={`35`}/>
                             </Item>
                             <Item>
-                                <div style={{color:"#EDE7E6FF"}}>
+                                <div style={{color:"rgba(0,78,137,0.7)"}}>
                                     No one was accepted
                                 </div>
                             </Item>
@@ -620,21 +682,33 @@ export default function UnAuthAnnouncement(props)
     return(
         <Modal open={props.open} onClose={handleClose} >
             <Box sx={{...style}}>
+                <IconButton
+                    edge="end"
+                    onClick={handleClose}
+                    size={"medium"}
+                    sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#004E89" }}
+                >
+                    <AiOutlineClose />
+                </IconButton>
                 <Row>
                     <Col md={4}>
                         <div style={{height:"100%", width:"100%"}}>
-                            <div style={{backgroundColor:"rgba(228,85,5,0.5)"}}>
+                            <div style={{backgroundColor:"rgba(0,78,137,0.8)"}}>
                                 <div className={classes.sidebarDetails}></div>
                             </div>
                             <div style={{position:"absolute", top:"0.5em",
-                                zIndex:"100",left:"0.5em", color:"#EDE7E6FF"}}>
-                                <h1 style={{marginLeft: "1.5rem"}}>Announcement</h1>
-                                <Stack sx={{marginTop:"2rem"}} spacing={3}>
+                                zIndex:"100",left:"0.5em", color:"#EFEFD0"}}>
+                                <h1 style={{marginLeft: "1.5rem", marginTop:"0.5rem", fontWeight:"bold"}}>Announcement</h1>
+                                    <Typography component="h4"
+                                                style={{marginLeft: "1.5rem", marginTop:"-1rem", fontWeight:"bold", fontSize:"0.9vw" }}>
+                                        {StatusCheck(announcement.anc_status)}
+                                    </Typography>
+                                <Stack sx={{marginTop:"1rem"}} spacing={3}>
                                     <Item>
                                         <Stack direction={`row`}>
                                             <Item>
                                                 <Typography component="h5"
-                                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw" }}>
+                                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1.15vw" }}>
                                                     <span><TiLocation style={{marginLeft: "1rem"  ,marginRight: "0.5rem"}} /></span>
                                                 </Typography>
                                             </Item>
@@ -642,32 +716,24 @@ export default function UnAuthAnnouncement(props)
                                                 <Stack>
                                                     <Item>
                                                         <Typography component="h5"
-                                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw" }}>
+                                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1.15vw" }}>
                                                             <span>{announcement.city_name}</span>
                                                         </Typography>
                                                     </Item>
                                                     <Item>
                                                         <Typography component="h5"
-                                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw" }}>
+                                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1.15vw" }}>
                                                         <span>{announcement.city_country}
                                                         </span>
                                                         </Typography>
                                                     </Item>
                                                 </Stack>
                                             </Item>
-                                            <Item>
-                                                <Typography component="h5"
-                                                            style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw" }}>
-                                                        <span>
-                                                    {checkButton(announcement.anc_status)}
-                                                        </span>
-                                                </Typography>
-                                            </Item>
                                         </Stack>
                                     </Item>
                                     <Item>
                                         <Typography component="h5"
-                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw" }}>
+                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1.1vw" }}>
                                                         <span>
                                                         <FaHome style={{ marginLeft: "1rem", marginRight: "0.5rem"}} />{props.numOfNights(announcement.arrival_date, announcement.departure_date)}
                                                         </span>
@@ -675,32 +741,32 @@ export default function UnAuthAnnouncement(props)
                                     </Item>
                                     <Item>
                                         <Typography component="h5"
-                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw" }}>
+                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1.1vw" }}>
                                                         <span>
                                                         <IoIosPerson style={{marginLeft: "1rem", marginRight: "0.5rem"}} />{props.numOfTravelers(announcement.travelers_count)}
                                                         </span>
                                         </Typography>
                                     </Item>
-                                    {announcement.anc_status ==="A" ?
-                                    <>
-                                    <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
-                                            <Grid item >
-                                            <Button size='medium'
-                                            onClick={handelSendM}
-                                            sx={{
-                                                color:"rgba(237,231,230,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.2)",
-                                            "&:hover":{
-                                                color:"rgba(234,187,170,0.8)",
-                                                backgroundColor:"rgba(201,153,127,0.27)"
-                                            },width:'20vh'
-                                            }} startIcon={<SendIcon />}>
-                                                Send Messege
-                                            </Button>
-                                            </Grid>
-                                    </Grid>
-                                    </>
-                                    :null}
+                                    {/*{announcement.anc_status ==="A" ?*/}
+                                    {/*<>*/}
+                                    {/*<Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>*/}
+                                    {/*        <Grid item >*/}
+                                    {/*        <Button size='medium'*/}
+                                    {/*        onClick={handelSendM}*/}
+                                    {/*        sx={{*/}
+                                    {/*            color:"rgba(237,231,230,0.8)",*/}
+                                    {/*            backgroundColor:"rgba(201,153,127,0.2)",*/}
+                                    {/*        "&:hover":{*/}
+                                    {/*            color:"rgba(234,187,170,0.8)",*/}
+                                    {/*            backgroundColor:"rgba(201,153,127,0.27)"*/}
+                                    {/*        },width:'20vh'*/}
+                                    {/*        }} startIcon={<SendIcon />}>*/}
+                                    {/*            Send Messege*/}
+                                    {/*        </Button>*/}
+                                    {/*        </Grid>*/}
+                                    {/*</Grid>*/}
+                                    {/*</>*/}
+                                    {/*:null}*/}
                                     {announcement.anc_status === "D" ? 
                                     <>
                                         <div style={{position:"fixed", bottom:"0",
@@ -762,14 +828,22 @@ export default function UnAuthAnnouncement(props)
                                         anc_id={announcement.id}
                                         />
                                     </>:null}
-                                  
+
                                     <Item>
-                                        <div style={{position:"fixed", bottom:"0",
-                                            marginBottom:"1rem", marginLeft:"0.25rem",
-                                            width:"30%", height:"32vh",
-                                        }}>
-                                            {renderHostBox(announcement.anc_status, announcement.volunteers, announcement.id)}
-                                        </div>
+                                        <Typography component="h5"
+                                                    style={{ position: "fixed", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw", bottom:"0", marginBottom:"1" }}>
+                                            <span>
+                                                <div style={{
+                                                    width:"100%",
+                                                    alignItems:"center",
+                                                    justifyContent:"center",
+                                                    display:"flex"
+                                                }}>
+                                                    {checkButton(announcement.anc_status)}
+                                                </div>
+
+                                            </span>
+                                        </Typography>
                                     </Item>
                                 </Stack>
 
@@ -778,17 +852,37 @@ export default function UnAuthAnnouncement(props)
                         </div>
                     </Col>
                     <Col md={8}>
-                        <div>
-                            <h1></h1>
+                        <div style={{
+                            marginTop:"3.5rem"
+                        }}>
                             <Stack>
                                 <Item>
                                     <Stack direction={`row`}>
                                         <Item>
                                             <Typography component="h4"
                                                         style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize:"1vw" }}>
-                                                <Stack sx={{marginTop:"1rem", marginLeft:"2rem", borderLeft:"solid", borderLeftWidth:"thin"}}>
-                                                    <Item className={classes.dates}>
-                                                        Start at {props.dayOfdate(announcement.arrival_date)}
+                                                <Stack sx={{marginTop:"1rem",
+                                                    marginLeft:"0.5vw",}}>
+                                                    <Item>
+                                                        <div style={{fontSize:"1.05vw", color:"#004E89"}}>
+                                                            <AiFillCalendar style={{marginRight: "0.5rem"}} /> Arrival
+                                                        </div>
+                                                    </Item>
+                                                    <Item>
+                                                        <div style={{wordBreak:"break-word"}}>
+                                                            <div style={{ color: '#004E89',
+                                                                paddingTop:"0.5rem",
+                                                                paddingBottom:"0.5rem",
+                                                            marginTop:"0.5rem",
+                                                            backgroundColor:"rgba(0,78,137,0.1)",
+                                                            fontWeight:"bold",
+                                                            border:"none",
+                                                            borderRadius:"15px", width:"16vw"}}>
+                                                            <div style={{marginLeft:"0.5vw", marginRight:"0.5vw"}}>
+                                                                {props.dayOfdate(announcement.arrival_date)}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     </Item>
                                                 </Stack>
                                             </Typography>
@@ -797,18 +891,30 @@ export default function UnAuthAnnouncement(props)
 
                                             <Typography component="h4"
                                                         style={{ display: "flex", alignItems: "center", fontWeight: "bold", fontSize:"1vw" }}>
-                                                <Stack sx={{marginTop:"1rem", marginLeft:"2rem", borderLeft:"solid", borderLeftWidth:"thin"}}>
-                                                    <Item className={classes.dates}>
-                                                        End at {props.dayOfdate(announcement.departure_date)}
+                                                <Stack sx={{marginTop:"1rem",
+                                                    marginLeft:"1.5vw",}}>
+                                                    <Item>
+                                                        <div style={{fontSize:"1.05vw", color:"#004E89"}}>
+                                                            <AiFillCalendar style={{marginRight: "0.5rem"}} /> Departure
+                                                        </div>
+                                                    </Item>
+                                                    <Item>
+                                                        <div style={{wordBreak:"break-word"}}>
+                                                            <div style={{ color: '#004E89',
+                                                                paddingTop:"0.5rem",
+                                                                paddingBottom:"0.5rem",
+                                                                marginTop:"0.5rem",
+                                                                backgroundColor:"rgba(0,78,137,0.1)",
+                                                                fontWeight:"bold",
+                                                                border:"none",
+                                                                borderRadius:"15px", width:"16vw"}}>
+                                                                <div style={{marginLeft:"0.5vw", marginRight:"0.5vw"}}>
+                                                                    {props.dayOfdate(announcement.departure_date)}
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </Item>
                                                 </Stack>
-                                            </Typography>
-                                        </Item>
-                                        <Item>
-                                            <Typography component="h4"
-                                                        style={{marginRight:"1rem" ,marginTop:"1rem", marginLeft:"0.5rem",
-                                                            display: "flex", alignItems: "center", fontWeight: "bold", fontSize:"1vw" }}>
-                                                {StatusCheck(announcement.anc_status)}
                                             </Typography>
                                         </Item>
                                     </Stack>
@@ -816,16 +922,27 @@ export default function UnAuthAnnouncement(props)
                                 <Item>
                                     <Box sx={{width:"90%"}}>
                                         <Typography component="h4"
-                                                    style={{ display: "flex", alignItems: "center", fontWeight: "bold",
+                                                    style={{ display: "flex", alignItems: "center",
+                                                        fontWeight: "bold",
                                                         fontSize:"1vw" }}>
-                                            <Stack sx={{marginTop:"2rem", marginLeft:"2rem",
-                                                borderLeft:"solid", borderLeftWidth:"thin"}}>
+                                            <Stack sx={{marginTop:"1rem", marginLeft:"0.5vw"}}>
                                                 <Item>
                                                     {checkDescription(announcement.anc_description)}
                                                 </Item>
                                                 <Item>
-                                                    <div style={{marginLeft:"3rem", wordBreak:"break-word"}}>
-                                                        {announcement.anc_description}
+                                                    <div style={{wordBreak:"break-word"}}>
+                                                        <div style={{ color: '#004E89',
+                                                            paddingTop:"0.5rem",
+                                                            marginTop:"0.5rem",
+                                                            backgroundColor:"rgba(0,78,137,0.1)",
+                                                            fontWeight:"bold",
+                                                            border:"none",
+                                                            borderRadius:"15px",
+                                                        height:"23vh", width:"33.5vw"}}>
+                                                            <div style={{marginLeft:"0.5vw", marginRight:"0.5vw"}}>
+                                                                {writeDescription(announcement.anc_description)}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </Item>
                                             </Stack>
@@ -833,37 +950,54 @@ export default function UnAuthAnnouncement(props)
                                     </Box>
                                 </Item>
                                 <Item>
-                                    <div style={{position:"fixed", bottom:"0", marginBottom:"1rem", marginLeft:"2rem",
+                                    <div style={{position:"fixed", marginBottom:"1rem",marginTop:"1.75rem",
+                                        marginLeft:"0.5vw",
+                                        marginRight:"0.5vw",
                                         alignItems:"center", alignContent:"center", justifyContent:"center", justifyItems:"center", display:"flex"}}>
-                                        <div className="volunbox">
-                                            <MapContainer style={{width:"32vw", height:"32vh",
-                                                alignItems:"center", alignContent:"center",
-                                                justifyContent:"center", justifyItems:"center", display:"flex"}} center={[0, 0]}
-                                                          zoom={13} scrollWheelZoom={true} zoomControl={false}>
-                                                <TileLayer
-                                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                                />
-                                                <Control position={`topright`}>
-                                                    {announcement.anc_status === "P" &&
-                                                        announcement.volunteers.length > 1 &&
-                                                        <Button
-                                                            className={!checkSwitch ?
-                                                                classes.mapButton : classes.mapButtonActive}
-                                                            onClick={viewAllHost}>
-                                                            View All
-                                                        </Button>}
-                                                </Control>
-                                                {!checkSwitch &&
-                                                    renderMapBox(announcement.anc_status, announcement.volunteers)}
-                                                {checkSwitch && (
-                                                    <>
-                                                        <SetBounds bounds={findBounds(announcement.volunteers)} />
-                                                        <ViewAllVol volnteers={announcement.volunteers} />
-                                                    </>
-                                                )}
-                                            </MapContainer>
-                                        </div>
+                                        <Stack direction={`row`} spacing={3}>
+                                            <Item>
+                                                <div style={{width:"14vw",
+                                                    color:"#004E89",
+                                                    backgroundColor:"rgba(0,78,137,0.1)",
+                                                    fontWeight:"bold",
+                                                    border:"none",
+                                                    borderRadius:"15px",height:"34vh"}}>
+                                                {renderHostBox(announcement.anc_status, announcement.volunteers, announcement.id)}
+                                                </div>
+                                            </Item>
+                                            <Item>
+
+                                                <div className="volunbox">
+                                                    <MapContainer style={{width:"18vw", height:"34vh",
+                                                        alignItems:"center", alignContent:"center",
+                                                        justifyContent:"center", justifyItems:"center", display:"flex"}} center={[0, 0]}
+                                                                  zoom={13} scrollWheelZoom={true} zoomControl={false}>
+                                                        <TileLayer
+                                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                                        />
+                                                        <Control position={`topright`}>
+                                                            {announcement.anc_status === "P" &&
+                                                                announcement.volunteers.length > 1 &&
+                                                                <Button
+                                                                    className={!checkSwitch ?
+                                                                        classes.mapButton : classes.mapButtonActive}
+                                                                    onClick={viewAllHost}>
+                                                                    View All
+                                                                </Button>}
+                                                        </Control>
+                                                        {!checkSwitch &&
+                                                            renderMapBox(announcement.anc_status, announcement.volunteers)}
+                                                        {checkSwitch && (
+                                                            <>
+                                                                <SetBounds bounds={findBounds(announcement.volunteers)} />
+                                                                <ViewAllVol volnteers={announcement.volunteers} />
+                                                            </>
+                                                        )}
+                                                    </MapContainer>
+                                                </div>
+                                            </Item>
+                                        </Stack>
                                     </div>
                                 </Item>
                             </Stack>

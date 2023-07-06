@@ -21,6 +21,8 @@ import Button from '@mui/material/Button';
 
 import Avatar from './avatar';
 
+import Lottie from 'react-lottie';
+import bellGif from '../../lottieAssets/bell.json';
 
 const Notif = () => {
 
@@ -193,6 +195,42 @@ const Notif = () => {
         }
     }));
 
+    const makeMessage = (message) => {
+
+      // Split the text by space
+      const words = message.split(" ");
+
+      // Remove the first word
+      words.shift();
+
+      // Create a new string
+      const newString = words.join(" ");
+
+      return newString
+    }
+
+    const noNotif = () => {
+
+      const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: bellGif,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+    
+      return(
+        <div>
+          <Lottie 
+          options={defaultOptions}
+            height={100}
+            width={100}
+          />
+        </div>
+      )
+    }
+
 
     React.useEffect(() => {
         let username = "";
@@ -216,7 +254,7 @@ const Notif = () => {
     useEffect(() => {
         const interval = setInterval(() => {
           fetchNotif(userId);
-        }, 2000);
+        }, 3000);
         return () => clearInterval(interval);
     }, [userId]);
 
@@ -295,18 +333,18 @@ const Notif = () => {
                                   }
                                 </div>
                                 
-                                {/* {<Avatar src={object.img} />} */}
-                                {/* <strong style={{marginRight : "5px"}}>{object.username}</strong>  */}
-                                <div className="message">{object.message}</div> 
+                                <strong style={{marginRight : "5px"}}>{object.sender_username}</strong> 
+                                <div className="message">{makeMessage(object.message)}</div> 
                                 <div className="timestamp" style={{}}>{formatTimeElapsed(object.created_at)}</div>                          
                     </MenuItem>
-                )) : <p style={{marginLeft : "20px", marginRight : "20px"}}>You have not any notification</p>: <Skeleton width={"300px"} height={"100px"} />
+                )) : <div><p style={{marginLeft : "20px", marginRight : "20px", marginTop : "10px"}}> <strong>No Notifications Yet!!!</strong></p> <br /> {noNotif()} </div> : <Skeleton width={"300px"} height={"100px"} />
                 }
                 
-                <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
+                {notifs !== null && notifs.length !== 0 &&  <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
                     <Button variant="contained">Mark as read</Button>
                     
                 </div>
+                }
                 
                 
 

@@ -24,7 +24,7 @@ import {
     MdAccountCircle,
     MdKeyboardArrowDown,
     MdNoteAdd,
-    MdLinkedCamera
+    MdLinkedCamera,
 } from "react-icons/md";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -39,9 +39,10 @@ import { useCounter } from "../../Context/CounterProvider";
 import axios from 'axios';
 import { toast } from "react-toastify";
 import {IoNotificationsSharp} from "react-icons/io5";
-
+import { useUserData } from "../../hooks/useSetUserData";
 import Notif from "../Notification/Notif";
 import ChatBadegt from '../Messenger/MsgBadget'
+import CoinBadegt from "../Badge/Bedge";
 
 let username = "";
 let user_id = "";
@@ -106,6 +107,13 @@ const Navbar = (props) => {
     useEffect(() => {
         console.log("profileImageURL:", profileImageURL);
     }, [profileImageURL]);
+
+    const Counter = useCounter();
+    const {userdata, userInfo} = useUserData(username);
+    useEffect(() => {
+        userdata()
+    },
+    [Counter]);
 
     useEffect(() => {
         if (user_id !== "" && user_id) {
@@ -233,6 +241,7 @@ const Navbar = (props) => {
 
                         <Notif/>
                         <ChatBadegt/>
+                        <CoinBadegt coins={userInfo.coins}/>
                         <Box sx={{ flexGrow: 0 }}>
                             <Box
                                 sx={{

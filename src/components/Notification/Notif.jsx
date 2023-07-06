@@ -337,10 +337,10 @@ const Notif = () => {
                                 <div className="message">{makeMessage(object.message)}</div> 
                                 <div className="timestamp" style={{}}>{formatTimeElapsed(object.created_at)}</div>                          
                     </MenuItem>
-                )) : <div><p style={{marginLeft : "20px", marginRight : "20px", marginTop : "10px"}}>No Notifications Yet!!!</p> <br /> {noNotif()} </div> : <Skeleton width={"300px"} height={"100px"} />
+                )) : <div><p style={{marginLeft : "20px", marginRight : "20px", marginTop : "10px"}}> <strong>No Notifications Yet!!!</strong></p> <br /> {noNotif()} </div> : <Skeleton width={"300px"} height={"100px"} />
                 }
                 
-                {notifs.length !== 0 && notifs !== null &&  <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
+                {notifs !== null && notifs.length !== 0 &&  <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
                     <Button variant="contained">Mark as read</Button>
                     
                 </div>

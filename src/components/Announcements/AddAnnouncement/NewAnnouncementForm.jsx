@@ -31,18 +31,19 @@ const styles = makeStyles(theme => ({
     },
     button:{
         width:"15em",
-        background:"linear-gradient(to right, #F7C59F 50%, #004E89 50%)",
+        backgroundColor:"#EFEFD0",
         backgroundPosition:"right bottom",
         fontWeight:"bold",
-        color:"#F7C59F",
-        border:"solid 2px #F7C59F",
+        color:"#004E89",
+        border:"solid 2px #004E89",
         borderRadius:"15px",
-        transition:"all 0.2s ease-out",
+        transition:"all 0.15s ease-out",
         display:"block",
         backgroundSize:"200% 100%",
         "&:hover":{
             backgroundPosition:"left bottom",
-            color:"#004E89"
+            backgroundColor:"#004E89",
+            color:"#EFEFD0"
         }
     }
 
@@ -333,16 +334,15 @@ export default function NewAnnouncementForm(props) {
             aria-labelledby="responsive-dialog-title"
             PaperProps={{ sx: {
                 borderRadius: "15px",
-                color:"#EFEFD0",
-                backgroundColor:"#004E89",
-                boxShadow:"inset 0px 0px 0px 8px #1A659E",
+                color:"#004E89",
+                boxShadow:"inset 0px 0px 0px 8px #004E89",
                 } }}
             >
             <IconButton
                 edge="end"
                 onClick={handleClose}
                 size={"medium"}
-                sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#EFEFD0" }}
+                sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#004E89" }}
             >
                 <AiOutlineClose />
             </IconButton>
@@ -398,11 +398,11 @@ export default function NewAnnouncementForm(props) {
                                                                     required
                                                                     className={classes.text_field}
                                                                     InputLabelProps={{
-                                                                        style: { color: 'rgba(239,239,208,0.7)',fontWeight: "bold" }
+                                                                        style: { color: 'rgba(0,78,137,0.6)',fontWeight: "bold" }
                                                                     }}
                                                                     InputProps={{
-                                                                        style: { color: '#EFEFD0',
-                                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                                        style: { color: '#004E89',
+                                                                            backgroundColor:"rgba(0,78,137,0.1)",
                                                                             fontWeight:"bold",
                                                                             border:"none"},
                                                                         disableUnderline: true,
@@ -451,11 +451,11 @@ export default function NewAnnouncementForm(props) {
                                                                     required
                                                                     className={classes.text_field}
                                                                     InputLabelProps={{
-                                                                        style: { color: 'rgba(239,239,208,0.7)',fontWeight: "bold" }
+                                                                        style: { color: 'rgba(0,78,137,0.6)',fontWeight: "bold" }
                                                                     }}
                                                                     InputProps={{
-                                                                        style: { color: '#EFEFD0',
-                                                                            backgroundColor:"rgba(239,239,208,0.11)",
+                                                                        style: { color: '#004E89',
+                                                                            backgroundColor:"rgba(0,78,137,0.1)",
                                                                             fontWeight:"bold",
                                                                             border:"none"},
                                                                         disableUnderline: true,
@@ -485,8 +485,8 @@ export default function NewAnnouncementForm(props) {
                                                                 })
                                                             ]}
                                                             style={{
-                                                                color: '#EFEFD0',
-                                                                backgroundColor:"rgba(239,239,208,0.11)",
+                                                                color: '#004E89',
+                                                                backgroundColor:"rgba(0,78,137,0.1)",
                                                                 width: "100%",
                                                                 border:"none"}}
                                                             inputClass="new-request-date-picker-input"
@@ -509,9 +509,9 @@ export default function NewAnnouncementForm(props) {
                                                         control={<Checkbox 
                                                                     value={arrival_date_is_flexible}
                                                                     sx={{
-                                                                        color: "#EFEFD0",
+                                                                        color: "rgba(0,78,137,1)",
                                                                         '&.Mui-checked': {
-                                                                            color: "#F7C59F",
+                                                                            color: "rgba(0,78,137,1)",
                                                                         }}}
                                                                     color="primary" 
                                                                     onChange={handleChangeIsArrDateFlexible}
@@ -533,8 +533,8 @@ export default function NewAnnouncementForm(props) {
                                                                 })
                                                             ]}
                                                             style={{
-                                                                color: '#EFEFD0',
-                                                                backgroundColor:"rgba(239,239,208,0.11)",
+                                                                color: '#004E89',
+                                                                backgroundColor:"rgba(0,78,137,0.1)",
                                                                 width: "100%",
                                                                 border:"none"}}
                                                             inputClass="new-request-date-picker-input"
@@ -559,9 +559,9 @@ export default function NewAnnouncementForm(props) {
                                                     <FormControlLabel
                                                         control={<Checkbox
                                                             sx={{
-                                                                color: "#EFEFD0",
+                                                                color: "rgba(0,78,137,1)",
                                                                 '&.Mui-checked': {
-                                                                    color: "#F7C59F",
+                                                                    color: "rgba(0,78,137,1)",
                                                                 }}}
                                                                     value={arrival_date_is_flexible}
                                                                     color="primary"
@@ -575,9 +575,9 @@ export default function NewAnnouncementForm(props) {
                                                     <FormControl sx={{ width: "100%", mb: "1rem" }}>
                                                             <InputLabel sx={{
                                                                 fontWeight:"bold",
-                                                                color: 'rgba(239,239,208,0.7)',
+                                                                color: 'rgba(0,78,137,0.6)',
                                                                 '&.Mui-focused': {
-                                                                    color: 'rgba(239,239,208,0.7)',
+                                                                    color: 'rgba(0,78,137,0.6)',
                                                                 },
                                                             }} id="travelers-count-label" required>
                                                                 Number of Travelers
@@ -585,17 +585,19 @@ export default function NewAnnouncementForm(props) {
 
                                                                 <Select
                                                                     sx={{
-                                                                        color: '#EFEFD0',
+                                                                        color: '#004E89',
                                                                         fontWeight:"bold",
-                                                                        backgroundColor:"rgba(239,239,208,0.11)",
+                                                                        border:"none",
+                                                                        backgroundColor:"rgba(0,78,137,0.1)",
                                                                         '.MuiOutlinedInput-notchedOutline': {
-                                                                            borderColor: 'rgba(239,239,208,0.11)',
+                                                                            backgroundColor:"rgba(0,78,137,0.1)",
+                                                                            border:"none"
                                                                         },
                                                                         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                                                            borderColor: 'rgba(239,239,208,0.11)',
+                                                                            border:"none"
                                                                         },
                                                                         '&:hover .MuiOutlinedInput-notchedOutline': {
-                                                                            borderColor: 'rgba(239,239,208,0.11)',
+                                                                            border:"none"
                                                                         }  }}
                                                                     labelId="travelers-count-labe"
                                                                     id="travelers-count"
@@ -632,11 +634,11 @@ export default function NewAnnouncementForm(props) {
                                                         <TextField 
                                                             id="new-request-message"
                                                             InputLabelProps={{
-                                                                style: { color: 'rgba(239,239,208,0.7)',fontWeight: "bold" }
+                                                                style: { color: 'rgba(0,78,137,0.6)',fontWeight: "bold" }
                                                             }}
                                                             InputProps={{
-                                                                style: { color: '#EFEFD0',
-                                                                    backgroundColor:"rgba(239,239,208,0.11)",
+                                                                style: { color: '#004E89',
+                                                                    backgroundColor:"rgba(0,78,137,0.1)",
                                                                     fontWeight:"bold",
                                                                     border:"none"},
                                                                 disableUnderline: true}}

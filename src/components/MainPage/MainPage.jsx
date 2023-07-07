@@ -160,9 +160,8 @@ const Announce = (props) => {
 
   const handleOffer = () => {
       handleCloseOfferDialog()
-      toast.success("your offer submited successfully");
       props.dispatch(setLoader(true))
-      fetchOffer(props.anc.id) 
+      fetchOffer(props.anc.id)
   }
 
   

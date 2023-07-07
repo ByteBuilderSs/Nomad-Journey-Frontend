@@ -47,6 +47,7 @@ import Settings from "../Settings/Settings";
 import TabAboutMe from "./RightBar/AboutMe/Tab-AboutMe";
 import { BiMessageRoundedDetail } from "react-icons/bi";
 import {makeStyles} from "@mui/styles";
+import HomeV2 from './RightBar/Home-v2';
 
 const styles = makeStyles(theme => ({
     button:{
@@ -130,7 +131,7 @@ const UserPanelNew = () => {
         {
             id: 1,
             name : "My Home",
-            component : <Home
+            component : <HomeV2
                 url_username={user_params.username}
                 local_storage_username={local_storage_username}
                 first_name={userInfo.first_name}
@@ -181,10 +182,10 @@ const UserPanelNew = () => {
             {/*    url_username={user_params.username}*/}
             {/*    local_storage_username={local_storage_username}*/}
             {/*/>*/}
-            <Row>
-                <Col md={2}>
+            <Row style={{display: "flex", flexDirection: "row"}}>
+                <Col md={2} style={{flex: 1, minHeight: "100vh"}}>
                     <div style={{background:"radial-gradient(circle, rgba(26,101,158,1) 0%, rgba(0,78,137,1) 54%)",
-                        minHeight:"200vh", position:"relative"}}>
+                       height:"100%", position:"relative"}}>
                    {local_storage_username == lastSegment ? 
                     menuItem.map((item, key) => (
                         

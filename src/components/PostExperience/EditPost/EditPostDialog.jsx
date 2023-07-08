@@ -364,9 +364,7 @@ const EditPostDialog = (props) => {
                 maxWidth={'xl'}
                 scroll={scroll}
                 PaperProps={{ sx: {
-                    borderRadius: "15px",
-                    color:"#004E89",
-                    boxShadow:"inset 0px 0px 0px 8px #004E89",
+                    borderRadius: "15px"
                     } }}
             >
                 <DialogContent  dir='ltr'>

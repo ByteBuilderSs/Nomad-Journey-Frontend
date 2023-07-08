@@ -41,6 +41,7 @@ function TabAboutMe(props) {
                         backgroundColor:"#1A659E",
                         borderRadius:"15px",
                         color:"#EFEFD0",
+                        marginBottom: "2rem"
                     }}>
                         <About
                             url_username={props.url_username}

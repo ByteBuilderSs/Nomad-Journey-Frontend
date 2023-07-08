@@ -251,7 +251,6 @@ LandingPage Styles
   
   .cities-town .slider-content h2 em {
     font-style: normal;
-    color: rgba(0,78,137,1);
   }
 
   
@@ -340,6 +339,7 @@ LandingPage Styles
     transform: translateY(-50%);
     box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
     padding: 30px;
+    width: 60%;
   }
   
   .weekly-offers .item .thumb .text h4 {
@@ -688,12 +688,7 @@ LandingPage Styles
     height: 300% !important;
   }
   
-  @media (prefers-color-scheme: dark) {
-    body:not(.light) {
-      background: #232223;
-      color: white;
-    }
-  }
+
   body .credit {
     position: absolute;
     bottom: 20px;

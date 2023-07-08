@@ -38,15 +38,17 @@ import AddCoinToUser from "../AddCoin";
 const styles = makeStyles(theme => ({
     button:{
         marginLeft:"53rem",
-        background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        // background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
         backgroundPosition:"right bottom",
-        color:"#F7C59F",
-        border:"solid 2px #F7C59F",
+        color:"#EFEFD0",
+        border:"solid 2px #EFEFD0",
         borderRadius:"15px",
-        transition:"all 0.1s ease-out",
+        transition:"all 0.2s ease-out",
         display:"block",
         backgroundSize:"200% 100%",
         "&:hover":{
+            backgroundColor: "#F7C59F",
+            border:"solid 2px #F7C59F",
             backgroundPosition:"left bottom",
             color:"#1A659E"
         }
@@ -139,7 +141,7 @@ const OverviewV2 = (props) => {
                 {/*Profile Info*/}
                 <Grid item xs={12} sx={{ marginTop: "1rem"
                 ,justifyContent:"center", alignItems:"center", display:"flex"}}>
-                    {userInfo !== [] &&
+                    {userInfo  &&
                         <UserProfile user_id={userInfo.id} imageSize={175}
                          profileSize={"14rem"} first_name={userInfo.first_name} />}
                 </Grid>

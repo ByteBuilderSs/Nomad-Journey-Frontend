@@ -271,7 +271,7 @@ export default function LandingPage(){
                         <div class="slider-content">
                         <div class="row">
                             <div class="col-lg-12">
-                            <h2> <em>Developers</em></h2>
+                            <h2> Developers</h2>
                             </div>
                             <div class="col-lg-12" style={{display : "flex",justifyContent : "center", gap : "5px"}}>
                                 <DevCard name = {"Baktash Ansari"} title = {"Front-end developer"} img = {baktashImg}/>

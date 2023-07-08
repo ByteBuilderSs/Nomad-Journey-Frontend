@@ -46,7 +46,30 @@ import {AiTwotoneSetting} from "react-icons/ai";
 import Settings from "../Settings/Settings";
 import TabAboutMe from "./RightBar/AboutMe/Tab-AboutMe";
 import { BiMessageRoundedDetail } from "react-icons/bi";
+import {makeStyles} from "@mui/styles";
+import HomeV2 from './RightBar/Home-v2';
 
+const styles = makeStyles(theme => ({
+    button:{
+        width:"15em",
+        // background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+        backgroundPosition:"right bottom",
+        color:"#EFEFD0",
+        fontWeight:"bold",
+        border:"solid 2px #EFEFD0",
+        borderRadius:"15px",
+        transition:"all 0.2s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            border:"solid 2px #F7C59F",
+            backgroundColor : "#F7C59F",
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    }
+
+}))
 
 
 
@@ -69,6 +92,7 @@ const UserPanelNew = () => {
     const [active, setActive] = useState("About Me");
     const {userdata, userInfo} = useUserData(user_params.username);
     const [profileImageURL, setProfileImageURL] = useState("");
+    const classes = styles();
 
 
     useEffect(() => {
@@ -107,7 +131,7 @@ const UserPanelNew = () => {
         {
             id: 1,
             name : "My Home",
-            component : <Home
+            component : <HomeV2
                 url_username={user_params.username}
                 local_storage_username={local_storage_username}
                 first_name={userInfo.first_name}
@@ -158,10 +182,10 @@ const UserPanelNew = () => {
             {/*    url_username={user_params.username}*/}
             {/*    local_storage_username={local_storage_username}*/}
             {/*/>*/}
-            <Row>
-                <Col md={2}>
+            <Row style={{display: "flex", flexDirection: "row"}}>
+                <Col md={2} style={{flex: 1, minHeight: "100vh"}}>
                     <div style={{background:"radial-gradient(circle, rgba(26,101,158,1) 0%, rgba(0,78,137,1) 54%)",
-                        minHeight:"200vh", position:"relative"}}>
+                       height:"100%", position:"relative"}}>
                    {local_storage_username == lastSegment ? 
                     menuItem.map((item, key) => (
                         
@@ -189,6 +213,14 @@ const UserPanelNew = () => {
                         null
                     ))
                     }
+                    {local_storage_username == lastSegment ?
+                        <div style={{justifyContent:"center", alignItems:"center", display:"flex", paddingTop:"2.5rem"}}>
+                            <Button
+                                className={classes.button}
+                                onClick={(e) => openCreateRequest()}>
+                                Add Announcement
+                            </Button>
+                        </div>: null}
                     </div>
                 </Col>
                 <Col md={10}>

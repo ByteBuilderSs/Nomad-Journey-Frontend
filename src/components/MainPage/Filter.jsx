@@ -359,6 +359,16 @@ export default function Filters() {
       setLanguageTags([])
     }
 
+    const handleClear = () => {
+
+      setSelectedCity(null)
+      setSelectedCountry(null)
+      setSelectedDates("")
+      setSelectedDatesFormat("")
+      setLanguageTags([])
+
+    }
+
 
     return(
         <div className="innerFilter">
@@ -501,6 +511,7 @@ export default function Filters() {
 
 
                 <DateRangePickerButton/>
+                <Button sx={{marginLeft : 4, width : {md : "120px",lg : "150px"}}} variant="outlined" onClick={handleClear}>Clear</Button>
             </ThemeProvider>
 
           </div>

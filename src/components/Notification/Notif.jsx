@@ -4,6 +4,7 @@ import "./Notif.css"
 import baktashImg from "../../Assets/images/baktash.jpg"
 import sinaImg from "../../Assets/images/sina.jpg"
 
+
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -139,6 +140,18 @@ const Notif = () => {
           console.error(error);
         }
     };
+    const seenAll = async (userId) => {
+        try {
+          await axios({
+            method: "put",
+            url: `https://api.nomadjourney.ir/api/v1/notification/change-notif-to-seen/${userId}`,
+          }).then((response) => {
+            toast.success("No unseen notification")
+          });
+        } catch (error) {
+          console.error(error);
+        }
+    };
 
     const formatTimeElapsed = (timestamp) => {
         // Split the date string into its components
@@ -185,6 +198,11 @@ const Notif = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleSeen = () => {
+      seenAll(userId);
+      handleClose();
+    }
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
         "& .MuiBadge-badge": {
@@ -342,8 +360,8 @@ const Notif = () => {
                 )) : <div><p style={{marginLeft : "20px", marginRight : "20px", marginTop : "10px"}}> <strong>No Notifications Yet!!!</strong></p> <br /> {noNotif()} </div> : <Skeleton width={"300px"} height={"100px"} />
                 }
                 
-                {notifs !== null && notifs.length !== 0 &&  <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
-                    <Button variant="contained">Mark as read</Button>
+                {notifs !== null && notifs.length !== 0 &&  unseen !== 0 && <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
+                    <Button variant="contained" onClick={handleSeen}>Mark all as read</Button>
                     
                 </div>
                 }

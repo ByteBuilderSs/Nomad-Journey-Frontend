@@ -181,16 +181,16 @@ export default function UsersPosts()
                             }}>
 
 
-                            <Container  sx={{ mt: 20 ,
-                                top:0,
-                                right:0,
-                                justifyContent:'center',
-                                position:'absolute',
-                                display:'flex',
-                                margin:'1.3rem',
-                                width:'100%',
-                            }}>
-                                <TextField
+                    <Container  sx={{ mt: 20 ,
+                        top:0,
+                        right:0,
+                        justifyContent:'center',
+                        position:'absolute',
+                        display:'flex',
+                        margin:'1.3rem',
+                        width:'100%',
+                    }}>
+                        <TextField
 
                     id="search"
                     type="search"
@@ -213,7 +213,7 @@ export default function UsersPosts()
                       ),
                     }}
                   />
-                </Grid>
+                </Container>
                 <Box
                     sx={{
                         width: 1/3,
@@ -229,7 +229,7 @@ export default function UsersPosts()
                 {resault && 
                     resault.map((blog, key) => (
                         <Grid item sx={{backgroundColor:'#ffffff'}}>
-                                <Grid className="blogs-hovering" sx={{
+                                <div className="blogs-hovering" sx={{
                                         
                                         borderRadius:'15px',
                                         border:'2px solid #004E89'
@@ -352,17 +352,15 @@ export default function UsersPosts()
                                                         </Item>
                                                     </Stack>
                                                 </div>
-                                            </div>
-                                            <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
-                                        </Item>
-                                    ))
-                                }
-                            </Stack>
-                        </Box>
-
-                    </Box>
-                </Col>
-                <Col md={2}></Col>
+                                </div>
+                                <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
+                        </Grid>))}
+                </Stack>
+                </Box>
+            </Box>
+        </Box>
+    </Col>
+            <Col md={2}/>
             </Row>
 
 

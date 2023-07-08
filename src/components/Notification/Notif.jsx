@@ -283,7 +283,7 @@ const Notif = () => {
     useEffect(() => {
         const interval = setInterval(() => {
           fetchNotif(userId);
-        }, 3000);
+        }, 1500);
         return () => clearInterval(interval);
     }, [userId]);
 

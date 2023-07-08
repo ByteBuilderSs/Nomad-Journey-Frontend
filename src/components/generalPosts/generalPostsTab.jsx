@@ -19,6 +19,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import {useSearchBlog} from '../../hooks/useSearchBlog'
 import './generalPost.css'
 
+
 export default function UsersPosts()
 {
     const NotFound = () => {
@@ -58,6 +59,7 @@ export default function UsersPosts()
     const [resault,setResault]=useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [active,setActive]=useState(true)
+
 
     useEffect( () =>
     {
@@ -268,7 +270,7 @@ export default function UsersPosts()
                                                         </Typography>
                                                     </Box>
                                                 </Item>
-                                                <Grid item sx={{marginRight:'50px'}}>
+                                                <Grid item >
                                                     {blog.main_image_64!=null ?
                                                     <>
                                                     <img src={blog.main_image_64}
@@ -296,11 +298,15 @@ export default function UsersPosts()
                                                  alignItems="center"
                                                  sx={{ width: 1,
                                                     marginTop:"1rem"}}>
-                                                {!blog.is_liked.includes(user_id)
+                                                {/* {!blog.is_liked.includes(user_id)
                                                     && <SetLikeOfBlog blog_id={blog.uid} />}
                                                 {blog.is_liked.includes(user_id)
-                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />}
-
+                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />} */}
+                                                {blog.is_liked.includes(user_id)?
+                                                <><SetLikeOfBlog blog_id={blog.uid} Isfill={true}/></>
+                                                :
+                                                <><SetLikeOfBlog blog_id={blog.uid} isFill={false}/></>
+                                                }
                                                 <div className="likes"
                                                     onClick={()=>{
                                                         setOpen_liker(true);

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
-import {toast} from "react-toastify";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import {useCounter, useCounterActions} from "../../../Context/CounterProvider";
 import {IconButton} from "@mui/material";
 import {makeStyles} from "@mui/styles";
+import { useLikePost } from '../../../hooks/useLikePost';
+
 
 const useStyles = makeStyles(theme => (
     {
@@ -13,43 +13,54 @@ const useStyles = makeStyles(theme => (
                 color:"rgba(0,78,137,1)",
                 backgroundColor:"rgba(228,85,5,0.1)"
             }
+        },
+        likeButtonActive:{
+            color:"rgba(0,78,137,1)",
+            "&:hover":{
+                backgroundColor:"rgba(228,85,5,0.1)"
+
+            }
         }
 
     }
 ));
-export default function SetLikeOfBlog({blog_id})
+export default function SetLikeOfBlog(props)
 {
-    const classes = useStyles();
-    const counter = useCounter();
     const setCounter = useCounterActions();
-    let access_token = "";
+    const counter = useCounter();
 
-    if (localStorage.getItem('tokens'))
-    {
-        const allData = JSON.parse(localStorage.getItem('tokens'));
-        access_token = allData.access;
+    const classes = useStyles();
+    
+    const[like,setLike]=useState(props.Isfill)
+
+    const {likepost,unlikepost}=useLikePost()
+    const onSubmit =  () => {
+        if(!like)
+        {
+            likepost(props.blog_id);
+            setCounter(counter+1)
+        }
+        else
+        {
+            unlikepost(props.blog_id)
+            setCounter(counter-1)
+
+        }
+        
     }
-    const onSubmit = async (event) => {
-        event.preventDefault();
-        axios({
-            method: "post",
-            url: `https://api.nomadjourney.ir/api/v1/like_post/create-like/${blog_id}`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-            },
-        }).then((res) => {
-            console.log(res);
-            setCounter(counter + 1);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
+   
+    
+
     return(
+        
         <>
-            <IconButton className={classes.likeButton} onClick={onSubmit}>
-                <AiOutlineHeart />
+            
+            
+            <IconButton  onClick={()=>{onSubmit();setLike(!like)}}>
+                {like?<AiFillHeart className={classes.likeButtonActive}/>:<AiOutlineHeart className={classes.likeButton}/>}
             </IconButton>
+            
+         
         </>
     )
 }

@@ -774,7 +774,7 @@ export default function UnAuthAnnouncement(props)
                                             width:"30%",
                                         }}>
                                     <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
-                                        {announcement.existPost ==false ?
+                                        {announcement.existPost ==false && props.isAuthenticate ?
                                          <Grid item >
                                          <Button onClick={()=>handelClickPost(announcement.id)}
                                          size='medium' sx={{
@@ -965,12 +965,15 @@ export default function UnAuthAnnouncement(props)
                                                 {renderHostBox(announcement.anc_status, announcement.volunteers, announcement.id)}
                                                 </div>
                                             </Item>
+                                            
                                             <Item>
 
-                                                <div className="volunbox">
+                                                <div className="volunbox"   >
+
+
                                                     <MapContainer style={{width:"18vw", height:"34vh",
                                                         alignItems:"center", alignContent:"center",
-                                                        justifyContent:"center", justifyItems:"center", display:"flex"}} center={[0, 0]}
+                                                        justifyContent:"center", justifyItems:"center", display:"flex", filter : !props.isAuthenticate && "blur(10px)"}} center={[0, 0]}
                                                                   zoom={13} scrollWheelZoom={true} zoomControl={false}>
                                                         <TileLayer
                                                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

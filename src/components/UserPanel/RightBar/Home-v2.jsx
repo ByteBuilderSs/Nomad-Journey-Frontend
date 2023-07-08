@@ -14,6 +14,9 @@ import { toast } from "react-toastify";
 import {Item} from "semantic-ui-react";
 import './Home.css';
 
+import {Link, Route, Routes, useParams,useNavigate,useLocation} from "react-router-dom";
+
+
 let username = "";
 let access_token = "";
 
@@ -57,8 +60,11 @@ const HomeV2 = (props) => {
     const [doesSmoke, setDoesSmoke] = useState(false);
     const [wheelchair, setWheelchair] = useState(false);
     const [days, setDays] = useState([]);
+    
 
 
+    // for unuthenticated : 
+    const [isAuthenticate, setIsAuthenticate] = useState(false);
 
     const loadUserHomeInfo = async () => {
         axios({
@@ -143,6 +149,16 @@ const HomeV2 = (props) => {
     
     useEffect(() => {
         loadUserHomeInfo();
+    }, []);
+
+    useEffect(() => {
+
+
+        if(props.local_storage_username == props.url_username){
+            setIsAuthenticate(true);
+        }
+
+
     }, []);
     
 
@@ -253,7 +269,7 @@ const HomeV2 = (props) => {
                             color:"#EFEFD0",
 
                         }}>
-                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
+                            {isAuthenticate && <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 4 }}>
                                 <Grid item xs={12}>
                                     <h3 style={{ display: "flex", alignItems: "center", marginTop: "1.5rem", marginLeft: "1rem", marginBottom: "1rem" }}>
                                         MY HOME
@@ -279,7 +295,7 @@ const HomeV2 = (props) => {
                                         : null
                                     }
                                 </Grid>
-                            </Grid>
+                            </Grid>}
                         </div>
                     </Item>
                     <Item>

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./Notif.css"
 import baktashImg from "../../Assets/images/baktash.jpg"
 import sinaImg from "../../Assets/images/sina.jpg"
+
 
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -24,9 +26,12 @@ import Avatar from './avatar';
 
 import Lottie from 'react-lottie';
 import bellGif from '../../lottieAssets/bell.json';
+import { Navigate } from 'react-router-dom';
 
 const Notif = () => {
 
+
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const [userId, setUserId] = useState(null);
     const [notifs, setNotifs] = useState(null);
@@ -139,6 +144,18 @@ const Notif = () => {
           console.error(error);
         }
     };
+    const seenAll = async (userId) => {
+        try {
+          await axios({
+            method: "put",
+            url: `https://api.nomadjourney.ir/api/v1/notification/change-notif-to-seen/${userId}`,
+          }).then((response) => {
+            toast.success("No unseen notification")
+          });
+        } catch (error) {
+          console.error(error);
+        }
+    };
 
     const formatTimeElapsed = (timestamp) => {
         // Split the date string into its components
@@ -185,6 +202,17 @@ const Notif = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleSeen = () => {
+      seenAll(userId);
+      handleClose();
+    }
+
+    const handleNavigate = (username) => {
+        handleClose();
+        navigate(`/home/Profile/${username}`);
+    }
+
 
     const StyledBadge = styled(Badge)(({ theme }) => ({
         "& .MuiBadge-badge": {
@@ -255,7 +283,7 @@ const Notif = () => {
     useEffect(() => {
         const interval = setInterval(() => {
           fetchNotif(userId);
-        }, 3000);
+        }, 1500);
         return () => clearInterval(interval);
     }, [userId]);
 
@@ -310,8 +338,8 @@ const Notif = () => {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 
-                {(notifs !== null) ? (notifs.length !== 0) ? notifs.map((object) => (
-                    <MenuItem key={object}  sx={{}}>
+                {(notifs !== null) ? (notifs.length !== 0) ? notifs.reverse().map((object) => (
+                    <MenuItem key={object}  onClick={() => {handleNavigate(object.sender_username)}} >
                                 <div
                                     style={{
                                         background: object.is_seen ? 'transparent' : '#E55807',
@@ -328,23 +356,22 @@ const Notif = () => {
                                     }}
                                 ></div>
                                 
-                                <div style={{marginRight : "6px"}}>
+                                <div style={{marginRight : "6px"}} >
                                   
                                   {(object.sender_profile_photo_URL) ? <Avatar imageUrl={`https://api.nomadjourney.ir${object.sender_profile_photo_URL}`} alt={object.sender_username[0]} size={35} /> :
                                     <Avatar letter={object.sender_username[0]} size={35}/>
                                   }
                                 </div>
                                 
-                                <strong style={{marginRight : "5px"}}>{object.sender_username}</strong> 
+                                <strong style={{marginRight : "5px"}} >{object.sender_username}</strong> 
                                 <div className="message">{object.message}</div> 
                                 <div className="timestamp" style={{}}>{formatTimeElapsed(object.created_at)}</div>                          
                     </MenuItem>
                 )) : <div><p style={{marginLeft : "20px", marginRight : "20px", marginTop : "10px"}}> <strong>No Notifications Yet!!!</strong></p> <br /> {noNotif()} </div> : <Skeleton width={"300px"} height={"100px"} />
                 }
                 
-                {notifs !== null && notifs.length !== 0 &&  <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
-                    <Button variant="contained">Mark as read</Button>
-                    
+                {notifs !== null && notifs.length !== 0 &&  unseen !== 0 && <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
+                    <Button variant="contained" onClick={handleSeen}>Mark all as read</Button>
                 </div>
                 }
                 

@@ -135,6 +135,7 @@ const UserPanelNew = () => {
                 url_username={user_params.username}
                 local_storage_username={local_storage_username}
                 first_name={userInfo.first_name}
+                
             />,
             icon : <MdHome style={{ marginTop : "-0.2rem" }}/>,
         },
@@ -200,7 +201,7 @@ const UserPanelNew = () => {
                     ))
                     :
                     menuItem.map((item, key) => (
-                        item.name=="About Me" || item.name=="My Home" ?
+                        item.name != "Settings" ?
                         <>
                             <div className={active !== item.name ? `sidebar-v2` : `selected-item`}
                                  onClick={() => setActive(item.name)}>

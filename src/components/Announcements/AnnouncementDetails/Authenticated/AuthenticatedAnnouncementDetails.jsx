@@ -776,7 +776,14 @@ export default function UnAuthAnnouncement(props)
                                     <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
                                         {announcement.existPost ==false ?
                                          <Grid item >
-                                         <Button onClick={()=>handelClickPost(announcement.id)}
+                                         <Button 
+                                            // onClick={()=>handelClickPost(announcement.id)}
+                                            onClick={() => {
+                                                setClosePost(false);
+                                                setOpenPost(true);
+                                                // props.setOpen(false);
+                                                // props.set_anc_id(null);
+                                            }}
                                          size='medium' sx={{
                                              color:"rgba(237,231,230,0.8)",
                                              backgroundColor:"rgba(201,153,127,0.2)",
@@ -826,6 +833,14 @@ export default function UnAuthAnnouncement(props)
                                         close={closeFeed}
                                         setClose={setCloseFeed}
                                         anc_id={announcement.id}
+                                        />
+                                    <EditorFormDialog 
+                                        open={openPost}
+                                        setOpen={setOpenPost}
+                                        close={closePost}
+                                        setClose={setClosePost}
+                                        anc_id={announcement.id}
+                                        closeAnnouncement={handleClose}
                                         />
                                     </>:null}
 

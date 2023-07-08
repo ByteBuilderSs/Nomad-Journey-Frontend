@@ -8,6 +8,7 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Tooltip } from '@mui/material';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -261,12 +262,13 @@ const Notif = () => {
     return(
 
         <div>
-
-            <IconButton aria-label="notif-bell" sx={{marginRight : "30px"}} onClick={handleClick}>
-                <StyledBadge badgeContent={unseen} color="primary">
-                    <NotificationsIcon sx={{fontSize : "30px", color : "#fff"}}/>
-                </StyledBadge>
-            </IconButton>
+            <Tooltip title="notifications">
+              <IconButton aria-label="notif-bell" sx={{marginRight : "30px"}} onClick={handleClick}>
+                  <StyledBadge badgeContent={unseen} color="primary">
+                      <NotificationsIcon sx={{fontSize : "30px", color : "#fff"}}/>
+                  </StyledBadge>
+              </IconButton>
+            </Tooltip>
 
             <Menu
                 anchorEl={anchorEl}
@@ -334,7 +336,7 @@ const Notif = () => {
                                 </div>
                                 
                                 <strong style={{marginRight : "5px"}}>{object.sender_username}</strong> 
-                                <div className="message">{makeMessage(object.message)}</div> 
+                                <div className="message">{object.message}</div> 
                                 <div className="timestamp" style={{}}>{formatTimeElapsed(object.created_at)}</div>                          
                     </MenuItem>
                 )) : <div><p style={{marginLeft : "20px", marginRight : "20px", marginTop : "10px"}}> <strong>No Notifications Yet!!!</strong></p> <br /> {noNotif()} </div> : <Skeleton width={"300px"} height={"100px"} />

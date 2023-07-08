@@ -880,6 +880,19 @@ Pre-loader Style
   border-radius: 20px; */
 }
 
+.clearDate{
+  justify-content: center;
+  background-color: rgb(249, 153, 153);
+  margin-left: 1px;
+  border-radius: 1px;
+  height: 48px;
+  width: 15px;
+  margin-top: 3px;
+}
+.clearDate p{
+  padding-top: 15px;
+}
+
 
 /* 
 ---------------------------------------------

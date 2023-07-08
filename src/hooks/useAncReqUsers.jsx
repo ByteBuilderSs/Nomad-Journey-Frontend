@@ -8,7 +8,7 @@ export const useAncUsers = () => {
         
         const username = JSON.parse(localStorage.getItem('tokens')).username
         
-        const respone= await fetch(process.env.REACT_APP_API_ACCOUNTS+'get-users-requests-announcer/'+username,{ 
+        const respone= await fetch(process.env.REACT_APP_API_TICKET+'get-contacts-requests/'+username,{ 
             method :'GET',
             headers :{'Content-Type':'application/json'}})
 

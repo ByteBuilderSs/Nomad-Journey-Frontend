@@ -31,11 +31,50 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeletePostDialog from '../DeletePostDialog';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {makeStyles} from "@mui/styles";
+import {AiOutlineClose} from "react-icons/ai";
+
+const styles = makeStyles(theme => ({
+    button:{
+        width:"13vw",
+        backgroundColor:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#004E89",
+        border:"solid 2px #004E89",
+        borderRadius:"15px",
+        transition:"all 0.15s ease-out",
+        // display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            backgroundColor:"#004E89",
+            color:"#EFEFD0"
+        }
+    },
+    deleteButton:{
+        width:"13vw",
+        backgroundColor:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#DE3733",
+        border:"solid 2px #DE3733",
+        borderRadius:"15px",
+        transition:"all 0.15s ease-out",
+        // display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            backgroundColor:"#DE3733",
+            color:"#EFEFD0"
+        }
+    }
+}))
 
 const PostDetailDialog = (props) => {
     let slug = props.post_slug;
     let navigate = useNavigate();
-
+    const classes = styles();
     const [openDelete, setOpenDelete] = useState(false);
     const [closeDelete, setCloseDelete] = useState(true);
     console.log("++++++++++++ THE POST SLUG IN PROPS IS +++++++++++ ", slug);
@@ -101,8 +140,20 @@ const PostDetailDialog = (props) => {
                 aria-labelledby="scroll-dialog-title"
                 aria-describedby="scroll-dialog-description"
                 maxWidth={'md'}
-                PaperProps={{ sx: { borderRadius: "15px" } }}
+                PaperProps={{ sx: {
+                    borderRadius: "15px",
+                    color:"#004E89",
+                    boxShadow:"inset 0px 0px 0px 8px #004E89",
+                    } }}
             >
+                <IconButton
+                    edge="end"
+                    onClick={handleClose}
+                    size={"medium"}
+                    sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#004E89" }}
+                >
+                <AiOutlineClose />
+            </IconButton>
             <DialogTitle id="scroll-dialog-title" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Stack direction={'column'} sx={{ flexGrow: 1 }}>
                     {/* Main Image */}
@@ -112,10 +163,10 @@ const PostDetailDialog = (props) => {
                             src={postData.main_image_64 && postData.main_image_64 !== '' ? postData.main_image_64 : SamplePostMainImage} 
                             style={{
                                 width: "60rem",
-                                height: "20rem",
+                                height: "16rem",
                                 borderRadius: '0.25rem',
                                 objectFit: 'fill',
-                                marginTop: "2rem"
+                                marginTop: "2.5rem"
                             }}
                         />
                     </Item>
@@ -126,23 +177,33 @@ const PostDetailDialog = (props) => {
                         </Typography>
                     </Item>
                 </Stack>
-                <IconButton aria-label="close" sx={{ position: 'absolute', top: -1, right: -1 }} onClick={handleClose}>
-                    <HighlightOffIcon fontSize='large' />
-                </IconButton>
             </DialogTitle>
                 
             <DialogContent dividers={scroll === 'paper'} dir='ltr'>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <form dir='ltr'>
                         <Grid container rowSpacing={0.25} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                            <div style={{ paddingLeft: "0.75rem" }}>
+                            <div style={{ paddingLeft: "2rem" }}>
                                 {/* Summary */}
                                 <Grid item xs={12}>
                                     <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
                                         Summary
                                     </Typography>
                                     <Typography sx={{ paddingLeft: "0.8rem" }}>
-                                        {postData.description}
+                                        <div style={{wordBreak:"break-word"}}>
+                                            <div style={{ color: '#004E89',
+                                                paddingTop:"0.5rem",
+                                                paddingBottom:"0.5rem",
+                                                marginTop:"0.5rem",
+                                                backgroundColor:"rgba(0,78,137,0.1)",
+                                                fontWeight:"bold",
+                                                border:"none",
+                                                borderRadius:"15px", width:"58rem"}}>
+                                                    <div style={{marginLeft:"0.5vw", marginRight:"0.5vw"}}>
+                                                        {postData.description && postData.description !== "" ? postData.description : (<span> No summary was written </span>)}
+                                                    </div>
+                                            </div>
+                                        </div>
                                     </Typography>
                                 </Grid>
                                 {/* Body */}
@@ -150,15 +211,26 @@ const PostDetailDialog = (props) => {
                                     <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
                                         Content
                                     </Typography>
-                                    <Box sx={{ display: "flex", alignItems: "center", alignContent: "center", width: "62rem"}}>
-                                        <FormControl>
-                                            <ReactQuill theme="bubble" 
-                                                        value={postData.json_data} 
-                                                        readOnly={true}
-                                                        // style={{ width: "65rem" }}
-                                            />
-                                        </FormControl>
-                                    </Box>
+                                    <div style={{wordBreak:"break-word"}}>
+                                        <Box sx={{ display: "flex", alignItems: "center", alignContent: "center", color: '#004E89',
+                                                    paddingTop:"0.5rem",
+                                                    paddingBottom:"0.5rem",
+                                                    marginTop:"0.5rem",
+                                                    backgroundColor:"rgba(0,78,137,0.1)",
+                                                    fontWeight:"bold",
+                                                    border:"none",
+                                                    borderRadius:"15px", width: "59rem"}}>
+                                            <FormControl>
+                                                <div style={{marginLeft:"0.5vw", marginRight:"0.5vw"}}>
+                                                    <ReactQuill theme="bubble" 
+                                                                value={postData.json_data} 
+                                                                readOnly={true}
+                                                                // style={{ width: "65rem" }}
+                                                    />
+                                                </div>
+                                            </FormControl>
+                                        </Box>
+                                    </div>
                                 </Grid>
                                 {/* Tags */}
                                 <Grid item xs={12}>
@@ -193,31 +265,23 @@ const PostDetailDialog = (props) => {
                 props.url_username === props.local_storage_username ? 
                 <DialogActions>
                 <Item>
-                    <Button
-                        sx={{ width: "100%" }}
-                        variant="outlined"
-                        color="error"
-                        startIcon={<DeleteIcon />}
-                        /* TODO */
+                    <Button className={classes.deleteButton} startIcon={<DeleteIcon />} sx={{mr: "1rem", mb: "1rem"}}
                         onClick={() => {
                                     console.log("---------- CLICK ON DELETE POST ---------");
                                     setOpenDelete(true);
                                     setCloseDelete(false);
-                                }}
-                        >
-                        Delete Your Post
-                        
+                                }}>
+                                Delete
                     </Button>
                 </Item>
                 <Item>
                     <Button
-                        sx={{ width: "100%" }}
-                        variant="contained"
-                        component="label"
+                        sx={{ mr: "3rem", mb: "1rem" }}
+                        className={classes.button}
                         startIcon={<EditIcon />}
                         onClick={() => handleEditClick(postData.uid, postData.slug)}
                         >
-                        Edit Your Post
+                        Edit
                     </Button>
                 </Item>
                 </DialogActions>

@@ -21,6 +21,7 @@ import './generalPost.css'
 import {Col, Row} from "react-bootstrap";
 import MostLikedPost from "./mostLikedPost";
 
+
 export default function UsersPosts()
 {
     const NotFound = () => {
@@ -60,6 +61,7 @@ export default function UsersPosts()
     const [resault,setResault]=useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [active,setActive]=useState(true)
+
 
     useEffect( () =>
     {
@@ -190,72 +192,72 @@ export default function UsersPosts()
                             }}>
                                 <TextField
 
-                                    id="search"
-                                    type="search"
-                                    label="Search"
-                                    variant="standard"
-                                    value={searchTerm}
-                                    onChange={handleChange}
-                                    autoFocus
-                                    autoComplete='off'
-                                    sx={{ width:'70%' ,
-                                        justifyContent:'center',
-                                    }}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position='start' >
-                                                <IconButton disabled={active} onClick={handelClick} >
-                                                    <SearchIcon />
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </Container>
-
-                            <Stack sx={{marginTop:'5rem'}}>
-
-                                {resault &&
-                                    resault.map((blog, key) => (
+                    id="search"
+                    type="search"
+                    label="Search"
+                    variant="standard"
+                    value={searchTerm}
+                    onChange={handleChange}
+                    autoFocus 
+                    autoComplete='off'
+                    sx={{ width:'70%' ,
+                    justifyContent:'center',
+                    }}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position='start' >
+                          <IconButton disabled={active} onClick={handelClick} >
+                            <SearchIcon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Container>
+                
+                <Stack sx={{marginTop:'5rem'}}>
+                
+                {resault && 
+                    resault.map((blog, key) => (
+                        <Item>
+                                <div className="blogs-hovering">
+                                    <div style={{
+                                        paddingTop:"2rem", paddingBottom:"1rem"}}>
+                                    <Stack sx={{
+                                        marginLeft:"1rem",
+                                    }} spacing={1}>
                                         <Item>
-                                            <div className="blogs-hovering">
-                                                <div style={{
-                                                    paddingTop:"2rem", paddingBottom:"1rem"}}>
-                                                    <Stack sx={{
-                                                        marginLeft:"1rem",
-                                                    }} spacing={1}>
-                                                        <Item>
-                                                            <Stack direction={`row`} spacing={1}
-                                                                   sx={{
-                                                                       display:"flex",
-                                                                       alignItems:"center"
-                                                                   }}>
-                                                                <Item>
-                                                                    <UserProfile user_id={blog.host_id} first_name={blog.host_name} imageSize={50} profileSize={`4rem`}/>
-                                                                </Item>
-                                                                <Item>
-                                                                        <Typography component="h5"
-                                                                                    style={{fontSize:"1.25vw" }}>
-                                                                <span>
-                                                                    {blog.host_name}
-                                                                </span>
-                                                                        </Typography>
-                                                                </Item>
-                                                                <Item>
-                                                                    <Typography component="h5"
-                                                                                style={{fontSize:"0.8vw" }}>
+                                            <Stack direction={`row`} spacing={1}
+                                                   sx={{
+                                                       display:"flex",
+                                                       alignItems:"center"
+                                                   }}>
+                                                <Item>
+                                                    <UserProfile user_id={blog.host_id} first_name={blog.host_name} imageSize={50} profileSize={`4rem`}/>
+                                                </Item>
+                                                <Item>
+                                                    <Typography component="h5"
+                                                                style={{fontSize:"1.25vw" }}>
+                                                            <span>
+                                                                {blog.host_name}
+                                                            </span>
+                                                    </Typography>
+                                                </Item>
+                                                <Item>
+                                                    <Typography component="h5"
+                                                                style={{fontSize:"0.8vw" }}>
                                                             <span style={{color:"#6b6767"}}>
                                                                 {post_createdAt(blog.created_at)}
                                                             </span>
-                                                                    </Typography>
-                                                                </Item>
-                                                            </Stack>
-                                                        </Item>
-                                                        <Item>
-                                                            <Stack sx={{
-                                                                marginLeft:"3rem"
-                                                            }}>
-                                                                <Item>
+                                                    </Typography>
+                                                </Item>
+                                            </Stack>
+                                        </Item>
+                                        <Item>
+                                            <Stack sx={{
+                                                marginLeft:"3rem"
+                                            }}>
+                                                <Item>
 
                                                                     <Typography component="h5"
                                                                                 style={{fontSize:"1.25vw" }}>
@@ -282,51 +284,55 @@ export default function UsersPosts()
                                                             <span>
                                                             {blog.description}
                                                             </span>
-                                                                        </Typography>
-                                                                    </Box>
-                                                                </Item>
-                                                                <Grid item sx={{marginRight:'50px'}}>
-                                                                    {blog.main_image_64!=null ?
-                                                                        <>
-                                                                            <img src={blog.main_image_64}
-                                                                                 style={{borderRadius:"5%",
-                                                                                     border:"solid",
-                                                                                     borderWidth:"thin",
-                                                                                     borderColor:"#b2b2b2"
-                                                                                 }}
-                                                                                 width="92%" />
-                                                                        </>
-                                                                        :
-                                                                        <Grid  container alignItems='center' direction='column' justifyContent="center">
-                                                                            <Item>
-                                                                                <NotFound/>
-                                                                            </Item>
-                                                                        </Grid>
-                                                                    }
-
-                                                                </Grid>
-                                                            </Stack>
-                                                        </Item>
+                                                        </Typography>
+                                                    </Box>
+                                                </Item>
+                                                <Grid item >
+                                                    {blog.main_image_64!=null ?
+                                                    <>
+                                                    <img src={blog.main_image_64}
+                                                        style={{borderRadius:"5%",
+                                                        border:"solid",
+                                                            borderWidth:"thin",
+                                                            borderColor:"#b2b2b2"
+                                                        }}
+                                                        width="92%" />
+                                                    </>
+                                                    :
+                                                    <Grid  container alignItems='center' direction='column' justifyContent="center">
                                                         <Item>
-                                                            <Box display="flex"
-                                                                 justifyContent="center"
-                                                                 alignItems="center"
-                                                                 sx={{ width: 1,
-                                                                     marginTop:"1rem"}}>
-                                                                {!blog.is_liked.includes(user_id)
-                                                                    && <SetLikeOfBlog blog_id={blog.uid} />}
-                                                                {blog.is_liked.includes(user_id)
-                                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />}
+                                                            <NotFound/>
+                                                        </Item>
+                                                    </Grid>
+                                                    }
 
-                                                                <div className="likes"
-                                                                     onClick={()=>{
-                                                                         setOpen_liker(true);
-                                                                         setClose_liker(false);
-                                                                         setBlog_id(blog.uid);
-                                                                     }
-                                                                     }>
-                                                                    {blog.num_likes > 0 ? blog.num_likes : null}
-                                                                </div>
+                                                </Grid>
+                                            </Stack>
+                                        </Item>
+                                        <Item>
+                                            <Box display="flex"
+                                                 justifyContent="center"
+                                                 alignItems="center"
+                                                 sx={{ width: 1,
+                                                    marginTop:"1rem"}}>
+                                                {/* {!blog.is_liked.includes(user_id)
+                                                    && <SetLikeOfBlog blog_id={blog.uid} />}
+                                                {blog.is_liked.includes(user_id)
+                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />} */}
+                                                {blog.is_liked.includes(user_id)?
+                                                <><SetLikeOfBlog blog_id={blog.uid} Isfill={true}/></>
+                                                :
+                                                <><SetLikeOfBlog blog_id={blog.uid} isFill={false}/></>
+                                                }
+                                                <div className="likes"
+                                                    onClick={()=>{
+                                                        setOpen_liker(true);
+                                                        setClose_liker(false);
+                                                        setBlog_id(blog.uid);
+                                                    }
+                                                    }>
+                                                    {blog.num_likes > 0 ? blog.num_likes : null}
+                                                </div>
 
                                                             </Box>
                                                         </Item>

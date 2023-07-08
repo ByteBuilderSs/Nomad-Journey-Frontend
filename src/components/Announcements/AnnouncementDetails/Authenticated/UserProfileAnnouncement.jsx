@@ -37,7 +37,7 @@ export default function UserProfile({user_id, first_name, imageSize, profileSize
                         </div>
                     ) :
 
-                    <LetteredAvatar name={first_name} backgroundColor='#FFE5B4'  size={imageSize}/>
+                    <LetteredAvatar name={first_name} backgroundColor='#D5D8DD'  size={imageSize}/>
             }
             </>
     );

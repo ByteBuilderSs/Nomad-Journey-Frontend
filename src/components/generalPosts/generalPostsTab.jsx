@@ -18,6 +18,9 @@ import { FcSearch } from "react-icons/fc";
 import SearchIcon from "@mui/icons-material/Search";
 import {useSearchBlog} from '../../hooks/useSearchBlog'
 import './generalPost.css'
+import {Col, Row} from "react-bootstrap";
+import MostLikedPost from "./mostLikedPost";
+
 
 export default function UsersPosts()
 {
@@ -58,6 +61,7 @@ export default function UsersPosts()
     const [resault,setResault]=useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [active,setActive]=useState(true)
+
 
     useEffect( () =>
     {
@@ -145,33 +149,48 @@ export default function UsersPosts()
     if(!loading)
         return(
         <>
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                 sx={{
-                width: 1,
-                     marginBottom:"1rem"
-            }}>
-                
-                <Box
-                    sx={{
-                        width: 1/2,
-                        backgroundColor:"#ffffff",
-                        position:'relative'
-                    }}>
-                
-               
-                <Container  sx={{ mt: 20 ,
-                    top:0,
-                    right:0,
-                    justifyContent:'center',
-                    position:'absolute',
-                    display:'flex',
-                    margin:'1.3rem',
-                    width:'100%',
-                                }}>
-                  <TextField
+            <Row>
+                <Col md={3}>
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{
+                            width: 1,
+                            marginBottom:"1rem",
+                            position:"relative"
+                        }}>
+                            <MostLikedPost />
+                    </Box>
+                </Col>
+                <Col md={6}>
+                    <Box
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{
+                            width: 3/4,
+                            marginLeft:"3vw",
+                            marginBottom:"1rem"
+                        }}>
+
+                        <Box
+                            sx={{
+                                backgroundColor:"#ffffff",
+                                position:'relative'
+                            }}>
+
+
+                            <Container  sx={{ mt: 20 ,
+                                top:0,
+                                right:0,
+                                justifyContent:'center',
+                                position:'absolute',
+                                display:'flex',
+                                margin:'1.3rem',
+                                width:'100%',
+                            }}>
+                                <TextField
 
                     id="search"
                     type="search"
@@ -240,35 +259,35 @@ export default function UsersPosts()
                                             }}>
                                                 <Item>
 
-                                                    <Typography component="h5"
-                                                                style={{fontSize:"1.25vw" }}>
+                                                                    <Typography component="h5"
+                                                                                style={{fontSize:"1.25vw" }}>
                                                             <span>
                                                                 {blog.blog_title}
                                                             </span>
-                                                        <span style={{
-                                                            float:"right",
-                                                            marginRight:"5rem"
-                                                        }}>
+                                                                        <span style={{
+                                                                            float:"right",
+                                                                            marginRight:"5rem"
+                                                                        }}>
                                                     <Rating sx={{color:"#e45505"
-                                                                }} name="read-only" value={3} readOnly precision={0.1} />
+                                                    }} name="read-only" value={3} readOnly precision={0.1} />
                                                             </span>
-                                                    </Typography>
-                                                </Item>
-                                                <Item>
-                                                    <Box sx={{
-                                                        wordBreak:"break-word",
-                                                        width:"92%",
-                                                        marginBottom:"1rem"
-                                                    }}>
-                                                        <Typography component="h5"
-                                                                    style={{fontSize:"0.75vw" }}>
+                                                                    </Typography>
+                                                                </Item>
+                                                                <Item>
+                                                                    <Box sx={{
+                                                                        wordBreak:"break-word",
+                                                                        width:"92%",
+                                                                        marginBottom:"1rem"
+                                                                    }}>
+                                                                        <Typography component="h5"
+                                                                                    style={{fontSize:"0.75vw" }}>
                                                             <span>
                                                             {blog.description}
                                                             </span>
                                                         </Typography>
                                                     </Box>
                                                 </Item>
-                                                <Grid item sx={{marginRight:'50px'}}>
+                                                <Grid item >
                                                     {blog.main_image_64!=null ?
                                                     <>
                                                     <img src={blog.main_image_64}
@@ -282,11 +301,11 @@ export default function UsersPosts()
                                                     :
                                                     <Grid  container alignItems='center' direction='column' justifyContent="center">
                                                         <Item>
-                                                            <NotFound/> 
+                                                            <NotFound/>
                                                         </Item>
                                                     </Grid>
                                                     }
-                                                    
+
                                                 </Grid>
                                             </Stack>
                                         </Item>
@@ -296,11 +315,15 @@ export default function UsersPosts()
                                                  alignItems="center"
                                                  sx={{ width: 1,
                                                     marginTop:"1rem"}}>
-                                                {!blog.is_liked.includes(user_id)
+                                                {/* {!blog.is_liked.includes(user_id)
                                                     && <SetLikeOfBlog blog_id={blog.uid} />}
                                                 {blog.is_liked.includes(user_id)
-                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />}
-
+                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />} */}
+                                                {blog.is_liked.includes(user_id)?
+                                                <><SetLikeOfBlog blog_id={blog.uid} Isfill={true}/></>
+                                                :
+                                                <><SetLikeOfBlog blog_id={blog.uid} isFill={false}/></>
+                                                }
                                                 <div className="likes"
                                                     onClick={()=>{
                                                         setOpen_liker(true);
@@ -311,19 +334,23 @@ export default function UsersPosts()
                                                     {blog.num_likes > 0 ? blog.num_likes : null}
                                                 </div>
 
-                                            </Box>
+                                                            </Box>
+                                                        </Item>
+                                                    </Stack>
+                                                </div>
+                                            </div>
+                                            <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
                                         </Item>
-                                    </Stack>
-                                    </div>
-                                </div>
-                            <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
-                        </Item>
-                    ))
-                }
-                </Stack>
-                </Box>
+                                    ))
+                                }
+                            </Stack>
+                        </Box>
 
-            </Box>
+                    </Box>
+                </Col>
+                <Col md={2}></Col>
+            </Row>
+
 
             {checkNotNull()}
             {() => setBlog_id(null)}

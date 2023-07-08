@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./Notif.css"
 import baktashImg from "../../Assets/images/baktash.jpg"
 import sinaImg from "../../Assets/images/sina.jpg"
@@ -25,9 +26,12 @@ import Avatar from './avatar';
 
 import Lottie from 'react-lottie';
 import bellGif from '../../lottieAssets/bell.json';
+import { Navigate } from 'react-router-dom';
 
 const Notif = () => {
 
+
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const [userId, setUserId] = useState(null);
     const [notifs, setNotifs] = useState(null);
@@ -204,6 +208,12 @@ const Notif = () => {
       handleClose();
     }
 
+    const handleNavigate = (username) => {
+        handleClose();
+        navigate(`/home/Profile/${username}`);
+    }
+
+
     const StyledBadge = styled(Badge)(({ theme }) => ({
         "& .MuiBadge-badge": {
           right: -3,
@@ -329,7 +339,7 @@ const Notif = () => {
             >
                 
                 {(notifs !== null) ? (notifs.length !== 0) ? notifs.map((object) => (
-                    <MenuItem key={object}  sx={{}}>
+                    <MenuItem key={object}  onClick={() => {handleNavigate(object.sender_username)}} >
                                 <div
                                     style={{
                                         background: object.is_seen ? 'transparent' : '#E55807',
@@ -346,14 +356,14 @@ const Notif = () => {
                                     }}
                                 ></div>
                                 
-                                <div style={{marginRight : "6px"}}>
+                                <div style={{marginRight : "6px"}} >
                                   
                                   {(object.sender_profile_photo_URL) ? <Avatar imageUrl={`https://api.nomadjourney.ir${object.sender_profile_photo_URL}`} alt={object.sender_username[0]} size={35} /> :
                                     <Avatar letter={object.sender_username[0]} size={35}/>
                                   }
                                 </div>
                                 
-                                <strong style={{marginRight : "5px"}}>{object.sender_username}</strong> 
+                                <strong style={{marginRight : "5px"}} >{object.sender_username}</strong> 
                                 <div className="message">{object.message}</div> 
                                 <div className="timestamp" style={{}}>{formatTimeElapsed(object.created_at)}</div>                          
                     </MenuItem>
@@ -362,7 +372,6 @@ const Notif = () => {
                 
                 {notifs !== null && notifs.length !== 0 &&  unseen !== 0 && <div style={{display : "flex", justifyContent : "center", marginTop : "10px", gap : "5px"}}>
                     <Button variant="contained" onClick={handleSeen}>Mark all as read</Button>
-                    
                 </div>
                 }
                 

@@ -198,7 +198,7 @@ function MyAnnouncements(props) {
                       sx={{
                           paddingLeft:"2rem",
                           paddingRight:"3rem",
-                          marginTop:"5rem",
+                          marginTop:"2rem",
                           marginBottom:"2rem"
                       }}>
                     {[...Array(n)].map((e, key) => (
@@ -207,7 +207,7 @@ function MyAnnouncements(props) {
                                     borderRadius:"20px",
                                     backgroundColor:"white"
                                 }}>
-                                <Skeleton variant="rectangular" width="100%" height={150}
+                                <Skeleton variant="rectangular" width="100%" height={200}
                                     sx={{
                                         borderRadius:"20px 20px 0px 0px"
                                     }}
@@ -251,8 +251,6 @@ function MyAnnouncements(props) {
         }
         return (
             <ThemeProvider theme={theme}>
-                <h1 style={{paddingTop:"2rem"}}>
-                    Announcements</h1>
                 <h5>
                     <Grid container rowSpacing={5} columnSpacing={2}
                     sx={{

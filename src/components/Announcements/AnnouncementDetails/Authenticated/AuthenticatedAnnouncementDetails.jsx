@@ -1,5 +1,6 @@
 import {
     Avatar,
+    Rating,
     Box,
     Button,
     Divider,
@@ -22,7 +23,7 @@ import {Item, ModalContent} from "semantic-ui-react";
 import React, {useEffect, useMemo, useState} from "react";
 import {AiFillCalendar} from "react-icons/ai";
 import {TiLocation} from "react-icons/ti";
-import {FaHome, FaMapMarkerAlt} from "react-icons/fa";
+import {FaEye, FaHome, FaMapMarkerAlt} from "react-icons/fa";
 import {IoIosPerson} from "react-icons/io";
 import {MdDescription, MdOutlineDescription} from "react-icons/md";
 import {ImProfile} from "react-icons/im";
@@ -57,6 +58,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Messenger from '../../../Messenger/Messenger'
 import {useAllposts} from '../../../../hooks/useAllposts'
 import EditorFormDialog from "../../../PostExperience/EditorForm/EditorFormDialog";
+import FeedbackAncDetails from "../../../feedBack/feedbackAncDetails";
 
 const useStyles = makeStyles(theme => (
     {
@@ -171,6 +173,24 @@ const useStyles = makeStyles(theme => (
                 backgroundColor:"#EFEFD0",
                 border:"solid 2px #EFEFD0",
                 color:"#b21313"
+            }
+        },
+        feedbackButton:{
+            width:"13vw",
+            backgroundColor:"rgba(239,239,208,0)",
+            backgroundPosition:"right bottom",
+            fontWeight:"bold",
+            color:"#EFEFD0",
+            border:"solid 2px #EFEFD0",
+            borderRadius:"15px",
+            transition:"all 0.25s ease-out",
+            // display:"block",
+            backgroundSize:"200% 100%",
+            "&:hover":{
+                backgroundPosition:"left bottom",
+                backgroundColor:"#EFEFD0",
+                border:"solid 2px #EFEFD0",
+                color:"#FF6B35"
             }
         }
 
@@ -325,6 +345,49 @@ export default function UnAuthAnnouncement(props)
         console.log(maxLats);
         console.log(maxLongs);
         return [[minLats, minLongs], [maxLats, maxLongs]];
+
+    }
+    const doneButtons = (anc_id, anc_status, exist_feedback, exist_post) => {
+        if(anc_status === "D")
+            return(<>
+                <Grid container style={{marginLeft:"25%", marginBottom:"15%"}} alignItems='center' direction='column' justifyContent="center" spacing={1}>
+                    <Grid item >
+                        {!exist_feedback ? (
+                                <>
+                                    <Button className={classes.feedbackButton} startIcon={<FeedbackIcon />} onClick={() => {
+                                        setShowFeed(true);
+                                        setCloseFeed(false);
+                                    }}>
+                                        Send Feedback
+                                    </Button>
+                                    <FeedbackModal
+                                        open={showFeed}
+                                        setOpen={setShowFeed}
+                                        close={closeFeed}
+                                        setClose={setCloseFeed}
+                                        anc_id={anc_id}
+                                    />
+                                </>
+                        ) : (
+                            <>
+                                <FeedbackAncDetails announcement_id={anc_id} />
+                            </>
+                        )}
+                    </Grid>
+                    <Grid item >
+                        {!exist_post ? (
+                            <Button className={classes.button} startIcon={<AddIcon />} onClick={()=>handelClickPost(anc_id)}>
+                                Add Post
+                            </Button>
+                        ) : (
+                            <Button className={classes.button} startIcon={<FaEye />} onClick={()=>handelClickPost(anc_id)}>
+                                View Post
+                            </Button>
+                        )}
+
+                    </Grid>
+                </Grid>
+                </>)
 
     }
     const checkButton = (anc_status) => {
@@ -767,68 +830,84 @@ export default function UnAuthAnnouncement(props)
                                     {/*</Grid>*/}
                                     {/*</>*/}
                                     {/*:null}*/}
-                                    {announcement.anc_status === "D" ? 
-                                    <>
-                                        <div style={{position:"fixed", bottom:"0",
-                                            marginBottom:"25rem", marginLeft:"0.25rem",
-                                            width:"30%",
-                                        }}>
-                                    <Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>
-                                        {announcement.existPost ==false ?
-                                         <Grid item >
-                                         <Button onClick={()=>handelClickPost(announcement.id)}
-                                         size='medium' sx={{
-                                             color:"rgba(237,231,230,0.8)",
-                                             backgroundColor:"rgba(201,153,127,0.2)",
-                                         "&:hover":{
-                                             color:"rgba(234,187,170,0.8)",
-                                             backgroundColor:"rgba(201,153,127,0.27)"
-                                         } ,width:'20vh',
-                                         borderRadius:'13px'
-                                         }} startIcon={<AddIcon />}
-                                         >
-                                             Add Post
-                                         </Button>
-                                         </Grid>
-                                         :
-                                         null
-                                        }
-                                           
-                                        {announcement.existFeedback ==false ?
-                                        <Grid item >
-                                        <Button size='medium'
-                                        onClick={()=>{
-                                            setShowFeed(true);
-                                            setCloseFeed(false);}}
-                                        sx={{
-                                            color:"rgba(237,231,230,0.8)",
-                                            backgroundColor:"rgba(201,153,127,0.2)",
-                                        "&:hover":{
-                                            color:"rgba(234,187,170,0.8)",
-                                            backgroundColor:"rgba(201,153,127,0.27)"
-                                        },width:'20vh',
-                                        borderRadius:'13px'
+                                    {/*{announcement.anc_status === "D" ? */}
+                                    {/*<>*/}
+                                    {/*    <div style={{position:"fixed", bottom:"0",*/}
+                                    {/*        marginBottom:"25rem", marginLeft:"0.25rem",*/}
+                                    {/*        width:"30%",*/}
+                                    {/*    }}>*/}
+                                    {/*<Grid container alignItems='center' direction='column' justifyContent="center" spacing={1}>*/}
+                                    {/*    {announcement.existPost ==false ?*/}
+                                    {/*     <Grid item >*/}
+                                    {/*     <Button onClick={()=>handelClickPost(announcement.id)}*/}
+                                    {/*     size='medium' sx={{*/}
+                                    {/*         color:"rgba(237,231,230,0.8)",*/}
+                                    {/*         backgroundColor:"rgba(201,153,127,0.2)",*/}
+                                    {/*     "&:hover":{*/}
+                                    {/*         color:"rgba(234,187,170,0.8)",*/}
+                                    {/*         backgroundColor:"rgba(201,153,127,0.27)"*/}
+                                    {/*     } ,width:'20vh',*/}
+                                    {/*     borderRadius:'13px'*/}
+                                    {/*     }} startIcon={<AddIcon />}*/}
+                                    {/*     >*/}
+                                    {/*         Add Post*/}
+                                    {/*     </Button>*/}
+                                    {/*     </Grid>*/}
+                                    {/*     :*/}
+                                    {/*     null*/}
+                                    {/*    }*/}
+                                    {/*       */}
+                                    {/*    {announcement.existFeedback ==false ?*/}
+                                    {/*    <Grid item >*/}
+                                    {/*    <Button size='medium'*/}
+                                    {/*    onClick={()=>{*/}
+                                    {/*        setShowFeed(true);*/}
+                                    {/*        setCloseFeed(false);}}*/}
+                                    {/*    sx={{*/}
+                                    {/*        color:"rgba(237,231,230,0.8)",*/}
+                                    {/*        backgroundColor:"rgba(201,153,127,0.2)",*/}
+                                    {/*    "&:hover":{*/}
+                                    {/*        color:"rgba(234,187,170,0.8)",*/}
+                                    {/*        backgroundColor:"rgba(201,153,127,0.27)"*/}
+                                    {/*    },width:'20vh',*/}
+                                    {/*    borderRadius:'13px'*/}
 
-                                        }} startIcon={<FeedbackIcon />}>
-                                            Send Feedback
-                                        </Button>
-                                        </Grid>
-                                        :
-                                        null
-                                        }   
-                                            
-                                            
-                                    </Grid>
-                                        </div>
-                                    <FeedbackModal
-                                        open={showFeed}
-                                        setOpen={setShowFeed}
-                                        close={closeFeed}
-                                        setClose={setCloseFeed}
-                                        anc_id={announcement.id}
-                                        />
-                                    </>:null}
+                                    {/*    }} startIcon={<FeedbackIcon />}>*/}
+                                    {/*        Send Feedback*/}
+                                    {/*    </Button>*/}
+                                    {/*    </Grid>*/}
+                                    {/*    :*/}
+                                    {/*    null*/}
+                                    {/*    }   */}
+                                    {/*        */}
+                                    {/*        */}
+                                    {/*</Grid>*/}
+                                    {/*    </div>*/}
+                                    {/*<FeedbackModal*/}
+                                    {/*    open={showFeed}*/}
+                                    {/*    setOpen={setShowFeed}*/}
+                                    {/*    close={closeFeed}*/}
+                                    {/*    setClose={setCloseFeed}*/}
+                                    {/*    anc_id={announcement.id}*/}
+                                    {/*    />*/}
+                                    {/*</>:null}*/}
+                                    <Item>
+                                        <Typography component="h5"
+                                                    style={{ position: "fixed", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw", bottom:"0", marginBottom:"1" }}>
+                                            <span>
+                                                <div style={{
+                                                    width:"100%",
+                                                    alignItems:"center",
+                                                    justifyContent:"center",
+                                                    display:"flex"
+                                                }}>
+                                                    {doneButtons(announcement.id, announcement.anc_status,
+                                                        announcement.existFeedback, announcement.existPost)}
+                                                </div>
 
+                                            </span>
+                                        </Typography>
+                                    </Item>
                                     <Item>
                                         <Typography component="h5"
                                                     style={{ position: "fixed", alignItems: "center", fontWeight: "bold", alignContent: "center", fontSize:"1vw", bottom:"0", marginBottom:"1" }}>

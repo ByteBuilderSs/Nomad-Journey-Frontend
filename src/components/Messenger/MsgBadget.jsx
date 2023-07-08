@@ -6,14 +6,17 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import EmailIcon from '@mui/icons-material/Email';
 import { Tooltip } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const ChatBadegt = () => {
 
   
-
+    const navigate=useNavigate()
     const handleClick = (event) => {
+       
+        navigate('/chatbar')
     };
    
     const StyledBadge = styled(Badge)(({ theme }) => ({

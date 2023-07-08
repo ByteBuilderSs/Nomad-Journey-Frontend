@@ -16,7 +16,8 @@ import {Paper,
     Button,
     Box,
     Tooltip, 
-    Stack} from '@mui/material';
+    Stack,
+    Collapse} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import Lottie from 'react-lottie';
 import UserProfile from '../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement'
@@ -25,9 +26,11 @@ import {useAllMsgs} from '../../hooks/useHistoryMsg'
 import {useSendMsg} from '../../hooks/useSendMsg'
 import {useVoluntier} from '../../hooks/useVoluntier'
 import {useAncUsers} from '../../hooks/useAncReqUsers'
-import {useImage} from '../../hooks/useFetchimage'
 import { useNavigate } from 'react-router-dom';
 import messagingL from '../../lottieAssets/messaging.json'
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 const useStyles = makeStyles({
   table: {
@@ -45,57 +48,43 @@ const useStyles = makeStyles({
   },
   messageArea: {
     height: '70vh',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    
+    width:'100%'
   }
 });
 
-const Messaging = () => {
 
-    const defaultOptions = {
-      loop: true,
-      autoplay: true,
-      animationData: messagingL,
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice"
-      }
-    };
-  
-    return(
-      <div class="col-lg-12">
-        <Lottie 
-          options={defaultOptions}
-          height={400}
-          width={400}
-        />
-      </div>
-    )
-  }
 const MessageRoom=()=>
 {
     
 
     return(
-        <Grid container xs={9} sx={{alignItems:'center',justifyContent:'center',height:'60vh'}} >
-            <Stack direction='column' >
-                <Avatar sx={{width:130,height:90}} src={require('../../Assets/images/messageIcon.jpg')}/>
-                <Typography primary="Start Messaging ..." variant='h1'/>
-                <Typography secondary="Message To Your Prefered Host!" variant='h1'/>
-            
-            </Stack>            
+        <Grid container xs={12} sx={{alignItems:'center',justifyContent:'center',height:'50vh'}} direction='column' >
+           
+                <Avatar sx={{width:130,height:90,margin:'1rem',justifyContent:'center',marginLeft:'1rem'}} src={require('../../Assets/images/messageIcon.jpg')}/> 
+                
+                <Typography variant='h5' sx={{textAlign:'center'}}>Start Messaging  </Typography>
+                <Typography variant='caption' sx={{textAlign:'center'}}>send private messages to your contacts</Typography>
+                 
         </Grid>
-        
-
     );
 }
+
 const ChatBox=(props)=>
 {
     const classes = useStyles();
 
     const [list,setList]=React.useState([])
-
+    const [seen,setSeen]=React.useState([])
+    const messagesEndRef = React.useRef(null)
+    const scrollButton=()=>
+    {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
     const {allMsgs,allmsg} =useAllMsgs() 
-    useEffect(()=>{allMsgs(props.senderU,props.reciverU)},[])
-    useEffect(()=>{setList(allmsg)},[allmsg])
+    useEffect(()=>{allMsgs(props.senderU,props.reciverU);scrollButton()},[])
+    useEffect(()=>{setList(allmsg);scrollButton()},[allmsg])
 
     
     const [message,setTextMsg]=React.useState("")
@@ -105,7 +94,7 @@ const ChatBox=(props)=>
 
     {
 
-        await sendMsg(message,props.sender,props.reciver,props.anc_id)
+        await sendMsg(message,props.sender,props.reciver)
         
         const newList=list.concat({message:message,type:"sent",created_at:null})
        
@@ -121,46 +110,58 @@ const ChatBox=(props)=>
         <Grid item xs={9}>
             
             <List className={classes.messageArea}>
-                {list && list.map((item,key)=>
+              {list && list.map((item,key)=>
                         <Grid container>
                             {
                                 item.type=="sent" ?
+                               
                                 <>
+                                
                                 <ListItem key={key} sx={{display:'grid',justifyContent:'right'}}>
-                                    <Grid item xs={12} sx={{backgroundColor:'#1A659E',borderRadius:'10px 10px 0px 10px'}} >
-                                    <ListItemText align="right" primary={item.message} sx={{color:'#EFEFD0',margin:'0.5rem',paddingRight:'0.4rem',paddingLeft:'0.3rem',padding:'0.1rem'}}></ListItemText>
+                                  
+                                    <Grid item minWidth='5vh' maxWidth='30vh' maxHeight='1000vh' sx={{backgroundColor:'#1A659E',borderRadius:'10px 10px 0px 10px',wordBreak:'break-word'}} >
+                                    <ListItemText align="right" primary={item.message} sx={{color:'#EFEFD0',margin:'0.4rem',textAlign:'left',paddingLeft:'1rem'}}/>
                                     </Grid>
-                                </ListItem>
-                                {item.created_at!=null ?<ListItemText 
+                                    <Grid display='flex' flexDirection='row'>
+                                    
+                                    
+                                    {item.created_at!=null ?<ListItemText 
+                                                        
                                                         align="right" 
                                                         secondary={item.created_at.split("T")[1].split(".")[0]} 
-                                                        sx={{paddingLeft:'0.3rem'}}></ListItemText>
+                                                        ></ListItemText>
                                                         :
 
                                                         <ListItemText align="right" 
                                                         secondary={new Date().getHours() +":"+new Date().getMinutes()+":"+new Date().getSeconds()} 
-                                                        sx={{paddingLeft:'0.3rem'}}></ListItemText>}
+                                                        ></ListItemText>}
+                                    
+                                    </Grid>
+                                </ListItem>
+                                
                                 </> 
                               
                                 :
                                 <>
                                 <ListItem key={key} sx={{display:'grid',justifyContent:'left'}}>
-                                    <Grid item xs={12} sx={{borderRadius:'10px 10px 10px 0px',backgroundColor:'#F7C59F'}} >
-                                    <ListItemText align="left" primary={item.message} sx={{margin:'0.5rem',paddingRight:'0.4rem',paddingLeft:'0.3rem',padding:'0.1rem'}}></ListItemText>
+                                    <Grid item xs={12} sx={{borderRadius:'10px 10px 10px 0px',backgroundColor:'#D5D8DD'}} >
+                                    <ListItemText align="left" primary={item.message} sx={{margin:'0.4rem',textAlign:'center'}}/>
                                     </Grid>
+                                    <ListItemText align="left" secondary={item.created_at.split("T")[1].split(".")[0]} sx={{paddingLeft:'0.3rem'}}></ListItemText>
                                 </ListItem>
-                                <ListItemText align="left" secondary={item.created_at.split("T")[1].split(".")[0]} sx={{paddingLeft:'0.3rem'}}></ListItemText>
 
                                 </>
-                            
+                           
                             }
+                            
 
                             
                         </Grid>
                     
                     
-                )} 
-                
+              )} 
+              
+              <div ref={messagesEndRef}/>
             </List>
                 <Divider />
                 <Grid container style={{padding: '20px',display:'flex'}} direction='row'>
@@ -169,10 +170,12 @@ const ChatBox=(props)=>
                         label="Send Massege ..." 
                         fullWidth onChange={(event)=>{setTextMsg(event.target.value)}} 
                         autoComplete='off'
+                        value={message}
                         InputProps={{endAdornment:(
                         <Button size='medium' color='primary'
                         onClick={()=>{handelSendM();setTextMsg(null)}}
                         onChange={handelChangeTxt}
+                        
                         startIcon={<SendIcon />}>
                           Send
                         </Button>
@@ -180,6 +183,7 @@ const ChatBox=(props)=>
                     </Grid>
                     
                 </Grid>
+        
         </Grid>
     );
 }
@@ -188,15 +192,21 @@ export default function Messenger(props)
 {
     
     const [active,setActive]=React.useState(false);
-    const [hover,setHover]=React.useState("");
+    const [selected,setSelected]=React.useState(null)
+    const [open1,setOpen1]=React.useState(false)
+    const [open2,setOpen2]=React.useState(false)
+
+    const [bgcolor,setBgColor]=React.useState(-1);
+    
     const classes = useStyles();
-    const handelChatBox=()=>
+    const handelChatBox=(index)=>
     {
-      setActive(true)
+      
+      setActive(!active)
+      setSelected(index)
     }
 
-    // const {allvoluntiers,volun} =useVoluntier() 
-    // useEffect(()=>{allvoluntiers()},[]) 
+   
     const [reciver,setReciver]=React.useState(null)
     const sender=JSON.parse(localStorage.getItem('tokens')).user_id
 
@@ -207,6 +217,8 @@ export default function Messenger(props)
     //------------------------------------------
     const {allUsersReq,usersReq} =useAncUsers()
     useEffect(()=>{allUsersReq()},[])
+    const {allvoluntiers,volun} =useVoluntier() 
+    useEffect(()=>{allvoluntiers()},[]) 
     //-----------------------------------------
     
 
@@ -215,7 +227,15 @@ export default function Messenger(props)
     {
         navigate(`/home/Profile/${username}/`)
     }
-
+    const handelClick1=()=>
+    {
+      setOpen1(!open1);
+    }
+    const handelClick2=()=>
+    {
+      setOpen2(!open2);
+    }
+    
     return (
         
         <div>
@@ -224,29 +244,66 @@ export default function Messenger(props)
               <Grid item xs={3} className={classes.borderRight500}>
                  
                   <List>
-                    <Typography sx={{justifyContent:'center',display:'flex',fontSize:'20px',color:'#1A659E'}}>.. Contacts ..</Typography>
+                    <Typography sx={{justifyContent:'center',display:'flex',fontSize:'20px',color:'#1A659E'}}>All My Contacts</Typography>
                     <Divider/>
-                  {usersReq.map((item)=>
-                    <>                    
-                    <ListItemButton key={item.first_name+item.last_name} onClick={()=>{handelChatBox();setReciver(item.id);setReciverU(item.username)}}>
-                    <Tooltip title='view profile'>
-                      <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
-                      <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
-
-                      </ListItemIcon>
-                    </Tooltip>
-                    {/* <ListItemText primary={item.first_name +" "+ item.last_name}></ListItemText> */}
-                    </ListItemButton>
-                    <Divider/>
-                    </>
-                  )}
-                      
+                  <ListItemButton onClick={handelClick1}>
+                  <ListItemText secondary='contact with your guests' sx={{alignItems:'center'}} />
+                  {open1?
+                  <ExpandLess/>
+                  :<ExpandMore/>}
+                   
+                  </ListItemButton>
+                  <Collapse in={open1}>
+                      <List disablePadding>
+                      {usersReq.length>0 ?usersReq.map((item,index)=>
+                        
+                          <>                    
+                          <ListItemButton style={{backgroundColor: bgcolor ==index?'#D5D8DD':null}}  key={item.id} onClick={()=>{handelChatBox(item.id);setReciver(item.id);setReciverU(item.username);setBgColor(index)}}>
+                          <Tooltip title='view profile'>
+                            <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
+                            <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
+                            
+                            </ListItemIcon>
+                          </Tooltip>
+                          <ListItemText primary={item.first_name +" "+ item.last_name} secondary={"from "+item.city_name}/>
+                          
+                          </ListItemButton>
+                          <Divider/>
+                          </>
+                        ):<Typography variant='caption' sx={{marginLeft:'2rem'}}>no guests yet</Typography>}
+                      </List>
+                  </Collapse>
+                  <ListItemButton onClick={handelClick2}>
+                  <ListItemText secondary='contact with your volunteers' sx={{alignItems:'center'}} />
+                  {open2?
+                  <ExpandLess/>
+                  :<ExpandMore/>}
+                  </ListItemButton>
+                  <Collapse in={open2}>
+                      <List disablePadding>
+                      {volun.length>0 ? volun.map((item,index)=>
+                          <>                    
+                          <ListItemButton style={{backgroundColor: bgcolor ==index?'#D5D8DD':null}}  key={item.id} onClick={()=>{handelChatBox(item.id);setReciver(item.id);setReciverU(item.username);setBgColor(index)}}>
+                          <Tooltip title='view profile'>
+                            <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
+                            <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
+                            
+                            </ListItemIcon>
+                          </Tooltip>
+                          <ListItemText primary={item.first_name +" "+ item.last_name} secondary={"from "+item.city_name}/>
+                          
+                          </ListItemButton>
+                          <Divider/>
+                          </>
+                        ):<Typography variant='caption' sx={{marginLeft:'2rem'}}>no volunteers yet</Typography>}
+                      </List>
+                  </Collapse>
                     
                   </List>
               </Grid>
   
               <Grid container xs={9} sx={{alignItems:'center',justifyContent:'center'}}>
-                  {active && <ChatBox reciver={reciver} sender={sender} anc_id={props.anc_id} senderU={senderU} reciverU={reciverU} />}
+                  {(active && reciver==selected)? <ChatBox reciver={reciver} sender={sender} senderU={senderU} reciverU={reciverU} /> :null}
                   {!active && <MessageRoom/>}
 
               </Grid>

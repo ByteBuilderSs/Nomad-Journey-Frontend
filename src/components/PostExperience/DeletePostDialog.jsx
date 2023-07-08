@@ -19,6 +19,44 @@ import axios from "axios";
 import {toast} from "react-toastify";
 import { useCounter, useCounterActions } from "../../Context/CounterProvider";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {AiOutlineClose} from "react-icons/ai";
+import {makeStyles} from "@mui/styles";
+const styles = makeStyles(theme => ({
+    button:{
+        width:"7vw",
+        backgroundColor:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#004E89",
+        border:"solid 2px #004E89",
+        borderRadius:"15px",
+        transition:"all 0.15s ease-out",
+        // display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            backgroundColor:"#004E89",
+            color:"#EFEFD0"
+        }
+    },
+    deleteButton:{
+        width:"7vw",
+        backgroundColor:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#DE3733",
+        border:"solid 2px #DE3733",
+        borderRadius:"15px",
+        transition:"all 0.15s ease-out",
+        // display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            backgroundColor:"#DE3733",
+            color:"#EFEFD0"
+        }
+    }
+}))
 
 
 function DeletePostDialog(props)
@@ -29,7 +67,8 @@ function DeletePostDialog(props)
     const allData = JSON.parse(localStorage.getItem('tokens'));
     const access_token = allData.access;
     const username = allData.username;
-    
+    const classes = styles();
+
     const handleClose = () =>
     {
         props.setOpen(false);
@@ -62,8 +101,20 @@ function DeletePostDialog(props)
                 open={props.open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-                PaperProps={{ sx: { borderRadius: "15px" } }}
+                PaperProps={{ sx: {
+                    borderRadius: "15px",
+                    color:"#DE3733",
+                    boxShadow:"inset 0px 0px 0px 2px #DE3733",
+                    } }}
             >
+                {/* <IconButton
+                    edge="end"
+                    onClick={handleClose}
+                    size={"medium"}
+                    sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#DE3733" }}
+                >
+                    <AiOutlineClose />
+                </IconButton> */}
                 <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6", display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Stack direction={'column'} sx={{ flexGrow: 1 }}>
                         <Item>
@@ -73,9 +124,9 @@ function DeletePostDialog(props)
                             {`Delete`} <b style={{ color: "#e66969" }}>«{props.post_title}» </b>{`Post`}
                         </Item>
                     </Stack>
-                    <IconButton aria-label="close" onClick={handleClose} sx={{ position: 'absolute', top: 8, right: 8 }}>
+                    {/* <IconButton aria-label="close" onClick={handleClose} sx={{ position: 'absolute', top: 8, right: 8 }}>
                         <HighlightOffIcon fontSize='large'/>
-                    </IconButton>
+                    </IconButton> */}
                 </DialogTitle>
 
                 <DialogContent>
@@ -86,17 +137,13 @@ function DeletePostDialog(props)
                     </DialogContentText>
                     <DialogActions>
                         <Button
-                            variant="outlined"
-                            color="error"
-                            className="p-button-text"
+                            className={classes.deleteButton}
                             onClick={onSubmit}
                         >
                             Delete
                         </Button>
                         <Button
-                            variant="outlined"
-                            color="primary"
-                            className="p-button-text"
+                            className={classes.button}
                             onClick={handleClose}
                         >
                             Cancel

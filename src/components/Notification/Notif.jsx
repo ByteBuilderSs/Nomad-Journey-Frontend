@@ -338,7 +338,7 @@ const Notif = () => {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 
-                {(notifs !== null) ? (notifs.length !== 0) ? notifs.map((object) => (
+                {(notifs !== null) ? (notifs.length !== 0) ? notifs.reverse().map((object) => (
                     <MenuItem key={object}  onClick={() => {handleNavigate(object.sender_username)}} >
                                 <div
                                     style={{

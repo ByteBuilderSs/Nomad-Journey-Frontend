@@ -438,7 +438,7 @@ const EditPost = () => {
                                                 )}
                                                 </>
                                             ) : null}
-                                        </Box>
+                                            </Box>
                                         </Grid>
                                         <div style={{ paddingLeft: "7rem" }}>
                                             {/* Title */}

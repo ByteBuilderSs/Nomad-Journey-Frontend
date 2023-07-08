@@ -371,7 +371,7 @@ const AllPosts = (props) =>
                                           sx={{ ml: "1rem", '& > *': { flexGrow: 3 } }}>
                                       {
                                         blog.tags_name.length > 0  ? (blog.tags_name.map((tag_name) => (
-                                          <Chip label={tag_name} color="primary" variant="outlined" />
+                                          <Chip label={tag_name} color="warning" />
                                         ))) : (
                                           <span> No related tag found </span>
                                         )

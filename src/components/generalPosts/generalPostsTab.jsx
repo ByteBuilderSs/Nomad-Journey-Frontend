@@ -195,12 +195,12 @@ export default function UsersPosts()
                     id="search"
                     type="search"
                     label="Search"
-                    variant="standard"
+                    variant='standard'
                     value={searchTerm}
                     onChange={handleChange}
                     autoFocus 
                     autoComplete='off'
-                    sx={{ width:'70%' ,
+                    sx={{ width:'100%' ,
                     justifyContent:'center',
                     }}
                     InputProps={{
@@ -213,14 +213,28 @@ export default function UsersPosts()
                       ),
                     }}
                   />
-                </Container>
+                </Grid>
+                <Box
+                    sx={{
+                        width: 1/3,
+                        borderRadius:'15px',
+                        backgroundColor:'#D5D8DD'
+                    }} >
                 
-                <Stack sx={{marginTop:'5rem'}}>
+               
+                
+                
+                <Stack sx={{backgroundColor:'#D5D8DD'}} >
                 
                 {resault && 
                     resault.map((blog, key) => (
-                        <Item>
-                                <div className="blogs-hovering">
+                        <Grid item sx={{backgroundColor:'#ffffff'}}>
+                                <Grid className="blogs-hovering" sx={{
+                                        
+                                        borderRadius:'15px',
+                                        border:'2px solid #004E89'
+
+                                }}>
                                     <div style={{
                                         paddingTop:"2rem", paddingBottom:"1rem"}}>
                                     <Stack sx={{

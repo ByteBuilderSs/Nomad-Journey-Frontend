@@ -30,6 +30,7 @@ import DatePicker, { DateObject } from "react-multi-date-picker";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeletePostDialog from '../DeletePostDialog';
+import EditPostDialog from '../EditPost/EditPostDialog';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {makeStyles} from "@mui/styles";
 import {AiOutlineClose} from "react-icons/ai";
@@ -81,6 +82,9 @@ const PostDetailDialog = (props) => {
     const [scroll, setScroll] = React.useState('paper');
     const [postData, setPostData] = useState("");
 
+    const [openEdit, setOpenEdit] = useState(false);
+    const [closeEdit, setCloseEdit] = useState(true);
+
     const loadPost = async () => {
         console.log("In load post request");
         axios({
@@ -125,6 +129,7 @@ const PostDetailDialog = (props) => {
         props.setOpen(false);
         props.set_post_slug(null);
     }
+
 
     const handleEditClick = (uid, slug) => 
     {
@@ -279,7 +284,11 @@ const PostDetailDialog = (props) => {
                         sx={{ mr: "3rem", mb: "1rem" }}
                         className={classes.button}
                         startIcon={<EditIcon />}
-                        onClick={() => handleEditClick(postData.uid, postData.slug)}
+                        // onClick={() => handleEditClick(postData.uid, postData.slug)}
+                        onClick={() => {
+                            setOpenEdit(true);
+                            setCloseEdit(false);
+                        }}
                         >
                         Edit
                     </Button>
@@ -298,6 +307,16 @@ const PostDetailDialog = (props) => {
             closePost={handleClose}
             close={closeDelete}
             setClose={setCloseDelete}
+        />
+        <EditPostDialog
+            post_slug={postData.slug}
+            post_id={postData.uid}
+            post={postData}
+            open={openEdit}
+            setOpen={setOpenEdit}
+            closePost={handleClose}
+            close={closeEdit}
+            setClose={setCloseEdit}
         />
         </div>
     )

@@ -46,7 +46,6 @@ const styles = makeStyles(theme => ({
             color:"#EFEFD0"
         }
     }
-
 }))
 export let addAnnouncement = 0;
 function sleep(delay = 0) {

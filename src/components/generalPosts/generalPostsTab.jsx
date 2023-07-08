@@ -153,37 +153,31 @@ export default function UsersPosts()
                 alignItems="center"
                  sx={{
                 width: 1,
-                     marginBottom:"1rem"
-            }}>
-                
-                <Box
-                    sx={{
-                        width: 1/2,
-                        backgroundColor:"#ffffff",
-                        position:'relative'
-                    }}>
-                
-               
-                <Container  sx={{ mt: 20 ,
+                marginBottom:"1rem",}}>
+                <Grid container  sx={{ mt: 20 ,
                     top:0,
                     right:0,
-                    justifyContent:'center',
-                    position:'absolute',
+                    justifyContent:'right',
+                    position:'fixed',
                     display:'flex',
-                    margin:'1.3rem',
-                    width:'100%',
+                    marginTop:'7rem',
+                    marginRight:'1rem',
+                    maxWidth:'40vh',
+                    borderRadius:'15px',
+                    borderColor:'#004E89',
+                    backgroundColor:'#D5D8DD'
                                 }}>
                   <TextField
 
                     id="search"
                     type="search"
                     label="Search"
-                    variant="standard"
+                    variant='standard'
                     value={searchTerm}
                     onChange={handleChange}
                     autoFocus 
                     autoComplete='off'
-                    sx={{ width:'70%' ,
+                    sx={{ width:'100%' ,
                     justifyContent:'center',
                     }}
                     InputProps={{
@@ -196,14 +190,28 @@ export default function UsersPosts()
                       ),
                     }}
                   />
-                </Container>
+                </Grid>
+                <Box
+                    sx={{
+                        width: 1/3,
+                        borderRadius:'15px',
+                        backgroundColor:'#D5D8DD'
+                    }} >
                 
-                <Stack sx={{marginTop:'5rem'}}>
+               
+                
+                
+                <Stack sx={{backgroundColor:'#D5D8DD'}} >
                 
                 {resault && 
                     resault.map((blog, key) => (
-                        <Item>
-                                <div className="blogs-hovering">
+                        <Grid item sx={{backgroundColor:'#ffffff'}}>
+                                <Grid className="blogs-hovering" sx={{
+                                        
+                                        borderRadius:'15px',
+                                        border:'2px solid #004E89'
+
+                                }}>
                                     <div style={{
                                         paddingTop:"2rem", paddingBottom:"1rem"}}>
                                     <Stack sx={{
@@ -321,9 +329,9 @@ export default function UsersPosts()
                                         </Item>
                                     </Stack>
                                     </div>
-                                </div>
+                                </Grid>
                             <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
-                        </Item>
+                        </Grid>
                     ))
                 }
                 </Stack>

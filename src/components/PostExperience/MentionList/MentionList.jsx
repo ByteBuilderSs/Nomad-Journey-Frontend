@@ -61,6 +61,7 @@ const CheckboxListSecondary=({mentions})=>{
   
   const handelViewProf=(host_username)=>
   {
+      window.location.reload();
       window.location.href = `/home/Profile/${host_username}/`;
       // window.location(`/home/Profile/${host_username}/`);
   }

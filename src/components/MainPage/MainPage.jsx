@@ -166,12 +166,12 @@ const Announce = (props) => {
 
   
   let Description = "";
-  if(props.anc.anc_description.includes("\n")){
-    props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
-  }
-  else if(props.anc.anc_description.includes("\t")){
-    props.anc.anc_description = props.anc.anc_description.replace(/\t/g, " ");
-  }
+  // if(props.anc.anc_description.includes("\n")){
+  //   props.anc.anc_description = props.anc.anc_description.replace(/\n/g, " ");
+  // }
+  // else if(props.anc.anc_description.includes("\t")){
+  //   props.anc.anc_description = props.anc.anc_description.replace(/\t/g, " ");
+  // }
   if(props.anc.anc_description.length > 44){
     Description = props.anc.anc_description.substring(0, 44) + "..."
   }else{

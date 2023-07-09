@@ -295,9 +295,6 @@ const Settings = () => {
         <div className="settings">
             <Container style={{ paddingTop: "3rem", paddingBottom: "2rem"}}>
                 <Grid container spacing={3}>
-                    <Grid xs={12} sm={12} md={12}>
-                        <h1>Settings</h1>
-                    </Grid>
                     <Grid item xs={12} sm={12} md={12}>
                             <Stack direction={`row`} spacing={3}>
                             {tabs.map((tab, key) => {

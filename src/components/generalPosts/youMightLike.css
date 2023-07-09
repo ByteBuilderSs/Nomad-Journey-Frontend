@@ -1,0 +1,13 @@
+.user{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    transition: 0.35s ease;
+    cursor: pointer;
+}
+.user:hover{
+    background-color: rgba(0,78,137,0.1);
+}
+.last{
+    padding-bottom: 2vh;
+    border-radius: 0 0 15px 15px;
+}

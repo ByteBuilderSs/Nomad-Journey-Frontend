@@ -180,9 +180,9 @@ export default function MostLikedPost()
                     justifyContent:"center",
                     alignItems:"center",
                     display:"flex",
-                    marginTop:"15vh",
-                    marginLeft:"3vw",
-                    position:"relative",
+                    // marginTop:"15vh",
+                    // marginLeft:"3vw",
+                    width:'100%'
                 }}>
 
                     <div style={{
@@ -192,10 +192,10 @@ export default function MostLikedPost()
                         paddingBottom:"1vh",
                         borderRadius:"15px",
                         color:"#004E89",
-                        marginTop:"33vh",
-                        marginLeft:"3vw",
-                        position:"fixed",
-                        width:"22%",
+                        // marginTop:"33vh",
+                        // marginLeft:"3vw",
+                        
+                        width:"100%",
                         height:442
 
                     }}>
@@ -252,9 +252,10 @@ export default function MostLikedPost()
                     justifyContent:"center",
                     alignItems:"center",
                     display:"flex",
-                    marginTop:"15vh",
-                    marginLeft:"3vw",
-                    position:"relative",
+                    width:'100%'
+                    // marginTop:"15vh",
+                    // marginLeft:"3vw",
+                    // position:"relative",
                 }}>
 
                     <div style={{
@@ -264,10 +265,10 @@ export default function MostLikedPost()
                         paddingBottom:"1vh",
                         borderRadius:"15px",
                         color:"#004E89",
-                        marginTop:"33vh",
-                        marginLeft:"3vw",
-                        position:"fixed",
-                        width:"22%"
+                        // marginTop:"33vh",
+                        // marginLeft:"3vw",
+                        // position:"fixed",
+                        width:'100%'
 
                     }}>
                         <h2

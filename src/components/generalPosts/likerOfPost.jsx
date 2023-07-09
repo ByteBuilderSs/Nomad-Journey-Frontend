@@ -10,6 +10,7 @@ import {
     DialogContent,
     DialogContentText,
     Stack,
+    Skeleton,
     DialogTitle, Divider, IconButton,
     ListItemIcon,
     Tooltip,
@@ -21,16 +22,18 @@ import {useCounter} from "../../Context/CounterProvider";
 import {Col, Row} from "react-bootstrap";
 import {AiOutlineClose} from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
+import "./likerOfPost.css";
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "15%",
-    height: "50%",
-    bgcolor: '#EDE7E6FF',
-    boxShadow: 24,
-    overflow: "hidden"
+    width: "20%",
+    maxHeight: "45%",
+    bgcolor: '#FFFFFF',
+    color:"#004E89",
+    borderRadius:"15px",
+    overflow: "scroll"
 };
 export default function PostLikers(props)
 {
@@ -42,6 +45,7 @@ export default function PostLikers(props)
     {
         props.setOpen(false);
         props.setClose(true);
+        props.setBlog_id(null);
     }
     useEffect( () =>
     {
@@ -64,50 +68,126 @@ export default function PostLikers(props)
     {
         navigate(`/home/Profile/${username}/`)
     }
+    const loadArray = [1,2,3,4,5]
+    if(loading)
+        return (<>
+
+            <Modal open={true} >
+                <Box sx={{...style}}>
+
+                    {/*<div style={{position:"relative"}}>*/}
+                    <h3
+                        style={{
+                            paddingTop:"2vh",
+                            paddingBottom:"1vh",
+                            paddingLeft:"1vw",
+                            fontSize:"135%",
+                            // position:"fixed",
+                            fontWeight:"bold",
+                            backgroundColor:"#FFFFFF",
+                            width:"100%"
+                        }}>
+                            <span style={{paddingTop:"1vh"}}>
+                            Who likes this
+                        </span>
+                    </h3>
+                    {/*</div>*/}
+                    <div>
+                        {loadArray.map((item, key) => (
+                                <div key={key} style={{
+                                    paddingTop: "1vh",
+                                    paddingBottom: "1vh",
+                                }}
+                                     onClick={() => {handelViewProf(item.username)}}>
+                                    <Stack direction={`row`} sx={{
+                                        display:"flex",
+                                        alignItems:"center",
+                                        paddingLeft:"1vw",
+                                        paddingRight:"1vw",
+                                    }}
+                                           spacing={1}>
+                                        <Item>
+                                            <Skeleton variant="circular" width={40} height={40} />
+                                        </Item>
+                                        <Item>
+                                            <Typography style={{fontSize:"120%"}}>
+                                                <Stack spacing={1}>
+                                                    <Item>
+                                                        <Skeleton variant="rounded" width={120} height={9} />
+                                                    </Item>
+                                                    <Item>
+                                                        <Skeleton variant="rounded" width={70} height={5} />
+                                                    </Item>
+                                                </Stack>
+                                            </Typography>
+                                        </Item>
+                                    </Stack>
+                                </div>
+                            )
+                        )}
+                    </div>
+                </Box>
+            </Modal>
+
+            </>)
     return(
         <>
             <Modal open={props.open} onClose={handleClose} >
                 <Box sx={{...style}}>
-                    <Row style={{marginTop:"1rem", marginBottom:"0.5rem"}}>
-                            <Col md={9}>
-                                <h1> Likes </h1>
-                            </Col>
-                            <Col md={3}>
-                                <IconButton onClick={handleClose}>
-                                    <AiOutlineClose />
-                                </IconButton>
-                            </Col>
-                    </Row>
-                    <Divider sx={{ borderBottomWidth: 2, width: "100%"}} />
-                    <Stack>
+
+                    {/*<div style={{position:"relative"}}>*/}
+                        <h3
+                            style={{
+                                paddingTop:"2vh",
+                                paddingBottom:"1vh",
+                                paddingLeft:"1vw",
+                                fontSize:"135%",
+                                // position:"fixed",
+                                fontWeight:"bold",
+                                backgroundColor:"#FFFFFF",
+                                width:"100%"
+                            }}>
+                            <span style={{paddingTop:"1vh"}}>
+                            Who likes this
+                        </span>
+                            <IconButton
+                                edge="end"
+                                onClick={handleClose}
+                                size={"medium"}
+                                sx={{ position: "absolute", right: "1.5vw", top : "0.25vh", color:"#004E89" }}
+                            >
+                                <AiOutlineClose />
+                            </IconButton>
+                        </h3>
+                    {/*</div>*/}
+                    <div>
                         {likers.map((item, key) => (
-                            <>
-                                <div className="blogs-hovering">
-                                    <div style={{
-                                        marginLeft:"1rem", paddingTop:"1rem", paddingBottom:"1rem"}}>
-                                <Item>
+                                <div key={key} className={key === 4 ? `user last`: `user`}
+                                     onClick={() => {handelViewProf(item.username)}}>
                                     <Stack direction={`row`} sx={{
                                         display:"flex",
-                                        alignItems:"center"
-                                    }} spacing={1}>
+                                        alignItems:"center",
+                                        paddingLeft:"1vw",
+                                        paddingRight:"1vw",
+                                    }}
+                                           spacing={1}>
                                         <Item>
-                                        <Tooltip title='view profile'>
-                                        <ListItemIcon onClick={()=>{handelViewProf(item.username)}}>
-                                            <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
-                                        </ListItemIcon>
-                                        </Tooltip>
+                                             <UserProfile user_id={item.id} first_name={item.first_name} imageSize={37.5} profileSize={`3rem`}/>
                                         </Item>
                                         <Item>
-                                            {item.first_name} {item.last_name}
+                                            <Typography style={{fontSize:"120%"}}>
+                                                {item.first_name} {item.last_name}
+                                                <p style={{marginTop:"-0.25rem" ,fontSize:"70%",
+                                                    color:"rgba(52, 52, 52, 0.5)"}}>
+                                                    @{item.username}
+                                                </p>
+                                            </Typography>
                                         </Item>
                                     </Stack>
-                                </Item>
                                 </div>
-                                </div>
-                                <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
-                            </>
-                        ))}
-                    </Stack>
+                            )
+                        )}
+                    </div>
                 </Box>
             </Modal>
         </>

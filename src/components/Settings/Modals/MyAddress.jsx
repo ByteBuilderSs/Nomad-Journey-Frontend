@@ -781,7 +781,22 @@ const MyAddress = (props) => {
                                           paddingTop:"3rem", paddingBottom:"3rem",
                                           marginLeft: "3rem"
                                       }}>
-                                    <Button className={classes.button}
+                                    <Button
+                                        sx={{
+                                            width:"15em",
+                                            background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+                                            backgroundPosition:"right bottom",
+                                            color:"#F7C59F",
+                                            border:"solid 2px #F7C59F",
+                                            borderRadius:"15px",
+                                            transition:"all 0.3s ease-out",
+                                            display:"block",
+                                            backgroundSize:"200% 100%",
+                                            "&:hover":{
+                                                backgroundPosition:"left bottom",
+                                                color:"#1A659E"
+                                            }
+                                        }}
                                             onClick={onSubmit}>
                                         Update Address
                                     </Button>

@@ -361,7 +361,26 @@ export default function UnAuthAnnouncement(props)
                                 <>
                                     {props.isAuthenticate? (
                                         <>
-                                        <Button className={classes.feedbackButton} startIcon={<FeedbackIcon/>}
+                                        <Button
+                                            sx={{
+                                                width:"13vw",
+                                                backgroundColor:"rgba(239,239,208,0)",
+                                                backgroundPosition:"right bottom",
+                                                fontWeight:"bold",
+                                                color:"#EFEFD0",
+                                                border:"solid 2px #EFEFD0",
+                                                borderRadius:"15px",
+                                                transition:"all 0.25s ease-out",
+                                                // display:"block",
+                                                backgroundSize:"200% 100%",
+                                                "&:hover":{
+                                                    backgroundPosition:"left bottom",
+                                                    backgroundColor:"#EFEFD0",
+                                                    border:"solid 2px #EFEFD0",
+                                                    color:"#FF6B35"
+                                                }
+                                            }}
+                                            className={classes.feedbackButton} startIcon={<FeedbackIcon/>}
                                                 onClick={() => {
                                                     setShowFeed(true);
                                                     setCloseFeed(false);
@@ -389,7 +408,26 @@ export default function UnAuthAnnouncement(props)
                             <>
                                 {props.isAuthenticate ? (
                                     <>
-                                        <Button className={classes.button} startIcon={<AddIcon />} onClick={() => {
+                                        <Button
+                                            sx= {{
+                                                width:"13vw",
+                                                backgroundColor:"rgba(239,239,208,0)",
+                                                backgroundPosition:"right bottom",
+                                                fontWeight:"bold",
+                                                color:"#EFEFD0",
+                                                border:"solid 2px #EFEFD0",
+                                                borderRadius:"15px",
+                                                transition:"all 0.25s ease-out",
+                                                // display:"block",
+                                                backgroundSize:"200% 100%",
+                                                "&:hover":{
+                                                    backgroundPosition:"left bottom",
+                                                    backgroundColor:"#EFEFD0",
+                                                    border:"solid 2px #EFEFD0",
+                                                    color:"#004E89"
+                                                }
+                                            }}
+                                            startIcon={<AddIcon />} onClick={() => {
                                             setClosePost(false);
                                             setOpenPost(true);}
                                         }>
@@ -420,7 +458,26 @@ export default function UnAuthAnnouncement(props)
                 <>
                     <Grid container style={{marginLeft:"25%", marginBottom:"15%"}} alignItems='center' direction='column' justifyContent="center" spacing={1}>
                         <Grid item >
-                            <Button className={classes.button} startIcon={<BiEdit />} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
+                            <Button
+                                sx={{
+                                    width:"13vw",
+                                    backgroundColor:"rgba(239,239,208,0)",
+                                    backgroundPosition:"right bottom",
+                                    fontWeight:"bold",
+                                    color:"#EFEFD0",
+                                    border:"solid 2px #EFEFD0",
+                                    borderRadius:"15px",
+                                    transition:"all 0.25s ease-out",
+                                    // display:"block",
+                                    backgroundSize:"200% 100%",
+                                    "&:hover":{
+                                        backgroundPosition:"left bottom",
+                                        backgroundColor:"#EFEFD0",
+                                        border:"solid 2px #EFEFD0",
+                                        color:"#004E89"
+                                    }
+                                }}
+                                startIcon={<BiEdit />} onClick={() => {setOpenEdit(true); setCloseEdit(false);}}>
                                 <div style={{marginLeft:"3.1rem"}}>
                                     <div style={{marginLeft:"-4.3rem"}}>
                                         Edit
@@ -438,7 +495,26 @@ export default function UnAuthAnnouncement(props)
                             />
                         </Grid>
                         <Grid item >
-                            <Button className={classes.deleteButton} startIcon={<BiTrash />} onClick={() => {setOpenDelete(true); setCloseDelete(false);}}>
+                            <Button
+                                sx={{
+                                    width:"13vw",
+                                    backgroundColor:"rgba(239,239,208,0)",
+                                    backgroundPosition:"right bottom",
+                                    fontWeight:"bold",
+                                    color:"#EFEFD0",
+                                    border:"solid 2px #EFEFD0",
+                                    borderRadius:"15px",
+                                    transition:"all 0.25s ease-out",
+                                    // display:"block",
+                                    backgroundSize:"200% 100%",
+                                    "&:hover":{
+                                        backgroundPosition:"left bottom",
+                                        backgroundColor:"#EFEFD0",
+                                        border:"solid 2px #EFEFD0",
+                                        color:"#b21313"
+                                    }
+                                }}
+                                className={classes.deleteButton} startIcon={<BiTrash />} onClick={() => {setOpenDelete(true); setCloseDelete(false);}}>
                                 Delete
                             </Button>
 

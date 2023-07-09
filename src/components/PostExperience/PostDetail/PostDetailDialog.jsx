@@ -347,7 +347,24 @@ const PostDetailDialog = (props) => {
                 props.url_username === props.local_storage_username ? 
                 <DialogActions>
                 <Item>
-                    <Button className={classes.deleteButton} startIcon={<DeleteIcon />} sx={{mr: "1rem", mb: "1rem"}}
+                    <Button sx={{
+                            width:"13vw",
+                            backgroundColor:"#EFEFD0",
+                            backgroundPosition:"right bottom",
+                            fontWeight:"bold",
+                            color:"#DE3733",
+                            border:"solid 2px #DE3733",
+                            borderRadius:"15px",
+                            transition:"all 0.15s ease-out",
+                            // display:"block",
+                            backgroundSize:"200% 100%",
+                            "&:hover":{
+                                backgroundPosition:"left bottom",
+                                backgroundColor:"#DE3733",
+                                color:"#EFEFD0"
+                            }
+                        }}
+                        startIcon={<DeleteIcon />} sx={{mr: "1rem", mb: "1rem"}}
                         onClick={() => {
                                     console.log("---------- CLICK ON DELETE POST ---------");
                                     setOpenDelete(true);
@@ -359,7 +376,23 @@ const PostDetailDialog = (props) => {
                 <Item>
                     <Button
                         sx={{ mr: "3rem", mb: "1rem" }}
-                        className={classes.button}
+                        sx={{
+                            width:"13vw",
+                            backgroundColor:"#EFEFD0",
+                            backgroundPosition:"right bottom",
+                            fontWeight:"bold",
+                            color:"#004E89",
+                            border:"solid 2px #004E89",
+                            borderRadius:"15px",
+                            transition:"all 0.15s ease-out",
+                            // display:"block",
+                            backgroundSize:"200% 100%",
+                            "&:hover":{
+                                backgroundPosition:"left bottom",
+                                backgroundColor:"#004E89",
+                                color:"#EFEFD0"
+                            }
+                        }}
                         startIcon={<EditIcon />}
                         // onClick={() => handleEditClick(postData.uid, postData.slug)}
                         onClick={() => {

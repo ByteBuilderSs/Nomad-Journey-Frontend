@@ -387,7 +387,23 @@ const EditorFormDialog = (props) => {
                                                                     textTransform: 'none',
                                                                     zIndex: 1
                                                                 }}
-                                                                className={classes.button}
+                                                                sx={{
+                                                                    width:"13vw",
+                                                                    backgroundColor:"#EFEFD0",
+                                                                    backgroundPosition:"right bottom",
+                                                                    fontWeight:"bold",
+                                                                    color:"#004E89",
+                                                                    border:"solid 2px #004E89",
+                                                                    borderRadius:"15px",
+                                                                    transition:"all 0.15s ease-out",
+                                                                    // display:"block",
+                                                                    backgroundSize:"200% 100%",
+                                                                    "&:hover":{
+                                                                        backgroundPosition:"left bottom",
+                                                                        backgroundColor:"#004E89",
+                                                                        color:"#EFEFD0"
+                                                                    }
+                                                                }}
                                                                 component="label"
                                                                 startIcon={<CameraAltIcon />}
                                                                 >
@@ -425,7 +441,23 @@ const EditorFormDialog = (props) => {
                                                                     textTransform: 'none',
                                                                     zIndex: 1
                                                                 }}
-                                                                className={classes.deleteButton}
+                                                                sx={{
+                                                                    width:"13vw",
+                                                                    backgroundColor:"#EFEFD0",
+                                                                    backgroundPosition:"right bottom",
+                                                                    fontWeight:"bold",
+                                                                    color:"#DE3733",
+                                                                    border:"solid 2px #DE3733",
+                                                                    borderRadius:"15px",
+                                                                    transition:"all 0.15s ease-out",
+                                                                    // display:"block",
+                                                                    backgroundSize:"200% 100%",
+                                                                    "&:hover":{
+                                                                        backgroundPosition:"left bottom",
+                                                                        backgroundColor:"#DE3733",
+                                                                        color:"#EFEFD0"
+                                                                    }
+                                                                }}
                                                                 variant="contained"
                                                                 component="label"
                                                                 startIcon={<RemoveCircleIcon />}
@@ -644,7 +676,23 @@ const EditorFormDialog = (props) => {
                             <Button
                                 variant="contained"
                                 type="submit"
-                                className={classes.button}
+                                sx={{
+                                    width:"13vw",
+                                    backgroundColor:"#EFEFD0",
+                                    backgroundPosition:"right bottom",
+                                    fontWeight:"bold",
+                                    color:"#004E89",
+                                    border:"solid 2px #004E89",
+                                    borderRadius:"15px",
+                                    transition:"all 0.15s ease-out",
+                                    // display:"block",
+                                    backgroundSize:"200% 100%",
+                                    "&:hover":{
+                                        backgroundPosition:"left bottom",
+                                        backgroundColor:"#004E89",
+                                        color:"#EFEFD0"
+                                    }
+                                }}
                                 onClick={onSubmit}
                                 disabled={disabled}
                             >

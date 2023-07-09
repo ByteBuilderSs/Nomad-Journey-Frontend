@@ -423,7 +423,23 @@ const EditPostDialog = (props) => {
                                                                     textTransform: 'none',
                                                                     zIndex: 1
                                                                 }}
-                                                                className={classes.button}
+                                                                sx={{
+                                                                    width:"13vw",
+                                                                    backgroundColor:"#EFEFD0",
+                                                                    backgroundPosition:"right bottom",
+                                                                    fontWeight:"bold",
+                                                                    color:"#004E89",
+                                                                    border:"solid 2px #004E89",
+                                                                    borderRadius:"15px",
+                                                                    transition:"all 0.15s ease-out",
+                                                                    // display:"block",
+                                                                    backgroundSize:"200% 100%",
+                                                                    "&:hover":{
+                                                                        backgroundPosition:"left bottom",
+                                                                        backgroundColor:"#004E89",
+                                                                        color:"#EFEFD0"
+                                                                    }
+                                                                }}
                                                                 component="label"
                                                                 startIcon={<CameraAltIcon />}
                                                                 >
@@ -658,7 +674,23 @@ const EditPostDialog = (props) => {
 
                 <DialogActions>
                     <Item>
-                        <Button className={classes.button} sx={{mr: "1rem", mb: "1rem"}}
+                        <Button
+                            sx={{mr: "1rem", mb: "1rem",
+                                width:"13vw",
+                                backgroundColor:"#EFEFD0",
+                                backgroundPosition:"right bottom",
+                                fontWeight:"bold",
+                                color:"#004E89",
+                                border:"solid 2px #004E89",
+                                borderRadius:"15px",
+                                transition:"all 0.15s ease-out",
+                                // display:"block",
+                                backgroundSize:"200% 100%",
+                                "&:hover":{
+                                    backgroundPosition:"left bottom",
+                                    backgroundColor:"#004E89",
+                                    color:"#EFEFD0"
+                                }}}
                             onClick={handleClose}
                             >
                                     Cancel
@@ -666,8 +698,23 @@ const EditPostDialog = (props) => {
                     </Item>
                     <Item>
                         <Button
-                            sx={{ mr: "3rem", mb: "1rem" }}
-                            className={classes.button}
+                            sx={{ mr: "3rem", mb: "1rem",
+                                width:"13vw",
+                                backgroundColor:"#EFEFD0",
+                                backgroundPosition:"right bottom",
+                                fontWeight:"bold",
+                                color:"#004E89",
+                                border:"solid 2px #004E89",
+                                borderRadius:"15px",
+                                transition:"all 0.15s ease-out",
+                                // display:"block",
+                                backgroundSize:"200% 100%",
+                                "&:hover":{
+                                    backgroundPosition:"left bottom",
+                                    backgroundColor:"#004E89",
+                                    color:"#EFEFD0"
+                                }
+                            }}
                             onClick={onSubmit}
                             >
                             Edit

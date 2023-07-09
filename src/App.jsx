@@ -57,7 +57,7 @@ function App() {
     if(!localStorage.getItem('tokens')){
       console.log('no user exists');
       setIsLogin(false);
-      // navigate("/landing");
+      navigate("/landing");
     }
     else {
       setIsLogin(true);
@@ -84,6 +84,7 @@ function App() {
                     </div>
                 ) :<div>
           {!["/landing","/signup","/signup/", "/login/","/login","/resetpass","/forgotpass"].includes(location.pathname) && (isLogin !== false) && <Navbar/>}
+          {["/resetpass"].includes(location.pathname)? setIsLogin(true):null}
 
               <body  style = {allPagesStyle}>
 
@@ -91,18 +92,19 @@ function App() {
                 <div style = {content}>
 
                     <Routes>
-                      {isLogin === false ?
+                      {isLogin === false?
                         <>
                           <Route path="/landing" element={<LandingPageFunc/>}/>
                           <Route path="/signup" element={<SignInForm />}/>
                           <Route path="/login" element={< Login/>}/>
                           <Route path="/forgotpass" element={<ForgotPassword/>}/>
-                          <Route path="/resetpass" element={<ResetPassWord/>}/>
+                          {/* <Route path="/resetpass" element={<ResetPassWord/>}/> */}
 
                           {/* <Route path="/home/Dashboard/" element={<MainPageFunc />}/> */}
                         </>
                         :
                         <>
+                        
                           <Route path="/resetpass" element={<ResetPassWord/>}/>
                           <Route path="/landing" element={<LandingPageFunc/>}/>
                           <Route path="/posts" element={<GeneralPostPage/>}/>

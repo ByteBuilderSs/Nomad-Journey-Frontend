@@ -23,15 +23,13 @@ import {AiOutlineClose} from "react-icons/ai";
 import {makeStyles} from "@mui/styles";
 const styles = makeStyles(theme => ({
     button:{
-        width:"7vw",
-        backgroundColor:"#EFEFD0",
+        width:"6vw",
         backgroundPosition:"right bottom",
         fontWeight:"bold",
         color:"#004E89",
         border:"solid 2px #004E89",
         borderRadius:"15px",
         transition:"all 0.15s ease-out",
-        // display:"block",
         backgroundSize:"200% 100%",
         "&:hover":{
             backgroundPosition:"left bottom",
@@ -40,15 +38,13 @@ const styles = makeStyles(theme => ({
         }
     },
     deleteButton:{
-        width:"7vw",
-        backgroundColor:"#EFEFD0",
+        width:"6vw",
         backgroundPosition:"right bottom",
         fontWeight:"bold",
         color:"#DE3733",
         border:"solid 2px #DE3733",
         borderRadius:"15px",
         transition:"all 0.15s ease-out",
-        // display:"block",
         backgroundSize:"200% 100%",
         "&:hover":{
             backgroundPosition:"left bottom",
@@ -97,14 +93,14 @@ function DeletePostDialog(props)
     return (
         <>
             <Dialog
-                onHide={handleClose}
+                onClose={handleClose}
                 open={props.open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 PaperProps={{ sx: {
                     borderRadius: "15px",
                     color:"#DE3733",
-                    boxShadow:"inset 0px 0px 0px 2px #DE3733",
+                    // boxShadow:"inset 0px 0px 0px 2px #DE3733",
                     } }}
             >
                 {/* <IconButton
@@ -131,23 +127,25 @@ function DeletePostDialog(props)
 
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <div style={{ fontWeight: 'bold', marginTop: "0.5rem", fontSize: 20 }}>
+                        <div style={{ fontWeight: 'bold', marginTop: "0.5rem", fontSize: 23, }}>
                             Are you sure?
                         </div>
                     </DialogContentText>
                     <DialogActions>
-                        <Button
-                            className={classes.deleteButton}
-                            onClick={onSubmit}
-                        >
-                            Delete
-                        </Button>
-                        <Button
-                            className={classes.button}
-                            onClick={handleClose}
-                        >
-                            Cancel
-                        </Button>
+                            <Button
+                                size={`small`}
+                                className={classes.deleteButton}
+                                onClick={onSubmit}
+                            >
+                                Delete
+                            </Button>
+                            <Button
+                                size={`small`}
+                                className={classes.button}
+                                onClick={handleClose}
+                            >
+                                Cancel
+                            </Button>
                     </DialogActions>
                 </DialogContent>
             </Dialog>

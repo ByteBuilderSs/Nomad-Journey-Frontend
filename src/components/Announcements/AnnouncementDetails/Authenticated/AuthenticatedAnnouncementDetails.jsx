@@ -242,6 +242,8 @@ export default function UnAuthAnnouncement(props)
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hostId, setHostId] = useState(null);
+    const [hostFirstname, setHostFirstname] = useState(null);
+    const [hostLastname, setHostLastname] = useState(null);
     const [checkLatLongRender, setCheck] = useState(false);
     const [checkSwitch, setCheckSwitch] = useState(false);
 
@@ -541,7 +543,10 @@ export default function UnAuthAnnouncement(props)
                                                                         color={`success`} onClick={()=> {
                                                                     setOpenAccept(true);
                                                                     setCloseAccept(false);
-                                                                    setHostId(item.id);}}>
+                                                                    setHostId(item.id);
+                                                                    setHostFirstname(item.first_name);
+                                                                    setHostFirstname(item.last_name);
+                                                                        }}>
                                                                     Accept
                                                                 </Button>
                                                             </Item>
@@ -554,6 +559,8 @@ export default function UnAuthAnnouncement(props)
                                                                     setOpenReject(true);
                                                                     setCloseReject(false);
                                                                     setHostId(item.id);
+                                                                    setHostFirstname(item.first_name);
+                                                                    setHostFirstname(item.last_name);
                                                                 }} >
                                                                     Reject
                                                                 </Button>
@@ -564,31 +571,35 @@ export default function UnAuthAnnouncement(props)
                                             </Stack>
                                         </>
                                     )}
-                                    <RejectOffers
-                                        anc_id={anc_id}
-                                        host_id={hostId}
-                                        setHost_id={setHostId}
-                                        open={openReject}
-                                        setOpen={setOpenReject}
-                                        close={closeReject}
-                                        host_firstName={item.first_name}
-                                        host_lastName={item.last_name}
-                                        setClose={setCloseReject}/>
-
-                                    <AcceptOffers
-                                        anc_id={anc_id}
-                                        host_id={hostId}
-                                        setHost_id={setHostId}
-                                        open={openAccept}
-                                        setOpen={setOpenAccept}
-                                        close={closeAccept}
-                                        host_firstName={item.first_name}
-                                        host_lastName={item.last_name}
-                                        setClose={setCloseAccept}/>
                                 </div>
                             </>
                         ))}
 
+                    <RejectOffers
+                        anc_id={anc_id}
+                        host_id={hostId}
+                        setHost_id={setHostId}
+                        open={openReject}
+                        setOpen={setOpenReject}
+                        close={closeReject}
+                        host_firstName={hostFirstname}
+                        set_hostFirstname={setHostFirstname}
+                        host_lastName={hostLastname}
+                        set_hostLastname={setHostFirstname}
+                        setClose={setCloseReject}/>
+
+                    <AcceptOffers
+                        anc_id={anc_id}
+                        host_id={hostId}
+                        setHost_id={setHostId}
+                        open={openAccept}
+                        setOpen={setOpenAccept}
+                        close={closeAccept}
+                        host_firstName={hostFirstname}
+                        set_hostFirstname={setHostFirstname}
+                        host_lastName={hostLastname}
+                        set_hostLastname={setHostFirstname}
+                        setClose={setCloseAccept}/>
                 </div>
 
             </>

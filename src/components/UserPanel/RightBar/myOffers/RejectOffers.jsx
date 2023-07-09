@@ -77,6 +77,36 @@ const useStyles = makeStyles(theme => (
             justifyContent:"center",
             borderRadius:"5%",
             backgroundColor:"#f0eaf8",
+        },
+        button:{
+            width:"6vw",
+            backgroundPosition:"right bottom",
+            fontWeight:"bold",
+            color:"#DE3733",
+            border:"solid 2px #DE3733",
+            borderRadius:"15px",
+            transition:"all 0.15s ease-out",
+            backgroundSize:"200% 100%",
+            "&:hover":{
+                backgroundPosition:"left bottom",
+                backgroundColor:"#DE3733",
+                color:"#EFEFD0"
+            }
+        },
+        deleteButton:{
+            width:"6vw",
+            backgroundPosition:"right bottom",
+            fontWeight:"bold",
+            color:"#004E89",
+            border:"solid 2px #004E89",
+            borderRadius:"15px",
+            transition:"all 0.15s ease-out",
+            backgroundSize:"200% 100%",
+            "&:hover":{
+                backgroundPosition:"left bottom",
+                backgroundColor:"#004E89",
+                color:"#EFEFD0"
+            }
         }
     }
 ));
@@ -113,6 +143,8 @@ function RejectOffers(props)
         props.setOpen(false);
         props.setClose(true);
         props.setHost_id(null);
+        props.set_hostLastname(null);
+        props.set_hostFirstname(null);
     }
     const onSubmit = () =>
     {
@@ -120,14 +152,20 @@ function RejectOffers(props)
         setCounter(counter - 1);
         props.setOpen(false);
         props.setClose(true);
+        props.setHost_id(null);
+        props.set_hostLastname(null);
+        props.set_hostFirstname(null);
     }
     return (
         <>
             <Dialog
-                onHide={handleClose}
+                onClose={handleClose}
                 open={props.open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
+                PaperProps={{ sx: {
+                        borderRadius: "15px",
+                    } }}
             >
                 <DialogTitle id="alert-dialog-title" sx={{ backgroundColor: "#FDECE6"}}>
                     <Stack direction={'column'}>
@@ -142,23 +180,21 @@ function RejectOffers(props)
 
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        <div style={{ fontWeight: 'bold', marginTop: "0.5rem", fontSize: 20 }}>
+                        <div style={{ fontWeight: 'bold', marginTop: "0.5rem", fontSize: 23 }}>
                             Are you sure?
                         </div>
                     </DialogContentText>
                     <DialogActions>
                         <Button
-                            variant="outlined"
-                            color="error"
-                            className="p-button-text"
+                            size={`small`}
+                            className={classes.button}
                             onClick={onSubmit}
                         >
                             Yes
                         </Button>
                         <Button
-                            variant="outlined"
-                            color="primary"
-                            className="p-button-text"
+                            size={`small`}
+                            className={classes.deleteButton}
                             onClick={handleClose}
                         >
                             No

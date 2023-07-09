@@ -30,6 +30,10 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {Item} from "semantic-ui-react";
 import {useCounter, useCounterActions} from "../../../Context/CounterProvider";
 import {Col, Row} from "react-bootstrap";
+import Control from "react-leaflet-custom-control";
+import {renderToStaticMarkup} from "react-dom/server";
+import {FaMapMarkerAlt} from "react-icons/fa";
+import {divIcon} from "leaflet/dist/leaflet-src.esm";
 const styles = makeStyles(theme => ({
     text_field:{
         borderRadius:"15px",
@@ -46,6 +50,24 @@ const styles = makeStyles(theme => ({
         display:"block",
         backgroundSize:"200% 100%",
         "&:hover":{
+            backgroundPosition:"left bottom",
+            color:"#1A659E"
+        }
+    },
+    editButton:{
+        width:"4em",
+        background:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        color:"#1A659E",
+        fontWeight:"bold",
+        border:"solid 2px #1A659E",
+        borderRadius:"15px",
+        transition:"all 0.2s ease-out",
+        display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            border:"solid 2px #F7C59F",
+            backgroundColor : "#F7C59F",
             backgroundPosition:"left bottom",
             color:"#1A659E"
         }
@@ -85,7 +107,7 @@ const SetViewToCurrentLocation = ({location, setLocation}) => {
                     console.log("--------- ERROR WHILE FETCHING LOCATION ----------- ", error);
                     console.log("THE LOCATION.LAT ", location.lat);
                     console.log("THE LOCATION.LNG ", location.lng);
-                    setLocation({lat: 51.505, lng: -0.09});
+                    // setLocation({lat: 51.505, lng: -0.09});
 
                 },
                 { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000}
@@ -129,7 +151,7 @@ const CustomizeMarker = ({location, setLocation}) => {
                 if (marker != null) {
                     console.log("+++++++++++ THE OUTPUT OF getLatLng IS ++++++++++++ ", marker.getLatLng());
                     setLocation(marker.getLatLng());
-                    setDraggable(false);
+                    // setDraggable(false);
                 }
             },
         }),
@@ -150,14 +172,84 @@ const CustomizeMarker = ({location, setLocation}) => {
         }
     };
 
+    const iconMarkup = renderToStaticMarkup(
+        <div style={{
+            bottom: "0.7vh",
+            position: "fixed",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            transform: "scale(3.5)",
+            color: "rgba(0,78,137,1)"} }>
+            <FaMapMarkerAlt />
+        </div>
+    );
+    const customMarkerIcon = divIcon({
+        html: iconMarkup
+    });
 
     return (
         <>
-            <Marker
-                draggable={true}
+            <Marker icon={customMarkerIcon}
+                draggable={draggable}
                 eventHandlers={eventHandlers}
                 position={[location.lat, location.lng]}
-                ref={markerRef} />
+                ref={markerRef}>
+                {/*<Popup minWidth={100}>*/}
+                {/*    <Typography>You can save your location after clicking on submit button.</Typography>*/}
+                {/*    <Button onClick={saveLocation} type='button' variant='contained' sx={{ position: 'center'}}>Submit</Button>*/}
+                {/*</Popup>*/}
+            </Marker>
+            <Control position={`topright`}>
+                {!draggable && <Button sx={{
+                    width:"4em",
+                    background:"rgba(239,239,208,0.65)",
+                    backgroundPosition:"right bottom",
+                    color:"#1A659E",
+                    fontWeight:"bold",
+                    border:"solid 2px #1A659E",
+                    borderRadius:"12px",
+                    transition:"all 0.2s ease-out",
+                    display:"block",
+                    backgroundSize:"200% 100%",
+                    "&:hover":{
+                        border:"solid 2px #1A659E",
+                        backgroundColor : "#1A659E",
+                        backgroundPosition:"left bottom",
+                        color:"#EFEFD0"
+                    }
+                }} size={`small`}
+                    onClick={() => setDraggable(true)}>
+                    Edit
+                </Button>}
+                {draggable &&
+                    <Button
+                        sx={{
+                            width:"4em",
+                            background:"rgba(247,197,159,0.7)",
+                            backgroundPosition:"right bottom",
+                            color:"#1A659E",
+                            fontWeight:"bold",
+                            border:"solid 2px #1A659E",
+                            borderRadius:"12px",
+                            transition:"all 0.2s ease-out",
+                            display:"block",
+                            backgroundSize:"200% 100%",
+                            "&:hover":{
+                                border:"solid 2px #1A659E",
+                                backgroundColor : "#1A659E",
+                                backgroundPosition:"left bottom",
+                                color:"#EFEFD0"
+                            }
+                        }} size={`small`}
+                        onClick={() => {
+                            setDraggable(false);
+                            toast.warning("Use \"Update Address\" button to change your location")
+                        }}>
+                        Save
+                    </Button>
+                }
+            </Control>
 
         </>
     );
@@ -173,6 +265,7 @@ const MyAddress = (props) => {
 
     const first_location = {};
     const [location, setLocation] = useState({});
+    const [defaultLocation, setDefaultLocation] = useState({});
     const [street, setStreet] = useState("");
     const [apt, setApt] = useState("");
     const [city, setCity] = useState(null);
@@ -188,6 +281,7 @@ const MyAddress = (props) => {
     const [cities, setCities] = React.useState([]);
     const [cityInput, setCityInput] = useState('');
     const [openC, setOpenC] = React.useState(false);
+
     const loadingC = openC && cities.length === 0;
     console.log("$$$$$$$$$$$$$$$$$$$$$ THE LOCATION OBJECT IS $$$$$$$$$$$$$$$$$$$$$$$$$$ ", location);
 
@@ -283,9 +377,11 @@ const MyAddress = (props) => {
 
     const handleCitySelection = (value) => {
         setCity(value);
+        // setDefaultLocation({lat: value.c_lat, lng: value.c_long});
     }
 
     console.log("------------------- THE SELECTED CITY IS ------------------", city);
+    // setLocation({lat: city.c_lat, lng: city.c_long})
 
     const handleChangeStreet = (event) => {
         setStreet(event.target.value);
@@ -674,7 +770,7 @@ const MyAddress = (props) => {
                                         <GeoSearchField />
                                         {checkLatLongRender && <SetViewCenter/>}
                                         {/* TODO => اگر فقط یک کاربر موقعیتش رو قبلا وارد نکرده بود بریم از مرورگر موقعیتش رو دربیاریم */}
-                                        {/*<SetViewToCurrentLocation location={location} setLocation={setLocation}/>*/}
+                                        {!checkLatLongRender && <SetViewToCurrentLocation location={location} setLocation={setLocation}/>}
                                         {location.lat && location.lng && (<CustomizeMarker location={location} setLocation={setLocation} />)}
                                     </MapContainer>
                                 </div>

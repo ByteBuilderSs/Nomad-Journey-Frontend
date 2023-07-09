@@ -15,6 +15,9 @@ import {Item} from "semantic-ui-react";
 import './Home.css';
 
 import {Link, Route, Routes, useParams,useNavigate,useLocation} from "react-router-dom";
+import {renderToStaticMarkup} from "react-dom/server";
+import {FaMapMarkerAlt} from "react-icons/fa";
+import {divIcon} from "leaflet/dist/leaflet-src.esm";
 
 
 let username = "";
@@ -160,7 +163,21 @@ const HomeV2 = (props) => {
 
 
     }, []);
-    
+    const iconMarkup = renderToStaticMarkup(
+        <div style={{
+            bottom: "0.7vh",
+            position: "fixed",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            transform: "scale(3.5)",
+            color: "rgba(0,78,137,1)"} }>
+            <FaMapMarkerAlt />
+        </div>
+    );
+    const customMarkerIcon = divIcon({
+        html: iconMarkup
+    });
 
     const DaysCheck = (days) => {
         console.log("THE DAYS ARE: ", days);
@@ -284,7 +301,7 @@ const HomeV2 = (props) => {
                                                 attribution='<a href="https://www.openstreetmap.org/copyright"></a>'
                                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                                 />
-                                                <Marker position={[lat,lng]}>
+                                                <Marker icon={customMarkerIcon} position={[lat,lng]}>
                                                 <Popup>
                                                     Your Home Location on The Map.
                                                 </Popup>

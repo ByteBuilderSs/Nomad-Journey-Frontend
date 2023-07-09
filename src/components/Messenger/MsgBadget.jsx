@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-
+import { useUnseenMsg } from '../../hooks/useUnseenMsg';
 
 const ChatBadegt = () => {
 
@@ -18,7 +18,7 @@ const ChatBadegt = () => {
        
         navigate('/chatbar')
     };
-   
+    
     const StyledBadge = styled(Badge)(({ theme }) => ({
         "& .MuiBadge-badge": {
           right: -3,
@@ -36,7 +36,7 @@ const ChatBadegt = () => {
         <div>
             <Tooltip title="inbox">
                 <IconButton aria-label="notif-bell" sx={{marginRight : "30px"}} onClick={handleClick}>
-                    <StyledBadge badgeContent={2} color="primary">
+                    <StyledBadge  color="primary">
                         <EmailIcon sx={{fontSize : "25px", color : "#fff"}}/>
                     </StyledBadge>
                 </IconButton>

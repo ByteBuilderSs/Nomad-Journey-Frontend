@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {Box, Divider, IconButton, Rating, Stack, Typography,Grid,Button,Container, InputAdornment, TextField} from "@mui/material";
+import {Box, Divider, IconButton, Rating, Stack, Typography,Grid,Button,Container, InputAdornment, TextField, FormControl} from "@mui/material";
 import {Item} from "semantic-ui-react";
 import Highlighter from "react-highlight-words";
 import "../UserPanel/RightBar/MyAnnouncement.css";
-import "./generalPostsTab.css";
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import axios from "axios";
 import UserProfile from "../Announcements/AnnouncementDetails/Authenticated/UserProfileAnnouncement";
 import notfound from '../../lottieAssets/9341-not-found.json';
 import Lottie from 'react-lottie';
-import {toast} from "react-toastify";
 import {useCounter, useCounterActions} from "../../Context/CounterProvider";
 import SetLikeOfBlog from "./LikePost/SetLike";
-import RemoveLikeOfBlog from "./LikePost/RemoveLike";
 import PostLikers from "./likerOfPost";
 import { FcSearch } from "react-icons/fc";
 import SearchIcon from "@mui/icons-material/Search";
@@ -20,31 +17,32 @@ import {useSearchBlog} from '../../hooks/useSearchBlog'
 import './generalPost.css'
 import {Col, Row} from "react-bootstrap";
 import MostLikedPost from "./mostLikedPost";
-
+import YouMightLike from './youMightLike';
+import { useAllposts } from '../../hooks/useAllposts'; 
 
 export default function UsersPosts()
 {
-    const NotFound = () => {
+    // const NotFound = () => {
 
-        const defaultOptions = {
-          loop: true,
-          autoplay: true,
-          animationData: notfound,
-          rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice"
-          }
-        };
+    //     const defaultOptions = {
+    //       loop: true,
+    //       autoplay: true,
+    //       animationData: notfound,
+    //       rendererSettings: {
+    //         preserveAspectRatio: "xMidYMid slice"
+    //       }
+    //     };
       
-        return(
-          <div class="col-lg-12">
-            <Lottie 
-              options={defaultOptions}
-              height={300}
-              width={420}
-            />
-          </div>
-        )
-    }
+    //     return(
+    //       <div class="col-lg-12">
+    //         <Lottie 
+    //           options={defaultOptions}
+    //           height={300}
+    //           width={420}
+    //         />
+    //       </div>
+    //     )
+    // }
 
     const [open_liker, setOpen_liker] = useState(false);
     const [close_liker, setClose_liker] = useState(true);
@@ -61,7 +59,7 @@ export default function UsersPosts()
     const [resault,setResault]=useState([])
     const [searchTerm, setSearchTerm] = useState("");
     const [active,setActive]=useState(true)
-
+    
 
     useEffect( () =>
     {
@@ -76,6 +74,7 @@ export default function UsersPosts()
                 console.log(blogs);
             })
     }, [counter]);
+    
     useEffect(()=>{setResault(blogs.data)},[blogs])
 
     const handleChange = (event) => {
@@ -84,7 +83,7 @@ export default function UsersPosts()
         {
         setActive(false)
         }else{
-        setActive(true)
+        setActive(active)
     }};
 
     const {searchBlogs,searchRes}=useSearchBlog()
@@ -150,217 +149,171 @@ export default function UsersPosts()
         return(
         <>
             <Row>
-                <Col md={3}>
-                    <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
+                <Col md={3} >
+                <div style={{position:'relative'}}>
+                <Grid
+                        container
+                        id="most-liked"
+                        
                         sx={{
-                            width: 1,
-                            marginBottom:"1rem",
-                            position:"relative"
-                        }}>
-                            <MostLikedPost />
-                    </Box>
-                </Col>
-                <Col md={6}>
-                    <Box
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        sx={{
-                            width: 3/4,
+                            alignItems:'center',
+                            justifyContent:'center',
+                            display:'flex',
+                            width: '20%',
                             marginLeft:"3vw",
-                            marginBottom:"1rem"
+                            marginBottom:"1rem",
+                            backgroundColor:'transparent',
+                            borderRadius:'15px',
+                            flexDirection:'column',
+                            marginTop:'2rem',
+                            position:'fixed'
                         }}>
 
-                        <Box
-                            sx={{
-                                backgroundColor:"#ffffff",
-                                position:'relative'
-                            }}>
+                    
+                    <Grid item sx={{width:'100%',minWidth:'100%',display:'flex',minHeight:'40vh',maxHeight:'60vh',marginTop:'5rem',flexDirection:'column'}}>
+                        <MostLikedPost/>
+                    </Grid>
+                   
+                    
+                </Grid>
+                </div>
+                </Col>
+                <Col md={6} id='posts'>
+                    <Grid
+                        container
+                        id="box contariner"
+                        
+                        sx={{
+                            alignItems:'center',
+                            justifyContent:'center',
+                            display:'flex',
+                            width: '100%',
+                            marginLeft:"3vw",
+                            marginBottom:"1rem",
+                            backgroundColor:'transparent',
+                            borderRadius:'15px',
+                            flexDirection:'column',
+                            marginTop:'2rem'
+                        }}>
 
+                       
 
-                    <Container  sx={{ mt: 20 ,
-                        top:0,
-                        right:0,
-                        justifyContent:'center',
-                        position:'absolute',
-                        display:'flex',
-                        margin:'1.3rem',
-                        width:'100%',
-                    }}>
-                        <TextField
-
-                    id="search"
-                    type="search"
-                    label="Search"
-                    variant='standard'
-                    value={searchTerm}
-                    onChange={handleChange}
-                    autoFocus 
-                    autoComplete='off'
-                    sx={{ width:'100%' ,
-                    justifyContent:'center',
-                    }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position='start' >
-                          <IconButton disabled={active} onClick={handelClick} >
-                            <SearchIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Container>
-                <Box
-                    sx={{
-                        width: 1/3,
-                        borderRadius:'15px',
-                        backgroundColor:'#D5D8DD'
-                    }} >
-                
-               
-                
-                
-                <Stack sx={{backgroundColor:'#D5D8DD'}} >
                 
                 {resault && 
                     resault.map((blog, key) => (
-                        <Grid item sx={{backgroundColor:'#ffffff'}}>
-                                <div className="blogs-hovering" sx={{
-                                        
-                                        borderRadius:'15px',
-                                        border:'2px solid #004E89'
-
-                                }}>
-                                    <div style={{
-                                        paddingTop:"2rem", paddingBottom:"1rem"}}>
-                                    <Stack sx={{
-                                        marginLeft:"1rem",
-                                    }} spacing={1}>
-                                        <Item>
-                                            <Stack direction={`row`} spacing={1}
-                                                   sx={{
-                                                       display:"flex",
-                                                       alignItems:"center"
-                                                   }}>
-                                                <Item>
-                                                    <UserProfile user_id={blog.host_id} first_name={blog.host_name} imageSize={50} profileSize={`4rem`}/>
-                                                </Item>
-                                                <Item>
-                                                    <Typography component="h5"
-                                                                style={{fontSize:"1.25vw" }}>
-                                                            <span>
-                                                                {blog.host_name}
-                                                            </span>
-                                                    </Typography>
-                                                </Item>
-                                                <Item>
-                                                    <Typography component="h5"
-                                                                style={{fontSize:"0.8vw" }}>
-                                                            <span style={{color:"#6b6767"}}>
-                                                                {post_createdAt(blog.created_at)}
-                                                            </span>
-                                                    </Typography>
-                                                </Item>
-                                            </Stack>
-                                        </Item>
-                                        <Item>
-                                            <Stack sx={{
-                                                marginLeft:"3rem"
-                                            }}>
-                                                <Item>
-
-                                                                    <Typography component="h5"
-                                                                                style={{fontSize:"1.25vw" }}>
-                                                            <span>
-                                                                {blog.blog_title}
-                                                            </span>
-                                                                        <span style={{
-                                                                            float:"right",
-                                                                            marginRight:"5rem"
-                                                                        }}>
-                                                    <Rating sx={{color:"#e45505"
-                                                    }} name="read-only" value={3} readOnly precision={0.1} />
-                                                            </span>
-                                                                    </Typography>
-                                                                </Item>
-                                                                <Item>
-                                                                    <Box sx={{
-                                                                        wordBreak:"break-word",
-                                                                        width:"92%",
-                                                                        marginBottom:"1rem"
-                                                                    }}>
-                                                                        <Typography component="h5"
-                                                                                    style={{fontSize:"0.75vw" }}>
-                                                            <span>
-                                                            {blog.description}
-                                                            </span>
-                                                        </Typography>
-                                                    </Box>
-                                                </Item>
-                                                <Grid item >
-                                                    {blog.main_image_64!=null ?
+                        <Grid item className="blogs-hovering"
+                                sx={{
+                                    backgroundColor:'white',
+                                    border:'2px solid #D5D8DD',
+                                    borderRadius:'15px',
+                                    maxWidth:'100%',
+                                    width:'100%',
+                                    minHeight:'80vh',
+                                    maxHeight:'84vh',
+                                    margin:'0.3rem',
+                                    position:'relative'
+                                    }}>
+                                   <Grid item sx={{margin:'1rem',display:'flex',flexDirection:'row'}}>
+                                        <UserProfile user_id={blog.host_id} first_name={blog.host_name} imageSize={50} profileSize={`4rem`}/> 
+                                        <Typography variant='h6' sx={{margin:'1rem'}}>{blog.host_name}
+                                        </Typography>
+                                   </Grid>  
+                                    <Grid item sx={{margin:'1rem',display:'flex',flexDirection:'column'}}>
+                                        <Typography variant='body1'>{blog.blog_title}</Typography>
+                                        <Typography variant='overline'>{blog.description}</Typography>
+                                    </Grid>
+                                                           
+                                    <Grid item sx={{justifyContent:'center',display:'flex',margin:'auto',
+                                            maxHeight:'50vh',maxWidth:'50vh',minWidth:'37vh',minHeight:'37vh',top:'0px',left:"0px"}}>
+                                                 {blog.main_image_64!=null ?
                                                     <>
                                                     <img src={blog.main_image_64}
-                                                        style={{borderRadius:"5%",
-                                                        border:"solid",
-                                                            borderWidth:"thin",
-                                                            borderColor:"#b2b2b2"
+                                                        style={{maxHeight:'50vh',maxWidth:'100%',minWidth:'100%',minHeight:'50vh',
+                                                        borderRadius:'15px'
                                                         }}
-                                                        width="92%" />
+                                                        />
                                                     </>
                                                     :
-                                                    <Grid  container alignItems='center' direction='column' justifyContent="center">
-                                                        <Item>
-                                                            <NotFound/>
-                                                        </Item>
-                                                    </Grid>
+                                                    null
                                                     }
-
-                                                </Grid>
-                                            </Stack>
-                                        </Item>
-                                        <Item>
-                                            <Box display="flex"
-                                                 justifyContent="center"
-                                                 alignItems="center"
-                                                 sx={{ width: 1,
-                                                    marginTop:"1rem"}}>
-                                                {/* {!blog.is_liked.includes(user_id)
-                                                    && <SetLikeOfBlog blog_id={blog.uid} />}
-                                                {blog.is_liked.includes(user_id)
-                                                    && <RemoveLikeOfBlog blog_id={blog.uid} user={user_id} />} */}
-                                                {blog.is_liked.includes(user_id)?
-                                                <><SetLikeOfBlog blog_id={blog.uid} Isfill={true}/></>
+                                                   
+                                    </Grid>
+                                    <Grid sx={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
+                                    {blog.is_liked.includes(user_id)?
+                                                <><SetLikeOfBlog blog_id={blog.uid} Isfill={true} num={blog.num_likes}/></>
                                                 :
-                                                <><SetLikeOfBlog blog_id={blog.uid} isFill={false}/></>
-                                                }
-                                                <div className="likes"
-                                                    onClick={()=>{
-                                                        setOpen_liker(true);
-                                                        setClose_liker(false);
-                                                        setBlog_id(blog.uid);
-                                                    }
-                                                    }>
-                                                    {blog.num_likes > 0 ? blog.num_likes : null}
-                                                </div>
-
-                                                            </Box>
-                                                        </Item>
-                                                    </Stack>
-                                                </div>
-                                </div>
-                                <Divider sx={{ borderBottomWidth: 1, width: "100%"}} />
+                                                <><SetLikeOfBlog blog_id={blog.uid} isFill={false} num={blog.num_likes}/></>
+                                        }
+                                       
+                                    </Grid>
+                                    
+                                        
+                                        
+                                        
+                                        <Rating sx={{color:"#e45505",position:"absolute",bottom:'0px',left:'0px',margin:'0.5rem'}} name="read-only" value={blog.average_rate} readOnly precision={0.1} />
+                                        <Typography variant='caption' sx={{margin:'0.4rem',bottom:'0px',right:'0px',position:'absolute'}}>{post_createdAt(blog.created_at)}</Typography>
+                                        
                         </Grid>))}
-                </Stack>
-                </Box>
-            </Box>
-        </Box>
-    </Col>
-            <Col md={2}/>
+                    </Grid>
+                </Col>
+                <Col md={2}>
+                <div style={{position:'relative'}}>
+                <Grid
+                        container
+                        id="most-liked"
+                        
+                        sx={{
+                            alignItems:'center',
+                            justifyContent:'center',
+                            display:'flex',
+                            width: '20%',
+                            marginLeft:"3vw",
+                            marginBottom:"1rem",
+                            backgroundColor:'transparent',
+                            borderRadius:'15px',
+                            flexDirection:'column',
+                            marginTop:'2rem',
+                            position:'fixed'
+                        }}>
+                        <Grid item id='search'
+                        sx={{width:'100%'
+                        
+                        ,minWidth:'100%',position:'absolute',display:'flex',top:'0px',
+                        minHeight:'5vh',maxHeight:'5vh',
+                        borderRadius:'15px',
+                        margin:'0.3rem'}}>
+
+                        <FormControl fullWidth>
+                        <TextField
+                        type="search"
+                        placeholder='search here..'
+                        value={searchTerm}
+                        onChange={handleChange}
+                        autoFocus 
+                        autoComplete='off'
+                        
+                        InputProps={{
+                        style:{borderRadius:'25px',backgroundColor:'#D5D8DD',border:'1px solid #004E89'},
+                          startAdornment: (
+                        <InputAdornment position='start' >
+                          <IconButton disabled={active} onClick={handelClick} >
+                            {active?<SearchIcon style={{fill:'gray'}}/>:<SearchIcon style={{fill:'blue'}}/>}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                        }}/>
+                    
+                        </FormControl>
+
+                        </Grid>
+                        
+                        <Grid item sx={{width:'100%',minWidth:'100%',display:'flex',minHeight:'60vh',marginTop:'5rem',flexDirection:'column'}}>
+                            <YouMightLike/>
+                        </Grid>
+                </Grid>
+                
+                </div>
+                </Col>
             </Row>
 
 

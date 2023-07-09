@@ -23,7 +23,7 @@ export const Make_Offer = () => {
         })
         .catch(error =>{
             if(error.response.status == 400){
-                toast.error("Exact location of the announcer is needed!!")
+                toast.error("Set your exact location!!")
                 fetchAnnc();
             }
             else{

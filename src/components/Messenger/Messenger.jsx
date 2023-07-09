@@ -99,6 +99,7 @@ const ChatBox=(props)=>
         const newList=list.concat({message:message,type:"sent",created_at:null})
        
         setList(newList)
+        setTextMsg("")
         
     } 
     const handelChangeTxt=(event)=>
@@ -165,13 +166,18 @@ const ChatBox=(props)=>
             </List>
                 <Divider />
                 <Grid container style={{padding: '20px',display:'flex'}} direction='row'>
+
                     <Grid item xs={11} >
                         <TextField id="outlined-basic-email" 
                         label="Send Massege ..." 
-                        fullWidth onChange={(event)=>{setTextMsg(event.target.value)}} 
+                        fullWidth 
+                        onChange={(event)=>{setTextMsg(event.target.value)}} 
                         autoComplete='off'
                         value={message}
-                        InputProps={{endAdornment:(
+                        InputProps={{
+                          
+                          style:{borderRadius:'25px',backgroundColor:'#D5D8DD',border:'0.3px solid #004E89'},
+                          endAdornment:(
                         <Button size='medium' color='primary'
                         onClick={()=>{handelSendM();setTextMsg(null)}}
                         onChange={handelChangeTxt}

@@ -17,9 +17,9 @@ export default function DevCard(probs){
                         <h4 class="title" style={{color : "rgba(0,78,137,1)"}}>{probs.title}</h4>
                         </div>
                         <ul class="social">
-                        <li><a href="https://codepen.io/collection/XdWJOQ/" aria-hidden="true"> <FaInstagram/></a></li>
-                        <li><a href="https://codepen.io/collection/XdWJOQ/" aria-hidden="true"><FaLinkedin/></a></li>
-                        <li><a href="https://codepen.io/collection/XdWJOQ/"  aria-hidden="true"><FaTwitter/></a></li>
+                        <li><a href="" aria-hidden="true"> <FaInstagram/></a></li>
+                        <li><a href="" aria-hidden="true"><FaLinkedin/></a></li>
+                        <li><a href=""  aria-hidden="true"><FaTwitter/></a></li>
                         </ul>
                     </div>
                 </div>

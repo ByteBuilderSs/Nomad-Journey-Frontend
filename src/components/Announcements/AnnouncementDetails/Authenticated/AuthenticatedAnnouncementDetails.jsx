@@ -228,6 +228,9 @@ export default function UnAuthAnnouncement(props)
 
     const [showFeed, setShowFeed]=useState(false);
     const [closeFeed, setCloseFeed]=useState(true);
+    //for view post dialog
+    const [openPostDialog, setOpenPostDialog] = useState(false);
+    const [closePostDialog, setClosePostDialog] = useState(true);
 
     // for add post dialog
     const [openPost, setOpenPost] = useState(false);
@@ -354,19 +357,24 @@ export default function UnAuthAnnouncement(props)
                     <Grid item >
                         {!exist_feedback ? (
                                 <>
-                                    <Button className={classes.feedbackButton} startIcon={<FeedbackIcon />} onClick={() => {
-                                        setShowFeed(true);
-                                        setCloseFeed(false);
-                                    }}>
-                                        Send Feedback
-                                    </Button>
-                                    <FeedbackModal
-                                        open={showFeed}
-                                        setOpen={setShowFeed}
-                                        close={closeFeed}
-                                        setClose={setCloseFeed}
-                                        anc_id={anc_id}
-                                    />
+                                    {props.isAuthenticate? (
+                                        <>
+                                        <Button className={classes.feedbackButton} startIcon={<FeedbackIcon/>}
+                                                onClick={() => {
+                                                    setShowFeed(true);
+                                                    setCloseFeed(false);
+                                                }}>
+                                            Send Feedback
+                                        </Button>
+                                        <FeedbackModal
+                                            open={showFeed}
+                                            setOpen={setShowFeed}
+                                            close={closeFeed}
+                                            setClose={setCloseFeed}
+                                            anc_id={anc_id}
+                                        />
+                                        </>
+                                    ) : null}
                                 </>
                         ) : (
                             <>
@@ -376,14 +384,28 @@ export default function UnAuthAnnouncement(props)
                     </Grid>
                     <Grid item >
                         {!exist_post ? (
-                            <Button className={classes.button} startIcon={<AddIcon />} onClick={()=>handelClickPost(anc_id)}>
-                                Add Post
-                            </Button>
-                        ) : (
-                            <Button className={classes.button} startIcon={<FaEye />} onClick={()=>handelClickPost(anc_id)}>
-                                View Post
-                            </Button>
-                        )}
+                            <>
+                                {props.isAuthenticate ? (
+                                    <>
+                                        <Button className={classes.button} startIcon={<AddIcon />} onClick={() => {
+                                            setClosePost(false);
+                                            setOpenPost(true);}
+                                        }>
+                                            Add Post
+                                        </Button>
+                                        <EditorFormDialog
+                                            open={openPost}
+                                            setOpen={setOpenPost}
+                                            close={closePost}
+                                            setClose={setClosePost}
+                                            anc_id={announcement.id}
+                                            closeAnnouncement={handleClose}
+                                        />
+                                    </>
+                                ) : null
+                                }
+                                </>
+                        ) : null}
 
                     </Grid>
                 </Grid>

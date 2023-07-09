@@ -73,7 +73,6 @@ const styles = makeStyles(theme => ({
             color:"#1A659E"
         }
     }
-
 }))
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;

@@ -24,12 +24,14 @@ import {
     DialogContentText,
     DialogTitle,
     IconButton,
+    Skeleton,
 } from '@mui/material';
 import SamplePostMainImage from '../../../Assets/images/post-default-main-image.jpg'
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DeletePostDialog from '../DeletePostDialog';
+import EditPostDialog from '../EditPost/EditPostDialog';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {makeStyles} from "@mui/styles";
 import {AiOutlineClose} from "react-icons/ai";
@@ -81,6 +83,10 @@ const PostDetailDialog = (props) => {
     const [scroll, setScroll] = React.useState('paper');
     const [postData, setPostData] = useState("");
 
+    const [openEdit, setOpenEdit] = useState(false);
+    const [closeEdit, setCloseEdit] = useState(true);
+    const [loading, setLoading] = useState(true);
+
     const loadPost = async () => {
         console.log("In load post request");
         axios({
@@ -106,6 +112,7 @@ const PostDetailDialog = (props) => {
                 }).format("YYYY/MM/DD, HH:MM:SS");
             }
             setPostData(result.data);
+            setLoading(false);
             console.log("********** The result is ******** ", result.data);
         }).catch((error) => {
             toast.error("Something went wrong while fetching post.");
@@ -126,11 +133,86 @@ const PostDetailDialog = (props) => {
         props.set_post_slug(null);
     }
 
+
     const handleEditClick = (uid, slug) => 
     {
         navigate(`/home/PostExperience/Edit/${uid}/${slug}`);
     }
 
+    if(loading) {
+        return (
+            <>
+                <Dialog
+                    open={props.open}
+                    onClose={handleClose}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                    maxWidth={'md'}
+                >
+                    <IconButton
+                        edge="end"
+                        onClick={handleClose}
+                        size={"medium"}
+                        sx={{ position: "absolute", top: "1rem", right: "2rem", color:"#004E89" }}
+                    >
+                    <AiOutlineClose />
+                </IconButton>
+                <DialogTitle id="scroll-dialog-title" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Stack direction={'column'} sx={{ flexGrow: 1 }}>
+                        {/* Main Image */}
+                        <Item>
+                            <Skeleton variant="rounded" width={500} height={100} />
+                        </Item>
+                        {/* Title */}
+                        <Item>
+                            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                        </Item>
+                    </Stack>
+                </DialogTitle>
+                    
+                <DialogContent dividers={scroll === 'paper'} dir='ltr'>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <form dir='ltr'>
+                            <Grid container rowSpacing={0.25} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                <div style={{ paddingLeft: "2rem" }}>
+                                    {/* Summary */}
+                                    <Grid item xs={12}>
+                                        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                                            Summary
+                                        </Typography>
+                                        <Skeleton variant="rectangular" width={500} height={60} />
+                                    </Grid>
+                                    {/* Body */}
+                                    <Grid item xs={12} sx={{ mt: "1rem" }}>
+                                        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                                            Content
+                                        </Typography>
+                                        <Skeleton variant="rounded" width={500} height={60} />
+                                    </Grid>
+                                    {/* Tags */}
+                                    <Grid item xs={12}>
+                                        <Box sx={{ mt: "0.75rem", mb: "1rem" }}>
+                                            <Typography
+                                                sx={{ marginTop: "1rem", fontSize: 20, display: "flex", alignItems: "center", fontWeight: "bold" }}
+                                                variant="h1"
+                                                component="div"
+                                            >
+                                            Tags
+                                            <Skeleton variant="rectangular" width={500} height={60} />
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                </div>
+                            </Grid>
+                        </form>
+                    </Grid>
+                </DialogContent>
+
+                
+                </Dialog>
+            </>
+        )
+    }
     return (
         <div>
             <Dialog
@@ -279,7 +361,11 @@ const PostDetailDialog = (props) => {
                         sx={{ mr: "3rem", mb: "1rem" }}
                         className={classes.button}
                         startIcon={<EditIcon />}
-                        onClick={() => handleEditClick(postData.uid, postData.slug)}
+                        // onClick={() => handleEditClick(postData.uid, postData.slug)}
+                        onClick={() => {
+                            setOpenEdit(true);
+                            setCloseEdit(false);
+                        }}
                         >
                         Edit
                     </Button>
@@ -298,6 +384,16 @@ const PostDetailDialog = (props) => {
             closePost={handleClose}
             close={closeDelete}
             setClose={setCloseDelete}
+        />
+        <EditPostDialog
+            post_slug={postData.slug}
+            post_id={postData.uid}
+            post={postData}
+            open={openEdit}
+            setOpen={setOpenEdit}
+            closePost={handleClose}
+            close={closeEdit}
+            setClose={setCloseEdit}
         />
         </div>
     )

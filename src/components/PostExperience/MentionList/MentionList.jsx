@@ -8,7 +8,8 @@ import {List,
       Grid,
       Divider,
       Collapse,
-      ListItemIcon
+      ListItemIcon,
+      Tooltip
 } from '@mui/material';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -16,6 +17,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import LetteredAvatar from 'react-lettered-avatar';
 import axios from 'axios';
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 let username = "";
 let user_id = "";
@@ -33,6 +35,7 @@ const CheckboxListSecondary=({mentions})=>{
   // console.log("DATA PASSED BY MENTIONS: ", mentions);
   // console.log("HOST ID", mentions.host_id);
   
+  const navigate=useNavigate()
 
   useEffect(() => {
     if (mentions.host_id) {
@@ -56,28 +59,36 @@ const CheckboxListSecondary=({mentions})=>{
       
   }, [mentions.host_id]);
   
-
+  const handelViewProf=(host_username)=>
+  {
+      window.location.reload();
+      window.location.href = `/home/Profile/${host_username}/`;
+      // window.location(`/home/Profile/${host_username}/`);
+  }
   return(
       <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <>
-      <ListItemButton>
-          <ListItem
-          hideChevron={true}
-          disablePadding>
-            <ListItemAvatar>
-              {
-                profileImageURL && profileImageURL !== "" ? 
-                (
-                    <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
-                        <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
-                    </div>
-                ) :
-                <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.host_username}/>
-              }
-            </ListItemAvatar>
-            <ListItemText primary={mentions.host_firstName + " " + mentions.host_lastName} secondary={" was your host in "+mentions.city_name} />
-          </ListItem>
-        </ListItemButton>
+        <ListItemButton >
+          <Tooltip title='view profile'>
+            <ListItem
+            hideChevron={true}
+            disablePadding
+            >
+              <ListItemAvatar  onClick={()=>{handelViewProf(mentions.host_username)}}>
+                {
+                  profileImageURL && profileImageURL !== "" ? 
+                  (
+                      <div style={{borderRadius: '10rem', overflow: 'hidden'}}>
+                          <img style={{ width:'15rem', height:'15rem', objectFit: 'fill', objectPosition: "center"  }} src={profileImageURL}/> 
+                      </div>
+                  ) :
+                  <LetteredAvatar size={40} radius={20} color='#fff' backgroundColor="#AD8E70" name={mentions.host_username}/>
+                }
+              </ListItemAvatar>
+              <ListItemText primary={mentions.host_firstName + " " + mentions.host_lastName} secondary={" was your host in "+mentions.city_name} />
+            </ListItem>
+            </Tooltip>
+          </ListItemButton>
         <Divider />
         </>
   </List>

@@ -1,74 +1,100 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import '../BlogForm.css';
+import React from 'react';
 import {
+    Box,
+    Paper,
     Grid,
     FormControl,
     TextField,
     Button,
+    Divider,
+    InputLabel,
+    MenuItem,
+    Select,
     Stack,
     Card,
-    Typography,
-    Autocomplete,
-    Checkbox,
-    Divider,
-    CardMedia,
-    CardContent,
-    CardActions,
     IconButton,
+    Typography,
+    Checkbox,
+    Autocomplete,
+    Container,
     CircularProgress,
-    Fab,
-    Box,
     Dialog,
-    DialogTitle,
-    DialogContent,
     DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Chip
 } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import ReactQuill, { Quill } from 'react-quill';
 import { Item } from "semantic-ui-react";
+import { useParams } from 'react-router';
+import { useState } from 'react';
 import axios from 'axios';
+import { useEffect } from 'react';
 import { toast } from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import  { DateObject } from "react-multi-date-picker";
 import ImageCompress from 'quill-image-compress';
 import ImageResize  from 'quill-image-resize-module-react';
-import Mentions from '../MentionList/MentionList';
-import {useMentionInPosts} from '../../../hooks/useMentionInPosts';
+import { convertFileToBase64 } from '../../../utils/utils';
 import SamplePostMainImage from '../../../Assets/images/post-default-main-image.jpg';
-import EditIcon from '@mui/icons-material/Edit';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, teal } from '@mui/material/colors';
-import { convertFileToBase64 } from '../../../utils/utils';
-import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
-import CloseIcon from '@mui/icons-material/Close';
+import { blue, deepOrange } from '@mui/material/colors';
+import {makeStyles} from "@mui/styles";
+import { useCounter, useCounterActions } from '../../../Context/CounterProvider';
+import { useMentionInPosts } from '../../../hooks/useMentionInPosts';
+import {AiOutlineClose} from "react-icons/ai";
+import Mentions from '../MentionList/MentionList';
 
-const theme = createTheme({
-    palette: {
-        primary: 
-        {
-            main: "#219EBC",
-        },
-        secondary: 
-        {
-            main: teal[900]
+const styles = makeStyles(theme => ({
+    text_field:{
+        borderRadius:"15px",
+        "& fieldset": { border:"none"}
+    },
+    button:{
+        width:"13vw",
+        backgroundColor:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#004E89",
+        border:"solid 2px #004E89",
+        borderRadius:"15px",
+        transition:"all 0.15s ease-out",
+        // display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            backgroundColor:"#004E89",
+            color:"#EFEFD0"
+        }
+    },
+    deleteButton:{
+        width:"13vw",
+        backgroundColor:"#EFEFD0",
+        backgroundPosition:"right bottom",
+        fontWeight:"bold",
+        color:"#DE3733",
+        border:"solid 2px #DE3733",
+        borderRadius:"15px",
+        transition:"all 0.15s ease-out",
+        // display:"block",
+        backgroundSize:"200% 100%",
+        "&:hover":{
+            backgroundPosition:"left bottom",
+            backgroundColor:"#DE3733",
+            color:"#EFEFD0"
         }
     }
-});
+}))
+
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
 Quill.register('modules/imageCompress', ImageCompress);
 Quill.register('modules/imageResize', ImageResize);
 
@@ -100,6 +126,7 @@ const modules = {
     }
 
 }
+
 let allData;
 let access_token;
 let username;
@@ -110,88 +137,525 @@ if (localStorage.getItem('tokens'))
     username = allData.username;
 }
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(1),
-    },
-}));
-
-function BootstrapDialogTitle(props) {
-    const { children, onClose, ...other } = props;
-
-    return (
-        <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-        {children}
-        {onClose ? (
-            <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-                position: 'absolute',
-                right: 8,
-                top: 8,
-                color: (theme) => theme.palette.grey[500],
-            }}
-            >
-            <CloseIcon />
-            </IconButton>
-        ) : null}
-        </DialogTitle>
-    );
-}
-
-BootstrapDialogTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-};
-
 const EditorFormDialog = (props) => {
+    const classes = styles();
+    // let announcement_id = useParams();
+    console.log(props.anc_id)
+    const {mentionPosts, mentions} = useMentionInPosts() ;
+
+    useEffect(() => 
+    {
+        if (props.anc_id)
+        {
+            mentionPosts(props.anc_id)
+        }
+    }, [props.anc_id])
+
+
+    const navigate = useNavigate();
+    const [disabled, setDisabled] = useState(false);
+    const [title, setTitle] = useState('');
+    /* TODO => useState for main image and summary */
+    const [mainImage, setMainImage] = useState('');
+    const [summary, setSummary] = useState('');
+    const [imageSizeErr, setImageSizeErr] = useState(false);
+    // this value is for editor
+    const [editorValue, setEditorValue] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [tags, setTags] = useState([]);
     const [scroll, setScroll] = React.useState('paper');
+    // for image loader
+    const [loading, setLoading] = React.useState(false);
+    const timer = React.useRef();
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
 
+    const loadTags = async () => {
+        axios({
+            method: "get",
+            url: "https://api.nomadjourney.ir/api/v1/blog/tags/",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((result) => {
+            setTags(result.data.data);
+            console.log("********** The Tags are ******** ", tags);
+        }).catch((error) => {
+            toast.error("Something went wrong while fetching tags.")
+        })
+    }
 
-    const handleClose = () => {
+    useEffect(() => {
+        loadTags();
+        
+    }, []);
+
+    function onSubmit(e) {
+        e.preventDefault();
+        let tagIDs = []
+        for (let i=0; i < selectedTags.length; i++)
+        {
+            tagIDs.push(selectedTags[i].uid);
+        }
+        let isDataValid = true;
+        if (!title) {
+            toast.error("Please select a title for your post.");
+            isDataValid = false;
+        }
+        console.log("***** The editor content ****", editorValue.ops);
+        
+        if (editorValue.ops === undefined || 
+            editorValue.ops.length == 0 || 
+            !editorValue.ops[0].insert || 
+            editorValue.ops[0].insert === undefined ||
+            editorValue.ops[0].insert === null ||
+            editorValue.ops[0].insert.length === 0 || 
+            editorValue.ops[0].insert === "\n" || 
+            editorValue.ops[0].insert === "\t" ||
+            (editorValue.ops[0].insert && editorValue.ops[0].insert.trim().length === 0)) {
+            toast.error("No content!?");
+            isDataValid = false;
+        }
+        if (imageSizeErr) {
+            isDataValid = false;
+        }
+        
+        if (isDataValid) {
+            axios({
+                method: "post",
+                url: `https://api.nomadjourney.ir/api/v1/blog/others-profile-post/${username}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                data: {
+                    blog_title: title,
+                    json_data: editorValue,
+                    tags: tagIDs,
+                    annoncement: props.anc_id,
+                    main_image_64: mainImage,
+                    description: summary
+                },
+                }).then((res) => {
+                    console.log("+++++ THE RESULT AFTER CREATING THE POST IS +++++ ", res.data);
+                    setDisabled(true);
+                    setTimeout(() => {
+                        setDisabled(false);
+                    }, 5000);
+                    toast.success("A new post created successfully.");
+                    setTitle('');
+                    setEditorValue('');
+                    setImageSizeErr(false);
+                    setSummary('');
+                    setMainImage('');
+                    setSelectedTags([]);
+                    props.setClose(true);
+                    props.setOpen(false);
+                    // navigate(`/home/Profile/${username}/`)
+                    props.closeAnnouncement();
+                }).catch((error) => {
+                    toast.error("Something went wrong.")
+                });
+        }
+    }
+
+    const handleChangeTitle = (event) => {
+        setTitle(event.target.value);
+    }
+    // onChange expects a function with these 4 arguments
+    const handleChangeEditorContent = (content, delta, source, editor) => {
+        setEditorValue(editor.getContents());
+    }
+    // select tag
+    const handleTagSelection = (values) => {
+        console.log("********** The value is: ***********", values);
+        setSelectedTags(values);
+    }
+
+    /* TODO => handleChange for main image */
+    const handleMainImage = async (e) => {
+        const file = e.target.files[0];
+        const size_mb = file.size / 1024 ** 2;
+        const size_kb = size_mb * 1000;
+        if (size_kb <= 500) {
+            const base64Image = await convertFileToBase64(file);
+            if (!loading) {
+                setLoading(true);
+                timer.current = window.setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
+            }
+            setImageSizeErr(false);
+            setMainImage(base64Image ? base64Image : "");
+        } else {
+            setImageSizeErr(true);
+            toast.warning("Image size can not be more than 500kb.");
+        }
+    }
+
+    const handleChangeSummary = (event) => {
+        setSummary(event.target.value);
+    }
+
+    console.log("++++++++ The selected tags are: ++++++++", selectedTags);
+    const handleClose = () =>
+    {
         props.setOpen(false);
         props.setClose(true);
-    };
-
+    }
     return (
         <div>
-        <BootstrapDialog
-            onClose={handleClose}
-            aria-labelledby="customized-dialog-title"
-            open={props.open}
-            onHide={handleClose}
-        >
-            <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Modal title
-            </BootstrapDialogTitle>
-            <DialogContent dividers>
-            <Typography gutterBottom>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                consectetur ac, vestibulum at eros.
-            </Typography>
-            <Typography gutterBottom>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-            </Typography>
-            <Typography gutterBottom>
-                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                ullamcorper nulla non metus auctor fringilla.
-            </Typography>
-            </DialogContent>
-            <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-                Save changes
-            </Button>
-            </DialogActions>
-        </BootstrapDialog>
+            <Dialog
+                onHide={handleClose}
+                open={props.open}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                maxWidth={'xl'}
+                scroll={scroll}
+                PaperProps={{ sx: {
+                    borderRadius: "15px",
+                    // color:"#004E89",
+                    
+                    } }}
+            >
+                <DialogTitle>
+                    <IconButton
+                        edge="end"
+                        onClick={handleClose}
+                        size={"medium"}
+                        sx={{ position: "absolute", top: "0.25rem", right: "2rem", color:"#004E89" }}
+                    >
+                        <AiOutlineClose />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent  dir='ltr'>
+                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                        <form dir='ltr'>
+                            <Grid container rowSpacing={0.25} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                <div style={{ paddingLeft: "3rem" }}>
+                                    <Grid item xs={12}>
+                                        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                            <Stack direction={'column'} sx={{ flexGrow: 1 }}>
+                                                {/* Main Image */}
+                                                <Item>
+                                                    {/* Main Image */}
+                                                    <Grid item xs={12} style={{ marginLeft: "-2rem", marginTop: "2rem" }}>
+                                                        <div>
+                                                            <IconButton component="label">
+                                                                <input
+                                                                    onChange={(e) => handleMainImage(e)}
+                                                                    hidden
+                                                                    accept="image/*"
+                                                                    multiple
+                                                                    type="file"
+                                                                    max={20}
+                                                                />
+                                                                <img
+                                                                    variant="square"
+                                                                    src={mainImage && mainImage !== '' ? mainImage : SamplePostMainImage} 
+                                                                    style={{
+                                                                        width: "70rem",
+                                                                        height: 340,
+                                                                        borderRadius: '15px',
+                                                                        objectFit: 'fill',
+                                                                        objectPosition: "center"
+                                                                    }}
+                                                                />
+                                                                {loading && (
+                                                                    <CircularProgress
+                                                                        size={50}
+                                                                        sx={{
+                                                                        position: 'absolute',
+                                                                        top: '50%',
+                                                                        left: '50%',
+                                                                        marginTop: '-12px',
+                                                                        marginLeft: '-12px',
+                                                                        }}
+                                                                    />
+                                                                    )}
+                                                            </IconButton>
+                                                        </div>
+                                                        <Box sx={{ position: 'relative' }}>
+                                                            <Button
+                                                                style={{
+                                                                    bottom: "35px",
+                                                                    marginLeft: "1rem",
+                                                                    marginTop: "-1.5rem",
+                                                                    textTransform: 'none',
+                                                                    zIndex: 1
+                                                                }}
+                                                                className={classes.button}
+                                                                component="label"
+                                                                startIcon={<CameraAltIcon />}
+                                                                >
+                                                                Upload a photo
+                                                                <input
+                                                                    hidden
+                                                                    accept="image/*"
+                                                                    multiple
+                                                                    type="file"
+                                                                    onChange={(e) => handleMainImage(e)}
+                                                                /> 
+                                                            </Button>
+                                                            {loading && (
+                                                                <CircularProgress
+                                                                    size={24}
+                                                                    sx={{
+                                                                    position: 'absolute',
+                                                                    top: -35,
+                                                                    left: 40,
+                                                                    marginTop: '-12px',
+                                                                    marginLeft: '-12px',
+                                                                    zIndex: 1
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </Box>
+                                                        <Box sx={{ position: 'relative', ml: "12rem", mt: '-1.7rem' }}>
+                                                        {mainImage && mainImage !== ''  && !loading ? (
+                                                            <>
+                                                            <Button
+                                                                style={{
+                                                                    bottom: "35px",
+                                                                    marginLeft: "4rem",
+                                                                    marginTop: "-1rem",
+                                                                    textTransform: 'none',
+                                                                    zIndex: 1
+                                                                }}
+                                                                className={classes.deleteButton}
+                                                                variant="contained"
+                                                                component="label"
+                                                                startIcon={<RemoveCircleIcon />}
+                                                                disabled={loading}
+                                                                onClick={() => {
+                                                                    if (!loading) {
+                                                                        setLoading(true);
+                                                                        timer.current = window.setTimeout(() => {
+                                                                            setLoading(false);
+                                                                        }, 2000);
+                                                                    }
+                                                                    setMainImage('');
+                                                                    setImageSizeErr(false);
+                                                                }}
+                                                                >
+                                                                Remove photo
+                                                            </Button>
+                                                            {loading && (
+                                                            <CircularProgress
+                                                                size={24}
+                                                                sx={{
+                                                                position: 'absolute',
+                                                                top: '50%',
+                                                                left: '50%',
+                                                                marginTop: '-12px',
+                                                                marginLeft: '-12px',
+                                                                }}
+                                                            />
+                                                            )}
+                                                            </>
+                                                        ) : null}
+                                                        </Box>
+                                                    </Grid>
+                                                </Item>
+                                            </Stack>
+                                        </div>
+                                    </Grid>
+                                    {/* Title */}
+                                    <Grid item xs={12}>
+                                        <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                            <Item>
+                                                <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Title</b>
+                                            </Item>
+                                            <Item>
+                                                <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                                    Please select an appropriate title for your post
+                                                </Typography>
+                                            </Item>
+                                            <Item>
+                                                <FormControl>
+                                                    <TextField
+                                                        sx={{ width: "70rem" }}
+                                                        className={classes.text_field}
+                                                        id="outlined-adornment-title"
+                                                        InputLabelProps={{
+                                                            style: { color: 'rgba(0,78,137,0.6)',fontWeight: "bold" }
+                                                        }}
+                                                        InputProps={{
+                                                            style: { color: '#004E89',
+                                                                backgroundColor:"rgba(0,78,137,0.1)",
+                                                                fontWeight:"bold",
+                                                                border:"none"},
+                                                            disableUnderline: true}}
+                                                        type={"text"}
+                                                        placeholder='e.g. My memories of a trip to the southern parts of Italy'
+                                                        size='small'
+                                                        value={title}
+                                                        onChange={handleChangeTitle}
+                                                        required
+                                                    />
+                                                </FormControl>
+                                            </Item>
+                                        </Stack>
+                                    </Grid>
+                                    <Grid item xs={12} direction='row'>
+                                        <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                            <Item>
+                                                {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem" }}>
+                                                    Your host name in this trip was:
+                                                </h6> */}
+                                                <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Your host in this trip was</b>
+                                            </Item>
+                                            <Item>
+                                                <FormControl>
+                                                    <Mentions props={mentions}/>
+                                                </FormControl>
+                                            </Item>
+                                        </Stack>
+                                    </Grid>
+                                    {/* Summary */}
+                                    <Grid item xs={12}>
+                                        <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                            <Item>
+                                                <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Summary</b>
+                                            </Item>
+                                            <Item>
+                                                <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                                    Please write a summary for your post in few lines
+                                                </Typography>
+                                            </Item>
+                                            <Item>
+                                                <FormControl>
+                                                    <TextField
+                                                        sx={{ width: "70rem" }}
+                                                        className={classes.text_field}
+                                                        InputLabelProps={{
+                                                            style: { color: 'rgba(0,78,137,0.6)',fontWeight: "bold" }
+                                                        }}
+                                                        InputProps={{
+                                                            style: { color: '#004E89',
+                                                                backgroundColor:"rgba(0,78,137,0.1)",
+                                                                fontWeight:"bold",
+                                                                border:"none"},
+                                                            disableUnderline: true}}
+                                                        id="outlined-adornment-summary"
+                                                        type={"text"}
+                                                        multiline
+                                                        fullWidth="true"
+                                                        size="medium"
+                                                        rows={2}
+                                                        maxRows={10}
+                                                        value={summary}
+                                                        onChange={handleChangeSummary}
+                                                    />
+                                                </FormControl>
+                                            </Item>
+                                        </Stack>
+                                    </Grid>
+                                    {/* Body */}
+                                    <Grid item xs={12}>
+                                        <Stack direction="column" spacing={0.5} sx={{ mt: "2rem" }}>
+                                            <Item>
+                                                <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Body</b>
+                                            </Item>
+                                            <Item>
+                                                <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                                    You can include all the amazing memories which you had during the journey!
+                                                </Typography>
+                                            </Item>
+                                            <Item>
+                                                <FormControl>
+                                                    <ReactQuill modules={modules} theme="snow" value={editorValue} placeholder="Content goes here ..." onChange={handleChangeEditorContent} style={{ width: "70rem", height: "30rem" }}/>
+                                                </FormControl>
+                                            </Item>
+                                        </Stack>
+                                    </Grid>
+                                    {/* Tags */}
+                                    <Grid item xs={12}>
+                                        <Stack direction="column" spacing={0.5} sx={{ mt: "3.5rem" }}>
+                                            <Item>
+                                                <b className="fields" style={{ paddingRight: "10rem", fontSize: 20 }}>Tags</b>
+
+                                                {/* <h6 style={{ fontWeight: "bold", paddingRight: "10rem", marginTop: "3rem" }}>
+                                                    Tags
+                                                </h6> */}
+                                            </Item>
+                                            <Item>
+                                                <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                                                    You can add some related tags to your post
+                                                </Typography>
+                                            </Item>
+                                            <Item>
+                                                <FormControl>
+                                                    <Autocomplete
+                                                        clearIcon={false}
+                                                        multiple
+                                                        id="tags-outlined"
+                                                        options={tags}
+                                                        value={selectedTags}
+                                                        isOptionEqualToValue={(option, value) => option.tag_name === value.tag_name}
+                                                        getOptionSelected={(option, value) => {
+                                                            return option.tag_name === value.tag_name;
+                                                        }}
+                                                        getOptionLabel={(option) => option.tag_name}
+                                                        sx={{ width: "50rem" }}
+                                                        size="small"
+                                                        disableCloseOnSelect
+                                                        noOptionsText="No related tag is available"
+                                                        onChange={(e, values) => {
+                                                            handleTagSelection(values);
+                                                        }}
+                                                        renderOption={(props, option, { selected }) => (
+                                                            <li {...props}>
+                                                                <Checkbox
+                                                                icon={icon}
+                                                                checkedIcon={checkedIcon}
+                                                                style={{ marginRight: 8 }}
+                                                                checked={
+                                                                    selected
+                                                                }
+                                                                />
+                                                                {option.tag_name}
+                                                            </li>
+                                                            )}
+                                                            style={{ width: 500 }}
+                                                            renderInput={(params) => (
+                                                                <TextField {...params} label="Tags"  />
+                                                            )}
+                                                    />
+                                                </FormControl>
+                                            </Item>
+                                        </Stack>
+                                    </Grid>
+                                </div>
+                            </Grid>
+                        </form>
+                    </Grid>
+                </DialogContent>
+
+                <DialogActions>
+                    {/* Confirm Button */}
+                    <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <div style={{width:"100%", justifyContent:"center",
+                        alignItems:"center", display:"flex",
+                        paddingBottom:"2rem"}}>
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                className={classes.button}
+                                onClick={onSubmit}
+                                disabled={disabled}
+                            >
+                                Submit
+                            </Button>
+                        </div>
+                    </Grid>
+                </DialogActions>
+            </Dialog>
         </div>
-    );
+    )
 }
 
 export default EditorFormDialog

@@ -49,9 +49,15 @@ function MyAnnouncements(props) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [announcement, setAnnouncement] = useState([]);
+    
     const [disabled, setDisabled] = useState(false);
     const [open, setOpen] = useState(false);
     const [anc_id, setAnc_id] = useState(null);
+
+    // for unuthenticated : 
+    const [isAuthenticate, setIsAuthenticate] = useState(false);
+    const [authAnnouncement, setAuthAnnouncement] = useState([]);
+
     const AnnouncementAnimation = () => {
 
         const defaultOptions = {
@@ -79,19 +85,34 @@ function MyAnnouncements(props) {
     {
         axios(`https://api.nomadjourney.ir/api/v1/announcement/get-user-announcements/${props.url_username}`)
             .then((data) => {
-                setAnnouncement(data.data)})
+                setAnnouncement(data.data)
+                console.log(data.data);
+                const auth = data.data.filter(obj => obj.anc_status == 'A' || 
+                obj.anc_status == 'D');
+                setAuthAnnouncement(auth);
+            })
             .catch(error =>
             {
                 console.error("error fetching data:", error);
                 setError(error);
             })
             .finally( () => {
-                console.log(announcement);
+                console.log("Abbasss")
+
                 setLoading(false);
             })
     }, [counter])
     
-   
+    useEffect(() => {
+
+
+        if(props.local_storage_username == props.url_username){
+            setIsAuthenticate(true);
+        }
+
+
+    }, []);
+
     const getDayOfDate = (date) => {
         const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
         const months = ["January", "February", "March", "April", "May", "June",
@@ -147,6 +168,12 @@ function MyAnnouncements(props) {
             return`${travler_count} Traveler`;
         return `${travler_count} Travelers`;
     }
+    const checkAnncStatus = (anc) => {
+        if(anc.anc_status != "A" && anc.anc_status != "D"){
+            return false;
+        }
+        return true;
+    }
     // const allData = JSON.parse(localStorage.getItem('tokens'));
     // const local_username = allData.username;
     const checkNotNull = (ancId) => {
@@ -168,6 +195,8 @@ function MyAnnouncements(props) {
                             numOfNights={diffDays}
                             url_username={props.url_username}
                             local_storage_username={props.local_storage_username}
+
+                            isAuthenticate = {isAuthenticate}
                         />
                     </>
                 )
@@ -260,10 +289,12 @@ function MyAnnouncements(props) {
                         marginBottom:"2rem",
                     }}>
                     {
-                        announcement.length > 0 ? announcement.map((anc, key) =>
+                        isAuthenticate !== true ? 
+                        authAnnouncement.length > 0 ? authAnnouncement.map((anc, key) =>
                         (
 
-                            <Grid item md={6} xs={12} sm={6} lg={4} xl={3}>
+                             <Grid item md={6} xs={12} sm={6} lg={4} xl={3}>
+
                                 <div
                                     className="announcements-hovering"
                                     onClick={() => {
@@ -330,7 +361,94 @@ function MyAnnouncements(props) {
                                         </Stack>
                                 </div>
                             </Grid>
+                            
+                        )) :
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                p: 2,
+                                width: "100%"
+                            }}
+                            >
+                            <div>
+                                    <AnnouncementAnimation />
+                                <h2 style={{color:"#004E89"}}>
+                                    No Announcement Found!
+                                </h2>
 
+                            </div>
+                        </Box>
+                        : announcement.length > 0 ? announcement.map((anc, key) =>
+                        (
+
+                             <Grid item md={6} xs={12} sm={6} lg={4} xl={3}>
+                                <div
+                                    className="announcements-hovering"
+                                    onClick={() => {
+                                            setOpen(true);
+                                            setDisabled(false);
+                                            setAnc_id(anc.id);}}>
+                                    <div style={{
+                                        overflow: "hidden",
+                                    }}>
+                                        <img
+                                             src="https://www.outofoffice.com/wp-content/uploads/santorini-1578440_1920.jpg"
+                                        />
+                                    </div>
+                                        <Stack className={classes.announcements}>
+                                            <Item>
+                                                <Stack direction={`row`}>
+                                                    <Item>
+                                                        <h1> <TiLocation style={{marginRight:"0.25rem"}} /> </h1>
+                                                    </Item>
+                                                    <Item>
+                                                        <Stack>
+                                                            <Item>
+                                                                <h1 style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                    <span>{anc.city_name}</span>
+                                                                </h1>
+                                                            </Item>
+                                                            <Item>
+                                                                <h4>{anc.city_country}</h4>
+                                                            </Item>
+                                                        </Stack>
+                                                    </Item>
+                                                </Stack>
+                                            
+                                            </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                                <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                    <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.arrival_date)} (Start)
+                                                </Typography>
+                                            </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                            <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                <BsCalendarDateFill style={{marginRight:"0.5rem"}}/> {getDayOfDate(anc.departure_date)} (End)
+                                            </Typography>
+                                        </Item>
+                                            <Item className={classes.eachAnnouncement}>
+                                                <Stack direction={`row`} spacing={1} divider={<Divider orientation={`vertical`} flexItem color={'black'}/>}>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <FaHome  style={{marginRight:"0.5rem"}}/> {diffDays(anc.arrival_date, anc.departure_date)}
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <IoIosPerson style={{marginRight:"0.5rem"}} /> {numberOftravelers(anc.travelers_count)}
+                                                        </Typography>
+                                                    </Item>
+                                                    <Item>
+                                                        <Typography style={{ display: "flex", alignItems: "center", alignContent: "center" }}>
+                                                            <big><AiOutlineFieldTime style={{marginRight:"0.5rem"}}/></big> {statusMode(anc.anc_status)}
+                                                        </Typography>
+                                                    </Item>
+                                                </Stack>
+                                            </Item>
+                                        </Stack>
+                                </div>
+                            </Grid>
+                            
                         )) : 
                         <Box
                             sx={{
@@ -347,6 +465,8 @@ function MyAnnouncements(props) {
 
                             </div>
                         </Box>
+
+                        
                     }
                 </Grid>
                     {checkNotNull(anc_id)}

@@ -159,7 +159,7 @@ export default function UsersPosts()
                             alignItems:'center',
                             justifyContent:'center',
                             display:'flex',
-                            width: '20%',
+                            width: '25%',
                             marginLeft:"3vw",
                             marginBottom:"1rem",
                             backgroundColor:'transparent',

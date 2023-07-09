@@ -477,7 +477,23 @@ const EditPostDialog = (props) => {
                                                                     textTransform: 'none',
                                                                     zIndex: 1
                                                                 }}
-                                                                className={classes.deleteButton}
+                                                                sx={{
+                                                                    width:"13vw",
+                                                                    backgroundColor:"#EFEFD0",
+                                                                    backgroundPosition:"right bottom",
+                                                                    fontWeight:"bold",
+                                                                    color:"#DE3733",
+                                                                    border:"solid 2px #DE3733",
+                                                                    borderRadius:"15px",
+                                                                    transition:"all 0.15s ease-out",
+                                                                    // display:"block",
+                                                                    backgroundSize:"200% 100%",
+                                                                    "&:hover":{
+                                                                        backgroundPosition:"left bottom",
+                                                                        backgroundColor:"#DE3733",
+                                                                        color:"#EFEFD0"
+                                                                    }
+                                                                }}
                                                                 variant="contained"
                                                                 component="label"
                                                                 startIcon={<RemoveCircleIcon />}

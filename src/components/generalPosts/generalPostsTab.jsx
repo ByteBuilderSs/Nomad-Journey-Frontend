@@ -214,8 +214,8 @@ export default function UsersPosts()
                                     position:'relative'
                                     }}>
                                    <Grid item sx={{margin:'1rem',display:'flex',flexDirection:'row'}}>
-                                        <UserProfile user_id={blog.host_id} first_name={blog.host_name} imageSize={50} profileSize={`4rem`}/> 
-                                        <Typography variant='h6' sx={{margin:'1rem'}}>{blog.host_name}
+                                        <UserProfile user_id={blog.host_id} first_name={blog.author_name} imageSize={50} profileSize={`4rem`}/> 
+                                        <Typography variant='h6' sx={{margin:'1rem'}}>{blog.author_name}
                                         </Typography>
                                    </Grid>  
                                     <Grid item sx={{margin:'1rem',display:'flex',flexDirection:'column'}}>

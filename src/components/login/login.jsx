@@ -65,115 +65,227 @@ export default function SignInSide()
             
         }
     };
-
     return (
-    
-        <div className="auth">
-            <Box
-                className="Mui-login-box"
-                sx={{ bgcolor: "background.paper", 
-                width: 510,
-                maxHeight: "100vh",
-                minHeight: "50vh",
-                boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
-                <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
-                <Tabs
-                        variant="fullWidth"
-                        TabIndicatorProps={{
-                        style: {
-                            backgroundColor: "#1A237D",
-                            borderRadius: "15px"
-                        },
-                        }}>
-                        <Tab
-                            tabIndex={0}
-                            style={{ color: "white", fontSize: 18, borderRadius: "15px" }}
-                            label="Login"
-                        
-                        />
-                    </Tabs>
-                </AppBar>
-                <div>
-                    <div className="authLogo">
-                        <img src={logo} alt="logo" />
-                    </div>
-                    <div className="authLogoLabel" style={{ marginBottom: "1rem"}}>
-                        <h1>
-                            Welcome to <b className="NJText">Nomad Journey</b> !
-                        </h1>
-                    </div>
-                    <Box
-                        component="form"
-                        sx={{
-                        "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    
-                    >
-                        <Grid id={"Login-Form"}>
-                        
-                            <FormControl fullWidth variant="outlined">
-                                <TextField
-                                id="signup-outlined-adornment-email"
-                                label="Email"
-                                onChange={e=>{setEmail(e.target.value)}}
-                                value={Email}
-                                />
-                            </FormControl>
-                            <FormControl fullWidth variant="outlined">
-                                <TextField
-                            
-                                id="outlined-adornment-password"
-                                type={values.showPassword ? "text" : "password"}
-                                onChange={e=>{setPassword(e.target.value)}}
-                                value={password}
-                                InputProps={{
-                                    endAdornment: (
-                                    <InputAdornment>
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                        {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                    ),
-                                }}
-                                label="Password"
-                                />
-                            </FormControl>
-                            <FormControl fullWidth variant="outlined">
-                                <Button
-                                    onClick={handleSubmit}
-                                    sx={{ m: 1 }}
-                                    variant="outlined"
-                                    size="large"
-                                    type="submit"
-                                >
-                                Submit
-                                </Button>
-                                
-                                <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
-                                    <Grid item xs>
-                                        <Link to="/forgotpass" >
-                                            {"Forgot password?"}
-                                        </Link>
+        <>
+            <div className={`background`}></div>
+            <div className={`login-form`}>
+                <Box
+                    className="Mui-login-box"
+                    sx={{ bgcolor: "background.paper",
+                    width: 510,
+                    maxHeight: "100vh",
+                    minHeight: "50vh",
+                    boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
+                    <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
+                    <Tabs
+                            variant="fullWidth"
+                            TabIndicatorProps={{
+                            style: {
+                                backgroundColor: "#1A237D",
+                                borderRadius: "15px"
+                            },
+                            }}>
+                            <Tab
+                                tabIndex={0}
+                                style={{ color: "white", fontSize: 18, borderRadius: "15px" }}
+                                label="Login"
+
+                            />
+                        </Tabs>
+                    </AppBar>
+                    <div>
+                        <div className="authLogo">
+                            <img src={logo} alt="logo" />
+                        </div>
+                        <div className="authLogoLabel" style={{ marginBottom: "1rem"}}>
+                            <h1>
+                                Welcome to <b className="NJText">Nomad Journey</b> !
+                            </h1>
+                        </div>
+                        <Box
+                            component="form"
+                            sx={{
+                            "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
+                            }}
+                            noValidate
+                            autoComplete="off"
+
+                        >
+                            <Grid id={"Login-Form"}>
+
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                    id="signup-outlined-adornment-email"
+                                    label="Email"
+                                    onChange={e=>{setEmail(e.target.value)}}
+                                    value={Email}
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+
+                                    id="outlined-adornment-password"
+                                    type={values.showPassword ? "text" : "password"}
+                                    onChange={e=>{setPassword(e.target.value)}}
+                                    value={password}
+                                    InputProps={{
+                                        endAdornment: (
+                                        <InputAdornment>
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                        ),
+                                    }}
+                                    label="Password"
+                                    />
+                                </FormControl>
+                                <FormControl fullWidth variant="outlined">
+                                    <Button
+                                        onClick={handleSubmit}
+                                        sx={{ m: 1 }}
+                                        variant="outlined"
+                                        size="large"
+                                        type="submit"
+                                    >
+                                    Submit
+                                    </Button>
+
+                                    <Grid container sx={{marginLeft:'-4rem', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
+                                        <Grid item xs>
+                                            <Link to="/forgotpass" >
+                                                {"Forgot password?"}
+                                            </Link>
+                                        </Grid>
+                                        <Grid item xs sx={{float:"right"}}>
+                                            <Link to="/signup" >
+                                            {"Don't have an account? Register Now!"}
+                                            </Link>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs>
-                                        <Link to="/signup" >
-                                        {"Don't have an account? Register Now!"}
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-                            </FormControl>
-                        </Grid>
-                    </Box>
-                </div>
-                
-            </Box>
-        </div>
+                                </FormControl>
+                            </Grid>
+                        </Box>
+                    </div>
+
+                </Box>
+            </div>
+
+        </>
     );
+    // return (
+    //
+    //     <div className="auth">
+    //         <Box
+    //             className="Mui-login-box"
+    //             sx={{ bgcolor: "background.paper",
+    //             width: 510,
+    //             maxHeight: "100vh",
+    //             minHeight: "50vh",
+    //             boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'}}>
+    //             <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
+    //             <Tabs
+    //                     variant="fullWidth"
+    //                     TabIndicatorProps={{
+    //                     style: {
+    //                         backgroundColor: "#1A237D",
+    //                         borderRadius: "15px"
+    //                     },
+    //                     }}>
+    //                     <Tab
+    //                         tabIndex={0}
+    //                         style={{ color: "white", fontSize: 18, borderRadius: "15px" }}
+    //                         label="Login"
+    //
+    //                     />
+    //                 </Tabs>
+    //             </AppBar>
+    //             <div>
+    //                 <div className="authLogo">
+    //                     <img src={logo} alt="logo" />
+    //                 </div>
+    //                 <div className="authLogoLabel" style={{ marginBottom: "1rem"}}>
+    //                     <h1>
+    //                         Welcome to <b className="NJText">Nomad Journey</b> !
+    //                     </h1>
+    //                 </div>
+    //                 <Box
+    //                     component="form"
+    //                     sx={{
+    //                     "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
+    //                     }}
+    //                     noValidate
+    //                     autoComplete="off"
+    //
+    //                 >
+    //                     <Grid id={"Login-Form"}>
+    //
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <TextField
+    //                             id="signup-outlined-adornment-email"
+    //                             label="Email"
+    //                             onChange={e=>{setEmail(e.target.value)}}
+    //                             value={Email}
+    //                             />
+    //                         </FormControl>
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <TextField
+    //
+    //                             id="outlined-adornment-password"
+    //                             type={values.showPassword ? "text" : "password"}
+    //                             onChange={e=>{setPassword(e.target.value)}}
+    //                             value={password}
+    //                             InputProps={{
+    //                                 endAdornment: (
+    //                                 <InputAdornment>
+    //                                     <IconButton
+    //                                         aria-label="toggle password visibility"
+    //                                         onClick={handleClickShowPassword}
+    //                                         onMouseDown={handleMouseDownPassword}
+    //                                         edge="end"
+    //                                     >
+    //                                     {values.showPassword ? <VisibilityOff /> : <Visibility />}
+    //                                     </IconButton>
+    //                                 </InputAdornment>
+    //                                 ),
+    //                             }}
+    //                             label="Password"
+    //                             />
+    //                         </FormControl>
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <Button
+    //                                 onClick={handleSubmit}
+    //                                 sx={{ m: 1 }}
+    //                                 variant="outlined"
+    //                                 size="large"
+    //                                 type="submit"
+    //                             >
+    //                             Submit
+    //                             </Button>
+    //
+    //                             <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
+    //                                 <Grid item xs>
+    //                                     <Link to="/forgotpass" >
+    //                                         {"Forgot password?"}
+    //                                     </Link>
+    //                                 </Grid>
+    //                                 <Grid item xs>
+    //                                     <Link to="/signup" >
+    //                                     {"Don't have an account? Register Now!"}
+    //                                     </Link>
+    //                                 </Grid>
+    //                             </Grid>
+    //                         </FormControl>
+    //                     </Grid>
+    //                 </Box>
+    //             </div>
+    //
+    //         </Box>
+    //     </div>
+    // );
 }

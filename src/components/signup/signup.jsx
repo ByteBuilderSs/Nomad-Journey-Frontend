@@ -221,279 +221,557 @@ export default function SignInSide()
     };
 
 
-    return (
-    
-        <div className="auth">
-            <Box
-                className="Mui-login-box"
-                sx={{ bgcolor: "background.paper", 
-                width: 500,
-                maxHeight: "100vh",
-                minHeight: "69vh",
-                boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'
-                }}>
-                <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
-                    <Tabs
-                        value={'0'}
-                        variant="fullWidth"
-                        TabIndicatorProps={{
-                        style: {
-                            backgroundColor: "#1A237D",
-                        },
-                        }}>
-                        <Tab
-                            tabIndex={0}
-                            style={{ color: "white", fontSize: 18 }}
-                            label="Register"
-                        />
-                    </Tabs>
-                </AppBar>
-                <div>
-                    <div className="authLogo">
-                        <img src={logo} alt="logo" />
-                    </div>
-                    <div className="authLogoLabel" style={{ marginBottom: "1rem"}}>
-                        <h1>
-                            Welcome to <b className="NJText">Nomad Journey</b> !
-                        </h1>
-                    </div>
-                    <Box
-                        component="form"
-                        sx={{
-                        "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    
-                    >
-                    <Grid form id={"Signup-Form"}>
-                        <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
-                            {/* Firstname */}
-                            <FormControl fullWidth variant="outlined">
-                                <TextField
-                                    id="outlined-adornment-firstname"
-                                    label="Firstname"
-                                    onChange={e=>{setName(e.target.value)}}
-                                    placeholder="Eg. Nariman"
-                                    value={FirstName}
-                                    required
-                                />
-                            </FormControl>
-                            {/* Lastname */}
-                            <FormControl fullWidth variant="outlined">
-                                <TextField
-                                    id="outlined-adornment-lastname"
-                                    label="Lastname"
-                                    onChange={e=>{setFamilyName(e.target.value)}}
-                                    value={FamilyName}
-                                    placeholder="Eg. Masjedi"
-                                    required
-                                />
-                            </FormControl>
-                        </Grid>
-                        {/* TODO => Country */}
-                        <FormControl fullWidth variant="outlined">
-                            <Autocomplete
-                                id="asynchronous-demo-country"
-                                sx={{ width: 483 }}
-                                open={open}
-                                onOpen={() => {
-                                    setOpen(true);
-                                }}
-                                onClose={() => {
-                                    setOpen(false);
-                                }}
-                                options={countries ?? []}
-                                value={selectedCountry}
-                                onChange={(e, newValue) => {
-                                    handleCountrySelection(newValue);
-                                }}
-                                inputValue={countryInput}
-                                onInputChange={(e, newInputValue) => {
-                                    setCountryInput(newInputValue);
-                                }}
-                                isOptionEqualToValue={(option, value) => {
-                                    if (option && value) {
-                                        return option.country === value.country;
-                                    } else {
-                                        return false;
-                                    }
-                                }}
-                                getOptionLabel={(option) => {
-                                    return (option ? option.country : "");
-                                }}
-                                getOptionSelected={(option, value) => {
-                                    return option.country === value.country;
-                                }}
-                                renderInput={(params) => (
-                                    <TextField 
-                                        {...params} 
-                                        label="Country"
-                                        placeholder="Country"
-                                        required
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            endAdornment: (
-                                            <React.Fragment>
-                                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                                {params.InputProps.endAdornment}
-                                            </React.Fragment>
-                                            ),
-                                        }} />
-                                )}
+    return(
+        <>
+            <div className={`background`}></div>
+            <div className={`login-form`}>
+                <Box
+                    className="Mui-login-box"
+                    sx={{ bgcolor: "background.paper",
+                    width: 500,
+                    maxHeight: "100vh",
+                    minHeight: "69vh",
+                    boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'
+                    }}>
+                    <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
+                        <Tabs
+                            value={'0'}
+                            variant="fullWidth"
+                            TabIndicatorProps={{
+                            style: {
+                                backgroundColor: "#1A237D",
+                            },
+                            }}>
+                            <Tab
+                                tabIndex={0}
+                                style={{ color: "white", fontSize: 18 }}
+                                label="Register"
                             />
-                        </FormControl>
-                        {/* TODO => City */}
-                        <FormControl fullWidth variant="outlined">
-                            <Autocomplete
-                                id="asynchronous-demo-city"
-                                sx={{ width: 483 }}
-                                open={openC}
-                                onOpen={() => {
-                                    setOpenC(true);
-                                }}
-                                onClose={() => {
-                                    setOpenC(false);
-                                }}
-                                isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
-                                getOptionLabel={(option) => option.city_name}
-                                getOptionSelected={(option, value) => {
-                                    return option.city_name === value.city_name;
-                                }}
-                                options={cities}
-                                value={selectedCity}
-                                onChange={(e, newValue) => {
-                                    handleCitySelection(newValue)
-                                }}
-                                inputValue={cityInput}
-                                onInputChange={(e, newInputValue) => {
-                                    setCityInput(newInputValue);
-                                }}
-                                renderInput={(params) => (
-                                    <TextField 
-                                        {...params} 
-                                        label="City"
+                        </Tabs>
+                    </AppBar>
+                    <div>
+                        <div className="authLogo">
+                            <img src={logo} alt="logo" />
+                        </div>
+                        <div className="authLogoLabel" style={{ marginBottom: "1rem"}}>
+                            <h1>
+                                Welcome to <b className="NJText">Nomad Journey</b> !
+                            </h1>
+                        </div>
+                        <Box
+                            component="form"
+                            sx={{
+                            "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
+                            }}
+                            noValidate
+                            autoComplete="off"
+
+                        >
+                        <Grid form id={"Signup-Form"}>
+                            <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
+                                {/* Firstname */}
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        id="outlined-adornment-firstname"
+                                        label="Firstname"
+                                        onChange={e=>{setName(e.target.value)}}
+                                        placeholder="Eg. Nariman"
+                                        value={FirstName}
                                         required
-                                        placeholder="City(To view the cities, first select your country)"
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            endAdornment: (
-                                            <React.Fragment>
-                                                {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
-                                                {params.InputProps.endAdornment}
-                                            </React.Fragment>
-                                            ),
-                                        }} 
                                     />
-                                )}
-                            />
-                        </FormControl>
-                        {/* Username */}
-                        <FormControl fullWidth variant="outlined">
-                            <TextField
-                                id="signup-outlined-adornment-username"
-                                label="Username"
-                                onChange={e=>{setUserName(e.target.value)}}
-                                value={UserName}
-                                placeholder="Eg. @Nariman1234"
-                                required
-                            />
-                        </FormControl>
-                        {/* Email */}
-                        <FormControl fullWidth variant="outlined">
-                            <TextField
-                                id="signup-outlined-adornment-email"
-                                label="Email"
-                                onChange={e=>{setEmail(e.target.value)}}
-                                value={Email}
-                                placeholder="Eg. nariman.masjedi@gmail.com"
-                                required
-                            />
-                        </FormControl>
-                        <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
-                            {/* Password */}
+                                </FormControl>
+                                {/* Lastname */}
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        id="outlined-adornment-lastname"
+                                        label="Lastname"
+                                        onChange={e=>{setFamilyName(e.target.value)}}
+                                        value={FamilyName}
+                                        placeholder="Eg. Masjedi"
+                                        required
+                                    />
+                                </FormControl>
+                            </Grid>
+                            {/* TODO => Country */}
+                            <FormControl fullWidth variant="outlined">
+                                <Autocomplete
+                                    id="asynchronous-demo-country"
+                                    sx={{ width: 483 }}
+                                    open={open}
+                                    onOpen={() => {
+                                        setOpen(true);
+                                    }}
+                                    onClose={() => {
+                                        setOpen(false);
+                                    }}
+                                    options={countries ?? []}
+                                    value={selectedCountry}
+                                    onChange={(e, newValue) => {
+                                        handleCountrySelection(newValue);
+                                    }}
+                                    inputValue={countryInput}
+                                    onInputChange={(e, newInputValue) => {
+                                        setCountryInput(newInputValue);
+                                    }}
+                                    isOptionEqualToValue={(option, value) => {
+                                        if (option && value) {
+                                            return option.country === value.country;
+                                        } else {
+                                            return false;
+                                        }
+                                    }}
+                                    getOptionLabel={(option) => {
+                                        return (option ? option.country : "");
+                                    }}
+                                    getOptionSelected={(option, value) => {
+                                        return option.country === value.country;
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Country"
+                                            placeholder="Country"
+                                            required
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                endAdornment: (
+                                                <React.Fragment>
+                                                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                                    {params.InputProps.endAdornment}
+                                                </React.Fragment>
+                                                ),
+                                            }} />
+                                    )}
+                                />
+                            </FormControl>
+                            {/* TODO => City */}
+                            <FormControl fullWidth variant="outlined">
+                                <Autocomplete
+                                    id="asynchronous-demo-city"
+                                    sx={{ width: 483 }}
+                                    open={openC}
+                                    onOpen={() => {
+                                        setOpenC(true);
+                                    }}
+                                    onClose={() => {
+                                        setOpenC(false);
+                                    }}
+                                    isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+                                    getOptionLabel={(option) => option.city_name}
+                                    getOptionSelected={(option, value) => {
+                                        return option.city_name === value.city_name;
+                                    }}
+                                    options={cities}
+                                    value={selectedCity}
+                                    onChange={(e, newValue) => {
+                                        handleCitySelection(newValue)
+                                    }}
+                                    inputValue={cityInput}
+                                    onInputChange={(e, newInputValue) => {
+                                        setCityInput(newInputValue);
+                                    }}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="City"
+                                            required
+                                            placeholder="City(To view the cities, first select your country)"
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                endAdornment: (
+                                                <React.Fragment>
+                                                    {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
+                                                    {params.InputProps.endAdornment}
+                                                </React.Fragment>
+                                                ),
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </FormControl>
+                            {/* Username */}
                             <FormControl fullWidth variant="outlined">
                                 <TextField
-                                    id="outlined-adornment-password"
-                                    type={values.showPassword ? "text" : "password"}
-                                    onChange={e=>{setPassword(e.target.value)}}
-                                    value={password}
+                                    id="signup-outlined-adornment-username"
+                                    label="Username"
+                                    onChange={e=>{setUserName(e.target.value)}}
+                                    value={UserName}
+                                    placeholder="Eg. @Nariman1234"
                                     required
-                                    InputProps={{
-                                        endAdornment: (
-                                        <InputAdornment>
-                                            <IconButton
+                                />
+                            </FormControl>
+                            {/* Email */}
+                            <FormControl fullWidth variant="outlined">
+                                <TextField
+                                    id="signup-outlined-adornment-email"
+                                    label="Email"
+                                    onChange={e=>{setEmail(e.target.value)}}
+                                    value={Email}
+                                    placeholder="Eg. nariman.masjedi@gmail.com"
+                                    required
+                                />
+                            </FormControl>
+                            <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
+                                {/* Password */}
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        id="outlined-adornment-password"
+                                        type={values.showPassword ? "text" : "password"}
+                                        onChange={e=>{setPassword(e.target.value)}}
+                                        value={password}
+                                        required
+                                        InputProps={{
+                                            endAdornment: (
+                                            <InputAdornment>
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                            ),
+                                        }}
+                                        label="Password"
+                                        placeholder="nariman1234"
+                                    />
+                                </FormControl>
+                                {/* Confirm Password */}
+                                <FormControl fullWidth variant="outlined">
+                                    <TextField
+                                        id="outlined-adornment-confirmPassword"
+                                        required
+                                        type={values.showConfirmPassword ? "text" : "password"}
+                                        onChange={e=>{setConfirmPass(e.target.value)}}
+                                        value={ConfirmPass}
+                                        InputProps={{
+                                            endAdornment: (
+                                            <InputAdornment>
+                                                <IconButton
                                                 aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
+                                                onClick={handleClickShowConfirmPassword}
                                                 onMouseDown={handleMouseDownPassword}
                                                 edge="end"
-                                            >
-                                            {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                        ),
-                                    }}
-                                    label="Password"
-                                    placeholder="nariman1234"
-                                />
-                            </FormControl>
-                            {/* Confirm Password */}
+                                                >
+                                                {values.showConfirmPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                            ),
+                                        }}
+                                        label="Password confirmation"
+                                        placeholder="nariman1234"
+                                    />
+                                </FormControl>
+                            </Grid>
+                            {/* Submit button */}
                             <FormControl fullWidth variant="outlined">
-                                <TextField
-                                    id="outlined-adornment-confirmPassword"
-                                    required
-                                    type={values.showConfirmPassword ? "text" : "password"}
-                                    onChange={e=>{setConfirmPass(e.target.value)}}
-                                    value={ConfirmPass}
-                                    InputProps={{
-                                        endAdornment: (
-                                        <InputAdornment>
-                                            <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowConfirmPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                            >
-                                            {values.showConfirmPassword ? (
-                                                <VisibilityOff />
-                                            ) : (
-                                                <Visibility />
-                                            )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                        ),
-                                    }}
-                                    label="Password confirmation"
-                                    placeholder="nariman1234"
-                                />
+                                <Button
+                                    sx={{ m: 1 }}
+                                    variant="outlined"
+                                    size="large"
+                                    type="submit"
+                                    onClick={handleSubmit}
+                                >
+                                    Submit
+                                </Button>
+                                <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
+                                    <Grid item xs>
+                                    </Grid>
+                                    <Grid item>
+                                        <Link to="/login" variant="body2">
+                                            {"Already registered? Login"}
+                                        </Link>
+                                    </Grid>
+                                </Grid>
                             </FormControl>
                         </Grid>
-                        {/* Submit button */}
-                        <FormControl fullWidth variant="outlined">
-                            <Button
-                                sx={{ m: 1 }}
-                                variant="outlined"
-                                size="large"
-                                type="submit"
-                                onClick={handleSubmit}
-                            >
-                                Submit
-                            </Button>
-                            <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
-                                <Grid item xs>
-                                </Grid>
-                                <Grid item>
-                                    <Link to="/login" variant="body2">
-                                        {"Already registered? Login"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
-                        </FormControl>
-                    </Grid>
-                    </Box>
-                </div>
-                
-            </Box>
-        </div>
-    );
+                        </Box>
+                    </div>
+
+                </Box>
+            </div>
+        </>
+        );
+
+    // return (
+    //
+    //     <div className="auth">
+    //         <Box
+    //             className="Mui-login-box"
+    //             sx={{ bgcolor: "background.paper",
+    //             width: 500,
+    //             maxHeight: "100vh",
+    //             minHeight: "69vh",
+    //             boxShadow :'-3px -3px 9px #aaa9a9a2,3px 3px 7px rgba(147, 149, 151, 0.671)'
+    //             }}>
+    //             <AppBar sx={{ backgroundColor: "rgba(0,78,137,1)", borderTopLeftRadius: "15px", borderTopRightRadius: "15px"}} position="static">
+    //                 <Tabs
+    //                     value={'0'}
+    //                     variant="fullWidth"
+    //                     TabIndicatorProps={{
+    //                     style: {
+    //                         backgroundColor: "#1A237D",
+    //                     },
+    //                     }}>
+    //                     <Tab
+    //                         tabIndex={0}
+    //                         style={{ color: "white", fontSize: 18 }}
+    //                         label="Register"
+    //                     />
+    //                 </Tabs>
+    //             </AppBar>
+    //             <div>
+    //                 <div className="authLogo">
+    //                     <img src={logo} alt="logo" />
+    //                 </div>
+    //                 <div className="authLogoLabel" style={{ marginBottom: "1rem"}}>
+    //                     <h1>
+    //                         Welcome to <b className="NJText">Nomad Journey</b> !
+    //                     </h1>
+    //                 </div>
+    //                 <Box
+    //                     component="form"
+    //                     sx={{
+    //                     "& .MuiTextField-root": { m: 1, maxWidth: "100%" },
+    //                     }}
+    //                     noValidate
+    //                     autoComplete="off"
+    //
+    //                 >
+    //                 <Grid form id={"Signup-Form"}>
+    //                     <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
+    //                         {/* Firstname */}
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <TextField
+    //                                 id="outlined-adornment-firstname"
+    //                                 label="Firstname"
+    //                                 onChange={e=>{setName(e.target.value)}}
+    //                                 placeholder="Eg. Nariman"
+    //                                 value={FirstName}
+    //                                 required
+    //                             />
+    //                         </FormControl>
+    //                         {/* Lastname */}
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <TextField
+    //                                 id="outlined-adornment-lastname"
+    //                                 label="Lastname"
+    //                                 onChange={e=>{setFamilyName(e.target.value)}}
+    //                                 value={FamilyName}
+    //                                 placeholder="Eg. Masjedi"
+    //                                 required
+    //                             />
+    //                         </FormControl>
+    //                     </Grid>
+    //                     {/* TODO => Country */}
+    //                     <FormControl fullWidth variant="outlined">
+    //                         <Autocomplete
+    //                             id="asynchronous-demo-country"
+    //                             sx={{ width: 483 }}
+    //                             open={open}
+    //                             onOpen={() => {
+    //                                 setOpen(true);
+    //                             }}
+    //                             onClose={() => {
+    //                                 setOpen(false);
+    //                             }}
+    //                             options={countries ?? []}
+    //                             value={selectedCountry}
+    //                             onChange={(e, newValue) => {
+    //                                 handleCountrySelection(newValue);
+    //                             }}
+    //                             inputValue={countryInput}
+    //                             onInputChange={(e, newInputValue) => {
+    //                                 setCountryInput(newInputValue);
+    //                             }}
+    //                             isOptionEqualToValue={(option, value) => {
+    //                                 if (option && value) {
+    //                                     return option.country === value.country;
+    //                                 } else {
+    //                                     return false;
+    //                                 }
+    //                             }}
+    //                             getOptionLabel={(option) => {
+    //                                 return (option ? option.country : "");
+    //                             }}
+    //                             getOptionSelected={(option, value) => {
+    //                                 return option.country === value.country;
+    //                             }}
+    //                             renderInput={(params) => (
+    //                                 <TextField
+    //                                     {...params}
+    //                                     label="Country"
+    //                                     placeholder="Country"
+    //                                     required
+    //                                     InputProps={{
+    //                                         ...params.InputProps,
+    //                                         endAdornment: (
+    //                                         <React.Fragment>
+    //                                             {loading ? <CircularProgress color="inherit" size={20} /> : null}
+    //                                             {params.InputProps.endAdornment}
+    //                                         </React.Fragment>
+    //                                         ),
+    //                                     }} />
+    //                             )}
+    //                         />
+    //                     </FormControl>
+    //                     {/* TODO => City */}
+    //                     <FormControl fullWidth variant="outlined">
+    //                         <Autocomplete
+    //                             id="asynchronous-demo-city"
+    //                             sx={{ width: 483 }}
+    //                             open={openC}
+    //                             onOpen={() => {
+    //                                 setOpenC(true);
+    //                             }}
+    //                             onClose={() => {
+    //                                 setOpenC(false);
+    //                             }}
+    //                             isOptionEqualToValue={(option, value) => option.city_name === value.city_name}
+    //                             getOptionLabel={(option) => option.city_name}
+    //                             getOptionSelected={(option, value) => {
+    //                                 return option.city_name === value.city_name;
+    //                             }}
+    //                             options={cities}
+    //                             value={selectedCity}
+    //                             onChange={(e, newValue) => {
+    //                                 handleCitySelection(newValue)
+    //                             }}
+    //                             inputValue={cityInput}
+    //                             onInputChange={(e, newInputValue) => {
+    //                                 setCityInput(newInputValue);
+    //                             }}
+    //                             renderInput={(params) => (
+    //                                 <TextField
+    //                                     {...params}
+    //                                     label="City"
+    //                                     required
+    //                                     placeholder="City(To view the cities, first select your country)"
+    //                                     InputProps={{
+    //                                         ...params.InputProps,
+    //                                         endAdornment: (
+    //                                         <React.Fragment>
+    //                                             {loadingC ? <CircularProgress color="inherit" size={20} /> : null}
+    //                                             {params.InputProps.endAdornment}
+    //                                         </React.Fragment>
+    //                                         ),
+    //                                     }}
+    //                                 />
+    //                             )}
+    //                         />
+    //                     </FormControl>
+    //                     {/* Username */}
+    //                     <FormControl fullWidth variant="outlined">
+    //                         <TextField
+    //                             id="signup-outlined-adornment-username"
+    //                             label="Username"
+    //                             onChange={e=>{setUserName(e.target.value)}}
+    //                             value={UserName}
+    //                             placeholder="Eg. @Nariman1234"
+    //                             required
+    //                         />
+    //                     </FormControl>
+    //                     {/* Email */}
+    //                     <FormControl fullWidth variant="outlined">
+    //                         <TextField
+    //                             id="signup-outlined-adornment-email"
+    //                             label="Email"
+    //                             onChange={e=>{setEmail(e.target.value)}}
+    //                             value={Email}
+    //                             placeholder="Eg. nariman.masjedi@gmail.com"
+    //                             required
+    //                         />
+    //                     </FormControl>
+    //                     <Grid fullWidth sx={{display:'flex', flexDirection:'row'}}>
+    //                         {/* Password */}
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <TextField
+    //                                 id="outlined-adornment-password"
+    //                                 type={values.showPassword ? "text" : "password"}
+    //                                 onChange={e=>{setPassword(e.target.value)}}
+    //                                 value={password}
+    //                                 required
+    //                                 InputProps={{
+    //                                     endAdornment: (
+    //                                     <InputAdornment>
+    //                                         <IconButton
+    //                                             aria-label="toggle password visibility"
+    //                                             onClick={handleClickShowPassword}
+    //                                             onMouseDown={handleMouseDownPassword}
+    //                                             edge="end"
+    //                                         >
+    //                                         {values.showPassword ? <VisibilityOff /> : <Visibility />}
+    //                                         </IconButton>
+    //                                     </InputAdornment>
+    //                                     ),
+    //                                 }}
+    //                                 label="Password"
+    //                                 placeholder="nariman1234"
+    //                             />
+    //                         </FormControl>
+    //                         {/* Confirm Password */}
+    //                         <FormControl fullWidth variant="outlined">
+    //                             <TextField
+    //                                 id="outlined-adornment-confirmPassword"
+    //                                 required
+    //                                 type={values.showConfirmPassword ? "text" : "password"}
+    //                                 onChange={e=>{setConfirmPass(e.target.value)}}
+    //                                 value={ConfirmPass}
+    //                                 InputProps={{
+    //                                     endAdornment: (
+    //                                     <InputAdornment>
+    //                                         <IconButton
+    //                                         aria-label="toggle password visibility"
+    //                                         onClick={handleClickShowConfirmPassword}
+    //                                         onMouseDown={handleMouseDownPassword}
+    //                                         edge="end"
+    //                                         >
+    //                                         {values.showConfirmPassword ? (
+    //                                             <VisibilityOff />
+    //                                         ) : (
+    //                                             <Visibility />
+    //                                         )}
+    //                                         </IconButton>
+    //                                     </InputAdornment>
+    //                                     ),
+    //                                 }}
+    //                                 label="Password confirmation"
+    //                                 placeholder="nariman1234"
+    //                             />
+    //                         </FormControl>
+    //                     </Grid>
+    //                     {/* Submit button */}
+    //                     <FormControl fullWidth variant="outlined">
+    //                         <Button
+    //                             sx={{ m: 1 }}
+    //                             variant="outlined"
+    //                             size="large"
+    //                             type="submit"
+    //                             onClick={handleSubmit}
+    //                         >
+    //                             Submit
+    //                         </Button>
+    //                         <Grid container sx={{paddingLeft:'2vh', paddingRight:'2vh', mb: "1rem", mt: "0.8rem"}}>
+    //                             <Grid item xs>
+    //                             </Grid>
+    //                             <Grid item>
+    //                                 <Link to="/login" variant="body2">
+    //                                     {"Already registered? Login"}
+    //                                 </Link>
+    //                             </Grid>
+    //                         </Grid>
+    //                     </FormControl>
+    //                 </Grid>
+    //                 </Box>
+    //             </div>
+    //
+    //         </Box>
+    //     </div>
+    // );
 }

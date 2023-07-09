@@ -362,9 +362,10 @@ const PostDetailDialog = (props) => {
                                 backgroundPosition:"left bottom",
                                 backgroundColor:"#DE3733",
                                 color:"#EFEFD0"
-                            }
+                            },
+                            mr: "1rem", mb: "1rem"
                         }}
-                        startIcon={<DeleteIcon />} sx={{mr: "1rem", mb: "1rem"}}
+                        startIcon={<DeleteIcon />} 
                         onClick={() => {
                                     console.log("---------- CLICK ON DELETE POST ---------");
                                     setOpenDelete(true);
@@ -375,7 +376,6 @@ const PostDetailDialog = (props) => {
                 </Item>
                 <Item>
                     <Button
-                        sx={{ mr: "3rem", mb: "1rem" }}
                         sx={{
                             width:"13vw",
                             backgroundColor:"#EFEFD0",
@@ -391,7 +391,8 @@ const PostDetailDialog = (props) => {
                                 backgroundPosition:"left bottom",
                                 backgroundColor:"#004E89",
                                 color:"#EFEFD0"
-                            }
+                            },
+                            mr: "3rem", mb: "1rem"
                         }}
                         startIcon={<EditIcon />}
                         // onClick={() => handleEditClick(postData.uid, postData.slug)}

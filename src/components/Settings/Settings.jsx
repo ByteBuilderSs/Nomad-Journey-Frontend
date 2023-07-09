@@ -24,8 +24,10 @@ const tabsTheme = makeStyles(theme => ({
     selectedTab:{
         backgroundColor:"#F7C59F",
         color:"#004E89",
+        cursor:"pointer",
         borderRadius:"10px 10px 0px 0px",
         transition:"0.3s ease",
+        padding:"5px",
         fontWeight:"bold",
         "&:hover":{
             backgroundColor:"#F7C59F",
@@ -33,8 +35,10 @@ const tabsTheme = makeStyles(theme => ({
     },
     tabs:{
         color:"#004E89",
+        padding:"5px",
         transition:"0.3s ease",
         fontWeight:"bold",
+        cursor:"pointer",
         borderRadius:"10px 10px 0px 0px",
         "&:hover":{
             backgroundColor:"rgb(227,227,196)",
@@ -67,6 +71,8 @@ const tabsTheme = makeStyles(theme => ({
     addButton:{
         color:"#F7C59F",
         fontWeight:"bold",
+        padding:"5px",
+        cursor:"pointer",
         fontSize:"medium",
         borderRadius:"10px 10px 0px 0px",
         "&:hover":{
@@ -76,7 +82,9 @@ const tabsTheme = makeStyles(theme => ({
     },
     selectedButton:{
         background:"#1A659E",
+        padding:"5px",
         color:"#F7C59F",
+        cursor:"pointer",
         fontSize:"medium",
         fontWeight:"bold",
         borderRadius:"10px 10px 0px 0px",
@@ -191,13 +199,13 @@ const Settings = () => {
                         {addressTabs.map((tab, key) => {
                             return (
                                 <Item>
-                                        <Button
+                                        <div
                                             className={addressTab === key ? classes.selectedButton : classes.addButton}
                                             key={tab.id}
                                             onClick={() => setAddressTab(tab.id)}
                                         >
                                             {tab.title}
-                                        </Button>
+                                        </div>
                                 </Item>
                             );
                         })}
@@ -241,13 +249,13 @@ const Settings = () => {
                             {profileTabs.map((tab, key) => {
                                 return (
                                     <Item>
-                                        <Button
+                                        <div
                                             className={profileTab === key ? classes.selectedButton : classes.addButton}
                                             key={tab.id}
                                             onClick={() => setProfileTab(tab.id)}
                                         >
                                             {tab.title}
-                                        </Button>
+                                        </div>
                                     </Item>
                                 );
                             })}
@@ -300,13 +308,13 @@ const Settings = () => {
                             {tabs.map((tab, key) => {
                                 return (
                                     <Item>
-                                        <Button
+                                        <div
                                             className={currentTab === key ? classes.selectedTab : classes.tabs}
                                             key={tab.id}
                                             onClick={() => setCurrentTab(tab.id)}
                                         >
                                             {tab.title}
-                                        </Button>
+                                        </div>
                                     </Item>
                                 );
                             })}

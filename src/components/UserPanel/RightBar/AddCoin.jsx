@@ -283,7 +283,20 @@ export default function AddCoinToUser(props)
                             <Stack direction={`row`} spacing={4} sx={{paddingTop:"1rem", marginLeft:"1.5rem"}}>
                                 <Item>
                                     <Button
-                                    className={classes.button}
+                                        sx={{
+                                            background:"linear-gradient(to right, #F7C59F 50%, #004E89 50%)",
+                                            backgroundPosition:"right bottom",
+                                            color:"#F7C59F",
+                                            border:"solid 2px #F7C59F",
+                                            borderRadius:"15px",
+                                            transition:"all 0.1s ease-out",
+                                            display:"block",
+                                            backgroundSize:"200% 100%",
+                                            "&:hover":{
+                                                backgroundPosition:"left bottom",
+                                                color:"#004E89"
+                                            }
+                                        }}
                                     onClick={onSubmit}>
                                         Buy More Coins
                                     </Button>

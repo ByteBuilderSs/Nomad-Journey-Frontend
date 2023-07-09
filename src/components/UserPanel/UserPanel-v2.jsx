@@ -217,7 +217,24 @@ const UserPanelNew = () => {
                     {local_storage_username == lastSegment ?
                         <div style={{justifyContent:"center", alignItems:"center", display:"flex", paddingTop:"2.5rem"}}>
                             <Button
-                                className={classes.button}
+                                sx={{
+                                    width:"15em",
+                                    // background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+                                    backgroundPosition:"right bottom",
+                                    color:"#EFEFD0",
+                                    fontWeight:"bold",
+                                    border:"solid 2px #EFEFD0",
+                                    borderRadius:"15px",
+                                    transition:"all 0.2s ease-out",
+                                    display:"block",
+                                    backgroundSize:"200% 100%",
+                                    "&:hover":{
+                                        border:"solid 2px #F7C59F",
+                                        backgroundColor : "#F7C59F",
+                                        backgroundPosition:"left bottom",
+                                        color:"#1A659E"
+                                    }
+                                }}
                                 onClick={(e) => openCreateRequest()}>
                                 Add Announcement
                             </Button>

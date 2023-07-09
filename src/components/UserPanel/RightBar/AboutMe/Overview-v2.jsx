@@ -129,7 +129,23 @@ const OverviewV2 = (props) => {
                         OVERVIEW
                         {props.url_username === props.local_storage_username ?
                             <Button
-                                className={classes.button}
+                                sx={{
+                                    marginLeft:"53rem",
+                                    // background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+                                    backgroundPosition:"right bottom",
+                                    color:"#EFEFD0",
+                                    border:"solid 2px #EFEFD0",
+                                    borderRadius:"15px",
+                                    transition:"all 0.2s ease-out",
+                                    display:"block",
+                                    backgroundSize:"200% 100%",
+                                    "&:hover":{
+                                        backgroundColor: "#F7C59F",
+                                        border:"solid 2px #F7C59F",
+                                        backgroundPosition:"left bottom",
+                                        color:"#1A659E"
+                                    }
+                                }}
                                 onClick={handleClickMoreCoin}
                             >
                                 Buy More Coins

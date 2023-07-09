@@ -141,7 +141,23 @@ const ResetEmail = (props) => {
                         variant='outlined' />
                 </div>
                 <div style={{paddingTop:"4.4em" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-                    <Button className={classes.button} onClick={onResetEmail}>
+                    <Button
+                        sx={{
+                            width:"15em",
+                            background:"linear-gradient(to right, #F7C59F 50%, #1A659E 50%)",
+                            backgroundPosition:"right bottom",
+                            color:"#F7C59F",
+                            border:"solid 2px #F7C59F",
+                            borderRadius:"15px",
+                            transition:"all 0.3s ease-out",
+                            display:"block",
+                            backgroundSize:"200% 100%",
+                            "&:hover":{
+                                backgroundPosition:"left bottom",
+                                color:"#1A659E"
+                            }
+                        }}
+                        onClick={onResetEmail}>
                         submit
                     </Button>
                 </div>

@@ -187,14 +187,42 @@ function RejectOffers(props)
                     <DialogActions>
                         <Button
                             size={`small`}
-                            className={classes.button}
+                            sx={{
+                                width:"6vw",
+                                backgroundPosition:"right bottom",
+                                fontWeight:"bold",
+                                color:"#DE3733",
+                                border:"solid 2px #DE3733",
+                                borderRadius:"15px",
+                                transition:"all 0.15s ease-out",
+                                backgroundSize:"200% 100%",
+                                "&:hover":{
+                                    backgroundPosition:"left bottom",
+                                    backgroundColor:"#DE3733",
+                                    color:"#EFEFD0"
+                                }
+                            }}
                             onClick={onSubmit}
                         >
                             Yes
                         </Button>
                         <Button
                             size={`small`}
-                            className={classes.deleteButton}
+                            sx={{
+                                width:"6vw",
+                                backgroundPosition:"right bottom",
+                                fontWeight:"bold",
+                                color:"#004E89",
+                                border:"solid 2px #004E89",
+                                borderRadius:"15px",
+                                transition:"all 0.15s ease-out",
+                                backgroundSize:"200% 100%",
+                                "&:hover":{
+                                    backgroundPosition:"left bottom",
+                                    backgroundColor:"#004E89",
+                                    color:"#EFEFD0"
+                                }
+                            }}
                             onClick={handleClose}
                         >
                             No

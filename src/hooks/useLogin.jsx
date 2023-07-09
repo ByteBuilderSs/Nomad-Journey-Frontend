@@ -62,8 +62,13 @@ export const useLogin=()=>{
             console.log("+++++++++++++++++ THE RESULT AFTER LOGIN IS +++++++++++++++++++ ", result)
 
             localStorage.setItem('tokens', result);
-            navigate("/home/Dashboard/", { replace: true });
             toast.success("You logged in successfully")
+            setTimeout(() => 
+            {
+                window.location.reload();
+                window.location.href = "/home/Dashboard/";
+            }
+            , 800);
         }
     }
     return{login}

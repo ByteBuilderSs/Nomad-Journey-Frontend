@@ -83,7 +83,7 @@ function App() {
                         </div>
                     </div>
                 ) :<div>
-          {!["/landing","/signup","/signup/", "/login/","/login","/resetpass","/forgotpass"].includes(location.pathname) && <Navbar/>}
+          {!["/landing","/signup","/signup/", "/login/","/login","/resetpass","/forgotpass"].includes(location.pathname) && (isLogin !== false) && <Navbar/>}
 
               <body  style = {allPagesStyle}>
 

@@ -93,7 +93,7 @@ export default function SetLikeOfBlog(props)
                 >
                     {count > 0 ? count : null}
             </Grid>
-         {showModal}
+         {showModal()}
          {()=>setBlog_id(null)}
         </>
     )
